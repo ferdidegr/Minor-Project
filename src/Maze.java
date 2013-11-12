@@ -237,13 +237,13 @@ public class Maze implements VisibleObject{
 	 * Draws a sphere at (0,0,0)
 	 * @param radius
 	 */
-	private void renderSphere(float radius) {
-
-	      Sphere s = new Sphere();
-	      s.draw(radius, 16, 16);
-	      s.setTextureFlag(true);
-
-	  }
+//	private void renderSphere(float radius) {
+//
+//	      Sphere s = new Sphere();
+//	      s.draw(radius, 16, 16);
+//	      s.setTextureFlag(true);
+//
+//	  }
 	/**
 	 * Draws a cube without top centered at (0,0,0)
 	 * @param size
