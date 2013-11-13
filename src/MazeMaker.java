@@ -1,13 +1,9 @@
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.swing.JOptionPane;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -25,7 +21,12 @@ public class MazeMaker {
 	private Texture texmenubar;
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
 	private boolean mousedown = false;
-	
+	/**
+	 * Begin the program
+	 * @throws LWJGLException
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	public void start() throws LWJGLException, InterruptedException, IOException{
 		/*
 		 * Select resolution
@@ -68,15 +69,22 @@ public class MazeMaker {
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 			Mousepoll();
 			keyboardpoll();
-			display();
-			drawMenu();
+			display();			
 			Display.update();Display.sync(60);
 			
 		}
 	}
-	
+	/**
+	 * Draw all drawable items on the screen
+	 */
 	public void display(){	
-		
+		drawMaze();		
+		drawMenu();
+	}
+	/**
+	 * Draw the maze map
+	 */
+	public void drawMaze(){
 		glColor3f(1, 1, 1);
 		glBegin(GL_QUADS);
 		glVertex2f(0, 0);
@@ -84,37 +92,41 @@ public class MazeMaker {
 		glVertex2f(100, 100);
 		glVertex2f(0f, 100f);
 		glEnd();
-		
-		
 	}
-		
+	/**
+	 * Draw the menu items including buttons
+	 */
 	public void drawMenu(){
 		
 		/*
-		 * Menu balk
+		 * Menu bar
 		 */
-		glEnable(GL_TEXTURE_2D);
-		texmenubar.bind();
-		glBegin(GL_QUADS);
+		glEnable(GL_TEXTURE_2D);						// Enable Textures
+		texmenubar.bind();								// Set this texture as active
 		
-		glVertex2f(right-menubarwidth, bottom);
+		glBegin(GL_QUADS);								// Begin drawing the rectangle
+		glVertex2f(right-menubarwidth, bottom);			// Bottom left vertex
 		glTexCoord2f(0, 0);
-		glVertex2f(right-menubarwidth, top);
+		glVertex2f(right-menubarwidth, top);			// top Left vertex
 		glTexCoord2f(0, 1);
-		glVertex2f(right, top);
+		glVertex2f(right, top);							// Top right vertex
 		glTexCoord2f(1, 0);
-		glVertex2f(right, bottom);
+		glVertex2f(right, bottom);						// Bottom Right vertex
 		glTexCoord2f(1, 1);
 		glEnd();
-		glDisable(GL_TEXTURE_2D);
+		glDisable(GL_TEXTURE_2D);						// Disable textures
 		/*
 		 * Buttons
 		 */
-		for(Button knop:buttonlist){
-			knop.drawButton();
+		Button.setStatics(right-menubarwidth, right, top, bottom);	// update menubar location
+		for(Button knop:buttonlist){								// Loop through all buttons
+			knop.update();											// Update button location
+			knop.drawButton();										// Draw button
 		}
 	}
-	
+	/**
+	 * Check if a key on the keyboard is pressed
+	 */
 	public void keyboardpoll(){
 		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
 			left+=10;
@@ -128,28 +140,49 @@ public class MazeMaker {
 		}
 		
 	}
-	
+	/**
+	 * Checks if the mouse is clicked and where the mouse is at that instant
+	 */
 	public void Mousepoll(){
-		int x = Mouse.getX();
-		int y = Mouse.getY();
-		Button temp = buttonlist.get(0);
-		if(temp.isButton(x, y)){
-			if(Mouse.isButtonDown(0) && !mousedown){
-				String test = JOptionPane.showInputDialog("Size");
-				System.out.println(test);
-				mousedown = true;
+		int x = Mouse.getX()+left;				// Transform to world coordinates
+		int y = Mouse.getY()+bottom;			// Transform to world coordinates
+		int ID = 0;								// ID when no button has been pressed
+		if(Mouse.isButtonDown(0) && !mousedown){
+			for(Button knopje: buttonlist){
+				if(knopje.isButton(x, y)){				
+					ID = knopje.getID();
+					System.out.println(ID);
+					mousedown = true;
+				}
 			}
 		}
+	/*
+	 * Unlock the mouse again when all mouse buttons are released
+	 */
 		if(!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)){mousedown = false;}
+		
 	}
-	
+	/**
+	 * Initialize buttons
+	 */
 	public void initButtons(){
-		
-		float buttonsize = menubarwidth*0.4f;
-		
-		buttonlist.add(new Button(right-0.95f*menubarwidth, top-0.1f*buttonsize, buttonsize));
+		/*
+		 * Set the menu coordinates in world coordinates
+		 */
+		Button.setStatics(right-menubarwidth, right, top, bottom);
+		/*
+		 * Add buttons to the arraylist, give each button an unique ID!
+		 */
+		buttonlist.add(new Button(0.05f, 0.1f, 1));		// 1
+		buttonlist.add(new Button(0.55f, 0.1f, 2));		// 2 
+		buttonlist.add(new Button(0.05f, 1.2f, 3));		// 3
+		buttonlist.add(new Button(0.55f, 1.2f, 4));		// 4
+		buttonlist.add(new Button(0.05f, 2.3f, 5));		// 5 
+		buttonlist.add(new Button(0.55f, 2.3f, 6));		// 6
 	}
-	
+	/**
+	 * Initialize all openGL functions
+	 */
 	public void initGL(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -162,6 +195,10 @@ public class MazeMaker {
 		
 	  
 	}
+	/**
+	 * Main program starts here
+	 * @param args
+	 */
 	public static void main(String[] args){
 		MazeMaker maker = new MazeMaker();
 		try {
