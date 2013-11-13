@@ -21,6 +21,7 @@ public class MazeMaker {
 	private Texture texmenubar;
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
 	private boolean mousedown = false;
+	private boolean keyleft = false, keyright = false, keyup = false, keydown = false;
 	/**
 	 * Begin the program
 	 * @throws LWJGLException
@@ -128,16 +129,34 @@ public class MazeMaker {
 	 * Check if a key on the keyboard is pressed
 	 */
 	public void keyboardpoll(){
-		if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
-			left+=10;
-			right+=10;
-			initGL();
+		
+		/*
+		 * Key events
+		 */
+		while(Keyboard.next()){
+			if(Keyboard.getEventKeyState()){
+				/*
+				 * Key Pressed
+				 */
+				if(Keyboard.getEventKey()==Keyboard.KEY_LEFT){keyleft=true;}
+				if(Keyboard.getEventKey()==(Keyboard.KEY_RIGHT)){keyright = true;}
+				if(Keyboard.getEventKey()==(Keyboard.KEY_UP)){keyup = true;}
+				if(Keyboard.getEventKey()==(Keyboard.KEY_DOWN)){keydown = true;}
+			}else{
+				/*
+				 * Key Released events
+				 */
+				if(Keyboard.getEventKey()==Keyboard.KEY_LEFT){	keyleft=false;}
+				if(Keyboard.getEventKey()==(Keyboard.KEY_RIGHT)){keyright = false;}
+				if(Keyboard.getEventKey()==(Keyboard.KEY_UP)){keyup = false;}
+				if(Keyboard.getEventKey()==(Keyboard.KEY_DOWN)){keydown = false;}
+			}
+
 		}
-		if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){
-			left-=10;
-			right-=10;
-			initGL();
-		}
+		if(keyleft){left+=10;	right+=10;	initGL();}
+		if(keyright){left-=10;	right-=10;	initGL();}
+		if(keyup){top-=10;	bottom-=10;	initGL();}
+		if(keydown){top+=10;	bottom+=10;	initGL();}
 		
 	}
 	/**
