@@ -40,7 +40,7 @@ public class Maze implements VisibleObject{
 	
 	Texture Texfloor;
 	
-	public final double SQUARE_SIZE = 5;
+	public final double SQUARE_SIZE = 10;
 
 	private int[][] maze = 
 	{	{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
@@ -177,7 +177,8 @@ public class Maze implements VisibleObject{
 	        	GL11.glTranslated( i * SQUARE_SIZE + SQUARE_SIZE / 2, SQUARE_SIZE / 2, j * SQUARE_SIZE + SQUARE_SIZE / 2 );
 				if ( isWall(i, j) ){
 					
-					renderCube((float)SQUARE_SIZE/2);
+					renderCube(SQUARE_SIZE/2,isWall(i-1,j),isWall(i+1,j),isWall(i,j-1),isWall(i,j+1));
+					
 					
 				}
 					
@@ -196,10 +197,10 @@ public class Maze implements VisibleObject{
 	private void paintSingleFloorTile( double size_X, double size_Z)
 	{
         // Setting the floor color and material.
-		FloatBuffer wallColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();// The floor is blue.
+		FloatBuffer wallColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.0f).put(0.0f).put(1.0f).put(0.0f).flip();// The floor is blue.
 
         // Set texture to repeat
-	
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 		
@@ -244,32 +245,45 @@ public class Maze implements VisibleObject{
 //	      s.setTextureFlag(true);
 //
 //	  }
+	
+
 	/**
 	 * Draws a cube without top centered at (0,0,0)
 	 * @param size
 	 */
-	private void renderCube(float size){
+	private void renderCube(double size, boolean left, boolean right, boolean fore, boolean back){
 				
-	      GL11.glBegin(GL11.GL_QUAD_STRIP);
-	        
+	      GL11.glBegin(GL11.GL_QUADS);
+	      if(!back){
+	        GL11.glNormal3d(0, 0, 1);
 	        GL11.glVertex3d(-size, size, size);	 	        
 	        GL11.glVertex3d(-size, -size, size);	
-	        
+	        GL11.glVertex3d(size, -size, size);	      	     
+	        GL11.glVertex3d(size, size, size);		     
+	      }
+	      if(!right){
+	        GL11.glNormal3d(1, 0, 0);
 	        GL11.glVertex3d(size, size, size);	      	     
-	        GL11.glVertex3d(size, -size, size);		     
-	        	        
+	        GL11.glVertex3d(size, -size, size);	
+	        GL11.glVertex3d(size, -size, -size);	      	     
+	        GL11.glVertex3d(size, size, -size);	
+	      }
+	      if(!fore){
+	        GL11.glNormal3d(0, 0, -1);
 	        GL11.glVertex3d(size, size, -size);	      	     
-	        GL11.glVertex3d(size, -size, -size);	
-	        	       	        
+	        GL11.glVertex3d(size, -size, -size);
+	        GL11.glVertex3d(-size, -size, -size);	      	     
+	        GL11.glVertex3d(-size, size, -size);		        
+	      }
+	      if(!left){
+	        GL11.glNormal3d(-1, 0, 0);
 	        GL11.glVertex3d(-size, size, -size);	      	     
-	        GL11.glVertex3d(-size, -size, -size);		        
+	        GL11.glVertex3d(-size, -size, -size);
+	        GL11.glVertex3d(-size, -size, size);	 	        
+	        GL11.glVertex3d(-size, size, size);		        
+	      }
 	        	        
-	        GL11.glVertex3d(-size, size, size);	 	        
-	        GL11.glVertex3d(-size, -size, size);		        
-	        
-	        GL11.glEnd();	
-	        
-	        GL11.glBegin(GL11.GL_QUADS);
+	      GL11.glNormal3d(0, 1, 0);
 	        GL11.glVertex3d(-size, size, size);	 
 	        GL11.glVertex3d(size, size, size);
 	        GL11.glVertex3d(size, size, -size);

@@ -1,5 +1,8 @@
 import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -173,6 +176,12 @@ public class MazeMaker {
 					System.out.println(ID);
 					mousedown = true;
 				}
+			}
+		}
+		switch(ID){
+			case 1:{
+				
+				break;
 			}
 		}
 	/*

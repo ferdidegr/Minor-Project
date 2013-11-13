@@ -137,7 +137,7 @@ public class Player extends GameObject {
 			if(verAngle<-89) verAngle=-89;
 			
 			if(control.jump && !jump){
-				tempVy = 0.4;			// 0.4
+				tempVy = 0.6;			// 0.4
 				jump=true;
 				y_begin = locationY;
 			}
