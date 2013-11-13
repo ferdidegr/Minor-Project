@@ -204,8 +204,8 @@ public class Maze implements VisibleObject{
 		GL11.glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 		
 		
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, Texfloor.getTextureID());
-//        Texfloor.bind();
+//		GL11.glBindTexture(GL11.GL_TEXTURE_2D, Texfloor.getTextureID());
+        Texfloor.bind();
 		
         GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, wallColour);	// Set the materials used by the floor.
         
@@ -249,8 +249,7 @@ public class Maze implements VisibleObject{
 	 * @param size
 	 */
 	private void renderCube(float size){
-		
-		
+				
 	      GL11.glBegin(GL11.GL_QUAD_STRIP);
 	        
 	        GL11.glVertex3d(-size, size, size);	 	        
