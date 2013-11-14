@@ -10,7 +10,7 @@ public class JfilechooserTest {
 		int res =jfc.showSaveDialog(null);
 		if(res==JFileChooser.APPROVE_OPTION){
 			File file = jfc.getSelectedFile();
-			System.out.println(file.getAbsolutePath());
+			System.out.println(file.getAbsolutePath()+".maze");
 		}
 	}
 	

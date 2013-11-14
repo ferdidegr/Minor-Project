@@ -183,10 +183,18 @@ public class MazeMaker {
 				switch(ID){
 					case 2:{maze.setObject(1, x, y);break;}
 					case 3:{maze.setObject(0, x, y);break;}
+					
 				}
 			}
 		}
 		switch(ID){
+			case 99:{IO.savechooser(maze);ID=0;break;}
+			case 98:{
+				try {maze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				ID=0;break;}
 			case 1:{
 				int mwidth = 0;
 				int mheight = 0;
@@ -231,8 +239,8 @@ public class MazeMaker {
 		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall, 2));		// 2 
 		buttonlist.add(new Button(0.05f, 1.2f,Textures.texempty, 3));		// 3
 		buttonlist.add(new Button(0.55f, 1.2f,Textures.texempty, 4));		// 4
-		buttonlist.add(new Button(0.05f, 2.3f,Textures.texempty, 5));		// 5 
-		buttonlist.add(new Button(0.55f, 2.3f,Textures.texempty, 6));		// 6
+		buttonlist.add(new Button(0.05f, 10.5f,Textures.texload, 98));		// 98 load button 
+		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button
 	}
 	/**
 	 * Initialize all openGL functions

@@ -4,7 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 import java.io.IOException;
 import java.io.Serializable;
 
-import org.newdawn.slick.opengl.Texture;
 
 
 public class MazeMap implements Serializable{
@@ -16,7 +15,7 @@ public class MazeMap implements Serializable{
 	private int height;
 	private int[][] maze;
 	private static float size;
-	private Texture texempty;
+
 	/**
 	 * constructor
 	 * @param width
@@ -27,13 +26,6 @@ public class MazeMap implements Serializable{
 		setHeight(height);
 		setWidth(width);
 		maze = new int[height][width];
-		
-		try {
-			texempty = IO.readtexture("res/empty.jpg");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	/**
 	 * set width
