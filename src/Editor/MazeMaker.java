@@ -55,7 +55,7 @@ public class MazeMaker {
 		top = height;
 		bottom = 0;
 		menubarwidth = width/6;
-		MazeMap.setSize(0.4f*menubarwidth);
+		MazeMap.setSize(0.2f*menubarwidth);
 		/*
 		 * Initialize openGL
 		 */
@@ -156,10 +156,10 @@ public class MazeMaker {
 			}
 
 		}
-		if(keyleft){left-=10;	right-=10;	initGL();}
-		if(keyright){left+=10;	right+=10;	initGL();}
-		if(keyup){top+=10;	bottom+=10;	initGL();}
-		if(keydown){top-=10;	bottom-=10;	initGL();}
+		if(keyleft){left+=10;	right+=10;	initGL();}
+		if(keyright){left-=10;	right-=10;	initGL();}
+		if(keyup){top-=10;	bottom-=10;	initGL();}
+		if(keydown){top+=10;	bottom+=10;	initGL();}
 		
 	}
 	/**
@@ -178,9 +178,13 @@ public class MazeMaker {
 					mousedown = true;
 				}
 			}
-			if(x>left && x<right-menubarwidth && y>bottom && y<top){
+			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
 				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
-				
+				switch(ID){
+					case 2:{
+						maze.setObject(1, x, y);
+					}
+				}
 			}
 		}
 		switch(ID){

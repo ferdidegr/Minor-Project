@@ -52,11 +52,11 @@ public class MazeMap implements Serializable{
 	
 	
 	public int getMazeX(float x){
-		return (int)(x/size);
+		return (int)Math.floor(x/size);
 	}
 	
 	public int getMazeY(float y){
-		return (int)((height*size-y)/size);
+		return (int)Math.floor((height*size-y)/size);
 	}
 	
 	public void draw(){
@@ -65,26 +65,30 @@ public class MazeMap implements Serializable{
 		
 		
 		//glBindTexture(GL_TEXTURE_2D, texempty.getTextureID());
-		glBegin(GL_QUADS);
+		
 		for(int j = maze.length-1;j>=0;j--){
 			for(int i = 0; i<maze[0].length;i++){
 				if(maze[j][i]==0){Textures.texempty.bind();}
+				if(maze[j][i]==1){Textures.texmenubar.bind();}
+				glBegin(GL_QUADS);
 				glTexCoord2d(0, 1);
-				glVertex2f(0+i*size, 0+j*size);
+				glVertex2f(0+i*size, height*size-(j+1)*size);
 				glTexCoord2d(1, 1);
-				glVertex2f(0+i*size+size, 0+j*size);
+				glVertex2f(0+i*size+size, height*size-(j+1)*size);
 				glTexCoord2d(1, 0);
-				glVertex2f(0+i*size+size, 0+j*size+size);
+				glVertex2f(0+i*size+size, height*size-(j+1)*size+size);
 				glTexCoord2d(0, 0);
-				glVertex2f(0+i*size, 0+j*size+size);				
+				glVertex2f(0+i*size, height*size-(j+1)*size+size);	
+				glEnd();
 			}
 		}
-		glEnd();
+		
 		glDisable(GL_TEXTURE_2D);
 	}
 	public void setObject(int ID,float x, float y){
 		int xloc = getMazeX(x);
 		int yloc = getMazeY(y);
+		if(xloc>=0 && xloc<width && yloc>=0 && yloc<height)
 		maze[yloc][xloc] = ID;		
 	}
 	
