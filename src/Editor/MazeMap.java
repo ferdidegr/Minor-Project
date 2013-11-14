@@ -60,25 +60,32 @@ public class MazeMap implements Serializable{
 	}
 	
 	public void draw(){
-		Textures.texempty.bind();
+		
 		glEnable(GL_TEXTURE_2D);
+		
+		
 		//glBindTexture(GL_TEXTURE_2D, texempty.getTextureID());
 		glBegin(GL_QUADS);
 		for(int j = maze.length-1;j>=0;j--){
 			for(int i = 0; i<maze[0].length;i++){
-				
+				if(maze[j][i]==0){Textures.texempty.bind();}
+				glTexCoord2d(0, 1);
 				glVertex2f(0+i*size, 0+j*size);
-				glTexCoord2d(0, 0);
+				glTexCoord2d(1, 1);
 				glVertex2f(0+i*size+size, 0+j*size);
 				glTexCoord2d(1, 0);
 				glVertex2f(0+i*size+size, 0+j*size+size);
-				glTexCoord2d(1, 1);
-				glVertex2f(0+i*size, 0+j*size+size);
-				glTexCoord2d(0, 1);
+				glTexCoord2d(0, 0);
+				glVertex2f(0+i*size, 0+j*size+size);				
 			}
 		}
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
+	}
+	public void setObject(int ID,float x, float y){
+		int xloc = getMazeX(x);
+		int yloc = getMazeY(y);
+		maze[yloc][xloc] = ID;		
 	}
 	
 	public static void setSize(float insize){

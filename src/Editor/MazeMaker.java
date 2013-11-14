@@ -21,8 +21,7 @@ public class MazeMaker {
 	private int right;
 	private int top;
 	private int bottom;
-	private int menubarwidth;
-	private Texture texmenubar, texempty, texnewmaze;
+	private int menubarwidth;	
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
 	private boolean mousedown = false;
 	private boolean keyleft = false, keyright = false, keyup = false, keydown = false;
@@ -65,11 +64,7 @@ public class MazeMaker {
 		 * Initialize Buttons
 		 */
 		initButtons();
-		/*
-		 * Load Textures
-		 */
-		texmenubar = IO.readtexture("res/Wooden_floor_original.jpg");
-		texempty = IO.readtexture("res/empty.jpg");
+		
 //		texnewmaze = IO.readtexture("res/newmaze.jpg");
 		
 		/*
@@ -108,21 +103,19 @@ public class MazeMaker {
 		/*
 		 * Menu bar
 		 */
-		glEnable(GL_TEXTURE_2D);
-		texmenubar.bind();							// Enable Textures
-	
-								
-														// Set this texture as active
-		
+		glEnable(GL_TEXTURE_2D);						// Enable Textures
+		Textures.texmenubar.bind();							// Set this texture as active
+											
 		glBegin(GL_QUADS);								// Begin drawing the rectangle
-		glVertex2f(right-menubarwidth, bottom);			// Bottom left vertex
-		glTexCoord2f(0, 0);
-		glVertex2f(right, bottom);							// Top right vertex
-		glTexCoord2f(1, 0);		
-		glVertex2f(right, top);						// Bottom Right vertex
-		glTexCoord2f(1, 1);
-		glVertex2f(right-menubarwidth, top);			// top Left vertex
 		glTexCoord2f(0, 1);
+		glVertex2f(right-menubarwidth, bottom);			// Bottom left vertex
+		glTexCoord2f(1, 1);	
+		glVertex2f(right, bottom);							// Top right vertex
+		glTexCoord2f(1, 0);	
+		glVertex2f(right, top);						// Bottom Right vertex
+		glTexCoord2f(0, 0);
+		glVertex2f(right-menubarwidth, top);			// top Left vertex
+		
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);						// Disable textures
@@ -231,12 +224,12 @@ public class MazeMaker {
 		/*
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
-		buttonlist.add(new Button(0.05f, 0.1f, 1));		// 1
-		buttonlist.add(new Button(0.55f, 0.1f, 2));		// 2 
-		buttonlist.add(new Button(0.05f, 1.2f, 3));		// 3
-		buttonlist.add(new Button(0.55f, 1.2f, 4));		// 4
-		buttonlist.add(new Button(0.05f, 2.3f, 5));		// 5 
-		buttonlist.add(new Button(0.55f, 2.3f, 6));		// 6
+		buttonlist.add(new Button(0.05f, 0.1f,Textures.texnewmaze, 1));		// 1
+		buttonlist.add(new Button(0.55f, 0.1f,Textures.texempty, 2));		// 2 
+		buttonlist.add(new Button(0.05f, 1.2f,Textures.texempty, 3));		// 3
+		buttonlist.add(new Button(0.55f, 1.2f,Textures.texempty, 4));		// 4
+		buttonlist.add(new Button(0.05f, 2.3f,Textures.texempty, 5));		// 5 
+		buttonlist.add(new Button(0.55f, 2.3f,Textures.texempty, 6));		// 6
 	}
 	/**
 	 * Initialize all openGL functions
