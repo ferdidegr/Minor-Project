@@ -22,10 +22,12 @@ public class MazeMaker {
 	private int top;
 	private int bottom;
 	private int menubarwidth;
-	private Texture texmenubar;
+	private Texture texmenubar, texempty, texnewmaze;
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
 	private boolean mousedown = false;
 	private boolean keyleft = false, keyright = false, keyup = false, keydown = false;
+	private MazeMap maze = null;
+	private int ID = 0;								// ID when no button has been pressed
 	/**
 	 * Begin the program
 	 * @throws LWJGLException
@@ -54,6 +56,7 @@ public class MazeMaker {
 		top = height;
 		bottom = 0;
 		menubarwidth = width/6;
+		MazeMap.setSize(0.4f*menubarwidth);
 		/*
 		 * Initialize openGL
 		 */
@@ -66,6 +69,9 @@ public class MazeMaker {
 		 * Load Textures
 		 */
 		texmenubar = IO.readtexture("res/Wooden_floor_original.jpg");
+		texempty = IO.readtexture("res/empty.jpg");
+//		texnewmaze = IO.readtexture("res/newmaze.jpg");
+		
 		/*
 		 * Main loop
 		 */
@@ -90,13 +96,9 @@ public class MazeMaker {
 	 * Draw the maze map
 	 */
 	public void drawMaze(){
-		glColor3f(1, 1, 1);
-		glBegin(GL_QUADS);
-		glVertex2f(0, 0);
-		glVertex2f(100, 0);
-		glVertex2f(100, 100);
-		glVertex2f(0f, 100f);
-		glEnd();
+		if(maze!=null){
+			maze.draw();
+		}
 	}
 	/**
 	 * Draw the menu items including buttons
@@ -106,18 +108,22 @@ public class MazeMaker {
 		/*
 		 * Menu bar
 		 */
-		glEnable(GL_TEXTURE_2D);						// Enable Textures
-		texmenubar.bind();								// Set this texture as active
+		glEnable(GL_TEXTURE_2D);
+		texmenubar.bind();							// Enable Textures
+	
+								
+														// Set this texture as active
 		
 		glBegin(GL_QUADS);								// Begin drawing the rectangle
 		glVertex2f(right-menubarwidth, bottom);			// Bottom left vertex
 		glTexCoord2f(0, 0);
+		glVertex2f(right, bottom);							// Top right vertex
+		glTexCoord2f(1, 0);		
+		glVertex2f(right, top);						// Bottom Right vertex
+		glTexCoord2f(1, 1);
 		glVertex2f(right-menubarwidth, top);			// top Left vertex
 		glTexCoord2f(0, 1);
-		glVertex2f(right, top);							// Top right vertex
-		glTexCoord2f(1, 0);
-		glVertex2f(right, bottom);						// Bottom Right vertex
-		glTexCoord2f(1, 1);
+
 		glEnd();
 		glDisable(GL_TEXTURE_2D);						// Disable textures
 		/*
@@ -157,19 +163,20 @@ public class MazeMaker {
 			}
 
 		}
-		if(keyleft){left+=10;	right+=10;	initGL();}
-		if(keyright){left-=10;	right-=10;	initGL();}
-		if(keyup){top-=10;	bottom-=10;	initGL();}
-		if(keydown){top+=10;	bottom+=10;	initGL();}
+		if(keyleft){left-=10;	right-=10;	initGL();}
+		if(keyright){left+=10;	right+=10;	initGL();}
+		if(keyup){top+=10;	bottom+=10;	initGL();}
+		if(keydown){top-=10;	bottom-=10;	initGL();}
 		
 	}
 	/**
 	 * Checks if the mouse is clicked and where the mouse is at that instant
+	 * @throws IOException 
 	 */
-	public void Mousepoll(){
+	public void Mousepoll() throws IOException{
 		int x = Mouse.getX()+left;				// Transform to world coordinates
 		int y = Mouse.getY()+bottom;			// Transform to world coordinates
-		int ID = 0;								// ID when no button has been pressed
+		
 		if(Mouse.isButtonDown(0) && !mousedown){
 			for(Button knopje: buttonlist){
 				if(knopje.isButton(x, y)){				
@@ -178,10 +185,32 @@ public class MazeMaker {
 					mousedown = true;
 				}
 			}
+			if(x>left && x<right-menubarwidth && y>bottom && y<top){
+				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
+				
+			}
 		}
 		switch(ID){
 			case 1:{
+				int mwidth = 0;
+				int mheight = 0;
 				
+				while(mwidth==0){
+					try{
+						String temp = JOptionPane.showInputDialog("Enter the width as an integer:", "20");
+						mwidth = Integer.parseInt(temp);
+					}catch(Exception e){		
+					}
+				}
+				while(mheight==0){
+					try{
+						String temp = JOptionPane.showInputDialog("Enter the height as an integer:", "20");
+						mheight = Integer.parseInt(temp);
+					}catch(Exception e){		
+					}
+				}
+				maze = new MazeMap(mwidth, mheight);
+				ID=0;
 				break;
 			}
 		}

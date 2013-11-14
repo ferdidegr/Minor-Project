@@ -5,11 +5,14 @@ import static org.lwjgl.opengl.GL11.glColor3f;
 import static org.lwjgl.opengl.GL11.glEnd;
 import static org.lwjgl.opengl.GL11.glVertex2f;
 
+import org.newdawn.slick.opengl.Texture;
+
 
 public class Button {
 	private float left, right, top, bottom, x_top_left, y_top_left;
 	private static float bar_left, bar_right, bar_top, bar_bottom, button_size, bar_width;
 	private int ID;
+	private Texture texbutton;
 	/**
 	 * 
 	 * @param x_top_left relative to the left edge of the menu bar as a function of the menubar width
@@ -26,6 +29,7 @@ public class Button {
 		this.ID = ID;
 		this.x_top_left = x_top_left;
 		this.y_top_left = y_top_left;
+		this.texbutton = texbutton;
 	}
 	/**
 	 * Draw the button on the screen	
