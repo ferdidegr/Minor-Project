@@ -181,9 +181,8 @@ public class MazeMaker {
 			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
 				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
 				switch(ID){
-					case 2:{
-						maze.setObject(1, x, y);
-					}
+					case 2:{maze.setObject(1, x, y);break;}
+					case 3:{maze.setObject(0, x, y);break;}
 				}
 			}
 		}
@@ -229,7 +228,7 @@ public class MazeMaker {
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
 		buttonlist.add(new Button(0.05f, 0.1f,Textures.texnewmaze, 1));		// 1
-		buttonlist.add(new Button(0.55f, 0.1f,Textures.texempty, 2));		// 2 
+		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall, 2));		// 2 
 		buttonlist.add(new Button(0.05f, 1.2f,Textures.texempty, 3));		// 3
 		buttonlist.add(new Button(0.55f, 1.2f,Textures.texempty, 4));		// 4
 		buttonlist.add(new Button(0.05f, 2.3f,Textures.texempty, 5));		// 5 
