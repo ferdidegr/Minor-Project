@@ -20,7 +20,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
-public class Menu2 {
+public class MainMenu {
 	private int width=800;
 	private int height=600;
 	private TrueTypeFont myfont;
@@ -55,11 +55,29 @@ public class Menu2 {
 		GL11.glPushMatrix();
 		GL11.glTranslatef(200, 400, 0);
 		GL11.glScalef(1, -1, 1);
-		myfont.drawString(0, 0, "Start game");
-		myfont.drawString(0, myfont.getLineHeight(), "Level editor",Color.white);
-		myfont.drawString(0, 2*myfont.getLineHeight(), "Highscores",Color.white);
-		myfont.drawString(0, 3*myfont.getLineHeight(), "Settings",Color.white);
-		myfont.drawString(0, 4*myfont.getLineHeight(), "Exit",Color.white);
+		
+		//CREATE BUTTONS
+		float ybuttonsize = 50;
+		float xbuttonsize = 200;
+		MenuButton startbutton = new MenuButton(xbuttonsize, ybuttonsize, "Start");
+		MenuButton leveleditor = new MenuButton(xbuttonsize, ybuttonsize, "Level Editor");
+		MenuButton highscores = new MenuButton(xbuttonsize, ybuttonsize, "Highscores");
+		MenuButton settings = new MenuButton(xbuttonsize, ybuttonsize, "Settings");
+		MenuButton exit = new MenuButton(xbuttonsize, ybuttonsize, "exit");
+		
+		//DRAW BUTTONS
+		
+		startbutton.drawButton();
+		GL11.glTranslatef(0, ybuttonsize, 0);
+		leveleditor.drawButton();
+		GL11.glTranslatef(0, ybuttonsize, 0);
+		highscores.drawButton();
+		GL11.glTranslatef(0, ybuttonsize, 0);
+		settings.drawButton();
+		GL11.glTranslatef(0, ybuttonsize, 0);
+		exit.drawButton();
+
+		//FINISH
 		GL11.glPopMatrix();
 		GL11.glDisable(GL11.GL_BLEND);
 	}
@@ -256,7 +274,7 @@ public class Menu2 {
 	 * @throws LWJGLException 
 	 */
 	public static void main(String[] args) throws LWJGLException, IOException{
-		Menu2 menu = new Menu2();
+		MainMenu menu = new MainMenu();
 		try {
 			menu.start();
 		} catch (LWJGLException e) {

@@ -13,11 +13,11 @@ import org.newdawn.slick.util.ResourceLoader;
 
 
 public class MenuButton {
-	
-	private float left, right, top, bottom, x_top_left, y_top_left;
-	private static float bar_left, bar_right, bar_top, bar_bottom, button_size, bar_width;
+
 	private String name;
 	private TrueTypeFont myfont;
+	private float x_size;
+	private float y_size;
 	
 	/**
 	 * 
@@ -27,27 +27,27 @@ public class MenuButton {
 	 * 
 	 * right-0.95f*menubarwidth, top-0.1f*buttonsize
 	 */
-	public MenuButton(float x_top_left,float y_top_left, String name){
-		this.left = bar_right - (1- x_top_left)*bar_width;
-		this.right = this.left + button_size;
-		this.top = bar_top - (y_top_left)*button_size;
-		this.bottom = this.top-button_size;
+	public MenuButton(float x_size,float y_size, String name){
+		
 		this.name = name;
-		this.x_top_left = x_top_left;
-		this.y_top_left = y_top_left;
+		this.x_size = x_size;
+		this.y_size = y_size;
+		
+
 	}
 	
 	/**
 	 * Draw the button on the screen	
 	 */
 	public void drawButton(){
-		init();
+		loadFont();
+		
 		glColor3f(1, 1, 1);
 		glBegin(GL_QUADS);
-		glVertex2f(left, top);
-		glVertex2f(right, top);
-		glVertex2f(right, bottom);
-		glVertex2f(left, bottom);
+		glVertex2f(0, 0);
+		glVertex2f(x_size, 0);
+		glVertex2f(x_size, y_size);
+		glVertex2f(0, y_size);
 		glEnd();
 		myfont.drawString(0, myfont.getLineHeight(), name);
 		
@@ -59,18 +59,18 @@ public class MenuButton {
 	 * @param y	Y-coordinate in world coordinates
 	 * @return true if the mouse is on this button
 	 */
-	public boolean isButton(int x , int y){
-		return (x>left && x<right && y<top && y>bottom);
-	}
+//	public boolean isButton(int x , int y){
+//		return (x>left && x<right && y<top && y>bottom);
+//	}
 	/**
 	 * Update the world coordinates of this button
 	 */
-	public void update(){
-		left = bar_right - (1- x_top_left)*bar_width;
-		right = left + button_size;
-		top = bar_top - (y_top_left)*button_size;
-		bottom = top-button_size;		
-	}
+//	public void update(){
+//		left = bar_right - (1- x_top_left)*bar_width;
+//		right = left + button_size;
+//		top = bar_top - (y_top_left)*button_size;
+//		bottom = top-button_size;		
+//	}
 	
 	/**
 	 * Menu bar location in world coordinates
@@ -79,17 +79,17 @@ public class MenuButton {
 	 * @param inbar_top
 	 * @param inbar_bottom
 	 */
-	public static void setStatics(float inbar_left, float inbar_right, float inbar_top, float inbar_bottom){
-		bar_left = inbar_left;
-		bar_right = inbar_right;
-		bar_top = inbar_top;
-		bar_bottom = inbar_bottom;
-		bar_width = (bar_right- bar_left);
-		button_size = bar_width*0.4f;
-	}	
+//	public static void setStatics(float inbar_left, float inbar_right, float inbar_top, float inbar_bottom){
+//		bar_left = inbar_left;
+//		bar_right = inbar_right;
+//		bar_top = inbar_top;
+//		bar_bottom = inbar_bottom;
+//		bar_width = (bar_right- bar_left);
+//		button_size = bar_width*0.4f;
+//	}	
 	
 	
-	public void init(){
+	public void loadFont(){
 		try {
 			InputStream inputStream	= ResourceLoader.getResourceAsStream("Snowtop Caps.ttf");
 
@@ -101,10 +101,12 @@ public class MenuButton {
 			e.printStackTrace();
 		}
 	}
+}
 	
 	/*
 	 * Getters
 	 */
+	/*
 	public float getLeft(){ return left;}
 	public float getRight(){ return right;}
 	public float getTop(){ return top;}
@@ -114,4 +116,4 @@ public class MenuButton {
 	public static float getbarTop(){return bar_top;}
 	public static float getbarLeft(){return bar_left;}
 	public static float getbarRight(){return bar_right;}
-}
+} */
