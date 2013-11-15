@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
@@ -42,6 +43,8 @@ public class IO {
 	public static MazeMap loadchooser() throws ClassNotFoundException, IOException{
 		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir"));		
 		jfc.setMultiSelectionEnabled(false);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
+		jfc.addChoosableFileFilter(filter);
 		int res = jfc.showSaveDialog(null);
 		MazeMap maze;
 		if(res == JFileChooser.APPROVE_OPTION){
@@ -60,11 +63,17 @@ public class IO {
 	public static void savechooser(MazeMap maze) throws IOException{
 		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir"));
 		jfc.setMultiSelectionEnabled(false);
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
+		jfc.addChoosableFileFilter(filter);
 		int res = jfc.showSaveDialog(null);
 		if(res == JFileChooser.APPROVE_OPTION){
 			File file = jfc.getSelectedFile();
 			String output = file.getAbsolutePath();
-			writeMaze(output, maze);
+			if(output.toLowerCase().endsWith(".maze")){
+				writeMaze(output, maze);
+			}else{
+				writeMaze(output+".maze", maze);
+			}
 		}
 	}
 	/**
