@@ -182,7 +182,7 @@ public class MazeMaker {
 				switch(ID){
 					case 2:{maze.setObject(1, x, y);break;}
 					case 3:{maze.setObject(0, x, y);break;}
-					
+//					
 				}
 			}
 		}
