@@ -77,7 +77,7 @@ public class Maze implements VisibleObject{
 		 * Load Maze
 		 */
 		try {
-			maze = IO.readMaze("levels/test1.maze");
+			maze = IO.readMaze("levels/test3.maze");
 			MAZE_SIZE_X = maze.length;
 			MAZE_SIZE_Z = maze[0].length;
 		} catch (IOException e) {

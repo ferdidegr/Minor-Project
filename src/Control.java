@@ -28,6 +28,7 @@ public abstract class Control
 	double Vy=0;
 	protected int dX = 0;
 	protected int dY = 0;
+	protected boolean lookback = false;
 	
 	/**
 	 * @return Returns true if forward motion is desired.

@@ -8,28 +8,28 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.Texture;
-
 import static org.lwjgl.opengl.GL11.*;
 
 
 
 public class MazeMaker {
-	private int left;
-	private int right;
-	private int top;
-	private int bottom;
+	private int left;								// world coordinate of the left side of the screen
+	private int right;								// world coordinate of the right side of the screen
+	private int top;								// world coordinate of the top side of the screen
+	private int bottom;								// world coordinate of the bottom side of the screen
 	private int menubarwidth;	
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
 	private boolean mousedown = false;
-	private boolean keyleft = false, keyright = false, keyup = false, keydown = false;
 	private MazeMap maze = null;
 	private int ID = 0;								// ID when no button has been pressed
+	private boolean exit = false;
 	/**
+	 * ***********************************************
 	 * Begin the program
 	 * @throws LWJGLException
 	 * @throws InterruptedException
 	 * @throws IOException
+	 * ***********************************************
 	 */
 	public void start() throws LWJGLException, InterruptedException, IOException{
 		/*
@@ -42,31 +42,31 @@ public class MazeMaker {
 		/*
 		 * Create Display
 		 */
-		Display.create();
+			Display.create();
 		/*
 		 * Initialize screen parameters
 		 */
-		right = Display.getWidth();
-		top = Display.getHeight();
-		left = 0;
-		bottom = 0;
-		menubarwidth = (right-left)/6;
-		MazeMap.setSize(0.2f*menubarwidth);
+			right = Display.getWidth();
+			top = Display.getHeight();
+			left = 0;
+			bottom = 0;
+			menubarwidth = (right-left)/6;
+			MazeMap.setSize(0.2f*menubarwidth);
 		/*
 		 * Initialize openGL
 		 */
-		initGL();
+			initGL();
 		/*
 		 * Initialize Buttons
 		 */
-		initButtons();
+			initButtons();
 		
 //		texnewmaze = IO.readtexture("res/newmaze.jpg");
 		
 		/*
 		 * Main loop
 		 */
-		while(!Display.isCloseRequested()){
+		while(!Display.isCloseRequested() && !exit){
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 			Mousepoll();
@@ -77,14 +77,18 @@ public class MazeMaker {
 		}
 	}
 	/**
+	 * ***********************************************
 	 * Draw all drawable items on the screen
+	 * ***********************************************
 	 */
 	public void display(){	
 		drawMaze();		
 		drawMenu();
 	}
 	/**
+	 * ***********************************************
 	 * Draw the maze map
+	 * ***********************************************
 	 */
 	public void drawMaze(){
 		if(maze!=null){
@@ -92,7 +96,9 @@ public class MazeMaker {
 		}
 	}
 	/**
+	 * ***********************************************
 	 * Draw the menu items including buttons
+	 * ***********************************************
 	 */
 	public void drawMenu(){
 		
@@ -125,7 +131,9 @@ public class MazeMaker {
 		}
 	}
 	/**
+	 * ********************************************************
 	 * Check if a key on the keyboard is pressed
+	 * ********************************************************
 	 */
 	public void keyboardpoll(){
 		
@@ -137,57 +145,74 @@ public class MazeMaker {
 				/*
 				 * Key Pressed
 				 */
-				if(Keyboard.getEventKey()==Keyboard.KEY_LEFT){keyleft=true;}
-				if(Keyboard.getEventKey()==(Keyboard.KEY_RIGHT)){keyright = true;}
-				if(Keyboard.getEventKey()==(Keyboard.KEY_UP)){keyup = true;}
-				if(Keyboard.getEventKey()==(Keyboard.KEY_DOWN)){keydown = true;}
+
 			}else{
 				/*
 				 * Key Released events
 				 */
-				if(Keyboard.getEventKey()==Keyboard.KEY_LEFT){	keyleft=false;}
-				if(Keyboard.getEventKey()==(Keyboard.KEY_RIGHT)){keyright = false;}
-				if(Keyboard.getEventKey()==(Keyboard.KEY_UP)){keyup = false;}
-				if(Keyboard.getEventKey()==(Keyboard.KEY_DOWN)){keydown = false;}
+
 				
 			}
 		}
-		
-		if(keyleft){left-=10;	right-=10;	initGL();}
-		if(keyright){left+=10;	right+=10;	initGL();}
-		if(keyup){top+=10;	bottom+=10;	initGL();}
-		if(keydown){top-=10;	bottom-=10;	initGL();}
+
 		
 	}
 	/**
+	 * ***********************************************************************
 	 * Checks if the mouse is clicked and where the mouse is at that instant
 	 * @throws IOException 
+	 * ***********************************************************************
 	 */
 	public void Mousepoll() throws IOException{
-		int x = Mouse.getX()+left;				// Transform to world coordinates
-		int y = Mouse.getY()+bottom;			// Transform to world coordinates
-		int wheeldx = Mouse.getDWheel();
-		if(wheeldx>0){Button.scrollup();}
-		if(wheeldx<0){Button.scrolldown();}
-		if(Mouse.isButtonDown(0) && !mousedown){
-			for(Button knopje: buttonlist){
-				if(knopje.isButton(x, y)){				
-					ID = knopje.getID();
-					System.out.println(ID);
-					mousedown = true;
-				}
-			}
+		int x = Mouse.getX()+left;					// Transform to world coordinates
+		int y = Mouse.getY()+bottom;				// Transform to world coordinates
+		int wheeldx = Mouse.getDWheel();			// difference in wheel location compared to previous call
+		if(wheeldx>0){Button.scrollup();}			// if you scroll up, move menu buttons
+		if(wheeldx<0){Button.scrolldown();}			// if you scroll down, move menu buttons
+		
+		/*
+		 * Unlock the mouse again when all mouse buttons are released
+		 */
+			if(!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)){mousedown = false;}
+		/*
+		 * Mouse drag (0) is left and (1) is right
+		 */
+		if(Mouse.isButtonDown(1) && mousedown){				
+			int dx = Mouse.getDX();
+			int dy = Mouse.getDY();			
+			left-=dx;right-=dx;
+			bottom-=dy;top-=dy;
+			initGL();
+		}else if(Mouse.isButtonDown(0) && mousedown){
+			// If you are on the left side of the screen (Maze side)
 			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
 				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
 				switch(ID){
-					case 2:{maze.setObject(1, x, y);break;}
-					case 3:{maze.setObject(0, x, y);break;}
-					case 4:{maze.setObject(2, x, y);break;}
+					case 2:{maze.setObject(1, x, y);break;}	// Wall
+					case 3:{maze.setObject(0, x, y);break;} // Empty spot
+					case 4:{maze.setObject(2, x, y);break;}	// Spikes
 //					
 				}
 			}
 		}
+		/*
+		 * Mouse click
+		 */
+		if(Mouse.isButtonDown(1))mousedown=true;
+		if(Mouse.isButtonDown(0) && !mousedown){	// check if clicked and not hold down
+			mousedown = true;
+			for(Button knopje: buttonlist){			// check for button clicked
+				if(knopje.isButton(x, y)){				
+					ID = knopje.getID();
+					System.out.println(ID);
+					
+					break;							// if found no need to check others
+				}
+			}		
+		}
+		// Check menu bar buttons
 		switch(ID){
+		    case 101:{exit = true; break;}
 			case 99:{IO.savechooser(maze);ID=0;break;}
 			case 98:{
 				int[][] tempmaze = null;
@@ -195,18 +220,22 @@ public class MazeMaker {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				if(tempmaze==null){ID= 0;break;}
 				maze = new MazeMap(tempmaze[0].length, tempmaze.length);
 				maze.setMaze(tempmaze);
+				left=0; right = Display.getWidth(); top = Display.getHeight(); bottom = 0;
 				initGL();
-				ID=0;break;}
-			case 1:{
+				ID=0;break;
+				}
+			case 100:{
 				int mwidth = 0;
 				int mheight = 0;
 				boolean lcont = true;
 				while(mwidth==0 && lcont){
 					try{
-						
+											
 						String temp = JOptionPane.showInputDialog("Enter the width as an integer:", "20");
+						
 						mwidth = Integer.parseInt(temp);
 						
 					}catch(Exception e){	
@@ -224,18 +253,18 @@ public class MazeMaker {
 				}
 				if(mwidth>0 && mheight>0)
 				maze = new MazeMap(mwidth, mheight);
+				left=0; right = Display.getWidth(); top = Display.getHeight(); bottom = 0;
+				initGL();
 				ID=0;
 				break;
 			}
 		}
-	/*
-	 * Unlock the mouse again when all mouse buttons are released
-	 */
-		if(!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)){mousedown = false;}
 		
 	}
 	/**
-	 * Initialize buttons
+	 * *************************************************
+	 * Initialize buttons, declare all menu buttons here
+	 * *************************************************
 	 */
 	public void initButtons(){
 		/*
@@ -245,15 +274,19 @@ public class MazeMaker {
 		/*
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
-		buttonlist.add(new Button(0.05f, 0.1f,Textures.texnewmaze, 1));		// 1
+		
 		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall, 2));		// 2 
-		buttonlist.add(new Button(0.05f, 1.2f,Textures.texempty, 3));		// 3
-		buttonlist.add(new Button(0.55f, 1.2f,Textures.texspike, 4));		// 4
+		buttonlist.add(new Button(0.05f, 0.1f,Textures.texempty, 3));		// 3
+		buttonlist.add(new Button(0.05f, 1.2f,Textures.texspike, 4));		// 4
 		buttonlist.add(new Button(0.05f, 10.5f,Textures.texload, 98));		// 98 load button 
 		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button
+		buttonlist.add(new Button(0.05f, 11.6f,Textures.texnewmaze, 100));		// 100 New maze
+		buttonlist.add(new Button(0.55f, 11.6f,Textures.texempty,101)); 	// 101 Exit button
 	}
 	/**
+	 * ********************************************
 	 * Initialize all openGL functions
+	 * ********************************************
 	 */
 	public void initGL(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	

@@ -83,7 +83,7 @@ public void start(){
 		// Now we set up our viewpoint.
 		GL11.glMatrixMode(GL11.GL_PROJECTION);					// We'll use orthogonal projection.
 		GL11.glLoadIdentity();									// REset the current matrix.
-		GLU.gluPerspective(120, (float)Display.getWidth()/Display.getHeight(), 0.001f, 1000);	// Set up the parameters for perspective viewing. 
+		GLU.gluPerspective(60, (float)Display.getWidth()/Display.getHeight(), 0.001f, 1000);	// Set up the parameters for perspective viewing. 
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		
 		// Enable back-face culling.
@@ -163,13 +163,14 @@ public void start(){
 		        	it.next().display();
 		        }
 		        
-//		        GL11.glLoadIdentity();
+		        GL11.glLoadIdentity();
 	}
 	
 	public void reshape(){
 		screenWidth = Display.getWidth();
 		screenHeight = Display.getHeight();
 		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		
 		// Now we set up our viewpoint.
 		GL11.glMatrixMode(GL11.GL_PROJECTION);					// We'll use orthogonal projection.
 		GL11.glLoadIdentity();									// REset the current matrix.

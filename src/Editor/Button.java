@@ -65,7 +65,7 @@ public class Button {
 		left = bar_right - (1- x_top_left)*bar_width;
 		right = left + button_size;
 		top = bar_top - (y_top_left+scroll)*button_size;
-		bottom = top-button_size+scroll;		
+		bottom = top-button_size;		
 	}
 	/**
 	 * Menu bar location in world coordinates
@@ -82,7 +82,9 @@ public class Button {
 		bar_width = (bar_right- bar_left);
 		button_size = bar_width*0.4f;
 	}	
-	
+	public String toString(){
+		return (top-bottom)+" "+left+" "+right+" "+bottom+" "+top;
+	}
 	public static void scrollup(){
 		scroll-=0.5;
 	}

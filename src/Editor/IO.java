@@ -17,6 +17,13 @@ import org.newdawn.slick.util.ResourceLoader;
 
 
 public class IO {
+	/**
+	 * read a maze file (which is an int[][])
+	 * @param input
+	 * @return
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	public static int[][] readMaze(String input) throws IOException, ClassNotFoundException{
 		FileInputStream fis = new FileInputStream(input);
 		ObjectInputStream ois = new ObjectInputStream(fis);
@@ -44,7 +51,7 @@ public class IO {
 		jfc.setMultiSelectionEnabled(false);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
 		jfc.addChoosableFileFilter(filter);
-		int res = jfc.showSaveDialog(null);
+		int res = jfc.showOpenDialog(null);
 		int[][] maze;
 		if(res == JFileChooser.APPROVE_OPTION){
 			File file = jfc.getSelectedFile();
