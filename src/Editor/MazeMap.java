@@ -81,6 +81,10 @@ public class MazeMap implements Serializable{
 		glDisable(GL_TEXTURE_2D);
 	}
 	
+	public void setMaze(int[][] maze){
+		this.maze = maze;
+	}
+	
 	public static void setSize(float insize){
 		size = insize;
 	}

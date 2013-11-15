@@ -149,11 +149,10 @@ public class MazeMaker {
 				if(Keyboard.getEventKey()==(Keyboard.KEY_RIGHT)){keyright = false;}
 				if(Keyboard.getEventKey()==(Keyboard.KEY_UP)){keyup = false;}
 				if(Keyboard.getEventKey()==(Keyboard.KEY_DOWN)){keydown = false;}
-				if(Keyboard.getEventKey()==(Keyboard.KEY_W)){Button.scrollup();}
-				if(Keyboard.getEventKey()==Keyboard.KEY_S){Button.scrolldown();}
+				
 			}
-
 		}
+		
 		if(keyleft){left+=10;	right+=10;	initGL();}
 		if(keyright){left-=10;	right-=10;	initGL();}
 		if(keyup){top-=10;	bottom-=10;	initGL();}
@@ -167,7 +166,9 @@ public class MazeMaker {
 	public void Mousepoll() throws IOException{
 		int x = Mouse.getX()+left;				// Transform to world coordinates
 		int y = Mouse.getY()+bottom;			// Transform to world coordinates
-		
+		int wheeldx = Mouse.getDWheel();
+		if(wheeldx>0){Button.scrollup();}
+		if(wheeldx<0){Button.scrolldown();}
 		if(Mouse.isButtonDown(0) && !mousedown){
 			for(Button knopje: buttonlist){
 				if(knopje.isButton(x, y)){				

@@ -21,11 +21,12 @@ public class IO {
 		FileInputStream fis = new FileInputStream(input);
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		
-		MazeMap maze = (MazeMap) ois.readObject();
+		int[][] maze = (int[][]) ois.readObject();
 		
 		ois.close();
-		
-		return maze;
+		MazeMap mazemap = new MazeMap(maze[0].length, maze.length);
+		mazemap.setMaze(maze);
+		return mazemap;
 	}
 	/**
 	 * Write maze as a whole object
@@ -37,7 +38,7 @@ public class IO {
 		FileOutputStream fos = new FileOutputStream(output);
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		
-		oos.writeObject(maze);
+		oos.writeObject(maze.getMaze());
 		oos.close();
 	}
 	public static MazeMap loadchooser() throws ClassNotFoundException, IOException{
