@@ -153,10 +153,10 @@ public class MazeMaker {
 			}
 		}
 		
-		if(keyleft){left+=10;	right+=10;	initGL();}
-		if(keyright){left-=10;	right-=10;	initGL();}
-		if(keyup){top-=10;	bottom-=10;	initGL();}
-		if(keydown){top+=10;	bottom+=10;	initGL();}
+		if(keyleft){left-=10;	right-=10;	initGL();}
+		if(keyright){left+=10;	right+=10;	initGL();}
+		if(keyup){top+=10;	bottom+=10;	initGL();}
+		if(keydown){top-=10;	bottom-=10;	initGL();}
 		
 	}
 	/**
@@ -196,25 +196,32 @@ public class MazeMaker {
 				}
 				maze = new MazeMap(tempmaze[0].length, tempmaze.length);
 				maze.setMaze(tempmaze);
+				initGL();
 				ID=0;break;}
 			case 1:{
 				int mwidth = 0;
 				int mheight = 0;
-				
-				while(mwidth==0){
+				boolean lcont = true;
+				while(mwidth==0 && lcont){
 					try{
+						
 						String temp = JOptionPane.showInputDialog("Enter the width as an integer:", "20");
 						mwidth = Integer.parseInt(temp);
-					}catch(Exception e){		
+						
+					}catch(Exception e){	
+						{System.out.println("hier!");lcont=false; break;}
 					}
 				}
-				while(mheight==0){
+				while(mheight==0 && lcont){
 					try{
 						String temp = JOptionPane.showInputDialog("Enter the height as an integer:", "20");
 						mheight = Integer.parseInt(temp);
-					}catch(Exception e){		
+						
+					}catch(Exception e){	
+						break;
 					}
 				}
+				if(mwidth>0 && mheight>0)
 				maze = new MazeMap(mwidth, mheight);
 				ID=0;
 				break;
