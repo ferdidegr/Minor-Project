@@ -15,8 +15,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 
 public class MazeMaker {
-	private int width;
-	private int height;
 	private int left;
 	private int right;
 	private int top;
@@ -48,13 +46,11 @@ public class MazeMaker {
 		/*
 		 * Initialize screen parameters
 		 */
-		width = Display.getWidth();
-		height = Display.getHeight();
+		right = Display.getWidth();
+		top = Display.getHeight();
 		left = 0;
-		right = width;
-		top = height;
 		bottom = 0;
-		menubarwidth = width/6;
+		menubarwidth = (right-left)/6;
 		MazeMap.setSize(0.2f*menubarwidth);
 		/*
 		 * Initialize openGL
@@ -153,6 +149,8 @@ public class MazeMaker {
 				if(Keyboard.getEventKey()==(Keyboard.KEY_RIGHT)){keyright = false;}
 				if(Keyboard.getEventKey()==(Keyboard.KEY_UP)){keyup = false;}
 				if(Keyboard.getEventKey()==(Keyboard.KEY_DOWN)){keydown = false;}
+				if(Keyboard.getEventKey()==(Keyboard.KEY_W)){Button.scrollup();}
+				if(Keyboard.getEventKey()==Keyboard.KEY_S){Button.scrolldown();}
 			}
 
 		}

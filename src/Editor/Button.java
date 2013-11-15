@@ -6,7 +6,7 @@ import org.newdawn.slick.opengl.Texture;
 
 public class Button {
 	private float left, right, top, bottom, x_top_left, y_top_left;
-	private static float bar_left, bar_right, bar_top, bar_bottom, button_size, bar_width;
+	private static float bar_left, bar_right, bar_top, bar_bottom, button_size, bar_width, scroll=0;
 	private int ID;
 	private Texture texbutton;
 	/**
@@ -64,8 +64,8 @@ public class Button {
 	public void update(){
 		left = bar_right - (1- x_top_left)*bar_width;
 		right = left + button_size;
-		top = bar_top - (y_top_left)*button_size;
-		bottom = top-button_size;		
+		top = bar_top - (y_top_left+scroll)*button_size;
+		bottom = top-button_size+scroll;		
 	}
 	/**
 	 * Menu bar location in world coordinates
@@ -83,6 +83,13 @@ public class Button {
 		button_size = bar_width*0.4f;
 	}	
 	
+	public static void scrollup(){
+		scroll-=0.5;
+	}
+	
+	public static void scrolldown(){
+		scroll+=0.5;
+	}
 	/*
 	 * Getters
 	 */
