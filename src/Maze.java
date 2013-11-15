@@ -41,18 +41,19 @@ public class Maze implements VisibleObject{
 	Texture Texfloor;
 	
 	public final double SQUARE_SIZE = 10;
-
-	private int[][] maze = 
-	{	{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
-		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-		{  1,  0,  0,  0,  0,  0,  1,  1,  1,  1 },
-		{  1,  0,  1,  0,  0,  0,  1,  0,  0,  1 },
-		{  1,  0,  1,  0,  1,  0,  1,  0,  0,  1 },
-		{  1,  0,  1,  0,  1,  0,  1,  0,  0,  1 },
-		{  1,  0,  0,  0,  1,  0,  1,  0,  0,  1 },
-		{  1,  0,  0,  0,  1,  1,  1,  0,  0,  1 },
-		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-		{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 }	};
+	private int[][] maze ;
+	
+//	private int[][] maze = 
+//	{	{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
+//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
+//		{  1,  0,  0,  0,  0,  0,  1,  1,  1,  1 },
+//		{  1,  0,  1,  0,  0,  0,  1,  0,  0,  1 },
+//		{  1,  0,  1,  0,  1,  0,  1,  0,  0,  1 },
+//		{  1,  0,  1,  0,  1,  0,  1,  0,  0,  1 },
+//		{  1,  0,  0,  0,  1,  0,  1,  0,  0,  1 },
+//		{  1,  0,  0,  0,  1,  1,  1,  0,  0,  1 },
+//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
+//		{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 }	};
 	
 //	private int[][] maze = 
 //	{	{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
@@ -72,14 +73,15 @@ public class Maze implements VisibleObject{
 //		{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 }
 //		};
 	
-	public double MAZE_SIZE_X = maze.length;
-	public double MAZE_SIZE_Z = maze[0].length;
+	public double MAZE_SIZE_X ;
+	public double MAZE_SIZE_Z ;
 	
 	public Maze(){
 		/*
 		 * Load floor texture
 		 */
 		try {
+			
 			Texfloor = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("res/Wooden_floor_original.jpg"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -91,14 +93,18 @@ public class Maze implements VisibleObject{
 		 * Load Maze
 		 */
 		try {
-			maze = importcompMaze("res/EAS",true);
+			maze = IO.readMaze("levels/test1.maze");
 			MAZE_SIZE_X = maze.length;
 			MAZE_SIZE_Z = maze[0].length;
 		} catch (IOException e) {
 			
 			e.printStackTrace();
 			System.err.println("Maze not found or corrupt, standard maze loaded!");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
 	}
 	
 	/**
@@ -290,46 +296,5 @@ public class Maze implements VisibleObject{
 	        GL11.glVertex3d(-size, size, -size);	        
 	        GL11.glEnd();
 	}
-	/**
-	 * Imports a maze in the format specified by 1 is a route and 0 is a wall
-	 * @param file
-	 * @return
-	 * @throws IOException
-	 */
-	private int[][] importcompMaze(String file, boolean surround) throws IOException{
-		Scanner scanner = new Scanner(new File(file));
-		
-		int width = scanner.nextInt();
-		int height = scanner.nextInt();
-		int[][] maze = null;
-		byte omheining = 0;
-		
-		if(surround) omheining=1;
-		
-		maze = new int[height+2*omheining][width+2*omheining];
-		
-		/*
-		 * Surround the maze with solid blocks
-		 */
-		for(int i = 0 ; i < width+2*omheining;i++){
-			maze[0][i]=1;
-			maze[height+2*omheining-1][i] =1;
-		}
-		
-		for(int j = 0; j <height+2*omheining;j++){
-			maze[j][0]=1;
-			maze[j][width+2*omheining-1]=1;
-		}
-		
-		/*
-		 * Maze itself
-		 */
-		for(int j=0; j<height; j++){
-			for(int i = 0; i<width; i++){
-				maze[j+omheining][i+omheining] = Math.abs(scanner.nextInt()-1);
-			}
-		}
-		scanner.close();
-		return maze;
-	}
+	
 }
