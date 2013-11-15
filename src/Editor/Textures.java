@@ -6,7 +6,7 @@ import org.newdawn.slick.opengl.Texture;
 
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall = null
-			, texsave = null, texload=null;
+			, texsave = null, texload=null, texspike = null;
 	
 	static {
 		try {
@@ -16,6 +16,7 @@ public class Textures {
 			texwall = IO.readtexture("res/wall.jpg");
 			texsave = IO.readtexture("res/save.jpg");
 			texload = IO.readtexture("res/load.jpg");
+			texspike = IO.readtexture("res/spikes.jpg");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

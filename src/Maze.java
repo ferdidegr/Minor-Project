@@ -40,7 +40,7 @@ public class Maze implements VisibleObject{
 	
 	Texture Texfloor;
 	
-	public final double SQUARE_SIZE = 10;
+	public final double SQUARE_SIZE = 1;
 	private int[][] maze ;
 	
 //	private int[][] maze = 
@@ -55,23 +55,7 @@ public class Maze implements VisibleObject{
 //		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
 //		{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 }	};
 	
-//	private int[][] maze = 
-//	{	{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  0,  0,  0,  0,  0,  0,  0,  0,  1 },
-//		{  1,  1,  1,  1,  1,  1,  1,  1,  1,  1 }
-//		};
+
 	
 	public double MAZE_SIZE_X ;
 	public double MAZE_SIZE_Z ;
@@ -180,14 +164,14 @@ public class Maze implements VisibleObject{
 	        for( int j = 0; j < MAZE_SIZE_Z; j++ )
 			{
 	        	GL11.glPushMatrix();
-	        	GL11.glTranslated( i * SQUARE_SIZE + SQUARE_SIZE / 2, SQUARE_SIZE / 2, j * SQUARE_SIZE + SQUARE_SIZE / 2 );
-				if ( isWall(i, j) ){
-					
-					renderCube(SQUARE_SIZE/2,isWall(i-1,j),isWall(i+1,j),isWall(i,j-1),isWall(i,j+1));
-					
-					
+	        	GL11.glTranslated( i * SQUARE_SIZE + SQUARE_SIZE / 2, 0, j * SQUARE_SIZE + SQUARE_SIZE / 2 );
+				if ( isWall(i, j) ){	
+//					Graphics.renderSpike((float) (SQUARE_SIZE/2), (float)SQUARE_SIZE);
+					Graphics.renderCube(SQUARE_SIZE/2,isWall(i-1,j),isWall(i+1,j),isWall(i,j-1),isWall(i,j+1));										
 				}
-					
+				if(maze[convertToGridZ(j)][convertToGridX(i)]==2){
+					Graphics.renderSpike((float) (SQUARE_SIZE/2), (float)SQUARE_SIZE);
+				}
 				GL11.glPopMatrix();
 			}
 		}
@@ -251,50 +235,5 @@ public class Maze implements VisibleObject{
 //	      s.setTextureFlag(true);
 //
 //	  }
-	
-
-	/**
-	 * Draws a cube without top centered at (0,0,0)
-	 * @param size
-	 */
-	private void renderCube(double size, boolean left, boolean right, boolean fore, boolean back){
-				
-	      GL11.glBegin(GL11.GL_QUADS);
-	      if(!back){
-	        GL11.glNormal3d(0, 0, 1);
-	        GL11.glVertex3d(-size, size, size);	 	        
-	        GL11.glVertex3d(-size, -size, size);	
-	        GL11.glVertex3d(size, -size, size);	      	     
-	        GL11.glVertex3d(size, size, size);		     
-	      }
-	      if(!right){
-	        GL11.glNormal3d(1, 0, 0);
-	        GL11.glVertex3d(size, size, size);	      	     
-	        GL11.glVertex3d(size, -size, size);	
-	        GL11.glVertex3d(size, -size, -size);	      	     
-	        GL11.glVertex3d(size, size, -size);	
-	      }
-	      if(!fore){
-	        GL11.glNormal3d(0, 0, -1);
-	        GL11.glVertex3d(size, size, -size);	      	     
-	        GL11.glVertex3d(size, -size, -size);
-	        GL11.glVertex3d(-size, -size, -size);	      	     
-	        GL11.glVertex3d(-size, size, -size);		        
-	      }
-	      if(!left){
-	        GL11.glNormal3d(-1, 0, 0);
-	        GL11.glVertex3d(-size, size, -size);	      	     
-	        GL11.glVertex3d(-size, -size, -size);
-	        GL11.glVertex3d(-size, -size, size);	 	        
-	        GL11.glVertex3d(-size, size, size);		        
-	      }
-	        	        
-	      GL11.glNormal3d(0, 1, 0);
-	        GL11.glVertex3d(-size, size, size);	 
-	        GL11.glVertex3d(size, size, size);
-	        GL11.glVertex3d(size, size, -size);
-	        GL11.glVertex3d(-size, size, -size);	        
-	        GL11.glEnd();
-	}
-	
+		
 }

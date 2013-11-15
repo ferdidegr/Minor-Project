@@ -182,6 +182,7 @@ public class MazeMaker {
 				switch(ID){
 					case 2:{maze.setObject(1, x, y);break;}
 					case 3:{maze.setObject(0, x, y);break;}
+					case 4:{maze.setObject(2, x, y);break;}
 //					
 				}
 			}
@@ -247,7 +248,7 @@ public class MazeMaker {
 		buttonlist.add(new Button(0.05f, 0.1f,Textures.texnewmaze, 1));		// 1
 		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall, 2));		// 2 
 		buttonlist.add(new Button(0.05f, 1.2f,Textures.texempty, 3));		// 3
-		buttonlist.add(new Button(0.55f, 1.2f,Textures.texempty, 4));		// 4
+		buttonlist.add(new Button(0.55f, 1.2f,Textures.texspike, 4));		// 4
 		buttonlist.add(new Button(0.05f, 10.5f,Textures.texload, 98));		// 98 load button 
 		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button
 	}

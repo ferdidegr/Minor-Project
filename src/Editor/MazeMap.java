@@ -68,14 +68,15 @@ public class MazeMap implements Serializable{
 			for(int i = 0; i<maze[0].length;i++){
 				if (maze[j][i]==0){Textures.texempty.bind();}
 				if (maze[j][i]==1){Textures.texwall.bind();}
+				if (maze[j][i]==2){Textures.texspike.bind();}
 				glBegin(GL_QUADS);				
-				glTexCoord2d(0, 0);
-				glVertex2f(0+i*size, height*size-(j+1)*size);
-				glTexCoord2d(1, 0);
-				glVertex2f(0+i*size+size, height*size-(j+1)*size);
-				glTexCoord2d(1, 1);
-				glVertex2f(0+i*size+size, height*size-(j+1)*size+size);
 				glTexCoord2d(0, 1);
+				glVertex2f(0+i*size, height*size-(j+1)*size);
+				glTexCoord2d(1, 1);
+				glVertex2f(0+i*size+size, height*size-(j+1)*size);
+				glTexCoord2d(1, 0);
+				glVertex2f(0+i*size+size, height*size-(j+1)*size+size);
+				glTexCoord2d(0, 0);
 				glVertex2f(0+i*size, height*size-(j+1)*size+size);
 				glEnd();
 			}

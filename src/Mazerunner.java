@@ -27,6 +27,8 @@ public class Mazerunner {
 	private double temp_X;
 	private double temp_Z;
 	
+	private FloatBuffer lightPosition;
+	
 	/*
 	 *  *************************************************
 	 *  * 					Main Loop					*
@@ -81,7 +83,7 @@ public void start(){
 		// Now we set up our viewpoint.
 		GL11.glMatrixMode(GL11.GL_PROJECTION);					// We'll use orthogonal projection.
 		GL11.glLoadIdentity();									// REset the current matrix.
-		GLU.gluPerspective(60, (float)Display.getWidth()/(float)Display.getHeight(), 0.001f, 1000);	// Set up the parameters for perspective viewing. 
+		GLU.gluPerspective(120, (float)Display.getWidth()/Display.getHeight(), 0.001f, 1000);	// Set up the parameters for perspective viewing. 
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		
 		// Enable back-face culling.
@@ -94,7 +96,7 @@ public void start(){
 		
 		// Set and enable the lighting.
 		
-		 	FloatBuffer lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.0f).put(50.0f).put(0.0f).put(1.0f).flip();	// High up in the sky!
+		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.0f).put(50.0f).put(0.0f).put(1.0f).flip();	// High up in the sky!
 	        FloatBuffer lightColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();		// White light!
 	        GL11.glLight( GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition);	// Note that we're setting Light0.
 	        GL11.glLight( GL11.GL_LIGHT0, GL11.GL_AMBIENT, lightColour);
@@ -122,7 +124,7 @@ public void start(){
 			visibleObjects.add( maze );
 	     // Initialize the player.
 			player = new Player( 6 * maze.SQUARE_SIZE + maze.SQUARE_SIZE / 2, 	// x-position
-								 maze.SQUARE_SIZE / 2 ,							// y-position
+								 maze.SQUARE_SIZE *3/ 2 ,							// y-position
 								 5 * maze.SQUARE_SIZE + maze.SQUARE_SIZE / 2, 	// z-position
 								 90, 0 );										// horizontal and vertical angle
 
@@ -152,13 +154,16 @@ public void start(){
 		        		(float)camera.getVrpX(), (float)camera.getVrpY(), (float)camera.getVrpZ(),
 		        		(float)camera.getVuvX(), (float)camera.getVuvY(), (float)camera.getVuvZ() );
 		        
+		        //update light positions
+		        GL11.glLight( GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition);	
+		        
 
 		        // Display all the visible objects of MazeRunner.
 		        for( Iterator<VisibleObject> it = visibleObjects.iterator(); it.hasNext(); ) {
 		        	it.next().display();
 		        }
 		        
-		        GL11.glLoadIdentity();
+//		        GL11.glLoadIdentity();
 	}
 	
 	public void reshape(){
