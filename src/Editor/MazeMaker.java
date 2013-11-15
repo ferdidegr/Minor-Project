@@ -19,10 +19,11 @@ public class MazeMaker {
 	private int bottom;								// world coordinate of the bottom side of the screen
 	private int menubarwidth;	
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
-	private boolean mousedown = false;
+	private boolean mousedown = false, ctrldown = false;
 	private MazeMap maze = null;
 	private int ID = 0;								// ID when no button has been pressed
 	private boolean exit = false;
+	private float tilesize;
 	/**
 	 * ***********************************************
 	 * Begin the program
@@ -51,7 +52,8 @@ public class MazeMaker {
 			left = 0;
 			bottom = 0;
 			menubarwidth = (right-left)/6;
-			MazeMap.setSize(0.2f*menubarwidth);
+			tilesize = 0.2f*menubarwidth;
+			MazeMap.setSize(tilesize);
 		/*
 		 * Initialize openGL
 		 */
@@ -121,6 +123,7 @@ public class MazeMaker {
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);						// Disable textures
+		
 		/*
 		 * Buttons
 		 */
@@ -136,7 +139,7 @@ public class MazeMaker {
 	 * ********************************************************
 	 */
 	public void keyboardpoll(){
-		
+				
 		/*
 		 * Key events
 		 */
@@ -145,12 +148,12 @@ public class MazeMaker {
 				/*
 				 * Key Pressed
 				 */
-
+				if(Keyboard.getEventKey()==Keyboard.KEY_LCONTROL){ctrldown=true;}
 			}else{
 				/*
 				 * Key Released events
 				 */
-
+				if(Keyboard.getEventKey()==Keyboard.KEY_LCONTROL){ctrldown=false;}
 				
 			}
 		}
@@ -167,9 +170,11 @@ public class MazeMaker {
 		int x = Mouse.getX()+left;					// Transform to world coordinates
 		int y = Mouse.getY()+bottom;				// Transform to world coordinates
 		int wheeldx = Mouse.getDWheel();			// difference in wheel location compared to previous call
-		if(wheeldx>0){Button.scrollup();}			// if you scroll up, move menu buttons
-		if(wheeldx<0){Button.scrolldown();}			// if you scroll down, move menu buttons
+		if(wheeldx>0 && !ctrldown){Button.scrollup();}			// if you scroll up, move menu buttons
+		if(wheeldx<0 && !ctrldown){Button.scrolldown();}			// if you scroll down, move menu buttons
 		
+		if(ctrldown && wheeldx >0){tilesize*=1.1;MazeMap.setSize(tilesize);}
+		if(ctrldown && wheeldx <0){tilesize/=1.1;MazeMap.setSize(tilesize);}
 		/*
 		 * Unlock the mouse again when all mouse buttons are released
 		 */
@@ -222,9 +227,8 @@ public class MazeMaker {
 				}
 				if(tempmaze==null){ID= 0;break;}
 				maze = new MazeMap(tempmaze[0].length, tempmaze.length);
-				maze.setMaze(tempmaze);
-				left=0; right = Display.getWidth(); top = Display.getHeight(); bottom = 0;
-				initGL();
+				maze.setMaze(tempmaze);		
+				resetView();
 				ID=0;break;
 				}
 			case 100:{
@@ -253,13 +257,19 @@ public class MazeMaker {
 				}
 				if(mwidth>0 && mheight>0)
 				maze = new MazeMap(mwidth, mheight);
-				left=0; right = Display.getWidth(); top = Display.getHeight(); bottom = 0;
-				initGL();
+				resetView();
 				ID=0;
 				break;
 			}
 		}
 		
+	}
+	
+	public void resetView(){
+		left=0; right = Display.getWidth(); top = Display.getHeight(); bottom = 0;
+		tilesize = 0.2f*menubarwidth;
+		MazeMap.setSize(tilesize);
+		initGL();
 	}
 	/**
 	 * *************************************************

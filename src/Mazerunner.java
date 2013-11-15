@@ -150,6 +150,10 @@ public void start(){
 				
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT );
 				GL11.glLoadIdentity();
+				if(input.lookback){
+					camera.setHorAngle(camera.getHorAngle()+180);					
+					camera.calculateVRP();
+				}
 		        GLU.gluLookAt( (float)camera.getLocationX(), (float)camera.getLocationY(),(float) camera.getLocationZ(), 
 		        		(float)camera.getVrpX(), (float)camera.getVrpY(), (float)camera.getVrpZ(),
 		        		(float)camera.getVuvX(), (float)camera.getVuvY(), (float)camera.getVuvZ() );
@@ -163,7 +167,7 @@ public void start(){
 		        	it.next().display();
 		        }
 		        
-		        GL11.glLoadIdentity();
+//		        GL11.glLoadIdentity();
 	}
 	
 	public void reshape(){
