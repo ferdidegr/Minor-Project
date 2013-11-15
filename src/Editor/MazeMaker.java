@@ -15,14 +15,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 
 public class MazeMaker {
-	private int width;
-	private int height;
 	private int left;
 	private int right;
 	private int top;
 	private int bottom;
-	private int menubarwidth;
-	private Texture texmenubar, texempty, texnewmaze;
+	private int menubarwidth;	
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
 	private boolean mousedown = false;
 	private boolean keyleft = false, keyright = false, keyup = false, keydown = false;
@@ -49,14 +46,12 @@ public class MazeMaker {
 		/*
 		 * Initialize screen parameters
 		 */
-		width = Display.getWidth();
-		height = Display.getHeight();
+		right = Display.getWidth();
+		top = Display.getHeight();
 		left = 0;
-		right = width;
-		top = height;
 		bottom = 0;
-		menubarwidth = width/6;
-		MazeMap.setSize(0.4f*menubarwidth);
+		menubarwidth = (right-left)/6;
+		MazeMap.setSize(0.2f*menubarwidth);
 		/*
 		 * Initialize openGL
 		 */
@@ -65,11 +60,7 @@ public class MazeMaker {
 		 * Initialize Buttons
 		 */
 		initButtons();
-		/*
-		 * Load Textures
-		 */
-		texmenubar = IO.readtexture("res/Wooden_floor_original.jpg");
-		texempty = IO.readtexture("res/empty.jpg");
+		
 //		texnewmaze = IO.readtexture("res/newmaze.jpg");
 		
 		/*
@@ -108,21 +99,19 @@ public class MazeMaker {
 		/*
 		 * Menu bar
 		 */
-		glEnable(GL_TEXTURE_2D);
-		texmenubar.bind();							// Enable Textures
-	
-								
-														// Set this texture as active
-		
+		glEnable(GL_TEXTURE_2D);						// Enable Textures
+		Textures.texmenubar.bind();							// Set this texture as active
+											
 		glBegin(GL_QUADS);								// Begin drawing the rectangle
-		glVertex2f(right-menubarwidth, bottom);			// Bottom left vertex
-		glTexCoord2f(0, 0);
-		glVertex2f(right, bottom);							// Top right vertex
-		glTexCoord2f(1, 0);		
-		glVertex2f(right, top);						// Bottom Right vertex
-		glTexCoord2f(1, 1);
-		glVertex2f(right-menubarwidth, top);			// top Left vertex
 		glTexCoord2f(0, 1);
+		glVertex2f(right-menubarwidth, bottom);			// Bottom left vertex
+		glTexCoord2f(1, 1);	
+		glVertex2f(right, bottom);							// Top right vertex
+		glTexCoord2f(1, 0);	
+		glVertex2f(right, top);						// Bottom Right vertex
+		glTexCoord2f(0, 0);
+		glVertex2f(right-menubarwidth, top);			// top Left vertex
+		
 
 		glEnd();
 		glDisable(GL_TEXTURE_2D);						// Disable textures
@@ -160,13 +149,15 @@ public class MazeMaker {
 				if(Keyboard.getEventKey()==(Keyboard.KEY_RIGHT)){keyright = false;}
 				if(Keyboard.getEventKey()==(Keyboard.KEY_UP)){keyup = false;}
 				if(Keyboard.getEventKey()==(Keyboard.KEY_DOWN)){keydown = false;}
+				if(Keyboard.getEventKey()==(Keyboard.KEY_W)){Button.scrollup();}
+				if(Keyboard.getEventKey()==Keyboard.KEY_S){Button.scrolldown();}
 			}
 
 		}
-		if(keyleft){left-=10;	right-=10;	initGL();}
-		if(keyright){left+=10;	right+=10;	initGL();}
-		if(keyup){top+=10;	bottom+=10;	initGL();}
-		if(keydown){top-=10;	bottom-=10;	initGL();}
+		if(keyleft){left+=10;	right+=10;	initGL();}
+		if(keyright){left-=10;	right-=10;	initGL();}
+		if(keyup){top-=10;	bottom-=10;	initGL();}
+		if(keydown){top+=10;	bottom+=10;	initGL();}
 		
 	}
 	/**
@@ -185,12 +176,23 @@ public class MazeMaker {
 					mousedown = true;
 				}
 			}
-			if(x>left && x<right-menubarwidth && y>bottom && y<top){
+			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
 				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
-				
+				switch(ID){
+					case 2:{maze.setObject(1, x, y);break;}
+					case 3:{maze.setObject(0, x, y);break;}
+					
+				}
 			}
 		}
 		switch(ID){
+			case 99:{IO.savechooser(maze);ID=0;break;}
+			case 98:{
+				try {maze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				ID=0;break;}
 			case 1:{
 				int mwidth = 0;
 				int mheight = 0;
@@ -231,12 +233,12 @@ public class MazeMaker {
 		/*
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
-		buttonlist.add(new Button(0.05f, 0.1f, 1));		// 1
-		buttonlist.add(new Button(0.55f, 0.1f, 2));		// 2 
-		buttonlist.add(new Button(0.05f, 1.2f, 3));		// 3
-		buttonlist.add(new Button(0.55f, 1.2f, 4));		// 4
-		buttonlist.add(new Button(0.05f, 2.3f, 5));		// 5 
-		buttonlist.add(new Button(0.55f, 2.3f, 6));		// 6
+		buttonlist.add(new Button(0.05f, 0.1f,Textures.texnewmaze, 1));		// 1
+		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall, 2));		// 2 
+		buttonlist.add(new Button(0.05f, 1.2f,Textures.texempty, 3));		// 3
+		buttonlist.add(new Button(0.55f, 1.2f,Textures.texempty, 4));		// 4
+		buttonlist.add(new Button(0.05f, 10.5f,Textures.texload, 98));		// 98 load button 
+		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button
 	}
 	/**
 	 * Initialize all openGL functions
