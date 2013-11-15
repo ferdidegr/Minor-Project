@@ -26,9 +26,15 @@ public class MainMenu {
 	private TrueTypeFont myfont;
 	private boolean exit = false;
 //	private boolean lcont = false;
-//	private GameState gamestate = GameState.MENU;
+	private GameState gamestate = GameState.MENU;
+	private static MenuButton startbutton;
+	float ybuttonsize;
+	float xbuttonsize;
+	float xposition = 200;
+	float yposition = 400;
 	
 	public void start() throws LWJGLException, IOException{
+		
 		
 		Display.setDisplayMode(new DisplayMode(width, height));
 		Display.setTitle("Main menu");
@@ -40,7 +46,7 @@ public class MainMenu {
 			/*
 			 * Mouse poll
 			 */
-		//	mousepoll();
+			mousepoll();
 			if(exit)break;
 			display();
 			Display.update();Display.sync(60);
@@ -53,29 +59,17 @@ public class MainMenu {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glPushMatrix();
-		GL11.glTranslatef(200, 400, 0);
+		
+		
+		GL11.glTranslatef(xposition, yposition, 0);
 		GL11.glScalef(1, -1, 1);
 		
+		
 		//CREATE BUTTONS
-		float ybuttonsize = 50;
-		float xbuttonsize = 200;
-		MenuButton startbutton = new MenuButton(xbuttonsize, ybuttonsize, "Start");
-		MenuButton leveleditor = new MenuButton(xbuttonsize, ybuttonsize, "Level Editor");
-		MenuButton highscores = new MenuButton(xbuttonsize, ybuttonsize, "Highscores");
-		MenuButton settings = new MenuButton(xbuttonsize, ybuttonsize, "Settings");
-		MenuButton exit = new MenuButton(xbuttonsize, ybuttonsize, "exit");
+		
 		
 		//DRAW BUTTONS
-		
-		startbutton.drawButton();
-		GL11.glTranslatef(0, ybuttonsize, 0);
-		leveleditor.drawButton();
-		GL11.glTranslatef(0, ybuttonsize, 0);
-		highscores.drawButton();
-		GL11.glTranslatef(0, ybuttonsize, 0);
-		settings.drawButton();
-		GL11.glTranslatef(0, ybuttonsize, 0);
-		exit.drawButton();
+		startbutton.drawButton(xposition, (float) (Display.getHeight() - yposition + 1.5 * myfont.getLineHeight()));
 
 		//FINISH
 		GL11.glPopMatrix();
@@ -113,23 +107,24 @@ public class MainMenu {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		xbuttonsize = 200;
+		ybuttonsize = 50;
+		startbutton = new MenuButton(xbuttonsize, ybuttonsize, "Start");
 	}
 	/**
 	 * Checks if the user used his mouse
 	 * @throws LWJGLException
 	 * @throws IOException 
 	 */
-	/*public void mousepoll() throws LWJGLException, IOException{
+	public void mousepoll() throws LWJGLException, IOException{
 		int x = Mouse.getX();
 		int y = Mouse.getY();
-		int lineheight = myfont.getLineHeight();
-		
-		switch(gamestate){
-			case MENU:{	
-				if(x>200 && x<400 && y<400 && y>(400-lineheight)){
-					wirebox(400);
+		if(startbutton.isButton(x,y)){
+			System.out.println("Je staat op start");
+		} 
+	}
 					
-					if(Mouse.isButtonDown(0)){
+				/*	if(Mouse.isButtonDown(0)){
 						Game spel = new Game();
 						Display.destroy();
 						int score =spel.start();
@@ -165,7 +160,7 @@ public class MainMenu {
 						}
 						highscore();
 					}
-				}
+				} */
 				/*
 				 * Highscore
 				 */

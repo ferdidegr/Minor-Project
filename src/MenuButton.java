@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.io.InputStream;
 
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.util.ResourceLoader;
 
@@ -18,6 +19,8 @@ public class MenuButton {
 	private TrueTypeFont myfont;
 	private float x_size;
 	private float y_size;
+	private float x_position;
+	private float y_position;
 	
 	/**
 	 * 
@@ -32,6 +35,7 @@ public class MenuButton {
 		this.name = name;
 		this.x_size = x_size;
 		this.y_size = y_size;
+	
 		
 
 	}
@@ -39,9 +43,12 @@ public class MenuButton {
 	/**
 	 * Draw the button on the screen	
 	 */
-	public void drawButton(){
-		loadFont();
+	public void drawButton(float x_position, float y_position){
 		
+		this.x_position = x_position;
+		this.y_position = y_position;
+		loadFont();
+
 		glColor3f(1, 1, 1);
 		glBegin(GL_QUADS);
 		glVertex2f(0, 0);
@@ -59,18 +66,15 @@ public class MenuButton {
 	 * @param y	Y-coordinate in world coordinates
 	 * @return true if the mouse is on this button
 	 */
-//	public boolean isButton(int x , int y){
-//		return (x>left && x<right && y<top && y>bottom);
-//	}
+	public boolean isButton(int x , int y){
+		return (x>(x_position) && x<(x_position + x_size) && y>(y_position) && y<(y_position + y_size));
+	}
 	/**
 	 * Update the world coordinates of this button
 	 */
-//	public void update(){
-//		left = bar_right - (1- x_top_left)*bar_width;
-//		right = left + button_size;
-//		top = bar_top - (y_top_left)*button_size;
-//		bottom = top-button_size;		
-//	}
+	public void update(){
+		
+	}
 	
 	/**
 	 * Menu bar location in world coordinates
