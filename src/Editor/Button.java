@@ -1,16 +1,12 @@
 package Editor;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glVertex2f;
+import static org.lwjgl.opengl.GL11.*;
 
 import org.newdawn.slick.opengl.Texture;
 
 
 public class Button {
 	private float left, right, top, bottom, x_top_left, y_top_left;
-	private static float bar_left, bar_right, bar_top, bar_bottom, button_size, bar_width;
+	private static float bar_left, bar_right, bar_top, bar_bottom, button_size, bar_width, scroll=0;
 	private int ID;
 	private Texture texbutton;
 	/**
@@ -21,7 +17,7 @@ public class Button {
 	 * 
 	 * right-0.95f*menubarwidth, top-0.1f*buttonsize
 	 */
-	public Button(float x_top_left,float y_top_left, int ID){
+	public Button(float x_top_left,float y_top_left,Texture texbutton, int ID){
 		this.left = bar_right - (1- x_top_left)*bar_width;
 		this.right = this.left + button_size;
 		this.top = bar_top - (y_top_left)*button_size;
@@ -36,12 +32,22 @@ public class Button {
 	 */
 	public void drawButton(){
 		glColor3f(1, 1, 1);
+		
+		glEnable(GL_TEXTURE_2D);
+		texbutton.bind();
 		glBegin(GL_QUADS);
-		glVertex2f(left, top);
-		glVertex2f(right, top);
-		glVertex2f(right, bottom);
+		glTexCoord2d(0, 1);
 		glVertex2f(left, bottom);
+		glTexCoord2d(1, 1);	
+		glVertex2f(right, bottom);
+		glTexCoord2d(1, 0);
+		glVertex2f(right, top);
+		glTexCoord2d(0, 0);
+		glVertex2f(left, top);
+		
+		
 		glEnd();
+		glDisable(GL_TEXTURE_2D);
 	}
 	/**
 	 * Checks if the mouse is on this button
@@ -58,8 +64,8 @@ public class Button {
 	public void update(){
 		left = bar_right - (1- x_top_left)*bar_width;
 		right = left + button_size;
-		top = bar_top - (y_top_left)*button_size;
-		bottom = top-button_size;		
+		top = bar_top - (y_top_left+scroll)*button_size;
+		bottom = top-button_size+scroll;		
 	}
 	/**
 	 * Menu bar location in world coordinates
@@ -77,6 +83,13 @@ public class Button {
 		button_size = bar_width*0.4f;
 	}	
 	
+	public static void scrollup(){
+		scroll-=0.5;
+	}
+	
+	public static void scrolldown(){
+		scroll+=0.5;
+	}
 	/*
 	 * Getters
 	 */

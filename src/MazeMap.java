@@ -3,7 +3,7 @@ import java.io.Serializable;
 import static org.lwjgl.opengl.GL11.*;
 
 
-protected class MazeMap implements Serializable{
+public class MazeMap implements Serializable{
 	/**
 	 * SerialUID
 	 */
