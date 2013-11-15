@@ -189,10 +189,13 @@ public class MazeMaker {
 		switch(ID){
 			case 99:{IO.savechooser(maze);ID=0;break;}
 			case 98:{
-				try {maze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
+				int[][] tempmaze = null;
+				try {tempmaze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				maze = new MazeMap(tempmaze[0].length, tempmaze.length);
+				maze.setMaze(tempmaze);
 				ID=0;break;}
 			case 1:{
 				int mwidth = 0;

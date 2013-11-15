@@ -17,16 +17,14 @@ import org.newdawn.slick.util.ResourceLoader;
 
 
 public class IO {
-	public static MazeMap readMaze(String input) throws IOException, ClassNotFoundException{
+	public static int[][] readMaze(String input) throws IOException, ClassNotFoundException{
 		FileInputStream fis = new FileInputStream(input);
 		ObjectInputStream ois = new ObjectInputStream(fis);
 		
 		int[][] maze = (int[][]) ois.readObject();
 		
-		ois.close();
-		MazeMap mazemap = new MazeMap(maze[0].length, maze.length);
-		mazemap.setMaze(maze);
-		return mazemap;
+		ois.close();		
+		return maze;
 	}
 	/**
 	 * Write maze as a whole object
@@ -41,13 +39,13 @@ public class IO {
 		oos.writeObject(maze.getMaze());
 		oos.close();
 	}
-	public static MazeMap loadchooser() throws ClassNotFoundException, IOException{
+	public static int[][] loadchooser() throws ClassNotFoundException, IOException{
 		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir"));		
 		jfc.setMultiSelectionEnabled(false);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
 		jfc.addChoosableFileFilter(filter);
 		int res = jfc.showSaveDialog(null);
-		MazeMap maze;
+		int[][] maze;
 		if(res == JFileChooser.APPROVE_OPTION){
 			File file = jfc.getSelectedFile();
 			String input = file.getAbsolutePath();
