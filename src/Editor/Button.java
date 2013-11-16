@@ -7,6 +7,7 @@ import org.newdawn.slick.opengl.Texture;
 public class Button {
 	private float left, right, top, bottom, x_top_left, y_top_left;
 	private static float bar_left, bar_right, bar_top, bar_bottom, button_size, bar_width, scroll=0;
+	private static int leftID=0,rightID=0;
 	private int ID;
 	private Texture texbutton;
 	/**
@@ -44,10 +45,30 @@ public class Button {
 		glVertex2f(right, top);
 		glTexCoord2d(0, 0);
 		glVertex2f(left, top);
-		
-		
-		glEnd();
+				
+		glEnd();	
+
 		glDisable(GL_TEXTURE_2D);
+		
+		if(ID==leftID){
+			glColor3f(0.0f, 0.0f, 1.0f);
+			drawlinebox();
+		}else if(ID==rightID){
+			glColor3f(0.0f, 1.0f, 0.0f);
+			drawlinebox();
+		}
+	}
+	/**
+	 * draw box around a selected button
+	 */
+	public void drawlinebox(){
+		glLineWidth(5);		
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(left, bottom);			
+		glVertex2f(right, bottom);
+		glVertex2f(right, top);
+		glVertex2f(left, top);				
+		glEnd();
 	}
 	/**
 	 * Checks if the mouse is on this button
@@ -81,17 +102,23 @@ public class Button {
 		bar_bottom = inbar_bottom;
 		bar_width = (bar_right- bar_left);
 		button_size = bar_width*0.4f;
-	}	
+	}
+	/*
+	 * set which button is clicked with which mousebutton
+	 */
+	public static void setLeftID(int ID){leftID = ID;}
+	public static void setrightID(int ID){rightID = ID;}
+	/**
+	 * Gives a string back giving the positions of the edges
+	 */
 	public String toString(){
 		return (top-bottom)+" "+left+" "+right+" "+bottom+" "+top;
 	}
-	public static void scrollup(){
-		scroll-=0.5;
-	}
-	
-	public static void scrolldown(){
-		scroll+=0.5;
-	}
+	/*
+	 * when scrolled, move the buttons along
+	 */
+	public static void scrollup(){	scroll-=0.5;}	
+	public static void scrolldown(){scroll+=0.5;}
 	/*
 	 * Getters
 	 */

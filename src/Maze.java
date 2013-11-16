@@ -77,9 +77,9 @@ public class Maze implements VisibleObject{
 		 * Load Maze
 		 */
 		try {
-			maze = IO.readMaze("levels/test4.maze");
-			MAZE_SIZE_X = maze.length;
-			MAZE_SIZE_Z = maze[0].length;
+			maze = IO.readMaze("levels/test2.maze");
+			MAZE_SIZE_Z = maze.length;
+			MAZE_SIZE_X = maze[0].length;
 		} catch (IOException e) {
 			
 			e.printStackTrace();
@@ -104,7 +104,7 @@ public class Maze implements VisibleObject{
 	{
 		
 		if( x >= 0 && x < MAZE_SIZE_X && z >= 0 && z < MAZE_SIZE_Z )
-			return maze[x][z] == 1;
+			return maze[z][x] == 1;
 		else
 			return false;
 	}

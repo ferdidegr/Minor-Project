@@ -55,7 +55,7 @@ public class Graphics {
 		for(int i = -1; i <=1;i++){
 			for(int j = -1; j<=1;j++){
 				GL11.glPushMatrix();
-				GL11.glTranslatef(i*baseradius/2, j*baseradius/2, 0);
+				GL11.glTranslatef(i*baseradius*2/3f, j*baseradius*2/3f, 0);
 				cylinder.draw(baseradius/3, 0, height, 10, 1);
 				GL11.glPopMatrix();
 			}

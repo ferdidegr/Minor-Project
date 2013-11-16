@@ -222,8 +222,8 @@ public class MazeMaker {
 				if(knopje.isButton(x, y)){				
 					ID = knopje.getID();
 					if(ID<90){						// >90 are not object buttons
-						if(Mouse.isButtonDown(0))leftID=ID;
-						if(Mouse.isButtonDown(1))rightID=ID;
+						if(Mouse.isButtonDown(0)){leftID=ID;Button.setLeftID(ID);}
+						if(Mouse.isButtonDown(1)){rightID=ID;Button.setrightID(ID);}
 					}
 					System.out.println(ID);
 					
