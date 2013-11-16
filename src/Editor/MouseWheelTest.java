@@ -10,7 +10,7 @@ public class MouseWheelTest {
 		Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.create();
 		while(!Display.isCloseRequested()){
-			System.out.println(Mouse.getDWheel());
+			System.out.println(Mouse.isButtonDown(2));
 			Display.update();Display.sync(60);
 		}
 	}

@@ -20,7 +20,7 @@ public class IO {
 	/**
 	 * read a maze file (which is an int[][])
 	 * @param input
-	 * @return
+	 * @return int[][] containing the maze
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
@@ -46,6 +46,12 @@ public class IO {
 		oos.writeObject(maze.getMaze());
 		oos.close();
 	}
+	/**
+	 * opens a Jfilechooser to select a maze to load
+	 * @return an int[][] containing the maze
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	public static int[][] loadchooser() throws ClassNotFoundException, IOException{
 		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir"));		
 		jfc.setMultiSelectionEnabled(false);

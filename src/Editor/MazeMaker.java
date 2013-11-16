@@ -21,7 +21,7 @@ public class MazeMaker {
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
 	private boolean mousedown = false, ctrldown = false;
 	private MazeMap maze = null;
-	private int ID = 0;								// ID when no button has been pressed
+	private int ID = 0, leftID=0, rightID=0;								// ID when no button has been pressed
 	private boolean exit = false;
 	private float tilesize;
 	/**
@@ -170,19 +170,20 @@ public class MazeMaker {
 		int x = Mouse.getX()+left;					// Transform to world coordinates
 		int y = Mouse.getY()+bottom;				// Transform to world coordinates
 		int wheeldx = Mouse.getDWheel();			// difference in wheel location compared to previous call
-		if(wheeldx>0 && !ctrldown){Button.scrollup();}			// if you scroll up, move menu buttons
-		if(wheeldx<0 && !ctrldown){Button.scrolldown();}			// if you scroll down, move menu buttons
+		if(wheeldx>0 && !ctrldown){Button.scrolldown();}			// if you scroll up, move menu buttons
+		if(wheeldx<0 && !ctrldown){Button.scrollup();}			// if you scroll down, move menu buttons
 		
 		if(ctrldown && wheeldx >0){tilesize*=1.1;MazeMap.setSize(tilesize);}
 		if(ctrldown && wheeldx <0){tilesize/=1.1;MazeMap.setSize(tilesize);}
 		/*
 		 * Unlock the mouse again when all mouse buttons are released
+		 * Left, right and scroll respectively
 		 */
-			if(!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1)){mousedown = false;}
+			if(!Mouse.isButtonDown(0) && !Mouse.isButtonDown(1) && !Mouse.isButtonDown(2)){mousedown = false;}
 		/*
-		 * Mouse drag (0) is left and (1) is right
+		 * Mouse drag (0) is left and (1) is right and (2) is wheel
 		 */
-		if(Mouse.isButtonDown(1) && mousedown){				
+		if(Mouse.isButtonDown(2) && mousedown){				
 			int dx = Mouse.getDX();
 			int dy = Mouse.getDY();			
 			left-=dx;right-=dx;
@@ -192,7 +193,18 @@ public class MazeMaker {
 			// If you are on the left side of the screen (Maze side)
 			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
 				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
-				switch(ID){
+				switch(leftID){
+					case 2:{maze.setObject(1, x, y);break;}	// Wall
+					case 3:{maze.setObject(0, x, y);break;} // Empty spot
+					case 4:{maze.setObject(2, x, y);break;}	// Spikes
+//					
+				}
+			}
+		}else if(Mouse.isButtonDown(1) && mousedown){
+			// If you are on the left side of the screen (Maze side)
+			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
+				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
+				switch(rightID){
 					case 2:{maze.setObject(1, x, y);break;}	// Wall
 					case 3:{maze.setObject(0, x, y);break;} // Empty spot
 					case 4:{maze.setObject(2, x, y);break;}	// Spikes
@@ -203,19 +215,23 @@ public class MazeMaker {
 		/*
 		 * Mouse click
 		 */
-		if(Mouse.isButtonDown(1))mousedown=true;
-		if(Mouse.isButtonDown(0) && !mousedown){	// check if clicked and not hold down
+		if(Mouse.isButtonDown(2))mousedown = true;
+		if((Mouse.isButtonDown(0) || Mouse.isButtonDown(1)) && !mousedown){	// check if clicked and not hold down
 			mousedown = true;
 			for(Button knopje: buttonlist){			// check for button clicked
 				if(knopje.isButton(x, y)){				
 					ID = knopje.getID();
+					if(ID<90){						// >90 are not object buttons
+						if(Mouse.isButtonDown(0))leftID=ID;
+						if(Mouse.isButtonDown(1))rightID=ID;
+					}
 					System.out.println(ID);
 					
 					break;							// if found no need to check others
 				}
 			}		
 		}
-		// Check menu bar buttons
+		// Check menu bar buttons Not object buttons
 		switch(ID){
 		    case 101:{exit = true; break;}
 			case 99:{IO.savechooser(maze);ID=0;break;}
