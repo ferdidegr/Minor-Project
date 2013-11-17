@@ -1,14 +1,14 @@
 package Game;
 
 
-import java.io.File;
+
 import java.io.IOException;
 import java.nio.FloatBuffer;
-import java.util.Scanner;
+
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.glu.Sphere;
+//import org.lwjgl.util.glu.Sphere;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -76,7 +76,7 @@ public class Maze implements VisibleObject{
 		 * Load Maze
 		 */
 		try {
-			maze = IO.readMaze("levels/test2.maze");
+			maze = IO.readMaze("levels/test3.maze");
 			MAZE_SIZE_Z = maze.length;
 			MAZE_SIZE_X = maze[0].length;
 		} catch (IOException e) {

@@ -11,8 +11,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Menu {
 	private ArrayList<MenuButton> knoppen = new ArrayList<MenuButton>();
-	private int top, bottom, scrollspeed = 20;
-	
+	private int top, bottom, scrollspeed;
+	double height_width_ratio = 1/4f;			// Height/Width 
 	/**
 	 * ************************************
 	 * Main loop
@@ -24,6 +24,7 @@ public class Menu {
 		Display.create();
 		bottom = 0;
 		top = Display.getHeight();
+		scrollspeed = Display.getHeight()/15;
 		initButtons();initGL();
 		
 		// Main loop, while the X button is not clicked
@@ -66,7 +67,7 @@ public class Menu {
 				game.start();
 				glPopMatrix();
 				buttonID=0;
-				initGL();
+
 				
 				
 			}
@@ -84,8 +85,8 @@ public class Menu {
 	 * ************************************
 	 */
 	public void initButtons(){
-		int buttonwidth = Display.getWidth()/3;
-		int buttonheight = Display.getHeight()/7;
+		int buttonwidth = Display.getWidth()/3;		
+		int buttonheight = (int) (buttonwidth*height_width_ratio);
 		MenuButton.setDimensions(buttonwidth, buttonheight);
 		knoppen.add(new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1));
 		knoppen.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));
@@ -96,7 +97,9 @@ public class Menu {
 	 * ************************************
 	 */
 	public void display(){
-		drawBackground();		
+		
+		drawBackground();
+		
 		
 		for(MenuButton knop: knoppen){
 			knop.draw();
@@ -109,7 +112,7 @@ public class Menu {
 	 */
 	public void drawBackground(){
 		glColor3f(1.0f, 1.0f, 1.0f);						// When using textures, set this to white
-		glPushMatrix();
+		
 		
 		glMatrixMode(GL_PROJECTION);						// We'll use orthogonal projection.
 		glLoadIdentity();									// REset the current matrix.
@@ -129,9 +132,8 @@ public class Menu {
 		glVertex2i(Display.getWidth(), 0);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
+		
 		initview();
-
 	}
 	/**
 	 * ************************************

@@ -145,10 +145,7 @@ public void start(){
 				
 				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT );
 				GL11.glLoadIdentity();
-				if(input.lookback){
-					camera.setHorAngle(camera.getHorAngle()+180);					
-					camera.calculateVRP();
-				}
+
 		        GLU.gluLookAt( (float)camera.getLocationX(), (float)camera.getLocationY(),(float) camera.getLocationZ(), 
 		        		(float)camera.getVrpX(), (float)camera.getVrpY(), (float)camera.getVrpZ(),
 		        		(float)camera.getVuvX(), (float)camera.getVuvY(), (float)camera.getVuvZ() );
@@ -201,8 +198,7 @@ public void start(){
 			player.updateX(deltaTime);
 			if(maze.isWall(player.getLocationX(), player.getLocationZ()) 
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()+dx)
-					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx) 
-					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()-dx)
+					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx)					
 					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)){
 				player.setLocationX(temp_X);			
 			}
@@ -211,8 +207,7 @@ public void start(){
 			player.updateZ(deltaTime);
 			if(maze.isWall(player.getLocationX(), player.getLocationZ()) 
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()+dx)
-					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx) 
-					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()-dx)
+					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx)					
 					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)){
 				player.setLocationZ(temp_Z);			
 			}
@@ -228,8 +223,8 @@ public void start(){
 			camera.setLocationX( player.getLocationX() );
 			camera.setLocationY( player.getLocationY() );  
 			camera.setLocationZ( player.getLocationZ() );
-			camera.setHorAngle( player.getHorAngle() );
-			camera.setVerAngle( player.getVerAngle() );
+			camera.setHorAngle( player.getHorAngle()+(input.lookback? 180:0) );
+			camera.setVerAngle( player.getVerAngle() * (input.lookback? -1:1) );
 			camera.calculateVRP();
 		}
 }
