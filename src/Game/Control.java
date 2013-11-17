@@ -1,3 +1,5 @@
+package Game;
+
 /**
  * The Control class is an abstract class containing only basic functionality such
  * as getters for all possible commands.

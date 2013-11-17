@@ -1,13 +1,12 @@
+package Game;
+
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
-
 import org.lwjgl.BufferUtils;
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
@@ -36,18 +35,7 @@ public class Mazerunner {
 	 */
 	
 public void start(){
-	try {
-		
-		Display.setResizable(true);
-		Display.setDisplayMode(new DisplayMode(screenWidth,screenHeight));
-		Display.setResizable(true);
-		Display.setTitle("MazeRunner");
-		Display.create();
-		
-	} catch (LWJGLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+
 	init();
 	initObj();
 	
@@ -67,6 +55,7 @@ public void start(){
 		Display.update();
 		Display.sync(70);
 	}
+	cleanup();
 }
 
 /*
@@ -114,7 +103,13 @@ public void start(){
 
 	        
 	}
-	        
+	public void cleanup(){
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glDisable(GL11.GL_LIGHT0);
+		GL11.glDisable(GL11.GL_BLEND);
+	}     
 	   public void initObj(){     
 	     // We define an ArrayList of VisibleObjects to store all the objects that need to be
 			// displayed by MazeRunner.
@@ -169,6 +164,8 @@ public void start(){
 		        
 //		        GL11.glLoadIdentity();
 	}
+	
+
 	
 	public void reshape(){
 		screenWidth = Display.getWidth();
@@ -235,8 +232,4 @@ public void start(){
 			camera.setVerAngle( player.getVerAngle() );
 			camera.calculateVRP();
 		}
-	public static void main(String[] args){
-		Mazerunner maze = new Mazerunner();
-		maze.start();
-	}
 }

@@ -1,3 +1,5 @@
+package Game;
+
 import java.io.Serializable;
 
 import static org.lwjgl.opengl.GL11.*;

@@ -1,3 +1,6 @@
+package Game;
+
+
 /**
  * Player represents the actual player in MazeRunner.
  * <p>

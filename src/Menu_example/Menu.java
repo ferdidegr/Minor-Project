@@ -1,5 +1,5 @@
 package Menu_example;
-
+import Game.*;
 import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
@@ -20,17 +20,16 @@ public class Menu {
 	 * ************************************
 	 */
 	public void start() throws LWJGLException{
-		Display.setDisplayMode(new DisplayMode(800, 600));
+		Display.setDisplayMode(new DisplayMode(1280, 720));
 		Display.create();
 		bottom = 0;
 		top = Display.getHeight();
 		initButtons();initGL();
 		
-		// Main loop, while the X button is not clickeds
+		// Main loop, while the X button is not clicked
 		while(!Display.isCloseRequested()){
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-			
+			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			
 			mousepoll();
 			display();
 			Display.update();
@@ -60,6 +59,16 @@ public class Menu {
 						{buttonID = knop.getID();System.out.println(buttonID);break;}
 					}
 				}
+			}
+			if(buttonID==1)
+				{Mazerunner game = new Mazerunner();
+				glPushMatrix();
+				game.start();
+				glPopMatrix();
+				buttonID=0;
+				initGL();
+				
+				
 			}
 			/*
 			 * Button released

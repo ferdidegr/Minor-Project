@@ -1,3 +1,5 @@
+package Game;
+
 /**
  * GameObject is the superclass for all the objects in the game that need a location.
  * <p>
