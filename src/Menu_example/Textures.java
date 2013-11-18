@@ -10,7 +10,7 @@ public class Textures {
 		static{
 			try {
 				start = IO.loadtex("res/wall.jpg");
-				startover = IO.loadtex("res/empty.jpg");
+				startover = IO.loadtex("res/transparent.png");
 				menubackground = IO.loadtex("res/Wooden_floor_original.jpg");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
