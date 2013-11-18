@@ -1,5 +1,5 @@
 import static org.lwjgl.opengl.GL11.*;
-
+import Game.*;
 import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
