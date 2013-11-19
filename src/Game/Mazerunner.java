@@ -25,7 +25,7 @@ public class Mazerunner {
 	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
 	private double temp_X;
 	private double temp_Z;
-	
+	private Wall wall;
 	private FloatBuffer lightPosition;
 	
 	/*
@@ -128,7 +128,7 @@ public void start(){
 			
 			input = new UserInput();
 			player.setControl(input);
-			
+			wall = new Wall(0, 0, 0, 5, 6);
 	}
 	
 	public void display(){
@@ -158,7 +158,7 @@ public void start(){
 		        for( Iterator<VisibleObject> it = visibleObjects.iterator(); it.hasNext(); ) {
 		        	it.next().display();
 		        }
-		        
+		        wall.draw();
 //		        GL11.glLoadIdentity();
 	}
 	
