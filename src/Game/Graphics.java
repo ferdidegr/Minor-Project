@@ -1,10 +1,22 @@
 package Game;
 
+import java.nio.FloatBuffer;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.Cylinder;
 
 
 public class Graphics {
+	public static FloatBuffer wallColour;
+	
+	// Shortcuts to buffers
+	static{
+		wallColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.5f).put(0.0f).put(0.7f).put(1.0f).flip();	// The walls are purple.    		
+	}
+	
+	
+	// Draw shapes
 	public static Cylinder cylinder = new Cylinder();
 	
 	/**

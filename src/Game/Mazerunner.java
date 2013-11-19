@@ -5,6 +5,7 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -128,7 +129,7 @@ public void start(){
 			
 			input = new UserInput();
 			player.setControl(input);
-			wall = new Wall(0, 0, 0, 5, 6);
+			wall = new Wall(10, 10, 0, 5, 6);
 	}
 	
 	public void display(){
@@ -158,12 +159,9 @@ public void start(){
 		        for( Iterator<VisibleObject> it = visibleObjects.iterator(); it.hasNext(); ) {
 		        	it.next().display();
 		        }
-		        
+		        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);
 		        wall.draw();
-		        GL11.glPushMatrix();
-		        GL11.glTranslatef(0.0f, 6.0f, 0.0f);
-		        wall.draw();
-		        GL11.
+		   
 //		        GL11.glLoadIdentity();
 	}
 	

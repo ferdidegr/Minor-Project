@@ -42,27 +42,9 @@ public class Wall extends GameObject{
 		glEnd();
 	}
 	
-	public double[][] getVert(){ return boxvertices;}
-	public double[][] getnorm(){ return normals;}
+	public void 
 	
-	public static void main(String[] args){
-		Wall wall = new Wall(0, 0, 0, 5, 6);
-		double[][] vert = wall.getVert();
-		double[][] norm = wall.getnorm();
-		for(int i = 0 ; i < vert.length;i++){
-			for(int j = 0 ; j < vert[0].length;j++){
-				System.out.print(vert[i][j]+" ");
-			}
-			System.out.println();
-		}
-		
-		for(int i = 0 ; i < norm.length;i++){
-			for(int j = 0 ; j < norm[0].length; j++){
-				System.out.print(norm[i][j]+" ");
-			}
-			System.out.println();
-		}
-		
-		
-	}
+	public double[][] getVert(){ return boxvertices;}
+	public double[][] getnorm(){ return normals;}	
+
 }
