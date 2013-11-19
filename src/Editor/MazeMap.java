@@ -60,6 +60,8 @@ public class MazeMap implements Serializable{
 				if (maze[j][i]==0){Textures.texempty.bind();}
 				if (maze[j][i]==1){Textures.texwall.bind();}
 				if (maze[j][i]==2){Textures.texspike.bind();}
+				if (maze[j][i]==5){Textures.texflaggreen.bind();}
+				if (maze[j][i]==6){Textures.texflagred.bind();}
 				glBegin(GL_QUADS);				
 				glTexCoord2d(0, 1);
 				glVertex2f(0+i*size, height*size-(j+1)*size);

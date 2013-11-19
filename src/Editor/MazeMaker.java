@@ -24,6 +24,7 @@ public class MazeMaker {
 	private int ID = 0, leftID=0, rightID=0;								// ID when no button has been pressed
 	private boolean exit = false;
 	private float tilesize;
+	private int flaggreenx=-1,flaggreeny=-1,flagredx=-1,flagredy=-1;
 	/**
 	 * ***********************************************
 	 * Begin the program
@@ -197,7 +198,20 @@ public class MazeMaker {
 					case 2:{maze.setObject(1, x, y);break;}	// Wall
 					case 3:{maze.setObject(0, x, y);break;} // Empty spot
 					case 4:{maze.setObject(2, x, y);break;}	// Spikes
-					case 5:{maze.setObject(3, x, y);break;} // Flag
+					case 5:{if (flaggreenx>0 && flaggreeny>0 && maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==5){
+								maze.setObject(0, flaggreenx, flaggreeny);
+							}
+							flaggreenx=x;
+							flaggreeny=y;
+							maze.setObject(5, x, y);
+							break;} 						// Flag green
+					case 6:{if (flagredx>0 && flagredy>0 && maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==6){
+								maze.setObject(0, flagredx, flagredy);
+							}
+							flagredx=x;
+							flagredy=y;
+							maze.setObject(6, x, y);
+							break;} 						// Flag red
 //					
 				}
 			}
@@ -209,6 +223,20 @@ public class MazeMaker {
 					case 2:{maze.setObject(1, x, y);break;}	// Wall
 					case 3:{maze.setObject(0, x, y);break;} // Empty spot
 					case 4:{maze.setObject(2, x, y);break;}	// Spikes
+					case 5:{if (flaggreenx>0 && flaggreeny>0 && maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==5){
+						maze.setObject(0, flaggreenx, flaggreeny);
+					}
+					flaggreenx=x;
+					flaggreeny=y;
+					maze.setObject(5, x, y);
+					break;} 						// Flag green
+					case 6:{if (flagredx>0 && flagredy>0 && maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==6){
+				maze.setObject(0, flagredx, flagredy);
+			}
+			flagredx=x;
+			flagredy=y;
+			maze.setObject(6, x, y);
+			break;} 						// Flag red
 //					
 				}
 			}
@@ -307,10 +335,10 @@ public class MazeMaker {
 		buttonlist.add(new Button(0.05f, 1.2f,Textures.texspike, 4));		// 4
 		buttonlist.add(new Button(0.05f, 10.5f,Textures.texload, 98));		// 98 load button 
 		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button
-		buttonlist.add(new Button(0.05f, 11.6f,Textures.texnewmaze, 100));		// 100 New maze
+		buttonlist.add(new Button(0.05f, 11.6f,Textures.texnewmaze, 100));	// 100 New maze
 		buttonlist.add(new Button(0.55f, 11.6f,Textures.texempty,101)); 	// 101 Exit button
-		buttonlist.add(new Button(0.55f, 1.2f,Textures.texflag,5));			// 5 flag
-		buttonlist.add(new Button(0.05f, 2.3f,Textures.texwall,6));
+		buttonlist.add(new Button(0.55f, 1.2f,Textures.texflaggreen,5));	// 5 flaggreen
+		buttonlist.add(new Button(0.05f, 2.3f,Textures.texflagred,6));		// 6 flagred
 	}
 	/**
 	 * ********************************************
