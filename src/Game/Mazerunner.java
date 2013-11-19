@@ -158,7 +158,12 @@ public void start(){
 		        for( Iterator<VisibleObject> it = visibleObjects.iterator(); it.hasNext(); ) {
 		        	it.next().display();
 		        }
+		        
 		        wall.draw();
+		        GL11.glPushMatrix();
+		        GL11.glTranslatef(0.0f, 6.0f, 0.0f);
+		        wall.draw();
+		        GL11.
 //		        GL11.glLoadIdentity();
 	}
 	
