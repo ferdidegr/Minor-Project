@@ -1,6 +1,6 @@
 import static org.lwjgl.opengl.GL11.*;
 import Game.*;
-import Menu_example.*;
+import Menu.*;
 
 import java.io.IOException;
 

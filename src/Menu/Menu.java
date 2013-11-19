@@ -1,4 +1,4 @@
-package Menu_example;
+package Menu;
 import Game.*;
 import java.util.ArrayList;
 

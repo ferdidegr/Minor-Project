@@ -1,4 +1,4 @@
-package Menu_example;
+package Menu;
 
 import static org.lwjgl.opengl.GL11.*;
 import org.newdawn.slick.opengl.Texture;
