@@ -308,6 +308,8 @@ public class MazeMaker {
 		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button
 		buttonlist.add(new Button(0.05f, 11.6f,Textures.texnewmaze, 100));		// 100 New maze
 		buttonlist.add(new Button(0.55f, 11.6f,Textures.texempty,101)); 	// 101 Exit button
+		buttonlist.add(new Button(0.55f, 1.2f,Textures.texflag,5));			// 5 flag
+		buttonlist.add(new Button(0.05f, 2.3f,Textures.texwall,6));
 	}
 	/**
 	 * ********************************************
