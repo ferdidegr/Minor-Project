@@ -129,7 +129,7 @@ public void start(){
 			
 			input = new UserInput();
 			player.setControl(input);
-			wall = new Wall(10, 10, 0, 5, 6);
+			wall = new Wall(10, 10, 0, 2, 2);
 	}
 	
 	public void display(){
@@ -161,6 +161,12 @@ public void start(){
 		        }
 		        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);
 		        wall.draw();
+		        GL11.glPushMatrix();
+		        GL11.glTranslatef(2, 0, 0);
+		        wall.draw();
+		        GL11.glPopMatrix();
+				System.out.println((wall.isCollision(player.locationX, player.locationY, player.locationZ))? "yes":"");
+
 		   
 //		        GL11.glLoadIdentity();
 	}
@@ -192,6 +198,7 @@ public void start(){
 		private void updateMovement(int deltaTime)
 		{
 			temp_X = player.getLocationX();
+			double temp_Y = player.locationY;
 			temp_Z = player.getLocationZ();
 			player.update(deltaTime);
 			double dx = player.getSpeed()*deltaTime;
@@ -202,7 +209,12 @@ public void start(){
 			if(maze.isWall(player.getLocationX(), player.getLocationZ()) 
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()+dx)
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx)					
-					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)){
+					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)
+					|| wall.isCollision(temp_X, temp_Y, temp_Z)
+					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z+dx)
+					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z-dx)
+					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z+dx)
+					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z-dx)){
 				player.setLocationX(temp_X);			
 			}
 			// collsion Z
@@ -211,7 +223,12 @@ public void start(){
 			if(maze.isWall(player.getLocationX(), player.getLocationZ()) 
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()+dx)
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx)					
-					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)){
+					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)
+					|| wall.isCollision(temp_X, temp_Y, temp_Z)
+					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z+dx)
+					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z-dx)
+					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z+dx)
+					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z-dx)){
 				player.setLocationZ(temp_Z);			
 			}
 			

@@ -3,8 +3,19 @@ package Game;
 import static org.lwjgl.opengl.GL11.* ;
 
 public class Wall extends GameObject{
-	
+	/**
+	 * 		 7 +--------+ 6
+  	 *		  /|       /|
+  	 * 		 / |      / |
+  	 * 	4	+--+-----+ 5|
+  	 * 		|  |     |  |
+  	 * 		| 3|_____|__| 2
+  	 * 		| /      | /
+  	 * 		|/       |/
+  	 * 	0	+--------+ 1
+	 */
 	private double[][] boxvertices;
+	private double left, right, back, front, top, bottom;
 	private int[][] boxfaces= {{0,1,5,4},
 								  {1,2,6,5},
 								  {2,3,7,6},
@@ -20,15 +31,22 @@ public class Wall extends GameObject{
 	
 	public Wall(double x, double y, double z,double size, double height){
 		super(x, y, z);
+		this.left = x-size/2;
+		this.right = x+size/2;
+		this.front = z+size/2;
+		this.back = z-size/2;
+		this.bottom = 0;
+		this.top = height;
+		
 		this.boxvertices = new double[][]{
-							{x-size/2, 0, z+size/2},
-							{x+size/2, 0, z+size/2},
-							{x+size/2, 0, z-size/2},
-							{x-size/2, 0, z-size/2},
-							{x-size/2, height, z+size/2},
-							{x+size/2, height, z+size/2},
-							{x+size/2, height, z-size/2},
-							{x-size/2, height, z-size/2}};		
+							{left, bottom, front},
+							{right, bottom, front},
+							{right, bottom, back},
+							{left, bottom, back},
+							{left, top, front},
+							{right, top, front},
+							{right, top, back},
+							{left, top, back}};	
 	}
 	
 	public void draw(){
@@ -42,7 +60,9 @@ public class Wall extends GameObject{
 		glEnd();
 	}
 	
-	public void 
+	public boolean isCollision(double x, double y, double z){
+		return x>left && x<right && z<front && z>back && y>	bottom && y<top;	
+	}
 	
 	public double[][] getVert(){ return boxvertices;}
 	public double[][] getnorm(){ return normals;}	
