@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
@@ -52,7 +53,7 @@ public void start(){
 		
 		// Location
 		if(input.view_coord==true)System.out.println(player.locationX/maze.SQUARE_SIZE+" "+player.locationZ/maze.SQUARE_SIZE);
-			
+		System.out.println(player.getHorAngle());	
 		Display.update();
 		Display.sync(70);
 	}
@@ -110,6 +111,7 @@ public void start(){
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glDisable(GL11.GL_LIGHT0);
 		GL11.glDisable(GL11.GL_BLEND);
+		Mouse.setGrabbed(false);
 	}     
 	   public void initObj(){     
 	     // We define an ArrayList of VisibleObjects to store all the objects that need to be
@@ -122,7 +124,7 @@ public void start(){
 			player = new Player( 6 * maze.SQUARE_SIZE + maze.SQUARE_SIZE / 2, 	// x-position
 								 maze.SQUARE_SIZE *3/ 2 ,							// y-position
 								 5 * maze.SQUARE_SIZE + maze.SQUARE_SIZE / 2, 	// z-position
-								 90, 0 );										// horizontal and vertical angle
+								 0, 0 );										// horizontal and vertical angle
 
 			camera = new Camera( player.getLocationX(), player.getLocationY(), player.getLocationZ(), 
 					             player.getHorAngle(), player.getVerAngle() );
@@ -201,7 +203,7 @@ public void start(){
 			double temp_Y = player.locationY;
 			temp_Z = player.getLocationZ();
 			player.update(deltaTime);
-			double dx = player.getSpeed()*deltaTime;
+			double dx = 2*player.getSpeed()*deltaTime;
 			
 			//collision X
 

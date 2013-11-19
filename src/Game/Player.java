@@ -28,6 +28,7 @@ public class Player extends GameObject {
 	double Ybuffer;
 	double timer = 0;
 	double y_begin;
+	Vector velocity = new Vector(0, 0, 0);
 	
 	/**
 	 * The Player constructor.

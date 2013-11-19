@@ -22,7 +22,7 @@ public class MazeMaker {
 	private boolean mousedown = false, ctrldown = false;
 	private MazeMap maze = null;
 	private int ID = 0, leftID=0, rightID=0;								// ID when no button has been pressed
-	private boolean exit = false;
+	private boolean exit = false;	
 	private float tilesize;
 	private int flaggreenx=-1,flaggreeny=-1,flagredx=-1,flagredy=-1;
 	/**
