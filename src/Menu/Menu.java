@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class Menu {
 	private ButtonList mainMenu = new ButtonList();
 	private ButtonList Settings = new ButtonList();
-	private ButtonList knoppen = new ButtonList();
+	private ButtonList knoppen;
 	private int top, bottom, scrollspeed;
 	double height_width_ratio = 1/4f;			// Height/Width 
 	/**
@@ -89,6 +89,7 @@ public class Menu {
 		MenuButton.setDimensions(buttonwidth, buttonheight);
 		
 		// knoppen
+		knoppen = new ButtonList();
 		MenuButton button1 = new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1);
 		knoppen.add(button1);
 		knoppen.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));

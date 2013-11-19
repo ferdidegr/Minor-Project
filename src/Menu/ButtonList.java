@@ -5,19 +5,19 @@ import java.util.*;
 import org.lwjgl.input.Mouse;
 
 public class ButtonList {
-	private ArrayList<MenuButton> list;
+	private ArrayList<MenuButton> lijst;
 	
 	public ButtonList(){
-		ArrayList<MenuButton> list = new ArrayList<MenuButton>(0);
+		ArrayList<MenuButton> lijst = new ArrayList<MenuButton>();
 	}
 	
 	public void add(MenuButton button){
-		list.add(button);
+		lijst.add(button);
 	}
 	
 	public int checkButtons(int bottom) {
 		int buttonID = 0;
-		for(MenuButton knop:list){
+		for(MenuButton knop:lijst){
 			if(knop.isButton(Mouse.getX(), Mouse.getY() + bottom))
 			{buttonID = knop.getID();System.out.println(buttonID);break;}
 		}
@@ -25,7 +25,7 @@ public class ButtonList {
 	}
 	
 	public void display(){
-		for (MenuButton knop: list){
+		for (MenuButton knop: lijst){
 			knop.draw();
 		}
 	}
