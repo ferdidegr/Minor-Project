@@ -197,6 +197,7 @@ public class MazeMaker {
 					case 2:{maze.setObject(1, x, y);break;}	// Wall
 					case 3:{maze.setObject(0, x, y);break;} // Empty spot
 					case 4:{maze.setObject(2, x, y);break;}	// Spikes
+					case 5:{maze.setObject(3, x, y);break;} // Flag
 //					
 				}
 			}
