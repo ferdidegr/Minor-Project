@@ -1,5 +1,7 @@
 import static org.lwjgl.opengl.GL11.*;
 import Game.*;
+import Menu_example.*;
+
 import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
@@ -17,46 +19,19 @@ public class GameStates {
 	private State state = State.MAIN_MENU; // Default state is main menu
 
 	public GameStates() {
-	/*	try {
-			Display.setDisplayMode(new DisplayMode(800, 600));
-			Display.setTitle("Game States");
-			Display.create();
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-		}
-		
-		// Initialization code OpenGL
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, 640, 480, 0, 1, -1);
-		glMatrixMode(GL_MODELVIEW);
-		
-		while (!Display.isCloseRequested()) { */
-			// Render
-			
-			checkInput();
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clearing buffers
-			
 			render();
-			
-		//	Display.update();
-		//	Display.sync(60);
-	//	}
-		
-	//	Display.destroy();
 	}
 	
 	// Defines the content of each state
 	private void render() {
 		switch(state) {
 		case MAIN_MENU:
-			MainMenu menu = new MainMenu();
+			Menu menu = new Menu();
 			try {
 				menu.start();
-			} catch (LWJGLException | IOException e) {
+			} catch (LWJGLException e) {
 				e.printStackTrace();
 			}
-			break;
 		case START_GAME:
 			
 			break;
@@ -73,8 +48,7 @@ public class GameStates {
 
 			break;
 		case GAME:
-			Mazerunner maze = new Mazerunner();
-			maze.start();
+			
 			break;
 		case PAUSE:
 
