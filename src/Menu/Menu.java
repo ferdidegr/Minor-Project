@@ -10,7 +10,9 @@ import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Menu {
-	private ArrayList<MenuButton> knoppen = new ArrayList<MenuButton>();
+	private ButtonList mainMenu = new ButtonList();
+	private ButtonList Settings = new ButtonList();
+	private ButtonList knoppen = new ButtonList();
 	private int top, bottom, scrollspeed;
 	double height_width_ratio = 1/4f;			// Height/Width 
 	/**
@@ -55,10 +57,7 @@ public class Menu {
 			 */
 			if(Mouse.getEventButtonState()){
 				if(Mouse.getEventButton()==0){
-					for(MenuButton knop:knoppen){
-						if(knop.isButton(Mouse.getX(), Mouse.getY()+bottom))
-						{buttonID = knop.getID();System.out.println(buttonID);break;}
-					}
+					buttonID = knoppen.checkButtons(bottom);
 				}
 			}
 			if(buttonID==1)
@@ -88,8 +87,18 @@ public class Menu {
 		int buttonwidth = Display.getWidth()/3;		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
 		MenuButton.setDimensions(buttonwidth, buttonheight);
-		knoppen.add(new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1));
+		
+		// knoppen
+		MenuButton button1 = new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1);
+		knoppen.add(button1);
 		knoppen.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));
+		
+		// MainMenu
+		mainMenu.add(new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1));
+		mainMenu.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));
+		
+		// Settings
+		Settings.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));
 	}
 	/**
 	 * ************************************
@@ -99,11 +108,7 @@ public class Menu {
 	public void display(){
 		
 		drawBackground();
-		
-		
-		for(MenuButton knop: knoppen){
-			knop.draw();
-		}
+		knoppen.display();
 	}
 	/**
 	 * ************************************
