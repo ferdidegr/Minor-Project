@@ -1,6 +1,10 @@
 package Game;
 
+import static org.lwjgl.opengl.GL11.*; // for bunny
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -11,6 +15,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
+import org.lwjgl.util.vector.Vector3f; // for bunny
 
 
 public class Mazerunner {
@@ -41,6 +46,42 @@ public void start(){
 	init();
 	initObj();
 	
+	// Loading the bunny
+	int objectDisplayList = glGenLists(1);
+    glNewList(objectDisplayList, GL_COMPILE);
+    {
+        Model m = null;
+        try {
+        	m = OBJLoader.loadModel(new File("res/bunny.obj"));
+        } catch (FileNotFoundException e) {
+        	e.printStackTrace();
+        	Display.destroy();
+        	System.exit(1);
+        } catch (IOException e) {
+        	e.printStackTrace();
+        	Display.destroy();
+        	System.exit(1);
+        }
+        glBegin(GL_TRIANGLES);
+        for (Face face : m.getFaces()) {
+        	Vector3f n1 = m.getNormals().get((int) face.normal.x);
+        	glNormal3f(n1.x, n1.y, n1.z);
+        	Vector3f v1 = m.getVertices().get((int) face.vertex.x);
+        	glVertex3f(v1.x, v1.y, v1.z);
+        	Vector3f n2 = m.getNormals().get((int) face.normal.y);
+        	glNormal3f(n2.x, n2.y, n2.z);
+        	Vector3f v2 = m.getVertices().get((int) face.vertex.y);
+        	glVertex3f(v2.x, v2.y, v2.z);
+        	Vector3f n3 = m.getNormals().get((int) face.normal.z);
+        	glNormal3f(n3.x, n3.y, n3.z);
+        	Vector3f v3 = m.getVertices().get((int) face.vertex.z);
+        	glVertex3f(v3.x, v3.y, v3.z);
+        }
+        glEnd();
+    }
+    glEndList();
+
+	
 	while(!Display.isCloseRequested()){
 		// If the window is resized
 		if(Display.getWidth()!=screenWidth || Display.getHeight()!=screenHeight) reshape();
@@ -51,6 +92,9 @@ public void start(){
 		// Draw objects on screen
 		display();
 		
+		// loading the bunny
+		glCallList(objectDisplayList);
+		
 		// Location
 		if(input.view_coord==true)System.out.println(player.locationX/maze.SQUARE_SIZE+" "+player.locationZ/maze.SQUARE_SIZE);
 		System.out.println(player.getHorAngle());	
@@ -58,6 +102,7 @@ public void start(){
 		Display.sync(70);
 	}
 	cleanup();
+	glDeleteLists(objectDisplayList, 1);
 }
 
 /*
