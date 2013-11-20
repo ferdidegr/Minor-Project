@@ -11,10 +11,9 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Menu {
 	
-	private GameState gamestate;
-	private ButtonList mainMenu = new ButtonList();
-	private ButtonList Settings = new ButtonList();
-	private ButtonList knoppen;
+	private static GameState gamestate;
+	private MainMenu main = new MainMenu();
+	private Settings sets = new Settings();
 	private int top, bottom, scrollspeed;
 	double height_width_ratio = 1/4f;			// Height/Width 
 	/**
@@ -84,32 +83,18 @@ public class Menu {
 	 * ************************************
 	 */
 	public void ButtonActions(){
-		int buttonID = 0;
+		int ID = 0;
 		switch(gamestate){
 		
-		case KNOPPEN:
-			buttonID = knoppen.checkButtons(bottom);
-			
-			switch(buttonID){
-			case 1:
-				gamestate = gamestate.MAIN;
-				break;
-			
-			default: break;
-			}
+		case SETTINGS:
+			ID = sets.checkButtons(bottom);
+			sets.actionButtons(ID);
 			
 			break;
 			
 		case MAIN:
-			buttonID = mainMenu.checkButtons(bottom);
-			switch(buttonID){
-			case 1:
-				gamestate = gamestate.KNOPPEN;
-				break;
-				
-				default: break;
-			}
-			
+			ID = main.checkButtons(bottom);
+			main.actionButtons(ID);
 			break;
 			
 		default: break;
@@ -123,22 +108,16 @@ public class Menu {
 	 * ************************************
 	 */
 	public void initButtons(){
-		gamestate = gamestate.KNOPPEN;
+		gamestate = GameState.MAIN;
 		int buttonwidth = Display.getWidth()/3;		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
 		MenuButton.setDimensions(buttonwidth, buttonheight);
 		
-		// knoppen
-		knoppen = new ButtonList();
-		knoppen.add(new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1));
-		knoppen.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));
-		
 		// MainMenu
-		mainMenu.add(new MenuButton(buttonwidth, 3*buttonheight, Textures.start, Textures.startover,1));
-		mainMenu.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));
+		main.init(buttonwidth, buttonheight);
 		
 		// Settings
-		Settings.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));
+		sets.init(buttonwidth, buttonheight);
 	}
 	/**
 	 * ************************************
@@ -150,17 +129,13 @@ public class Menu {
 		drawBackground();
 		
 		switch(gamestate){
-		
-		case KNOPPEN:
-			knoppen.display();
-			break;
 			
 		case MAIN:
-			mainMenu.display();
+			main.display();
 			break;
 			
-		case HIGHSCORES:
-			Settings.display();
+		case SETTINGS:
+			sets.display();
 		
 		default: break;
 		}
@@ -241,7 +216,7 @@ public class Menu {
 	 * @param args
 	 * ************************************
 	 */
-	public void setState(GameState state){
+	public static void setState(GameState state){
 		gamestate = state;
 	}
 }

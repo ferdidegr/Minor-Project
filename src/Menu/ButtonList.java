@@ -5,7 +5,7 @@ import java.util.*;
 import org.lwjgl.input.Mouse;
 
 public class ButtonList {
-	private ArrayList<MenuButton> lijst;
+	protected ArrayList<MenuButton> lijst;
 	
 	public ButtonList(){
 		lijst = new ArrayList<MenuButton>();
@@ -29,6 +29,5 @@ public class ButtonList {
 			knop.draw();
 		}
 	}
-	
 
 }
