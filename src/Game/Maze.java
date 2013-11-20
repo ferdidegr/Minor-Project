@@ -63,30 +63,30 @@ public class Maze implements VisibleObject{
 		/*
 		 * Load floor texture
 		 */
-		try {
-			
-			Texfloor = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("res/Wooden_floor_original.jpg"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.err.println("Texture File not found or corrupt!");
-		}
+//		try {
+//			
+////			Texfloor = TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream("res/Wooden_floor_original.jpg"));
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//			System.err.println("Texture File not found or corrupt!");
+//		}
 		
-		/*
-		 * Load Maze
-		 */
-		try {
-			maze = IO.readMaze("levels/test3.maze");
-			MAZE_SIZE_Z = maze.length;
-			MAZE_SIZE_X = maze[0].length;
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-			System.err.println("Maze not found or corrupt, standard maze loaded!");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		/*
+//		 * Load Maze
+//		 */
+//		try {
+//			maze = IO.readMaze("levels/test3.maze");
+//			MAZE_SIZE_Z = maze.length;
+//			MAZE_SIZE_X = maze[0].length;
+//		} catch (IOException e) {
+//			
+//			e.printStackTrace();
+//			System.err.println("Maze not found or corrupt, standard maze loaded!");
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 	}
 	
@@ -186,7 +186,7 @@ public class Maze implements VisibleObject{
 	private void paintSingleFloorTile( double size_X, double size_Z)
 	{
         // Setting the floor color and material.
-		FloatBuffer wallColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.0f).put(0.0f).put(1.0f).put(0.0f).flip();// The floor is blue.
+//		FloatBuffer wallColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.0f).put(0.0f).put(1.0f).put(0.0f).flip();// The floor is blue.
 
         // Set texture to repeat
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -197,7 +197,7 @@ public class Maze implements VisibleObject{
 //		GL11.glBindTexture(GL11.GL_TEXTURE_2D, Texfloor.getTextureID());
         Texfloor.bind();
 		
-        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, wallColour);	// Set the materials used by the floor.
+        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.floorColour);	// Set the materials used by the floor.
         
         
         GL11.glNormal3d(0, 1, 0);

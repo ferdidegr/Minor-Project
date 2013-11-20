@@ -1,5 +1,7 @@
 package Menu;
 import Game.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
@@ -64,7 +66,15 @@ public class Menu {
 			if(buttonID==1)
 				{Mazerunner game = new Mazerunner();
 				glPushMatrix();
-				game.start();
+				try {
+					game.start();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				glPopMatrix();
 				buttonID=0;
 

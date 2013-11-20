@@ -2,7 +2,7 @@ package Game;
 
 import static org.lwjgl.opengl.GL11.* ;
 
-public class Wall extends GameObject{
+public class Wall extends levelObject{
 	/**
 	 * 		 7 +--------+ 6
   	 *		  /|       /|
@@ -16,6 +16,7 @@ public class Wall extends GameObject{
 	 */
 	private double[][] boxvertices;
 	private double left, right, back, front, top, bottom;
+	private boolean wleft, wright, wfront, wback;
 	private int[][] boxfaces= {{0,1,5,4},
 								  {1,2,6,5},
 								  {2,3,7,6},
@@ -49,7 +50,7 @@ public class Wall extends GameObject{
 							{left, top, back}};	
 	}
 	
-	public void draw(){
+	public void display(){
 		glBegin(GL_QUADS);
 		for(int i = 0; i < boxfaces.length; i++){
 			Utils.glNormalvec(normals[i]);
@@ -59,6 +60,24 @@ public class Wall extends GameObject{
 		}
 		glEnd();
 	}
+	/**
+	 * Maximum distance you can travel till you collide
+	 * @param x
+	 * @return
+	 */
+	public double maxDistX(double x){
+		
+		return Math.min(Math.abs(left-x),Math.abs(right-x));
+	}
+	/**
+	 * Maximum distance you can travel till you collide
+	 * @param z
+	 * @return
+	 */
+	public double maxDistZ(double z){
+		return Math.min(Math.abs(front-z),Math.abs(back-z));
+	}
+	
 	
 	public boolean isCollision(double x, double y, double z){
 		return x>left && x<right && z<front && z>back && y>	bottom && y<top;	
