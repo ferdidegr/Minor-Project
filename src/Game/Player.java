@@ -1,5 +1,7 @@
 package Game;
 
+import static org.lwjgl.opengl.GL11.*;
+
 
 /**
  * Player represents the actual player in MazeRunner.
@@ -23,10 +25,8 @@ public class Player extends GameObject {
 	private double speed;
 	private Control control = null;
 	private double run;
-	private boolean jump = false;
+	protected boolean jump = false;
 	double tempVy =0 ;
-	double Ybuffer;
-	double timer = 0;
 	double y_begin;
 	Vector velocity = new Vector(0, 0, 0);
 	
@@ -131,9 +131,7 @@ public class Player extends GameObject {
 		if (control != null)
 		{
 			control.update();
-			
-			// TODO: Rotate the player, according to control
-			
+					
 			horAngle = control.getdX()*speed + horAngle;
 			verAngle = control.getdY()*speed + verAngle;
 			
@@ -141,18 +139,14 @@ public class Player extends GameObject {
 			if(verAngle<-89) verAngle=-89;
 			
 			if(control.jump && !jump){
-				tempVy = 0.6;			// 0.4
+				tempVy = 0.05;			// 0.03
 				jump=true;
 				y_begin = locationY;
 			}
 			if(jump){
-//				locationY = Math.max(y_begin, locationY+tempVy);
-				locationY += tempVy;
-				tempVy-=0.02;
-				if(locationY<=y_begin){
-					locationY=y_begin;
-					jump=false;
-				}
+
+				tempVy-=0.002;
+				velocity.add(0, deltaTime*tempVy, 0);
 			}
 			
 					
@@ -161,39 +155,82 @@ public class Player extends GameObject {
 			} else{
 				run =1;
 			}
-			
+			updateV(deltaTime);
 		}
 	}
-	
-	public void updateX(int deltaTime){
+	/**
+	 * get X grid location
+	 * @param SQUARE_SIZE
+	 * @return
+	 */
+	public int getGridX(int SQUARE_SIZE){
+		return (int) Math.floor(locationX/SQUARE_SIZE);
+	}
+	/**
+	 * get Z grid location
+	 * @param SQUARE_SIZE
+	 * @return
+	 */
+	public int getGridZ(int SQUARE_SIZE){
+		return (int) Math.floor(locationZ/SQUARE_SIZE);
+	}
+	/**
+	 * Update Velocity
+	 * @param deltaTime
+	 */
+	public void updateV(int deltaTime){
+		velocity.scale(0.1,0.5,0.1);
 		if (control.getForward()){
-			locationX = locationX - run*speed*deltaTime*Math.sin(Math.toRadians(horAngle));
+			velocity.add(-run*speed*deltaTime*Math.sin(Math.toRadians(horAngle)),
+					0,
+					- run*speed*deltaTime*Math.cos(Math.toRadians(horAngle)));
 		}
 		if (control.getBack()){
-			locationX = locationX + run*speed*deltaTime*Math.sin(Math.toRadians(horAngle));
+			velocity.add(run*speed*deltaTime*Math.sin(Math.toRadians(horAngle)),
+					0,
+					+ run*speed*deltaTime*Math.cos(Math.toRadians(horAngle)));
 		}
 		if (control.getLeft()){
-			locationX = locationX - run*speed*deltaTime*Math.cos(Math.toRadians(horAngle));
+			velocity.add(-run*speed*deltaTime*Math.cos(Math.toRadians(horAngle)),
+					0,
+					+ run*speed*deltaTime*Math.sin(Math.toRadians(horAngle)));
 		}
 		if (control.getRight()){
-			locationX = locationX + run*speed*deltaTime*Math.cos(Math.toRadians(horAngle));
+			velocity.add(+run*speed*deltaTime*Math.cos(Math.toRadians(horAngle)),
+					0,
+					- run*speed*deltaTime*Math.sin(Math.toRadians(horAngle)));
 		}
+		// Gravity
+		velocity.add(0, -deltaTime*0.002, 0);
+	
 	}
 	
-	public void updateZ(int deltaTime){
-		if (control.getForward()){
-			locationZ = locationZ - run*speed*deltaTime*Math.cos(Math.toRadians(horAngle));
-		}
-		if (control.getBack()){
-			locationZ = locationZ + run*speed*deltaTime*Math.cos(Math.toRadians(horAngle));
-		}
-		if (control.getLeft()){
-			locationZ = locationZ + run*speed*deltaTime*Math.sin(Math.toRadians(horAngle));
-		}
-		if (control.getRight()){
-			locationZ = locationZ - run*speed*deltaTime*Math.sin(Math.toRadians(horAngle));
-		}
-	}
-	
+	public void updateX(){
+		locationX += velocity.getX();
 
+	}
+	
+	public void updateY(){
+		locationY += velocity.getY();
+	}
+	
+	public void updateZ(){
+		locationZ += velocity.getZ();
+	}
+	
+	public void draw(){
+		double offset=0.25;
+		glColor3d(1.0, 0, 0);
+		glPointSize(50);
+		glBegin(GL_POINTS);
+		glVertex3d(locationX, 0, locationZ);
+		glEnd();
+		
+		glBegin(GL_LINE_LOOP);
+		glVertex3d(locationX+offset, 0, locationZ+offset);
+		glVertex3d(locationX-offset, 0, locationZ+offset);
+		glVertex3d(locationX-offset, 0, locationZ-offset);
+		glVertex3d(locationX+offset, 0, locationZ-offset);
+		glEnd();
+	}
 }

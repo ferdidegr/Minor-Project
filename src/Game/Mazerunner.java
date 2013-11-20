@@ -1,10 +1,10 @@
 package Game;
 
 
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
@@ -22,13 +22,17 @@ public class Mazerunner {
 	public Player player;									// The player object.
 	private Camera camera;									// The camera object.
 	private UserInput input;								// The user input object that controls the player.
-	private Maze maze; 										// The maze.
+	private int[][] maze; 										// The maze.
 	private ArrayList<VisibleObject> visibleObjects;		// A list of objects that will be displayed on screen.
+	private ArrayList<levelObject> objlijst;
 	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
 	private double temp_X;
 	private double temp_Z;
 	private Wall wall;
+	private Floor grond;
 	private FloatBuffer lightPosition;
+	private levelObject[][] levelobjecten;
+	private int SQUARE_SIZE=1;
 	
 	/*
 	 *  *************************************************
@@ -36,7 +40,7 @@ public class Mazerunner {
 	 *  *************************************************
 	 */
 	
-public void start(){
+public void start() throws ClassNotFoundException, IOException{
 
 	init();
 	initObj();
@@ -52,14 +56,36 @@ public void start(){
 		display();
 		
 		// Location
-		if(input.view_coord==true)System.out.println(player.locationX/maze.SQUARE_SIZE+" "+player.locationZ/maze.SQUARE_SIZE);
-		System.out.println(player.getHorAngle());	
+		if(input.view_coord==true)System.out.println(player.locationX/SQUARE_SIZE+" "+player.locationZ/SQUARE_SIZE);
+			
 		Display.update();
 		Display.sync(70);
 	}
 	cleanup();
 }
 
+/*
+ * **************************************************
+ * *                 Load Maze                      *
+ * **************************************************
+ */
+public void initMaze() throws ClassNotFoundException, IOException{
+	maze = IO.readMaze("levels/test3.maze");
+	levelobjecten = new levelObject[maze.length][maze[0].length];
+	
+	for(int j = 0; j < maze.length; j++){
+		for(int i = 0; i<maze[0].length; i++){
+			if(maze[j][i]==1){
+				levelObject lvlo = new Wall(i*SQUARE_SIZE+SQUARE_SIZE/2, 0, j*SQUARE_SIZE+SQUARE_SIZE/2, SQUARE_SIZE, 5);
+				visibleObjects.add(lvlo);
+				objlijst.add(lvlo);
+				levelobjecten[j][i]=lvlo;
+			}
+		}
+	}
+
+	
+}
 /*
  *  *************************************************
  *  * 			Initialization methods				*
@@ -98,7 +124,7 @@ public void start(){
 	        GL11.glShadeModel( GL11.GL_SMOOTH );
 	        
 			// Enable Textures
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
+//			GL11.glEnable(GL11.GL_TEXTURE_2D);
 			
 			GL11.glClearDepth(1.0f);			
 			GL11.glDepthFunc(GL11.GL_LEQUAL);
@@ -113,17 +139,21 @@ public void start(){
 		GL11.glDisable(GL11.GL_BLEND);
 		Mouse.setGrabbed(false);
 	}     
-	   public void initObj(){     
+	   public void initObj() throws ClassNotFoundException, IOException{  
+		   
 	     // We define an ArrayList of VisibleObjects to store all the objects that need to be
 			// displayed by MazeRunner.
 			visibleObjects = new ArrayList<VisibleObject>();
+			objlijst = new ArrayList<levelObject>();
+			initMaze();
+			
 			// Add the maze that we will be using.
-			maze = new Maze();
-			visibleObjects.add( maze );
+//			maze = new Maze();
+//			visibleObjects.add( maze );
 	     // Initialize the player.
-			player = new Player( 6 * maze.SQUARE_SIZE + maze.SQUARE_SIZE / 2, 	// x-position
-								 maze.SQUARE_SIZE *3/ 2 ,							// y-position
-								 5 * maze.SQUARE_SIZE + maze.SQUARE_SIZE / 2, 	// z-position
+			player = new Player( 6 * SQUARE_SIZE + SQUARE_SIZE / 2, 	// x-position
+								 SQUARE_SIZE *3/ 2 ,							// y-position
+								 5 * SQUARE_SIZE + SQUARE_SIZE / 2, 	// z-position
 								 0, 0 );										// horizontal and vertical angle
 
 			camera = new Camera( player.getLocationX(), player.getLocationY(), player.getLocationZ(), 
@@ -131,7 +161,12 @@ public void start(){
 			
 			input = new UserInput();
 			player.setControl(input);
-			wall = new Wall(10, 10, 0, 2, 2);
+			wall = new Wall(10, 10, 0, 5, 2);
+			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1);	
+			objlijst.add(wall);
+			
+			objlijst.add(grond);
+		
 	}
 	
 	public void display(){
@@ -158,18 +193,20 @@ public void start(){
 		        
 
 		        // Display all the visible objects of MazeRunner.
-		        for( Iterator<VisibleObject> it = visibleObjects.iterator(); it.hasNext(); ) {
-		        	it.next().display();
-		        }
+		        
+		        for(VisibleObject vo:visibleObjects){
+		        	if(vo instanceof Wall){GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);}
+		        	vo.display();
+		        }	
+		        
 		        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);
-		        wall.draw();
-		        GL11.glPushMatrix();
-		        GL11.glTranslatef(2, 0, 0);
-		        wall.draw();
-		        GL11.glPopMatrix();
-				System.out.println((wall.isCollision(player.locationX, player.locationY, player.locationZ))? "yes":"");
-
-		   
+		        wall.display();
+				player.draw();
+				GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.floorColour);
+				grond.display();
+				// TODO remove
+//				System.out.println(player.getGridX(SQUARE_SIZE)+" "+player.getGridZ(SQUARE_SIZE));
+//				System.out.println(player.locationX+" "+player.locationY+" "+player.locationZ);
 //		        GL11.glLoadIdentity();
 	}
 	
@@ -203,36 +240,46 @@ public void start(){
 			double temp_Y = player.locationY;
 			temp_Z = player.getLocationZ();
 			player.update(deltaTime);
-			double dx = 2*player.getSpeed()*deltaTime;
+			int Xin = player.getGridX(SQUARE_SIZE);
+			int Zin = player.getGridZ(SQUARE_SIZE);
+			boolean colX = false;
+			boolean colZ = false;
+			boolean colY = false;
 			
-			//collision X
-
-			player.updateX(deltaTime);
-			if(maze.isWall(player.getLocationX(), player.getLocationZ()) 
-					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()+dx)
-					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx)					
-					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)
-					|| wall.isCollision(temp_X, temp_Y, temp_Z)
-					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z+dx)
-					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z-dx)
-					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z+dx)
-					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z-dx)){
-				player.setLocationX(temp_X);			
+			for(levelObject lvlob:objlijst){
+				if(lvlob.isCollision(temp_X+player.velocity.getX()+0.25*Math.signum(player.velocity.getX()), temp_Y, temp_Z)){
+					colX=true;
+				}
+				if(lvlob.isCollision(player.locationX, player.locationY, temp_Z+0.25*Math.signum(player.velocity.getZ())+player.velocity.getZ())){
+					colZ=true;
+				}
+				if(lvlob.isCollision(player.locationX,  player.locationY+player.velocity.getY()-SQUARE_SIZE *3/ 2 , player.locationZ)){
+					colY=true;
+				}				
+			}
+			//collision X			
+		
+//			if(wall.isCollision(temp_X+player.velocity.getX()+0.25*Math.signum(player.velocity.getX()), temp_Y, temp_Z)){
+			if(colX){	
+			}else{
+				player.updateX();
 			}
 			// collsion Z
-
-			player.updateZ(deltaTime);
-			if(maze.isWall(player.getLocationX(), player.getLocationZ()) 
-					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()+dx)
-					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx)					
-					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)
-					|| wall.isCollision(temp_X, temp_Y, temp_Z)
-					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z+dx)
-					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z-dx)
-					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z+dx)
-					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z-dx)){
-				player.setLocationZ(temp_Z);			
+			//			
+//			if(wall.isCollision(player.locationX, player.locationY, temp_Z+0.25*Math.signum(player.velocity.getZ())+player.velocity.getZ())){
+			if(colZ){										
+			}else{
+				player.updateZ();
 			}
+			// Collision Y
+//			if(grond.isCollision(player.locationX, player.locationY+player.velocity.getY()-SQUARE_SIZE *3/ 2 , player.locationZ)||
+//					wall.isCollision(player.locationX,  player.locationY+player.velocity.getY()-SQUARE_SIZE *3/ 2 , player.locationZ)){
+			if(colY){
+				player.jump=false;
+			}else{
+				player.updateY();
+			}
+			
 			
 		}
 
