@@ -45,6 +45,7 @@ public class MenuButton {
 		this.mouseover = Mouseover;
 		this.ID = ID;
 		this.name = name;
+		//TODO: Volgens mij kan dit beter ergens anders gebeuren, bedenken waar!
 		initFont();
 	}
 	/**
@@ -78,6 +79,13 @@ public class MenuButton {
 		text(x, y, 1, name );
 	}
 	
+	/** Schrijft tekst vanaf de coordinaten x,y met tekst s
+	 *  
+	 * @param x
+	 * @param y
+	 * @param scale
+	 * @param s
+	 */
 	public void text(int x, int y,float scale, String s){
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -89,6 +97,10 @@ public class MenuButton {
 		GL11.glDisable(GL11.GL_BLEND);
 	}
 	
+	/** Initialiseert het font
+	 *  !Definieer hier het juiste font bestand!
+	 * 
+	 */
 	public void initFont(){
 			try {
 			
@@ -122,7 +134,7 @@ public class MenuButton {
 		height = inheight;
 	}
 	/**
-	 * report mouse location to all buttonss
+	 * report mouse location to all buttons
 	 * @param x
 	 * @param y
 	 */

@@ -73,6 +73,7 @@ public class Menu {
 	/**
 	 * ************************************
 	 * check buttons
+	 * Deze methode roept de checkButtons aan voor het huidige menu
 	 * !Define actions for buttons here!
 	 * ************************************
 	 */
@@ -99,6 +100,7 @@ public class Menu {
 	/**
 	 * ************************************
 	 * define buttons
+	 * Hier worden alle buttons geinitialiseerd met de init() functie
 	 * ************************************
 	 */
 	public void initButtons(){
@@ -116,6 +118,7 @@ public class Menu {
 	/**
 	 * ************************************
 	 * Display all objects	
+	 * Afhankelijk van huidige gamestate wordt de display van de juiste ButtonList aangeroepen
 	 * ************************************
 	 */
 	public void display(){
@@ -206,7 +209,7 @@ public class Menu {
 	/**
 	 * ************************************
 	 * SET GAMESTATE
-	 * @param args
+	 * @param state
 	 * ************************************
 	 */
 	public static void setState(GameState state){
