@@ -10,6 +10,8 @@ import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
 
 public class Menu {
+	
+	private GameState gamestate;
 	private ButtonList mainMenu = new ButtonList();
 	private ButtonList Settings = new ButtonList();
 	private ButtonList knoppen;
@@ -57,19 +59,16 @@ public class Menu {
 			 */
 			if(Mouse.getEventButtonState()){
 				if(Mouse.getEventButton()==0){
-					buttonID = knoppen.checkButtons(bottom);
+					ButtonActions();
 				}
 			}
-			if(buttonID==1)
+			/**if(buttonID==1)
 				{Mazerunner game = new Mazerunner();
 				glPushMatrix();
 				game.start();
 				glPopMatrix();
 				buttonID=0;
-
-				
-				
-			}
+			}**/
 			/*
 			 * Button released
 			 */
@@ -80,22 +79,62 @@ public class Menu {
 	}
 	/**
 	 * ************************************
+	 * check buttons
+	 * !Define actions for buttons here!
+	 * ************************************
+	 */
+	public void ButtonActions(){
+		int buttonID = 0;
+		switch(gamestate){
+		
+		case KNOPPEN:
+			buttonID = knoppen.checkButtons(bottom);
+			
+			switch(buttonID){
+			case 1:
+				gamestate = gamestate.MAIN;
+				break;
+			
+			default: break;
+			}
+			
+			break;
+			
+		case MAIN:
+			buttonID = mainMenu.checkButtons(bottom);
+			switch(buttonID){
+			case 1:
+				gamestate = gamestate.KNOPPEN;
+				break;
+				
+				default: break;
+			}
+			
+			break;
+			
+		default: break;
+			
+		}
+	}
+	
+	/**
+	 * ************************************
 	 * define buttons
 	 * ************************************
 	 */
 	public void initButtons(){
+		gamestate = gamestate.KNOPPEN;
 		int buttonwidth = Display.getWidth()/3;		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
 		MenuButton.setDimensions(buttonwidth, buttonheight);
 		
 		// knoppen
 		knoppen = new ButtonList();
-		MenuButton button1 = new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1);
-		knoppen.add(button1);
+		knoppen.add(new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1));
 		knoppen.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));
 		
 		// MainMenu
-		mainMenu.add(new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1));
+		mainMenu.add(new MenuButton(buttonwidth, 3*buttonheight, Textures.start, Textures.startover,1));
 		mainMenu.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2));
 		
 		// Settings
@@ -109,7 +148,23 @@ public class Menu {
 	public void display(){
 		
 		drawBackground();
-		knoppen.display();
+		
+		switch(gamestate){
+		
+		case KNOPPEN:
+			knoppen.display();
+			break;
+			
+		case MAIN:
+			mainMenu.display();
+			break;
+			
+		case HIGHSCORES:
+			Settings.display();
+		
+		default: break;
+		}
+			
 	}
 	/**
 	 * ************************************
@@ -179,5 +234,14 @@ public class Menu {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * ************************************
+	 * SET GAMESTATE
+	 * @param args
+	 * ************************************
+	 */
+	public void setState(GameState state){
+		gamestate = state;
 	}
 }

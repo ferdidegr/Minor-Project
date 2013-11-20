@@ -8,7 +8,7 @@ public class ButtonList {
 	private ArrayList<MenuButton> lijst;
 	
 	public ButtonList(){
-		ArrayList<MenuButton> lijst = new ArrayList<MenuButton>();
+		lijst = new ArrayList<MenuButton>();
 	}
 	
 	public void add(MenuButton button){
