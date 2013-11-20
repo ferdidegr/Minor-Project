@@ -21,9 +21,11 @@ import static org.lwjgl.opengl.GL11.*;
  *
  */
 public class Player extends GameObject {	
-	private double horAngle, verAngle;
+	private double horAngle, verAngle, width, height;
 	private double speed;
 	private Control control = null;
+	
+	
 	private double run;
 	protected boolean jump = false;
 	double tempVy =0 ;
@@ -45,12 +47,14 @@ public class Player extends GameObject {
 	 * @param h		the horizontal angle of the orientation in degrees
 	 * @param v		the vertical angle of the orientation in degrees
 	 */
-	public Player( double x, double y, double z, double h, double v ) {
+	public Player( double x, double y, double z, double h, double v, double width, double height ) {
 		// Set the initial position and viewing direction of the player.
 		super( x, y, z );
-		horAngle = h;
-		verAngle = v;
-		speed = 0.005;
+		setHorAngle(h);
+		setVerAngle(v);
+		setSpeed(0.005);
+		setHeight(height);
+		setWidth(width);
 	}
 	
 	/**
@@ -104,7 +108,34 @@ public class Player extends GameObject {
 	public void setVerAngle(double verAngle) {
 		this.verAngle = verAngle;
 	}
-	
+	/**
+	 * get the width (actually size as it is cubic
+	 * @param width
+	 */
+	public void setHeight(double height){
+		this.height = height;
+	}
+	/**
+	 * getWidth
+	 * @return
+	 */
+	public double getHeight(){
+		return height;
+	}
+	/**
+	 * get the width (actually size as it is cubic
+	 * @param width
+	 */
+	public void setWidth(double width){
+		this.width = width;
+	}
+	/**
+	 * getWidth
+	 * @return
+	 */
+	public double getWidth(){
+		return width;
+	}
 	/**
 	 * Returns the speed.
 	 * @return the speed
@@ -179,7 +210,7 @@ public class Player extends GameObject {
 	 * @param deltaTime
 	 */
 	public void updateV(int deltaTime){
-		velocity.scale(0.1,0.3,0.1);
+		velocity.scale(0.1,0.4,0.1);
 		if (control.getForward()){
 			velocity.add(-run*speed*deltaTime*Math.sin(Math.toRadians(horAngle)),
 					0,
@@ -201,7 +232,7 @@ public class Player extends GameObject {
 					- run*speed*deltaTime*Math.sin(Math.toRadians(horAngle)));
 		}
 		// Gravity
-		velocity.add(0, -deltaTime*0.002, 0);
+		velocity.add(0, -deltaTime*0.007, 0);
 	
 	}
 	
@@ -219,18 +250,19 @@ public class Player extends GameObject {
 	}
 	
 	public void draw(){
-		double offset=0.25;
-		glColor3d(1.0, 0, 0);
+		glDisable(GL_LIGHTING);
+		glColor3f(1.0f, 1.0f, 1.0f);
 		glPointSize(50);
 		glBegin(GL_POINTS);
-		glVertex3d(locationX, 0, locationZ);
+		glVertex3d(locationX, locationY-height, locationZ);
 		glEnd();
-		
+		glLineWidth(2);
 		glBegin(GL_LINE_LOOP);
-		glVertex3d(locationX+offset, 0, locationZ+offset);
-		glVertex3d(locationX-offset, 0, locationZ+offset);
-		glVertex3d(locationX-offset, 0, locationZ-offset);
-		glVertex3d(locationX+offset, 0, locationZ-offset);
+		glVertex3d(locationX+width, locationY-height, locationZ+width);
+		glVertex3d(locationX-width, locationY-height, locationZ+width);
+		glVertex3d(locationX-width, locationY-height, locationZ-width);
+		glVertex3d(locationX+width, locationY-height, locationZ-width);
 		glEnd();
+		glEnable(GL_LIGHTING);
 	}
 }

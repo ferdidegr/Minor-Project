@@ -26,8 +26,6 @@ public class Mazerunner {
 	private ArrayList<VisibleObject> visibleObjects;		// A list of objects that will be displayed on screen.
 	private ArrayList<levelObject> objlijst;
 	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
-	private double temp_X;
-	private double temp_Z;
 	private Wall wall;
 	private Floor grond;
 	private FloatBuffer lightPosition;
@@ -45,7 +43,8 @@ public void start() throws ClassNotFoundException, IOException{
 	init();
 	initObj();
 	
-	while(!Display.isCloseRequested()){
+	while(!Display.isCloseRequested() && player.locationY>-50){
+		
 		// If the window is resized
 		if(Display.getWidth()!=screenWidth || Display.getHeight()!=screenHeight) reshape();
 		
@@ -70,7 +69,7 @@ public void start() throws ClassNotFoundException, IOException{
  * **************************************************
  */
 public void initMaze() throws ClassNotFoundException, IOException{
-	maze = IO.readMaze("levels/test3.maze");
+	maze = IO.readMaze("levels/test5.maze");
 	levelobjecten = new levelObject[maze.length][maze[0].length];
 	
 	for(int j = 0; j < maze.length; j++){
@@ -154,7 +153,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			player = new Player( 6 * SQUARE_SIZE + SQUARE_SIZE / 2, 	// x-position
 								 SQUARE_SIZE *15/ 2 ,							// y-position
 								 5 * SQUARE_SIZE + SQUARE_SIZE / 2, 	// z-position
-								 0, 0 );										// horizontal and vertical angle
+								 0, 0 ,0.25,SQUARE_SIZE* 3/2);										// horizontal and vertical angle
 
 			camera = new Camera( player.getLocationX(), player.getLocationY(), player.getLocationZ(), 
 					             player.getHorAngle(), player.getVerAngle() );
@@ -175,7 +174,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				long currentTime = now.getTimeInMillis();
 				int deltaTime = (int)(currentTime - previousTime);
 				previousTime = currentTime;
-				
+				System.out.println(deltaTime);
 				
 				//Update any movement since last frame.
 				updateMovement(deltaTime);
@@ -204,9 +203,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				player.draw();
 				GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.floorColour);
 				grond.display();
-				// TODO remove
-//				System.out.println(player.getGridX(SQUARE_SIZE)+" "+player.getGridZ(SQUARE_SIZE));
-//				System.out.println(player.locationX+" "+player.locationY+" "+player.locationZ);
+
+
 //		        GL11.glLoadIdentity();
 	}
 	
@@ -236,45 +234,50 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		 */
 		private void updateMovement(int deltaTime)
 		{
-			temp_X = player.getLocationX();
-			double temp_Y = player.locationY;
-			temp_Z = player.getLocationZ();
-			player.update(deltaTime);
-			int Xin = player.getGridX(SQUARE_SIZE);
-			int Zin = player.getGridZ(SQUARE_SIZE);
+			double px = player.getLocationX();				// Player X Location
+			double py = player.locationY;					// Player Y location
+			double pz = player.getLocationZ();				// Player Z location
+			double ph	  = player.getHeight();				// Player Height
+			double pw	  = player.getWidth();				// Player Width
+			player.update(deltaTime);						// Updating velocity vector
+//			int Xin = player.getGridX(SQUARE_SIZE);
+//			int Zin = player.getGridZ(SQUARE_SIZE);
+			int signX = (int) Math.signum(player.velocity.getX()); // Direction of the velocity in X
+			int signZ = (int) Math.signum(player.velocity.getZ()); // Direction of the velocity in Z
 			boolean colX = false;
 			boolean colZ = false;
 			boolean colY = false;
 			
 			for(levelObject lvlob:objlijst){
-				if(lvlob.isCollision(temp_X+player.velocity.getX()+0.25*Math.signum(player.velocity.getX()), temp_Y, temp_Z)||
-						lvlob.isCollision(temp_X+player.velocity.getX()+0.25*Math.signum(player.velocity.getX()), player.locationY-SQUARE_SIZE *3/ 2, temp_Z)){
+				if(lvlob.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz+pw)
+				|| lvlob.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz-pw)){
 					colX=true;
 				}
-				if(lvlob.isCollision(player.locationX, player.locationY-SQUARE_SIZE *3/ 2, temp_Z+0.25*Math.signum(player.velocity.getZ())+player.velocity.getZ())){
+				if(lvlob.isCollision(px+pw, py, pz+pw*signZ+player.velocity.getZ())
+				|| lvlob.isCollision(px-pw, py-ph, pz+pw*signZ+player.velocity.getZ())){
 					colZ=true;
 				}
-				if(lvlob.isCollision(player.locationX,  player.locationY+player.velocity.getY()-SQUARE_SIZE *3/ 2 , player.locationZ)){
+				if(lvlob.isCollision(px+pw,  py+player.velocity.getY()-ph , pz+pw)
+				|| lvlob.isCollision(px-pw,  py+player.velocity.getY()-ph , pz+pw)
+				|| lvlob.isCollision(px-pw,  py+player.velocity.getY()-ph , pz-pw)
+				|| lvlob.isCollision(px+pw,  py+player.velocity.getY()-ph , pz-pw)){
 					colY=true;
 				}				
 			}
 			//collision X			
 		
-//			if(wall.isCollision(temp_X+player.velocity.getX()+0.25*Math.signum(player.velocity.getX()), temp_Y, temp_Z)){
 			if(colX){	
 			}else{
 				player.updateX();
 			}
 			// collsion Z
-			//			
-//			if(wall.isCollision(player.locationX, player.locationY, temp_Z+0.25*Math.signum(player.velocity.getZ())+player.velocity.getZ())){
+
 			if(colZ){										
 			}else{
 				player.updateZ();
 			}
 			// Collision Y
-//			if(grond.isCollision(player.locationX, player.locationY+player.velocity.getY()-SQUARE_SIZE *3/ 2 , player.locationZ)||
-//					wall.isCollision(player.locationX,  player.locationY+player.velocity.getY()-SQUARE_SIZE *3/ 2 , player.locationZ)){
+
 			if(colY){
 				player.jump=false;
 			}else{
