@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
@@ -52,7 +53,7 @@ public void start(){
 		
 		// Location
 		if(input.view_coord==true)System.out.println(player.locationX/maze.SQUARE_SIZE+" "+player.locationZ/maze.SQUARE_SIZE);
-			
+		System.out.println(player.getHorAngle());	
 		Display.update();
 		Display.sync(70);
 	}
@@ -110,6 +111,7 @@ public void start(){
 		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		GL11.glDisable(GL11.GL_LIGHT0);
 		GL11.glDisable(GL11.GL_BLEND);
+		Mouse.setGrabbed(false);
 	}     
 	   public void initObj(){     
 	     // We define an ArrayList of VisibleObjects to store all the objects that need to be
@@ -122,14 +124,14 @@ public void start(){
 			player = new Player( 6 * maze.SQUARE_SIZE + maze.SQUARE_SIZE / 2, 	// x-position
 								 maze.SQUARE_SIZE *3/ 2 ,							// y-position
 								 5 * maze.SQUARE_SIZE + maze.SQUARE_SIZE / 2, 	// z-position
-								 90, 0 );										// horizontal and vertical angle
+								 0, 0 );										// horizontal and vertical angle
 
 			camera = new Camera( player.getLocationX(), player.getLocationY(), player.getLocationZ(), 
 					             player.getHorAngle(), player.getVerAngle() );
 			
 			input = new UserInput();
 			player.setControl(input);
-			wall = new Wall(10, 10, 0, 5, 6);
+			wall = new Wall(10, 10, 0, 2, 2);
 	}
 	
 	public void display(){
@@ -161,6 +163,12 @@ public void start(){
 		        }
 		        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);
 		        wall.draw();
+		        GL11.glPushMatrix();
+		        GL11.glTranslatef(2, 0, 0);
+		        wall.draw();
+		        GL11.glPopMatrix();
+				System.out.println((wall.isCollision(player.locationX, player.locationY, player.locationZ))? "yes":"");
+
 		   
 //		        GL11.glLoadIdentity();
 	}
@@ -192,9 +200,10 @@ public void start(){
 		private void updateMovement(int deltaTime)
 		{
 			temp_X = player.getLocationX();
+			double temp_Y = player.locationY;
 			temp_Z = player.getLocationZ();
 			player.update(deltaTime);
-			double dx = player.getSpeed()*deltaTime;
+			double dx = 2*player.getSpeed()*deltaTime;
 			
 			//collision X
 
@@ -202,7 +211,12 @@ public void start(){
 			if(maze.isWall(player.getLocationX(), player.getLocationZ()) 
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()+dx)
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx)					
-					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)){
+					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)
+					|| wall.isCollision(temp_X, temp_Y, temp_Z)
+					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z+dx)
+					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z-dx)
+					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z+dx)
+					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z-dx)){
 				player.setLocationX(temp_X);			
 			}
 			// collsion Z
@@ -211,7 +225,12 @@ public void start(){
 			if(maze.isWall(player.getLocationX(), player.getLocationZ()) 
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()+dx)
 					|| maze.isWall(player.getLocationX()+dx, player.getLocationZ()-dx)					
-					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)){
+					|| maze.isWall(player.getLocationX()-dx, player.getLocationZ()+dx)
+					|| wall.isCollision(temp_X, temp_Y, temp_Z)
+					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z+dx)
+					|| wall.isCollision(temp_X+dx, temp_Y, temp_Z-dx)
+					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z+dx)
+					|| wall.isCollision(temp_X-dx, temp_Y, temp_Z-dx)){
 				player.setLocationZ(temp_Z);			
 			}
 			

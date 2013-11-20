@@ -8,5 +8,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick"/>
+	<classpathentry kind="lib" path="C:/Users/Miranda/Documents/GitHub/WI3620TU-GROUP2/lib/PNGDecoder.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
