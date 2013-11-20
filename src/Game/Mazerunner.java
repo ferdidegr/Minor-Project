@@ -76,7 +76,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
 			if(maze[j][i]==1){
-				levelObject lvlo = new Wall(i*SQUARE_SIZE+SQUARE_SIZE/2, 0, j*SQUARE_SIZE+SQUARE_SIZE/2, SQUARE_SIZE, 5);
+				levelObject lvlo = new Wall(i*SQUARE_SIZE+SQUARE_SIZE/2, 0, j*SQUARE_SIZE+SQUARE_SIZE/2, SQUARE_SIZE, 4);
 				visibleObjects.add(lvlo);
 				objlijst.add(lvlo);
 				levelobjecten[j][i]=lvlo;
@@ -152,7 +152,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 //			visibleObjects.add( maze );
 	     // Initialize the player.
 			player = new Player( 6 * SQUARE_SIZE + SQUARE_SIZE / 2, 	// x-position
-								 SQUARE_SIZE *3/ 2 ,							// y-position
+								 SQUARE_SIZE *15/ 2 ,							// y-position
 								 5 * SQUARE_SIZE + SQUARE_SIZE / 2, 	// z-position
 								 0, 0 );										// horizontal and vertical angle
 
@@ -247,10 +247,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			boolean colY = false;
 			
 			for(levelObject lvlob:objlijst){
-				if(lvlob.isCollision(temp_X+player.velocity.getX()+0.25*Math.signum(player.velocity.getX()), temp_Y, temp_Z)){
+				if(lvlob.isCollision(temp_X+player.velocity.getX()+0.25*Math.signum(player.velocity.getX()), temp_Y, temp_Z)||
+						lvlob.isCollision(temp_X+player.velocity.getX()+0.25*Math.signum(player.velocity.getX()), player.locationY-SQUARE_SIZE *3/ 2, temp_Z)){
 					colX=true;
 				}
-				if(lvlob.isCollision(player.locationX, player.locationY, temp_Z+0.25*Math.signum(player.velocity.getZ())+player.velocity.getZ())){
+				if(lvlob.isCollision(player.locationX, player.locationY-SQUARE_SIZE *3/ 2, temp_Z+0.25*Math.signum(player.velocity.getZ())+player.velocity.getZ())){
 					colZ=true;
 				}
 				if(lvlob.isCollision(player.locationX,  player.locationY+player.velocity.getY()-SQUARE_SIZE *3/ 2 , player.locationZ)){
