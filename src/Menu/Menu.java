@@ -48,7 +48,7 @@ public class Menu {
 	 */
 	public void mousepoll(){
 		
-		int wheeldx = Mouse.getDWheel(), buttonID = 0;
+		int wheeldx = Mouse.getDWheel();
 		if(wheeldx>0){top+=scrollspeed;bottom+=scrollspeed;initview();}
 		if(wheeldx<0){top-=scrollspeed;bottom-=scrollspeed;initview();}
 		MenuButton.setMouse(Mouse.getX(), Mouse.getY()+bottom);
@@ -61,13 +61,7 @@ public class Menu {
 					ButtonActions();
 				}
 			}
-			/**if(buttonID==1)
-				{Mazerunner game = new Mazerunner();
-				glPushMatrix();
-				game.start();
-				glPopMatrix();
-				buttonID=0;
-			}**/
+			
 			/*
 			 * Button released
 			 */
@@ -88,13 +82,13 @@ public class Menu {
 		
 		case SETTINGS:
 			ID = sets.checkButtons(bottom);
-			sets.actionButtons(ID);
+			Settings.actionButtons(ID);
 			
 			break;
 			
 		case MAIN:
 			ID = main.checkButtons(bottom);
-			main.actionButtons(ID);
+			MainMenu.actionButtons(ID);
 			break;
 			
 		default: break;
@@ -125,7 +119,6 @@ public class Menu {
 	 * ************************************
 	 */
 	public void display(){
-		
 		drawBackground();
 		
 		switch(gamestate){
