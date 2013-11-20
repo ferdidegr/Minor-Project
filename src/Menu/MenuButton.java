@@ -76,7 +76,7 @@ public class MenuButton {
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 		
-		text(x, y, 1, name );
+		text(x, y+height/2, 1, name );
 	}
 	
 	/** Schrijft tekst vanaf de coordinaten x,y met tekst s
@@ -87,15 +87,16 @@ public class MenuButton {
 	 * @param s
 	 */
 	public void text(int x, int y,float scale, String s){
+		int lineh = myfont.getHeight();
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glPushMatrix();
 		GL11.glTranslatef(x, y + height, 0);
 		GL11.glScalef(scale, -scale, scale);
-		myfont.drawString(0, 0, s,Color.white);
+		myfont.drawString(0, lineh/2, s,Color.white);
 		GL11.glPopMatrix();
 		GL11.glDisable(GL11.GL_BLEND);
-	}
+	} 
 	
 	/** Initialiseert het font
 	 *  !Definieer hier het juiste font bestand!

@@ -33,7 +33,6 @@ public class MainMenu extends ButtonList {
 		switch(buttonID){
 		
 		case 1:
-			System.out.println("Nu moet hij starten.");
 			Mazerunner game = new Mazerunner();
 			glPushMatrix();
 			try {
