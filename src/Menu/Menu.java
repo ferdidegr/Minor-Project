@@ -23,7 +23,7 @@ public class Menu {
 	 * ************************************
 	 */
 	public void start() throws LWJGLException{
-		Display.setDisplayMode(new DisplayMode(1280, 720));
+		Display.setDisplayMode(new DisplayMode(680, 420));
 		Display.create();
 		bottom = 0;
 		top = Display.getHeight();
