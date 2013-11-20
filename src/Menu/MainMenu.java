@@ -1,6 +1,7 @@
 package Menu;
-import Game.*;
+import java.io.IOException;
 
+import Game.*;
 import static org.lwjgl.opengl.GL11.*;
 
 /** Deze klasse definieert het Main menu. 
@@ -35,7 +36,12 @@ public class MainMenu extends ButtonList {
 			System.out.println("Nu moet hij starten.");
 			Mazerunner game = new Mazerunner();
 			glPushMatrix();
-			game.start();
+			try {
+				game.start();
+			} catch (ClassNotFoundException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			glPopMatrix();
 			buttonID=0;
 			break;
