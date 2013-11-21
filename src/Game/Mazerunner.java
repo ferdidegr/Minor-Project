@@ -31,6 +31,7 @@ public class Mazerunner {
 	private FloatBuffer lightPosition;						
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
+	private MiniMap minimap;								// The minimap object.
 
 	
 	/*
@@ -72,6 +73,8 @@ public void start() throws ClassNotFoundException, IOException{
 public void initMaze() throws ClassNotFoundException, IOException{
 	maze = IO.readMaze("levels/test6.maze");
 	objectindex = new int[maze.length][maze[0].length];
+	
+	minimap=new MiniMap(maze);		//load the minimap
 	
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
@@ -207,8 +210,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				player.draw();
 				GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.floorColour);
 				grond.display();
-
-
+				drawHUD();
+			
 //		        GL11.glLoadIdentity();
 	}
 	
@@ -322,5 +325,30 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			camera.setHorAngle( player.getHorAngle()+(input.lookback? 180:0) );
 			camera.setVerAngle( player.getVerAngle() * (input.lookback? -1:1) );
 			camera.calculateVRP();
+		}
+		
+		private void drawHUD(){
+			// Switch to 2D
+			GL11.glMatrixMode(GL11.GL_PROJECTION);
+			GL11.glPushMatrix();
+			GL11.glLoadIdentity();
+			GL11.glOrtho(0.0, Display.getWidth(), Display.getHeight(), 0.0, -1.0, 10.0);
+			GL11.glMatrixMode(GL11.GL_MODELVIEW);
+
+			GL11.glLoadIdentity();
+			GL11.glDisable(GL11.GL_CULL_FACE);
+			GL11.glDisable(GL11.GL_LIGHTING);
+
+			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+			
+			
+
+			minimap.draw(player,SQUARE_SIZE);
+			GL11.glEnable(GL11.GL_LIGHTING);
+
+			// Making sure we can render 3d again
+			GL11.glMatrixMode(GL11.GL_PROJECTION);
+			GL11.glPopMatrix();
+			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		}
 }
