@@ -65,7 +65,13 @@ public class MazeMap implements Serializable{
 		for(int j = maze.length-1;j>=0;j--){
 			for(int i = 0; i<maze[0].length;i++){
 				if (maze[j][i]==0){Textures.texempty.bind();}
-				if (maze[j][i]==1){Textures.texwall.bind();}
+				if (maze[j][i]==1){Textures.texwall1.bind();}
+				if (maze[j][i]==2){Textures.texwall2.bind();}
+				if (maze[j][i]==3){Textures.texwall3.bind();}
+				if (maze[j][i]==4){Textures.texwall4.bind();}
+				if (maze[j][i]==5){Textures.texwall5.bind();}
+				if (maze[j][i]==6){Textures.texwall6.bind();}
+				if (maze[j][i]==7){Textures.texwall7.bind();}
 				if (maze[j][i]==13){Textures.texspike.bind();}
 				if (maze[j][i]==11){Textures.texflaggreen.bind();}
 				if (maze[j][i]==12){Textures.texflagred.bind();}

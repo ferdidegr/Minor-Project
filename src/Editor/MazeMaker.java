@@ -357,10 +357,18 @@ public class MazeMaker {
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
 		buttonlist.add(new Button(0.05f, 0.1f,Textures.texempty, 0));		// 0
-		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall, 1));		// 1 
-		buttonlist.add(new Button(0.55f, 1.2f,Textures.texflaggreen,11));	// 11 flaggreen
-		buttonlist.add(new Button(0.05f, 2.3f,Textures.texflagred,12));		// 12 flagred
-		buttonlist.add(new Button(0.05f, 1.2f,Textures.texspike, 13));		// 13
+		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall1, 1));		// 1 
+		buttonlist.add(new Button(0.05f, 1.2f,Textures.texwall2, 2));		// 2 
+		buttonlist.add(new Button(0.55f, 1.2f,Textures.texwall3, 3));		// 3 
+		buttonlist.add(new Button(0.05f, 2.3f,Textures.texwall4, 4));		// 4 
+		buttonlist.add(new Button(0.55f, 2.3f,Textures.texwall5, 5));		// 5 
+		buttonlist.add(new Button(0.05f, 3.4f,Textures.texwall6, 6));		// 6 
+		buttonlist.add(new Button(0.55f, 3.4f,Textures.texwall7, 7));		// 7 
+
+		
+		buttonlist.add(new Button(0.05f, 5.6f,Textures.texflaggreen,11));	// 11 flaggreen
+		buttonlist.add(new Button(0.55f, 5.6f,Textures.texflagred,12));		// 12 flagred
+		buttonlist.add(new Button(0.05f, 6.7f,Textures.texspike, 13));		// 13
 
 		buttonlist.add(new Button(0.05f, 10.5f,Textures.texload, 98));		// 98 load button 
 		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button

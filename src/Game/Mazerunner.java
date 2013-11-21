@@ -31,6 +31,7 @@ public class Mazerunner {
 	private FloatBuffer lightPosition;						
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
+
 	
 	/*
 	 *  *************************************************
@@ -69,13 +70,13 @@ public void start() throws ClassNotFoundException, IOException{
  * **************************************************
  */
 public void initMaze() throws ClassNotFoundException, IOException{
-	maze = IO.readMaze("levels/test5.maze");
+	maze = IO.readMaze("levels/test6.maze");
 	objectindex = new int[maze.length][maze[0].length];
 	
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
-			if(maze[j][i]==1){
-				levelObject lvlo = new Wall(i*SQUARE_SIZE+SQUARE_SIZE/2, 0, j*SQUARE_SIZE+SQUARE_SIZE/2, SQUARE_SIZE, 4);
+			if(maze[j][i]>0 && maze[j][i]<11){
+				levelObject lvlo = new Wall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0, SQUARE_SIZE, maze[j][i]);
 				visibleObjects.add(lvlo);
 				objlijst.add(lvlo);
 				objectindex[j][i]=visibleObjects.size()-1;
@@ -195,11 +196,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        
 
 		        // Display all the visible objects of MazeRunner.
-		        
+		        if(!input.debug){
 		        for(VisibleObject vo:visibleObjects){
 		        	if(vo instanceof Wall){GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);}
 		        	vo.display();
-		        }	
+		        }}	
 		        
 		        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);
 		        wall.display();
