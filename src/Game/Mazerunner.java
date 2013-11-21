@@ -276,7 +276,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				|| tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz-pw)){
 					colX=true;
 				}
-				if(tempobj.isCollision(px+pw, py, pz+pw*signZ+player.velocity.getZ())
+				if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+player.velocity.getZ())
 				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+player.velocity.getZ())){
 					colZ=true;
 				}
