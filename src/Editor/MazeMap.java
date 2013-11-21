@@ -49,7 +49,14 @@ public class MazeMap implements Serializable{
 	public int getMazeY(float y){
 		return (int)Math.floor((height*size-y)/size);
 	}
-	
+	/**
+	 * Reserved ID's
+	 * 0 - No wall
+	 * 1-10; Wall(corresponding height)
+	 * 11 - Begin point
+	 * 12 - End point
+	 * 13 - Spikes
+	 */
 	public void draw(){
 		
 		glEnable(GL_TEXTURE_2D);
@@ -59,9 +66,9 @@ public class MazeMap implements Serializable{
 			for(int i = 0; i<maze[0].length;i++){
 				if (maze[j][i]==0){Textures.texempty.bind();}
 				if (maze[j][i]==1){Textures.texwall.bind();}
-				if (maze[j][i]==2){Textures.texspike.bind();}
-				if (maze[j][i]==5){Textures.texflaggreen.bind();}
-				if (maze[j][i]==6){Textures.texflagred.bind();}
+				if (maze[j][i]==13){Textures.texspike.bind();}
+				if (maze[j][i]==11){Textures.texflaggreen.bind();}
+				if (maze[j][i]==12){Textures.texflagred.bind();}
 				glBegin(GL_QUADS);				
 				glTexCoord2d(0, 1);
 				glVertex2f(0+i*size, height*size-(j+1)*size);

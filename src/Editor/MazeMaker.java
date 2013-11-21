@@ -21,7 +21,7 @@ public class MazeMaker {
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
 	private boolean mousedown = false, ctrldown = false;
 	private MazeMap maze = null;
-	private int ID = 0, leftID=0, rightID=0;								// ID when no button has been pressed
+	private int ID = -1, leftID=0, rightID=0;								// ID when no button has been pressed
 	private boolean exit = false;	
 	private float tilesize;
 	private int flaggreenx=-1,flaggreeny=-1,flagredx=-1,flagredy=-1;
@@ -166,6 +166,12 @@ public class MazeMaker {
 	 * Checks if the mouse is clicked and where the mouse is at that instant
 	 * @throws IOException 
 	 * ***********************************************************************
+	 * Reserved ID's
+	 * 0 - No wall
+	 * 1-10; Wall(corresponding height)
+	 * 11 - Begin point
+	 * 12 - End point
+	 * 13 - Spike
 	 */
 	public void Mousepoll() throws IOException{
 		int x = Mouse.getX()+left;					// Transform to world coordinates
@@ -195,22 +201,29 @@ public class MazeMaker {
 			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
 				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
 				switch(leftID){
-					case 2:{maze.setObject(1, x, y);break;}	// Wall
-					case 3:{maze.setObject(0, x, y);break;} // Empty spot
-					case 4:{maze.setObject(2, x, y);break;}	// Spikes
-					case 5:{if (flaggreenx>0 && flaggreeny>0 && maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==5){
+					case 0:{maze.setObject(0, x, y);break;} // Empty spot
+					case 1:{maze.setObject(1, x, y);break;}	// Wall
+					case 2:{maze.setObject(2, x, y);break;}	// Wall
+					case 3:{maze.setObject(3, x, y);break;}	// Wall
+					case 4:{maze.setObject(4, x, y);break;}	// Wall
+					case 5:{maze.setObject(5, x, y);break;}	// Wall
+					case 6:{maze.setObject(6, x, y);break;}	// Wall
+					case 7:{maze.setObject(7, x, y);break;}	// Wall
+					
+					case 13:{maze.setObject(13, x, y);break;}	// Spikes
+					case 11:{if (flaggreenx>0 && flaggreeny>0 && maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
 								maze.setObject(0, flaggreenx, flaggreeny);
 							}
 							flaggreenx=x;
 							flaggreeny=y;
-							maze.setObject(5, x, y);
+							maze.setObject(11, x, y);
 							break;} 						// Flag green
-					case 6:{if (flagredx>0 && flagredy>0 && maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==6){
+					case 12:{if (flagredx>0 && flagredy>0 && maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
 								maze.setObject(0, flagredx, flagredy);
 							}
 							flagredx=x;
 							flagredy=y;
-							maze.setObject(6, x, y);
+							maze.setObject(12, x, y);
 							break;} 						// Flag red
 //					
 				}
@@ -220,23 +233,30 @@ public class MazeMaker {
 			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
 				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
 				switch(rightID){
-					case 2:{maze.setObject(1, x, y);break;}	// Wall
-					case 3:{maze.setObject(0, x, y);break;} // Empty spot
-					case 4:{maze.setObject(2, x, y);break;}	// Spikes
-					case 5:{if (flaggreenx>0 && flaggreeny>0 && maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==5){
-						maze.setObject(0, flaggreenx, flaggreeny);
-					}
-					flaggreenx=x;
-					flaggreeny=y;
-					maze.setObject(5, x, y);
-					break;} 						// Flag green
-					case 6:{if (flagredx>0 && flagredy>0 && maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==6){
-				maze.setObject(0, flagredx, flagredy);
-			}
-			flagredx=x;
-			flagredy=y;
-			maze.setObject(6, x, y);
-			break;} 						// Flag red
+				case 0:{maze.setObject(0, x, y);break;} // Empty spot
+				case 1:{maze.setObject(1, x, y);break;}	// Wall
+				case 2:{maze.setObject(2, x, y);break;}	// Wall
+				case 3:{maze.setObject(3, x, y);break;}	// Wall
+				case 4:{maze.setObject(4, x, y);break;}	// Wall
+				case 5:{maze.setObject(5, x, y);break;}	// Wall
+				case 6:{maze.setObject(6, x, y);break;}	// Wall
+				case 7:{maze.setObject(7, x, y);break;}	// Wall
+				
+				case 13:{maze.setObject(13, x, y);break;}	// Spikes
+				case 11:{if (flaggreenx>0 && flaggreeny>0 && maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
+							maze.setObject(0, flaggreenx, flaggreeny);
+						}
+						flaggreenx=x;
+						flaggreeny=y;
+						maze.setObject(11, x, y);
+						break;} 						// Flag green
+				case 12:{if (flagredx>0 && flagredy>0 && maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
+							maze.setObject(0, flagredx, flagredy);
+						}
+						flagredx=x;
+						flagredy=y;
+						maze.setObject(12, x, y);
+						break;} 						// Flag red
 //					
 				}
 			}
@@ -263,18 +283,18 @@ public class MazeMaker {
 		// Check menu bar buttons Not object buttons
 		switch(ID){
 		    case 101:{exit = true; break;}
-			case 99:{IO.savechooser(maze);ID=0;break;}
+			case 99:{IO.savechooser(maze);ID=-1;break;}
 			case 98:{
 				int[][] tempmaze = null;
 				try {tempmaze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(tempmaze==null){ID= 0;break;}
+				if(tempmaze==null){ID= -1;break;}
 				maze = new MazeMap(tempmaze[0].length, tempmaze.length);
 				maze.setMaze(tempmaze);		
 				resetView();
-				ID=0;break;
+				ID=-1;break;
 				}
 			case 100:{
 				int mwidth = 0;
@@ -303,7 +323,7 @@ public class MazeMaker {
 				if(mwidth>0 && mheight>0)
 				maze = new MazeMap(mwidth, mheight);
 				resetView();
-				ID=0;
+				ID=-1;
 				break;
 			}
 		}
@@ -320,6 +340,13 @@ public class MazeMaker {
 	 * *************************************************
 	 * Initialize buttons, declare all menu buttons here
 	 * *************************************************
+	 * Reserved ID's
+	 * -1 - No button clicked
+	 *  0 - No wall
+	 * 1-10; Wall(corresponding height)
+	 * 11 - Begin point
+	 * 12 - End point
+	 * 13 - Spikes
 	 */
 	public void initButtons(){
 		/*
@@ -329,16 +356,17 @@ public class MazeMaker {
 		/*
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
-		
-		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall, 2));		// 2 
-		buttonlist.add(new Button(0.05f, 0.1f,Textures.texempty, 3));		// 3
-		buttonlist.add(new Button(0.05f, 1.2f,Textures.texspike, 4));		// 4
+		buttonlist.add(new Button(0.05f, 0.1f,Textures.texempty, 0));		// 0
+		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall, 1));		// 1 
+		buttonlist.add(new Button(0.55f, 1.2f,Textures.texflaggreen,11));	// 11 flaggreen
+		buttonlist.add(new Button(0.05f, 2.3f,Textures.texflagred,12));		// 12 flagred
+		buttonlist.add(new Button(0.05f, 1.2f,Textures.texspike, 13));		// 13
+
 		buttonlist.add(new Button(0.05f, 10.5f,Textures.texload, 98));		// 98 load button 
 		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button
 		buttonlist.add(new Button(0.05f, 11.6f,Textures.texnewmaze, 100));	// 100 New maze
 		buttonlist.add(new Button(0.55f, 11.6f,Textures.texempty,101)); 	// 101 Exit button
-		buttonlist.add(new Button(0.55f, 1.2f,Textures.texflaggreen,5));	// 5 flaggreen
-		buttonlist.add(new Button(0.05f, 2.3f,Textures.texflagred,6));		// 6 flagred
+
 	}
 	/**
 	 * ********************************************
