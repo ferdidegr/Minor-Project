@@ -71,7 +71,7 @@ public void start() throws ClassNotFoundException, IOException{
  * **************************************************
  */
 public void initMaze() throws ClassNotFoundException, IOException{
-	maze = IO.readMaze("levels/pyramid.maze");
+	maze = IO.readMaze("levels/test5.maze");
 	objectindex = new int[maze.length][maze[0].length];
 	
 	minimap=new MiniMap(maze);		//load the minimap
@@ -156,10 +156,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 //			maze = new Maze();
 //			visibleObjects.add( maze );
 	     // Initialize the player.
-			player = new Player( 6 * SQUARE_SIZE + SQUARE_SIZE / 2, 	// x-position
-								 SQUARE_SIZE *15/ 2 ,							// y-position
-								 5 * SQUARE_SIZE + SQUARE_SIZE / 2, 	// z-position
-								 0, 0 ,0.25,SQUARE_SIZE* 3/2);										// horizontal and vertical angle
+			player = new Player( 6 * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
+								 SQUARE_SIZE *15/ 2.0 ,							// y-position
+								 5 * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
+								 0, 0 ,0.25,SQUARE_SIZE* 3/2.0);										// horizontal and vertical angle
 
 			camera = new Camera( player.getLocationX(), player.getLocationY(), player.getLocationZ(), 
 					             player.getHorAngle(), player.getVerAngle() );
@@ -167,7 +167,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			input = new UserInput();
 			player.setControl(input);
 			wall = new Wall(10, 10, 0, 5, 2);
-			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1);	
+			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1,SQUARE_SIZE,Textures.menubackground);	
 			objlijst.add(wall);
 			
 			objlijst.add(grond);
@@ -210,7 +210,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				player.draw();
 				GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.floorColour);
 				grond.display();
-				drawHUD();
+				if(input.minimap){drawHUD();}
 			
 //		        GL11.glLoadIdentity();
 	}

@@ -26,10 +26,10 @@ public class IO {
 	 * @return
 	 * @throws IOException
 	 */
-	public static Texture readtexture(String input) throws IOException{
-					
-		return TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream(input));
-
+	public static Texture loadtex(String input) throws IOException{
+		if(input.toLowerCase().endsWith(".jpg")){return TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream(input));}
+		if(input.toLowerCase().endsWith(".png")){return TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(input));}
+		throw new IOException();
 	}
 	
 }

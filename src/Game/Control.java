@@ -28,6 +28,7 @@ public abstract class Control
 	protected boolean run = false;
 	protected boolean view_coord = false;
 	protected boolean debug = false;
+	protected boolean minimap = false;
 	double Vy=0;
 	protected int dX = 0;
 	protected int dY = 0;

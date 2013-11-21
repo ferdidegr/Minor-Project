@@ -109,6 +109,7 @@ public class UserInput extends Control
 				if(Keyboard.getEventKey() == Keyboard.KEY_F1){view_coord = false;}
 				if(Keyboard.getEventKey() == Keyboard.KEY_E){lookback = false;}
 				if(Keyboard.getEventKey()== Keyboard.KEY_F2){debug = !debug;}
+				if(Keyboard.getEventKey()== Keyboard.KEY_M){minimap = ! minimap;}
 		    }
 		}
 	}
