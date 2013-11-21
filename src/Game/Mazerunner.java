@@ -71,7 +71,7 @@ public void start() throws ClassNotFoundException, IOException{
  * **************************************************
  */
 public void initMaze() throws ClassNotFoundException, IOException{
-	maze = IO.readMaze("levels/test6.maze");
+	maze = IO.readMaze("levels/pyramid.maze");
 	objectindex = new int[maze.length][maze[0].length];
 	
 	minimap=new MiniMap(maze);		//load the minimap
