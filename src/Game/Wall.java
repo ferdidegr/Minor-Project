@@ -2,6 +2,8 @@ package Game;
 
 import static org.lwjgl.opengl.GL11.* ;
 
+import org.lwjgl.opengl.GL11;
+
 public class Wall extends levelObject{
 	/**
 	 * 		 7 +--------+ 6
@@ -17,6 +19,8 @@ public class Wall extends levelObject{
 	private double[][] boxvertices;
 	private double left, right, back, front, top, bottom;
 	private boolean wleft, wright, wfront, wback;
+	private double height;
+	private int SQUARE_SIZE;
 	private int[][] boxfaces= {{0,1,5,4},
 								  {1,2,6,5},
 								  {2,3,7,6},
@@ -30,7 +34,7 @@ public class Wall extends levelObject{
 										 {0,1,0}};
 
 	
-	public Wall(double x, double y, double z,double size, double height){
+	public Wall(double x, double y, double z,double size, double height, int SQUARE_SIZE){
 		super(x, y, z);
 		this.left = x-size/2;
 		this.right = x+size/2;
@@ -38,7 +42,8 @@ public class Wall extends levelObject{
 		this.back = z-size/2;
 		this.bottom = 0;
 		this.top = height;
-		
+		this.height= height;
+		setSZ(SQUARE_SIZE);
 		this.boxvertices = new double[][]{
 							{left, bottom, front},
 							{right, bottom, front},
@@ -49,16 +54,29 @@ public class Wall extends levelObject{
 							{right, top, back},
 							{left, top, back}};	
 	}
-	
+	public void setSZ(int SQUARE_SIZE){
+		this.SQUARE_SIZE= SQUARE_SIZE;
+	}
 	public void display(){
+		
+		glEnable(GL_TEXTURE_2D);
+		Textures.start.bind();
+		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 		glBegin(GL_QUADS);
 		for(int i = 0; i < boxfaces.length; i++){
 			Utils.glNormalvec(normals[i]);
-			for(int j = 0; j < boxfaces[0].length; j++){
-				Utils.glVertvec(boxvertices[boxfaces[i][j]]);				
-			}
+			glTexCoord2d(0, (i==boxfaces.length-1?1:height/SQUARE_SIZE));
+			Utils.glVertvec(boxvertices[boxfaces[i][0]]);
+			glTexCoord2d(1, (i==boxfaces.length-1?1:height/SQUARE_SIZE));
+			Utils.glVertvec(boxvertices[boxfaces[i][1]]);
+			glTexCoord2d(1, 0);
+			Utils.glVertvec(boxvertices[boxfaces[i][2]]);
+			glTexCoord2d(0, 0);
+			Utils.glVertvec(boxvertices[boxfaces[i][3]]);
 		}
 		glEnd();
+		glDisable(GL_TEXTURE_2D);
 	}
 	/**
 	 * Maximum distance you can travel till you collide

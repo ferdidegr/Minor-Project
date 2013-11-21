@@ -32,7 +32,7 @@ public class Mazerunner {
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
 	private MiniMap minimap;								// The minimap object.
-
+	private String level = "levels/pyramid.maze";
 	
 	/*
 	 *  *************************************************
@@ -41,6 +41,9 @@ public class Mazerunner {
 	 */
 	
 public void start() throws ClassNotFoundException, IOException{
+	// TODO remove
+	Display.setResizable(true);
+	
 	initObj();
 	init();
 	
@@ -71,7 +74,7 @@ public void start() throws ClassNotFoundException, IOException{
  * **************************************************
  */
 public void initMaze() throws ClassNotFoundException, IOException{
-	maze = IO.readMaze("levels/test5.maze");
+	maze = IO.readMaze(level);
 	objectindex = new int[maze.length][maze[0].length];
 	
 	minimap=new MiniMap(maze);		//load the minimap
@@ -79,7 +82,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
 			if(maze[j][i]>0 && maze[j][i]<11){
-				levelObject lvlo = new Wall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0, SQUARE_SIZE, maze[j][i]);
+				levelObject lvlo = new Wall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0, SQUARE_SIZE, maze[j][i],SQUARE_SIZE);
 				visibleObjects.add(lvlo);
 				objlijst.add(lvlo);
 				objectindex[j][i]=visibleObjects.size()-1;
@@ -96,8 +99,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
  *  * 			Initialization methods				*
  *  *************************************************
  */
-	public void init(){
-		
+	public void init(){		
 		
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);	
 		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -136,6 +138,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 
 	        
 	}
+	/**
+	 * Cleanup after shut down
+	 */
 	public void cleanup(){
 		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glDisable(GL11.GL_CULL_FACE);
@@ -143,7 +148,12 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		GL11.glDisable(GL11.GL_LIGHT0);
 		GL11.glDisable(GL11.GL_BLEND);
 		Mouse.setGrabbed(false);
-	}     
+	}  
+	/**
+	 * Initialize all objects
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	   public void initObj() throws ClassNotFoundException, IOException{  
 		   
 	     // We define an ArrayList of VisibleObjects to store all the objects that need to be
@@ -166,14 +176,16 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			
 			input = new UserInput();
 			player.setControl(input);
-			wall = new Wall(10, 10, 0, 5, 2);
+			wall = new Wall(10, 10, 0, 5, 2,SQUARE_SIZE);
 			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1,SQUARE_SIZE,Textures.menubackground);	
 			objlijst.add(wall);
 			
 			objlijst.add(grond);
 		
 	}
-	
+	/**
+	 * Display function, draw all visible objects
+	 */
 	public void display(){
 		// Calculating time since last frame.
 				Calendar now = Calendar.getInstance();		
@@ -216,7 +228,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	}
 	
 
-	
+	/**
+	 * if the window is reshaped, change accordingly
+	 */
 	public void reshape(){
 		screenWidth = Display.getWidth();
 		screenHeight = Display.getHeight();
@@ -326,13 +340,15 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			camera.setVerAngle( player.getVerAngle() * (input.lookback? -1:1) );
 			camera.calculateVRP();
 		}
-		
+		/**
+		 * Switches to 2D orthogonal view to project the HUD, after drawing the HUD, the Matrixmode is set back to 3D view
+		 */
 		private void drawHUD(){
 			// Switch to 2D
 			GL11.glMatrixMode(GL11.GL_PROJECTION);
 			GL11.glPushMatrix();
 			GL11.glLoadIdentity();
-			GL11.glOrtho(0.0, Display.getWidth(), Display.getHeight(), 0.0, -1.0, 10.0);
+			GL11.glOrtho(0.0, Display.getWidth(), Display.getHeight(), 0.0, -1.0, 1.0);
 			GL11.glMatrixMode(GL11.GL_MODELVIEW);
 
 			GL11.glLoadIdentity();
