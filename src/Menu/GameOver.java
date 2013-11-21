@@ -1,19 +1,14 @@
 package Menu;
+
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+
 import java.io.IOException;
 
-import org.lwjgl.opengl.Display;
+import Game.Mazerunner;
 
-import Game.*;
-import static org.lwjgl.opengl.GL11.*;
-
-/** Deze klasse definieert het Main menu. 
- * 
- * @author Karin
- *
- */
-public class MainMenu extends ButtonList {
-	
-	public MainMenu(){
+public class GameOver extends ButtonList {
+	public GameOver(){
 		super();
 	}
 	
@@ -23,8 +18,8 @@ public class MainMenu extends ButtonList {
 	 * @param buttonheight
 	 */
 	public void init(int buttonwidth, int buttonheight){
-		lijst.add(new MenuButton(buttonwidth, 3*buttonheight, Textures.start, Textures.startover,1, "Start game"));
-		lijst.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2, "Settings"));
+		lijst.add(new MenuButton(buttonwidth, 3*buttonheight, Textures.start, Textures.startover,1, "Restart"));
+		lijst.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2, "Main Menu"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -49,10 +44,9 @@ public class MainMenu extends ButtonList {
 			break;
 			
 		case 2:
-			Menu.setState(GameState.SETTINGS);
+			Menu.setState(GameState.MAIN);
 			
 			default: break;
 		}
 	}
-	
 }

@@ -14,6 +14,7 @@ public class Menu {
 	private static GameState gamestate;
 	private MainMenu main = new MainMenu();
 	private Settings sets = new Settings();
+	private GameOver over = new GameOver();
 	private int top, bottom, scrollspeed;
 	double height_width_ratio = 1/4f;			// Height/Width 
 	/**
@@ -92,6 +93,11 @@ public class Menu {
 			MainMenu.actionButtons(ID);
 			break;
 			
+		case GAMEOVER:
+			ID = over.checkButtons(bottom);
+			GameOver.actionButtons(ID);
+			break;
+			
 		default: break;
 			
 		}
@@ -114,6 +120,9 @@ public class Menu {
 		
 		// Settings
 		sets.init(buttonwidth, buttonheight);
+		
+		// Game Over
+		over.init(buttonwidth, buttonheight);
 	}
 	/**
 	 * ************************************
@@ -132,6 +141,12 @@ public class Menu {
 			
 		case SETTINGS:
 			sets.display();
+			break;
+			
+		case GAMEOVER:
+			over.display();
+			
+			break;
 		
 		default: break;
 		}

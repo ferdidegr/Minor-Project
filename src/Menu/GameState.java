@@ -1,5 +1,5 @@
 package Menu;
 
 public enum GameState {
-	KNOPPEN, MAIN, SETTINGS
+	KNOPPEN, MAIN, SETTINGS, GAMEOVER
 }
