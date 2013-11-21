@@ -29,7 +29,7 @@ public class Mazerunner {
 	private Wall wall;
 	private Floor grond;
 	private FloatBuffer lightPosition;
-	private levelObject[][] levelobjecten;
+	private int[][] objectindex;
 	private int SQUARE_SIZE=1;
 	
 	/*
@@ -39,9 +39,9 @@ public class Mazerunner {
 	 */
 	
 public void start() throws ClassNotFoundException, IOException{
-
-	init();
 	initObj();
+	init();
+	
 	
 	while(!Display.isCloseRequested() && player.locationY>-50){
 		
@@ -70,7 +70,7 @@ public void start() throws ClassNotFoundException, IOException{
  */
 public void initMaze() throws ClassNotFoundException, IOException{
 	maze = IO.readMaze("levels/test5.maze");
-	levelobjecten = new levelObject[maze.length][maze[0].length];
+	objectindex = new int[maze.length][maze[0].length];
 	
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
@@ -78,7 +78,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				levelObject lvlo = new Wall(i*SQUARE_SIZE+SQUARE_SIZE/2, 0, j*SQUARE_SIZE+SQUARE_SIZE/2, SQUARE_SIZE, 4);
 				visibleObjects.add(lvlo);
 				objlijst.add(lvlo);
-				levelobjecten[j][i]=lvlo;
+				objectindex[j][i]=visibleObjects.size()-1;
+			}else{
+				objectindex[j][i]=-200;
 			}
 		}
 	}
@@ -112,7 +114,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		
 		// Set and enable the lighting.
 		
-		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.0f).put(50.0f).put(0.0f).put(1.0f).flip();	// High up in the sky!
+		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(maze[0].length*SQUARE_SIZE).put(150.0f).put(maze.length*SQUARE_SIZE).put(1.0f).flip();	// High up in the sky!
 	        FloatBuffer lightColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();		// White light!
 	        GL11.glLight( GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition);	// Note that we're setting Light0.
 	        GL11.glLight( GL11.GL_LIGHT0, GL11.GL_AMBIENT, lightColour);
@@ -174,7 +176,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				long currentTime = now.getTimeInMillis();
 				int deltaTime = (int)(currentTime - previousTime);
 				previousTime = currentTime;
-				System.out.println(deltaTime);
+				// TODO remove
+//				System.out.println(deltaTime);
 				
 				//Update any movement since last frame.
 				updateMovement(deltaTime);
@@ -240,27 +243,47 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			double ph	  = player.getHeight();				// Player Height
 			double pw	  = player.getWidth();				// Player Width
 			player.update(deltaTime);						// Updating velocity vector
-//			int Xin = player.getGridX(SQUARE_SIZE);
-//			int Zin = player.getGridZ(SQUARE_SIZE);
+			int Xin = player.getGridX(SQUARE_SIZE);
+			int Zin = player.getGridZ(SQUARE_SIZE);
 			int signX = (int) Math.signum(player.velocity.getX()); // Direction of the velocity in X
 			int signZ = (int) Math.signum(player.velocity.getZ()); // Direction of the velocity in Z
 			boolean colX = false;
 			boolean colZ = false;
 			boolean colY = false;
+			ArrayList<Integer> tempindex = new ArrayList<Integer>();
 			
-			for(levelObject lvlob:objlijst){
-				if(lvlob.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz+pw)
-				|| lvlob.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz-pw)){
+			// Get indices
+			for(int i = -1 ; i<=1;i++){
+				for(int j = -1; j<=1; j++){
+					if((Xin+i)>=0 && (Xin+i)<maze[0].length && (Zin+j)>=0 && (Zin+j)<maze.length){
+						if(objectindex[Zin+j][Xin+i]>=0){							// < zero means there is nothing so no index
+							tempindex.add(objectindex[Zin+j][Xin+i]);
+						}
+					}
+				}
+			}
+			//Add addition extra block
+			tempindex.add(objlijst.size()-2);
+			//Add floor
+			tempindex.add(objlijst.size()-1);
+			//TODO REMOVE
+			System.out.println(tempindex.size());
+			
+//			for(levelObject lvlob:objlijst){
+			for(int i = 0; i< tempindex.size();i++){
+				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));				
+				if(tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz+pw)
+				|| tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz-pw)){
 					colX=true;
 				}
-				if(lvlob.isCollision(px+pw, py, pz+pw*signZ+player.velocity.getZ())
-				|| lvlob.isCollision(px-pw, py-ph, pz+pw*signZ+player.velocity.getZ())){
+				if(tempobj.isCollision(px+pw, py, pz+pw*signZ+player.velocity.getZ())
+				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+player.velocity.getZ())){
 					colZ=true;
 				}
-				if(lvlob.isCollision(px+pw,  py+player.velocity.getY()-ph , pz+pw)
-				|| lvlob.isCollision(px-pw,  py+player.velocity.getY()-ph , pz+pw)
-				|| lvlob.isCollision(px-pw,  py+player.velocity.getY()-ph , pz-pw)
-				|| lvlob.isCollision(px+pw,  py+player.velocity.getY()-ph , pz-pw)){
+				if(tempobj.isCollision(px+pw,  py+player.velocity.getY()-ph , pz+pw)
+				|| tempobj.isCollision(px-pw,  py+player.velocity.getY()-ph , pz+pw)
+				|| tempobj.isCollision(px-pw,  py+player.velocity.getY()-ph , pz-pw)
+				|| tempobj.isCollision(px+pw,  py+player.velocity.getY()-ph , pz-pw)){
 					colY=true;
 				}				
 			}
