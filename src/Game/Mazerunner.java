@@ -18,19 +18,19 @@ public class Mazerunner {
 	 * Local Variables
 	 */
 	
-	private int screenWidth = 1280, screenHeight = 720;
+	private int screenWidth = 1280, screenHeight = 720;		// Deprecated
 	public Player player;									// The player object.
 	private Camera camera;									// The camera object.
 	private UserInput input;								// The user input object that controls the player.
-	private int[][] maze; 										// The maze.
+	private int[][] maze; 									// The maze.
 	private ArrayList<VisibleObject> visibleObjects;		// A list of objects that will be displayed on screen.
-	private ArrayList<levelObject> objlijst;
+	private ArrayList<levelObject> objlijst;				// List of all collidable objects
 	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
-	private Wall wall;
-	private Floor grond;
-	private FloatBuffer lightPosition;
-	private int[][] objectindex;
-	private int SQUARE_SIZE=1;
+	private Wall wall;										// Wall Class, used to put one wall in for test TODO remove
+	private Floor grond;									// Floor class used to put the floor in
+	private FloatBuffer lightPosition;						
+	private int[][] objectindex;							// reference to the arraylist entry
+	private int SQUARE_SIZE=1;								// Size of a unit block
 	
 	/*
 	 *  *************************************************
@@ -45,7 +45,7 @@ public void start() throws ClassNotFoundException, IOException{
 	
 	while(!Display.isCloseRequested() && player.locationY>-50){
 		
-		// If the window is resized
+		// If the window is resized, might not be implemented
 		if(Display.getWidth()!=screenWidth || Display.getHeight()!=screenHeight) reshape();
 		
 		// Check for Input
@@ -54,8 +54,8 @@ public void start() throws ClassNotFoundException, IOException{
 		// Draw objects on screen
 		display();
 		
-		// Location
-		if(input.view_coord==true)System.out.println(player.locationX/SQUARE_SIZE+" "+player.locationZ/SQUARE_SIZE);
+		// Location print player location
+		if(input.view_coord==true)System.out.println(player.getGridX(SQUARE_SIZE)+" "+player.getGridZ(SQUARE_SIZE));
 			
 		Display.update();
 		Display.sync(70);
@@ -177,7 +177,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				int deltaTime = (int)(currentTime - previousTime);
 				previousTime = currentTime;
 				// TODO remove
-//				System.out.println(deltaTime);
+				System.out.println(deltaTime);
 				
 				//Update any movement since last frame.
 				updateMovement(deltaTime);
@@ -252,7 +252,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			boolean colY = false;
 			ArrayList<Integer> tempindex = new ArrayList<Integer>();
 			
-			// Get indices
+			// Get indices of the arraylist with collidable objects
 			for(int i = -1 ; i<=1;i++){
 				for(int j = -1; j<=1; j++){
 					if((Xin+i)>=0 && (Xin+i)<maze[0].length && (Zin+j)>=0 && (Zin+j)<maze.length){
@@ -266,8 +266,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			tempindex.add(objlijst.size()-2);
 			//Add floor
 			tempindex.add(objlijst.size()-1);
-			//TODO REMOVE
-			System.out.println(tempindex.size());
+
 			
 //			for(levelObject lvlob:objlijst){
 			for(int i = 0; i< tempindex.size();i++){
