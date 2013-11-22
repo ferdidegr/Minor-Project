@@ -287,18 +287,33 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			//Add floor
 			tempindex.add(objlijst.size()-1);
 
-			
+			// Voor nu nog ff beunen
 //			for(levelObject lvlob:objlijst){
+			//collision X	
 			for(int i = 0; i< tempindex.size();i++){
 				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));				
 				if(tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz+pw)
 				|| tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz-pw)){
 					colX=true;
 				}
+			}			
+			if(colX){}else{	player.updateX();}
+			px = player.locationX;
+			// collsion Z			
+			
+			for(int i = 0; i< tempindex.size();i++){
+				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));		
 				if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+player.velocity.getZ())
 				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+player.velocity.getZ())){
 					colZ=true;
 				}
+			}
+			if(colZ){}else{	player.updateZ();}
+			pz= player.getLocationZ();
+			
+			// CollisionY
+			for(int i = 0; i< tempindex.size();i++){
+				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));		
 				if(tempobj.isCollision(px+pw,  py+player.velocity.getY()-ph , pz+pw)
 				|| tempobj.isCollision(px-pw,  py+player.velocity.getY()-ph , pz+pw)
 				|| tempobj.isCollision(px-pw,  py+player.velocity.getY()-ph , pz-pw)
@@ -306,25 +321,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 					colY=true;
 				}				
 			}
-			//collision X			
-		
-			if(colX){	
-			}else{
-				player.updateX();
-			}
-			// collsion Z
-
-			if(colZ){										
-			}else{
-				player.updateZ();
-			}
-			// Collision Y
-
-			if(colY){
-				player.jump=false;
-			}else{
-				player.updateY();
-			}
+			if(colY){player.jump=false;}else{player.updateY();}
 			
 			
 		}
