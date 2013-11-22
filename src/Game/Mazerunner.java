@@ -32,7 +32,7 @@ public class Mazerunner {
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/pyramid.maze";
+	private String level = "levels/test6.maze";
 	
 	/*
 	 *  *************************************************
@@ -218,7 +218,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        }}	
 		        
 		        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);
+
 		        wall.display();
+		        
 				player.draw();
 				GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.floorColour);
 				grond.display();
