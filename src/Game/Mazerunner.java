@@ -9,7 +9,7 @@ import java.util.Calendar;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.glu.GLU;
 
 
@@ -101,40 +101,40 @@ public void initMaze() throws ClassNotFoundException, IOException{
  */
 	public void init(){		
 		
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);	
-		GL11.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		// Now we set up our viewpoint.
-		GL11.glMatrixMode(GL11.GL_PROJECTION);					// We'll use orthogonal projection.
-		GL11.glLoadIdentity();									// REset the current matrix.
+		glMatrixMode(GL_PROJECTION);					// We'll use orthogonal projection.
+		glLoadIdentity();									// REset the current matrix.
 		GLU.gluPerspective(60, (float)Display.getWidth()/Display.getHeight(), 0.001f, 1000);	// Set up the parameters for perspective viewing. 
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		glMatrixMode(GL_MODELVIEW);
 		
 		// Enable back-face culling.
-		GL11.glCullFace(GL11.GL_BACK);
-		GL11.glEnable(GL11.GL_CULL_FACE);
+		glCullFace(GL_BACK);
+		glEnable(GL_CULL_FACE);
 		
 		// Enable Z-buffering
-		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		glEnable(GL_DEPTH_TEST);
 		
 		
 		// Set and enable the lighting.
 		
 		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(maze[0].length*SQUARE_SIZE).put(150.0f).put(maze.length*SQUARE_SIZE).put(1.0f).flip();	// High up in the sky!
 	        FloatBuffer lightColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();		// White light!
-	        GL11.glLight( GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition);	// Note that we're setting Light0.
-	        GL11.glLight( GL11.GL_LIGHT0, GL11.GL_AMBIENT, lightColour);
-	        GL11.glEnable( GL11.GL_LIGHTING );
-	        GL11.glEnable( GL11.GL_LIGHT0 );
+	        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	// Note that we're setting Light0.
+	        glLight( GL_LIGHT0, GL_AMBIENT, lightColour);
+	        glEnable( GL_LIGHTING );
+	        glEnable( GL_LIGHT0 );
 	        
 	     // Set the shading model.
-	        GL11.glShadeModel( GL11.GL_SMOOTH );
+	        glShadeModel( GL_SMOOTH );
 	        
 			// Enable Textures
-//			GL11.glEnable(GL11.GL_TEXTURE_2D);
+//			glEnable(GL_TEXTURE_2D);
 			
-			GL11.glClearDepth(1.0f);			
-			GL11.glDepthFunc(GL11.GL_LEQUAL);
+			glClearDepth(1.0f);			
+			glDepthFunc(GL_LEQUAL);
 
 	        
 	}
@@ -142,11 +142,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 * Cleanup after shut down
 	 */
 	public void cleanup(){
-		GL11.glDisable(GL11.GL_LIGHTING);
-		GL11.glDisable(GL11.GL_CULL_FACE);
-		GL11.glDisable(GL11.GL_DEPTH_TEST);
-		GL11.glDisable(GL11.GL_LIGHT0);
-		GL11.glDisable(GL11.GL_BLEND);
+		glDisable(GL_LIGHTING);
+		glDisable(GL_CULL_FACE);
+		glDisable(GL_DEPTH_TEST);
+		glDisable(GL_LIGHT0);
+		glDisable(GL_BLEND);
 		Mouse.setGrabbed(false);
 	}  
 	/**
@@ -199,34 +199,34 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				updateMovement(deltaTime);
 				updateCamera();
 				
-				GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT );
-				GL11.glLoadIdentity();
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+				glLoadIdentity();
 
 		        GLU.gluLookAt( (float)camera.getLocationX(), (float)camera.getLocationY(),(float) camera.getLocationZ(), 
 		        		(float)camera.getVrpX(), (float)camera.getVrpY(), (float)camera.getVrpZ(),
 		        		(float)camera.getVuvX(), (float)camera.getVuvY(), (float)camera.getVuvZ() );
 		        
 		        //update light positions
-		        GL11.glLight( GL11.GL_LIGHT0, GL11.GL_POSITION, lightPosition);	
+		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
 		        
 
 		        // Display all the visible objects of MazeRunner.
 		        if(!input.debug){
 		        for(VisibleObject vo:visibleObjects){
-		        	if(vo instanceof Wall){GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);}
+		        	if(vo instanceof Wall){glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);}
 		        	vo.display();
 		        }}	
 		        
-		        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);
+		        glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);
 
 		        wall.display();
 		        
 				player.draw();
-				GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.floorColour);
+				glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.floorColour);
 				grond.display();
 				if(input.minimap){drawHUD();}
 			
-//		        GL11.glLoadIdentity();
+//		        glLoadIdentity();
 	}
 	
 
@@ -236,13 +236,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	public void reshape(){
 		screenWidth = Display.getWidth();
 		screenHeight = Display.getHeight();
-		GL11.glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		
 		// Now we set up our viewpoint.
-		GL11.glMatrixMode(GL11.GL_PROJECTION);					// We'll use orthogonal projection.
-		GL11.glLoadIdentity();									// REset the current matrix.
+		glMatrixMode(GL_PROJECTION);					// We'll use orthogonal projection.
+		glLoadIdentity();									// REset the current matrix.
 		GLU.gluPerspective(60, (float)Display.getWidth()/(float)Display.getHeight(), 0.001f, 1000);	// Set up the parameters for perspective viewing. 
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
+		glMatrixMode(GL_MODELVIEW);
 		
 	}
 	/*
@@ -347,26 +347,31 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		 */
 		private void drawHUD(){
 			// Switch to 2D
-			GL11.glMatrixMode(GL11.GL_PROJECTION);
-			GL11.glPushMatrix();
-			GL11.glLoadIdentity();
-			GL11.glOrtho(0.0, Display.getWidth(), Display.getHeight(), 0.0, -1.0, 1.0);
-			GL11.glMatrixMode(GL11.GL_MODELVIEW);
+			glMatrixMode(GL_PROJECTION);
+			glPushMatrix();
+			glLoadIdentity();
+			glOrtho(0.0, Display.getWidth(), Display.getHeight(), 0.0, -1.0, 1.0);
+			glMatrixMode(GL_MODELVIEW);
 
-			GL11.glLoadIdentity();
-			GL11.glDisable(GL11.GL_CULL_FACE);
-			GL11.glDisable(GL11.GL_LIGHTING);
+			glLoadIdentity();
+			glDisable(GL_CULL_FACE);
+			glDisable(GL_LIGHTING);
 
-			GL11.glClear(GL11.GL_DEPTH_BUFFER_BIT);
+			glClear(GL_DEPTH_BUFFER_BIT);
 			
 			
 
 			minimap.draw(player,SQUARE_SIZE);
-			GL11.glEnable(GL11.GL_LIGHTING);
+			glEnable(GL_LIGHTING);
 
 			// Making sure we can render 3d again
-			GL11.glMatrixMode(GL11.GL_PROJECTION);
-			GL11.glPopMatrix();
-			GL11.glMatrixMode(GL11.GL_MODELVIEW);
+			glMatrixMode(GL_PROJECTION);
+			glPopMatrix();
+			glMatrixMode(GL_MODELVIEW);
+		}
+		
+		public void drawSkybox(){
+		    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+		    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 		}
 }
