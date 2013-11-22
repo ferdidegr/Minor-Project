@@ -27,8 +27,9 @@ public class IO {
 	 * @throws IOException
 	 */
 	public static Texture loadtex(String input) throws IOException{
-		if(input.toLowerCase().endsWith(".jpg")){return TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream(input));}
-		if(input.toLowerCase().endsWith(".png")){return TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(input));}
+		if(input.toLowerCase().endsWith(".jpg")){return TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream(input),true);}
+		if(input.toLowerCase().endsWith(".png")){return TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(input),true);}
+		if(input.toLowerCase().endsWith(".bmp")){return TextureLoader.getTexture("BMP", ResourceLoader.getResourceAsStream(input),true);}
 		throw new IOException();
 	}
 	
