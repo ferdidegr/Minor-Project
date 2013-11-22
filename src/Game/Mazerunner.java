@@ -32,7 +32,7 @@ public class Mazerunner {
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test6.maze";
+	private String level = "levels/test5.maze";
 	
 	/*
 	 *  *************************************************
@@ -167,7 +167,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 //			visibleObjects.add( maze );
 	     // Initialize the player.
 			player = new Player( 6 * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-								 SQUARE_SIZE *15/ 2.0 ,							// y-position
+								 SQUARE_SIZE *30/ 2.0 ,							// y-position
 								 5 * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
 								 0, 0 ,0.25,SQUARE_SIZE* 3/2.0);										// horizontal and vertical angle
 

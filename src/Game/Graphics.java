@@ -14,7 +14,7 @@ public class Graphics {
 	static{
 //		wallColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.5f).put(0.0f).put(0.7f).put(1.0f).flip();	// The walls are purple. 
 		wallColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.7f).put(0.7f).put(0.7f).put(1.0f).flip();	// The walls are white. 
-		floorColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.7f).put(0.7f).put(0.7f).put(0.0f).flip();// The floor is blue.
+		floorColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.7f).put(0.7f).put(0.7f).put(0.0f).flip();// The floor was blue.
 
 	}
 	
