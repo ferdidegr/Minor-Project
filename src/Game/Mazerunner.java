@@ -33,7 +33,7 @@ public class Mazerunner {
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test5.maze";
+	private String level = "levels/pyramid.maze";
 	
 	/*
 	 *  *************************************************
@@ -211,7 +211,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        //update light positions
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
 		        
-
+		        Textures.start.bind();
 		        // Display all the visible objects of MazeRunner.
 		        if(!input.debug){
 		        for(VisibleObject vo:visibleObjects){
@@ -220,14 +220,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        }}	
 		        
 		        glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);
-
+		        
 		        wall.display();
 		        
-				player.draw();
+				
 				glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.floorColour);
 				grond.display();
 				if(input.minimap){drawHUD();}
-				
+				player.draw();
 //		        glLoadIdentity();
 	}
 	
@@ -290,7 +290,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			tempindex.add(objlijst.size()-1);
 
 			// Voor nu nog ff beunen
-//			for(levelObject lvlob:objlijst){
+
 			//collision X	
 			for(int i = 0; i< tempindex.size();i++){
 				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));				
@@ -301,9 +301,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			}			
 			if(colX){}else{	player.updateX();}
 			px = player.locationX;
-			// collsion Z			
-			
+			// collsion Z						
 			for(int i = 0; i< tempindex.size();i++){
+				
+			
 				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));		
 				if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+player.velocity.getZ())
 				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+player.velocity.getZ())){

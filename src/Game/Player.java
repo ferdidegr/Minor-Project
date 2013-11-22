@@ -251,7 +251,7 @@ public class Player extends GameObject {
 	
 	public void draw(){
 		glDisable(GL_LIGHTING);
-		glColor3f(1.0f, 1.0f, 1.0f);
+		glColor4f(1.0f, 1.0f, 1.0f,1.0f);
 		glPointSize(50);
 		glBegin(GL_POINTS);
 		glVertex3d(locationX, locationY-height, locationZ);
