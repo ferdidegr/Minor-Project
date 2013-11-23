@@ -232,8 +232,8 @@ public class Player extends GameObject {
 					- run*speed*deltaTime*Math.sin(Math.toRadians(horAngle)));
 		}
 		// Gravity
-		velocity.add(0, -deltaTime*0.007, 0);
-		System.out.println(locationY+" "+velocity.getY());
+		velocity.add(0, -deltaTime*0.004, 0);
+
 	}
 	
 	public void updateX(){

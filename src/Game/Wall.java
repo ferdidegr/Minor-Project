@@ -107,8 +107,9 @@ public class Wall extends levelObject{
 	public double[][] getnorm(){ return normals;}
 	@Override
 	public double getmaxDistY(double Y) {
-		if(locationY<Y) return (top-Y);
-		return bottom-Y;
+		if(top<Y) return (top-Y);
+		if(bottom>Y)return bottom-Y;
+		return 0;
 	}	
 
 }

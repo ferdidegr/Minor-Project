@@ -33,7 +33,7 @@ public class Mazerunner {
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test5.maze";
+	private String level = "levels/test6.maze";
 	
 	/*
 	 *  *************************************************
@@ -298,6 +298,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				|| tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz-pw)){
 					colX=true;
 					player.locationX+=tempobj.getmaxDistX(player.locationX+pw*signX);
+					System.out.println(tempindex.size()-2==i);
 					break;
 				}
 
