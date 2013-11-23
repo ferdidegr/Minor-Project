@@ -5,14 +5,14 @@ import java.io.IOException;
 import org.newdawn.slick.opengl.Texture;
 
 public class Textures {
-		public static Texture start = null, startover = null, menubackground
+		public static Texture ingamewall = null, startover = null, ground
 				, front = null, back=null, left=null,right=null,top=null, bottom=null;
 		
 		static{
 			try {
-				start = IO.loadtex("res/wall.jpg");
+				ingamewall = IO.loadtex("res/ingamewall.jpg");
 				startover = IO.loadtex("res/transparent.png");
-				menubackground = IO.loadtex("res/Wooden_floor_original.jpg");
+				ground = IO.loadtex("res/ground1.jpg");
 				/*
 				 * Comment all except one
 				 */

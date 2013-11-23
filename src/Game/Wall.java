@@ -58,7 +58,8 @@ public class Wall extends levelObject{
 		this.SQUARE_SIZE= SQUARE_SIZE;
 	}
 	public void display(){
-		
+		double width = (right-left)/SQUARE_SIZE;
+		double depth = (front-back)/SQUARE_SIZE;
 //		glEnable(GL_TEXTURE_2D);
 //		Textures.start.bind();
 		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
@@ -66,11 +67,11 @@ public class Wall extends levelObject{
 		glBegin(GL_QUADS);
 		for(int i = 0; i < boxfaces.length; i++){
 			Utils.glNormalvec(normals[i]);
-			glTexCoord2d(0, (i==boxfaces.length-1?1:height/SQUARE_SIZE));
+			glTexCoord2d(0, (i==boxfaces.length-1?depth:height/SQUARE_SIZE));
 			Utils.glVertvec(boxvertices[boxfaces[i][0]]);
-			glTexCoord2d(1, (i==boxfaces.length-1?1:height/SQUARE_SIZE));
+			glTexCoord2d(width, (i==boxfaces.length-1?depth:height/SQUARE_SIZE));
 			Utils.glVertvec(boxvertices[boxfaces[i][1]]);
-			glTexCoord2d(1, 0);
+			glTexCoord2d(width, 0);
 			Utils.glVertvec(boxvertices[boxfaces[i][2]]);
 			glTexCoord2d(0, 0);
 			Utils.glVertvec(boxvertices[boxfaces[i][3]]);

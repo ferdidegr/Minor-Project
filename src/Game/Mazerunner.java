@@ -33,7 +33,7 @@ public class Mazerunner {
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/pyramid.maze";
+	private String level = "levels/test5.maze";
 	
 	/*
 	 *  *************************************************
@@ -178,7 +178,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			input = new UserInput();
 			player.setControl(input);
 			wall = new Wall(10, 10, 0, 5, 2,SQUARE_SIZE);
-			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1,SQUARE_SIZE,Textures.menubackground);	
+			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1,SQUARE_SIZE,Textures.ground);	
 			objlijst.add(wall);
 			
 			objlijst.add(grond);
@@ -211,7 +211,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        //update light positions
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
 		        
-		        Textures.start.bind();
+		        Textures.ingamewall.bind();
 		        // Display all the visible objects of MazeRunner.
 		        if(!input.debug){
 		        for(VisibleObject vo:visibleObjects){
