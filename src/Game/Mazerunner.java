@@ -194,7 +194,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				int deltaTime = (int)(currentTime - previousTime);
 				previousTime = currentTime;
 				// TODO remove
-				System.out.println(deltaTime);
+//				System.out.println(deltaTime);
 				
 				//Update any movement since last frame.
 				updateMovement(deltaTime);
@@ -290,16 +290,19 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			tempindex.add(objlijst.size()-1);
 
 			// Voor nu nog ff beunen
-
+			double maxX = player.velocity.getX();
 			//collision X	
 			for(int i = 0; i< tempindex.size();i++){
 				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));				
 				if(tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz+pw)
 				|| tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz-pw)){
 					colX=true;
+					player.locationX+=tempobj.getmaxDistX(player.locationX+pw*signX);
+					break;
 				}
+
 			}			
-			if(colX){}else{	player.updateX();}
+			if(colX){}else{player.updateX();}
 			px = player.locationX;
 			// collsion Z						
 			for(int i = 0; i< tempindex.size();i++){
@@ -309,6 +312,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+player.velocity.getZ())
 				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+player.velocity.getZ())){
 					colZ=true;
+					player.locationZ+=tempobj.getmaxDistZ(player.locationZ+pw*signZ);
+					break;
 				}
 			}
 			if(colZ){}else{	player.updateZ();}
@@ -322,6 +327,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				|| tempobj.isCollision(px-pw,  py+player.velocity.getY()-ph , pz-pw)
 				|| tempobj.isCollision(px+pw,  py+player.velocity.getY()-ph , pz-pw)){
 					colY=true;
+					player.locationY+=tempobj.getmaxDistY(player.locationY-ph);
 				}				
 			}
 			if(colY){player.jump=false;}else{player.updateY();}

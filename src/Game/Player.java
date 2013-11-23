@@ -210,7 +210,7 @@ public class Player extends GameObject {
 	 * @param deltaTime
 	 */
 	public void updateV(int deltaTime){
-		velocity.scale(0.1,0.4,0.1);
+		velocity.scale(0.1,.4,0.1);
 		if (control.getForward()){
 			velocity.add(-run*speed*deltaTime*Math.sin(Math.toRadians(horAngle)),
 					0,
@@ -233,7 +233,7 @@ public class Player extends GameObject {
 		}
 		// Gravity
 		velocity.add(0, -deltaTime*0.007, 0);
-	
+		System.out.println(locationY+" "+velocity.getY());
 	}
 	
 	public void updateX(){

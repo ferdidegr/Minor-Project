@@ -84,25 +84,31 @@ public class Wall extends levelObject{
 	 * @param x
 	 * @return
 	 */
-	public double maxDistX(double x){
-		
-		return Math.min(Math.abs(left-x),Math.abs(right-x));
+	public double getmaxDistX(double X){
+		if(locationX>X)return left-X;
+		return right - X;
 	}
 	/**
 	 * Maximum distance you can travel till you collide
 	 * @param z
 	 * @return
 	 */
-	public double maxDistZ(double z){
-		return Math.min(Math.abs(front-z),Math.abs(back-z));
+	public double getmaxDistZ(double Z){
+		if(locationZ>Z)return back-Z;
+		return front - Z;
 	}
 	
 	
 	public boolean isCollision(double x, double y, double z){
-		return x>left && x<right && z<front && z>back && y>	bottom && y<top;	
+		return x>left && x<right && z<front && z>back && y>=bottom && y<top;	
 	}
 	
 	public double[][] getVert(){ return boxvertices;}
-	public double[][] getnorm(){ return normals;}	
+	public double[][] getnorm(){ return normals;}
+	@Override
+	public double getmaxDistY(double Y) {
+		if(locationY<Y) return (top-Y);
+		return bottom-Y;
+	}	
 
 }

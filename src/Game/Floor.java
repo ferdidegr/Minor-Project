@@ -36,6 +36,9 @@ public class Floor extends levelObject{
 	public void setTex(Texture tex){
 		this.tex = tex;
 	}
+	public double getmaxDistY(double Y){
+		return up*(locationY-Y);
+	}
 	@Override
 	public void display() {
 		
@@ -63,6 +66,16 @@ public class Floor extends levelObject{
 		
 		return y<this.locationY && x>this.locationX && x<this.locationX+width &&
 				z>this.locationZ && z<this.locationZ+height;
+	}
+	@Override
+	public double getmaxDistX(double X) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public double getmaxDistZ(double Z) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
