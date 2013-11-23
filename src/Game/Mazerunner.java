@@ -10,7 +10,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL12.*;
 import org.lwjgl.util.glu.GLU;
 
 
@@ -390,25 +390,28 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		 
 		    // Enable/Disable features
 		    glPushAttrib(GL_ENABLE_BIT);
-		    glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-		    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-//		    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-//		    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		    glEnable(GL_TEXTURE_2D);
+		    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+		    
+		    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		    
 		    glDisable(GL_DEPTH_TEST);
 		    glDisable(GL_LIGHTING);
 		    glDisable(GL_BLEND);
 		 
+		    float smallnumber = 0.001f;
 		    // Just in case we set all vertices to white.
-		    glColor4f(1,1,1,0);
+		    glColor4f(1,1,1,1);
 		 
 		    // Render the front quad
 		    Textures.front.bind();
 		    glBegin(GL_QUADS);
-		        glTexCoord2f(0, 0); glVertex3f(  0.5f, -0.5f, -0.5f );
-		        glTexCoord2f(0, 1); glVertex3f(  0.5f,  0.5f, -0.5f );
-		        glTexCoord2f(1, 1); glVertex3f( -0.5f,  0.5f, -0.5f );
-		        glTexCoord2f(1, 0); glVertex3f( -0.5f, -0.5f, -0.5f );
+		        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
+		        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
+		        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
+		        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
 		        
 		        
 		    glEnd();
@@ -416,10 +419,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		    // Render the left quad
 		    Textures.left.bind();
 		    glBegin(GL_QUADS);
-		    	glTexCoord2f(0, 1); glVertex3f(  0.5f,  0.5f,  0.5f );
-		    	glTexCoord2f(1, 1); glVertex3f(  0.5f,  0.5f, -0.5f );
-		    	glTexCoord2f(1, 0); glVertex3f(  0.5f, -0.5f, -0.5f );	
-		    	glTexCoord2f(0, 0); glVertex3f(  0.5f, -0.5f,  0.5f );
+		    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
+		    	glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
+		    	glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );	
+		    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
 		        
 		       
 		    glEnd();
@@ -428,40 +431,40 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		    Textures.back.bind();
 		    glBegin(GL_QUADS);
 		    	
-		        glTexCoord2f(0, 0); glVertex3f( -0.5f, -0.5f,  0.5f );
-		        glTexCoord2f(0, 1); glVertex3f( -0.5f,  0.5f,  0.5f );
-		        glTexCoord2f(1, 1); glVertex3f(  0.5f,  0.5f,  0.5f );
-		        glTexCoord2f(1, 0); glVertex3f(  0.5f, -0.5f,  0.5f );
+		        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
+		        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
+		        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
+		        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
 		 
 		    glEnd();
 		 
 		    // Render the right quad
 		    Textures.right.bind();
 		    glBegin(GL_QUADS);
-		        glTexCoord2f(0, 0); glVertex3f( -0.5f, -0.5f, -0.5f );
-		        glTexCoord2f(0, 1); glVertex3f( -0.5f,  0.5f, -0.5f );
-		        glTexCoord2f(1, 1); glVertex3f( -0.5f,  0.5f,  0.5f );
-		        glTexCoord2f(1, 0); glVertex3f( -0.5f, -0.5f,  0.5f );
+		        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
+		        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
+		        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
+		        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
 		        
 		    glEnd();
 		 
 		    // Render the top quad
 		    Textures.top.bind();
 		    glBegin(GL_QUADS);
-		        glTexCoord2f(1, 0); glVertex3f( -0.5f,  0.5f, -0.5f );
-		        glTexCoord2f(0, 0); glVertex3f(  0.5f,  0.5f, -0.5f );
-		        glTexCoord2f(0, 1); glVertex3f(  0.5f,  0.5f,  0.5f );
-		        glTexCoord2f(1, 1); glVertex3f( -0.5f,  0.5f,  0.5f );
+		        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
+		        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
+		        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
+		        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
 		        
 		    glEnd();
 		 
 		    // Render the bottom quad
 		    Textures.bottom.bind();
 		    glBegin(GL_QUADS);
-		    	glTexCoord2f(0, 0); glVertex3f(  0.5f, -0.5f,  0.5f );
-		    	glTexCoord2f(0, 1); glVertex3f(  0.5f, -0.5f, -0.5f );
-		        glTexCoord2f(1, 1); glVertex3f( -0.5f, -0.5f, -0.5f );  		       
-		        glTexCoord2f(1, 0); glVertex3f( -0.5f, -0.5f,  0.5f );
+		    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
+		    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
+		        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );  		       
+		        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
 		        
 		    glEnd();
 		 
