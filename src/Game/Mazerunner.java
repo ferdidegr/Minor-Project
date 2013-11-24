@@ -10,7 +10,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL12.*;
+//import static org.lwjgl.opengl.GL12.*;
 import org.lwjgl.util.glu.GLU;
 
 
@@ -34,7 +34,7 @@ public class Mazerunner {
 	private int SQUARE_SIZE=1;								// Size of a unit block
 	private MiniMap minimap;								// The minimap object.
 	private String level = "levels/test6.maze";
-	private int objectDisplayList = glGenLists(1);
+	private int objectDisplayList = glGenLists(1), skyboxDL = glGenLists(1);
 	/*
 	 *  *************************************************
 	 *  * 					Main Loop					*
@@ -229,21 +229,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 //		        glLoadIdentity();
 	}
 	
-	public void initDisp(){
-		 glNewList(objectDisplayList, GL_COMPILE);
-		 
-		 for(VisibleObject vo:visibleObjects){
-	        	if(vo instanceof Wall){glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);Textures.ingamewall.bind();}
-	        	vo.display();
-	        }
-	        glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);	        
-	        wall.display();		
-			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.floorColour); Textures.ground.bind();
-			grond.display();
-			
-		 glEndList();
-		
-	}
 	/**
 	 * Switches to 2D orthogonal view to project the HUD, after drawing the HUD, the Matrixmode is set back to 3D view
 	 */
@@ -270,7 +255,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
 	}
-	
+	/**
+	 * Draw a unit cube around the camera
+	 */
 	public void drawSkybox(){
 
 		camera.setLocationX( 0 );
@@ -292,82 +279,12 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	    // Enable/Disable features
 	    glPushAttrib(GL_ENABLE_BIT);
 	    glEnable(GL_TEXTURE_2D);
-	    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-	    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	    
-	    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	    
 	    glDisable(GL_DEPTH_TEST);
 	    glDisable(GL_LIGHTING);
 	    glDisable(GL_BLEND);
 	 
-	    float smallnumber = 0.002f;
-	    // Just in case we set all vertices to white.
-	    glColor4f(1,1,1,1);
-	 
-	    // Render the front quad
-	    Textures.front.bind();
-	    glBegin(GL_QUADS);
-	        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
-	        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
-	        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-	        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
-	        
-	        
-	    glEnd();
-	 
-	    // Render the left quad
-	    Textures.left.bind();
-	    glBegin(GL_QUADS);
-	    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
-	    	glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
-	    	glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );	
-	    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
-	        
-	       
-	    glEnd();
-	 
-	    // Render the back quad
-	    Textures.back.bind();
-	    glBegin(GL_QUADS);
-	    	
-	        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
-	        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
-	        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
-	        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
-	 
-	    glEnd();
-	 
-	    // Render the right quad
-	    Textures.right.bind();
-	    glBegin(GL_QUADS);
-	        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
-	        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-	        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
-	        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
-	        
-	    glEnd();
-	 
-	    // Render the top quad
-	    Textures.top.bind();
-	    glBegin(GL_QUADS);
-	        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-	        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
-	        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
-	        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
-	        
-	    glEnd();
-	 
-	    // Render the bottom quad
-	    Textures.bottom.bind();
-	    glBegin(GL_QUADS);
-	    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
-	    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
-	        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );  		       
-	        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
-	        
-	    glEnd();
+	    glCallList(skyboxDL);
 	 
 	    // Restore enable bits and matrix
 	    glPopAttrib();
@@ -440,7 +357,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				|| tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz-pw)){
 					colX=true;
 					player.locationX+=tempobj.getmaxDistX(player.locationX+pw*signX);
-					System.out.println(tempindex.size()-2==i);
 					break;
 				}
 
@@ -490,5 +406,98 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			camera.setHorAngle( player.getHorAngle()+(input.lookback? 180:0) );
 			camera.setVerAngle( player.getVerAngle() * (input.lookback? -1:1) );
 			camera.calculateVRP();
+		}
+		
+		/**
+		 * Setting up the displayLists
+		 */
+		public void initDisp(){
+			/*
+			 * Walls and ground
+			 */
+			 glNewList(objectDisplayList, GL_COMPILE);
+			 
+			 for(VisibleObject vo:visibleObjects){
+		        	if(vo instanceof Wall){glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);Textures.ingamewall.bind();}
+		        	vo.display();
+		        }
+		        glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);	        
+		        wall.display();		
+				glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.floorColour); Textures.ground.bind();
+				grond.display();
+				
+			 glEndList();
+			 /*
+			  * SkyBox	
+			  */
+			 glNewList(skyboxDL, GL_COMPILE);
+			 float smallnumber = 0.002f;
+			    // Just in case we set all vertices to white.
+			    glColor4f(1,1,1,1);
+			 
+			    // Render the front quad
+			    Textures.front.bind();
+			    glBegin(GL_QUADS);
+			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
+			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
+			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
+			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
+			        
+			        
+			    glEnd();
+			 
+			    // Render the left quad
+			    Textures.left.bind();
+			    glBegin(GL_QUADS);
+			    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
+			    	glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
+			    	glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );	
+			    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
+			        
+			       
+			    glEnd();
+			 
+			    // Render the back quad
+			    Textures.back.bind();
+			    glBegin(GL_QUADS);
+			    	
+			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
+			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
+			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
+			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
+			 
+			    glEnd();
+			 
+			    // Render the right quad
+			    Textures.right.bind();
+			    glBegin(GL_QUADS);
+			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
+			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
+			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
+			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
+			        
+			    glEnd();
+			 
+			    // Render the top quad
+			    Textures.top.bind();
+			    glBegin(GL_QUADS);
+			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
+			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
+			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
+			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
+			        
+			    glEnd();
+			 
+			    // Render the bottom quad
+			    Textures.bottom.bind();
+			    glBegin(GL_QUADS);
+			    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
+			    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
+			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );  		       
+			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
+			        
+			    glEnd();
+			    glEndList();
+			 
 		}
 	}
