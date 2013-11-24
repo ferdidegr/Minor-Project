@@ -170,7 +170,7 @@ public class Player extends GameObject {
 			if(verAngle<-89) verAngle=-89;
 			
 			if(control.jump && !jump){
-				tempVy = 0.05;			// 0.03
+				tempVy = 0.04;			// 0.03
 				jump=true;
 				y_begin = locationY;
 			}
@@ -182,7 +182,7 @@ public class Player extends GameObject {
 			
 					
 			if (control.getRun()){
-				run = 3;
+				run = 2;
 			} else{
 				run =1;
 			}
@@ -232,7 +232,7 @@ public class Player extends GameObject {
 					- run*speed*deltaTime*Math.sin(Math.toRadians(horAngle)));
 		}
 		// Gravity
-		velocity.add(0, -deltaTime*0.004, 0);
+		velocity.add(0, -deltaTime*0.005, 0);
 
 	}
 	
@@ -251,6 +251,7 @@ public class Player extends GameObject {
 	
 	public void draw(){
 		glDisable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
 		glColor4f(1.0f, 1.0f, 1.0f,1.0f);
 		glPointSize(50);
 		glBegin(GL_POINTS);
