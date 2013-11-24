@@ -211,14 +211,17 @@ public class MazeMaker {
 					case 7:{maze.setObject(7, x, y);break;}	// Wall
 					
 					case 13:{maze.setObject(13, x, y);break;}	// Spikes
-					case 11:{if (flaggreenx>0 && flaggreeny>0 && maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
+					case 11:{if (flaggreenx>0 && flaggreeny>0 && flaggreeny<(maze.getHeight()*MazeMap.getSize())&& 
+							flaggreenx<(maze.getWidth()*MazeMap.getSize())&& 
+							maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
 								maze.setObject(0, flaggreenx, flaggreeny);
 							}
 							flaggreenx=x;
 							flaggreeny=y;
 							maze.setObject(11, x, y);
 							break;} 						// Flag green
-					case 12:{if (flagredx>0 && flagredy>0 && maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
+					case 12:{if (flagredx>0 && flagredy>0 && flagredy<(maze.getHeight()*MazeMap.getSize())&& 
+							flagredx<(maze.getWidth()*MazeMap.getSize())&&  maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
 								maze.setObject(0, flagredx, flagredy);
 							}
 							flagredx=x;
@@ -243,14 +246,17 @@ public class MazeMaker {
 				case 7:{maze.setObject(7, x, y);break;}	// Wall
 				
 				case 13:{maze.setObject(13, x, y);break;}	// Spikes
-				case 11:{if (flaggreenx>0 && flaggreeny>0 && maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
+				case 11:{if (flaggreenx>0 && flaggreeny>0 && flaggreeny<(maze.getHeight()*MazeMap.getSize())&& 
+						flaggreenx<(maze.getWidth()*MazeMap.getSize())&& 
+						maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
 							maze.setObject(0, flaggreenx, flaggreeny);
 						}
 						flaggreenx=x;
 						flaggreeny=y;
 						maze.setObject(11, x, y);
 						break;} 						// Flag green
-				case 12:{if (flagredx>0 && flagredy>0 && maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
+				case 12:{if (flagredx>0 && flagredy>0 && flagredy<(maze.getHeight()*MazeMap.getSize())&& 
+						flagredx<(maze.getWidth()*MazeMap.getSize())&&  maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
 							maze.setObject(0, flagredx, flagredy);
 						}
 						flagredx=x;

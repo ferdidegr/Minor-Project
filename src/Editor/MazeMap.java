@@ -105,6 +105,10 @@ public class MazeMap implements Serializable{
 	public static void setSize(float insize){
 		size = insize;
 	}
+	
+	public static float getSize(){
+		return size;
+	}
 	/*
 	 * Getters
 	 */
