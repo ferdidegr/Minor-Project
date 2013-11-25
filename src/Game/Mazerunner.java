@@ -9,7 +9,10 @@ import java.util.Calendar;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
+
 import static org.lwjgl.opengl.GL11.*;
+
 //import static org.lwjgl.opengl.GL12.*;
 import org.lwjgl.util.glu.GLU;
 
@@ -33,7 +36,7 @@ public class Mazerunner {
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test6.maze";
+	private String level = "levels/test5.maze";
 	private int objectDisplayList = glGenLists(1), skyboxDL = glGenLists(1);
 	/*
 	 *  *************************************************
@@ -121,10 +124,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		
 		// Set and enable the lighting.
 		
-		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(maze[0].length*SQUARE_SIZE).put(150.0f).put(maze.length*SQUARE_SIZE).put(1.0f).flip();	// High up in the sky!
+		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(maze[0].length*SQUARE_SIZE/2.0f).put(150.0f).put(maze.length*SQUARE_SIZE/2.0f).put(1.0f).flip();	// High up in the sky!
 	        FloatBuffer lightColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();		// White light!
 	        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	// Note that we're setting Light0.
 	        glLight( GL_LIGHT0, GL_AMBIENT, lightColour);
+	        
 	        glEnable( GL_LIGHTING );
 	        glEnable( GL_LIGHT0 );
 	        
@@ -194,7 +198,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				int deltaTime = (int)(currentTime - previousTime);
 				previousTime = currentTime;
 				// TODO remove
-//				System.out.println(deltaTime);
+				System.out.println(deltaTime);
 				
 				//Update any movement since last frame.
 				updateMovement(deltaTime);
@@ -418,14 +422,26 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			 glNewList(objectDisplayList, GL_COMPILE);
 			 
 			 for(VisibleObject vo:visibleObjects){
-		        	if(vo instanceof Wall){glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);Textures.ingamewall.bind();}
+		        	if(vo instanceof Wall){glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);Textures.ingamewall.bind();}
 		        	vo.display();
 		        }
-		        glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);	        
+		        glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);	  
+		        glMaterial(GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
+		        glMaterialf(GL_FRONT, GL_SHININESS, -1f);
 		        wall.display();		
-				glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.floorColour); Textures.ground.bind();
+				Textures.ground.bind();
 				grond.display();
 				
+								
+				glMaterial( GL_FRONT, GL_SPECULAR, Graphics.white);
+				glMaterialf(GL_FRONT, GL_SHININESS,5f);
+				glPushMatrix();
+
+				glTranslatef(0.5f, 1f, 0.5f);
+				Graphics.renderSpike(0.5f, 1);
+				glPopMatrix();
+				
+
 			 glEndList();
 			 /*
 			  * SkyBox	

@@ -154,7 +154,7 @@ public class Maze implements VisibleObject{
 		
 		//FloatBuffer wallColour = BufferUtils.createFloatBuffer(4).put(new float[] { 0.5f, 0.0f, 0.7f ,1.0f});	// The walls are purple.    	
 //		FloatBuffer wallColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.5f).put(0.0f).put(0.7f).put(1.0f).flip();	// The walls are purple.    		
-        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.wallColour);	// Set the materials used by the wall.
+        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.white);	// Set the materials used by the wall.
         
         
         // draw the grid with the current material
@@ -197,7 +197,7 @@ public class Maze implements VisibleObject{
 //		GL11.glBindTexture(GL11.GL_TEXTURE_2D, Texfloor.getTextureID());
         Texfloor.bind();
 		
-        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.floorColour);	// Set the materials used by the floor.
+        GL11.glMaterial( GL11.GL_FRONT, GL11.GL_DIFFUSE, Graphics.lightgrey);	// Set the materials used by the floor.
         
         
         GL11.glNormal3d(0, 1, 0);

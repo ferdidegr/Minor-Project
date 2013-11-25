@@ -24,19 +24,26 @@ public class Textures {
 //				top = IO.loadtex("res/Skybox/Skybox-Top.bmp",true);
 //				bottom = IO.loadtex("res/Skybox/Skybox-Bottom.bmp",true);
 				//#2
-//				front = IO.loadtex("res/Skybox/anachronismbk.bmp",true);
-//				back = IO.loadtex("res/Skybox/anachronismft.bmp",true);
-//				left = IO.loadtex("res/Skybox/anachronismlf.bmp",true);
-//				right = IO.loadtex("res/Skybox/anachronismrt.bmp",true);
-//				top = IO.loadtex("res/Skybox/anachronismup.bmp",true);
-//				bottom = IO.loadtex("res/Skybox/anachronismdn.bmp",true);
+//				front = IO.loadtex("res/Skybox/anachorism/anachronismbk.bmp",true);
+//				back = IO.loadtex("res/Skybox/anachorism/anachronismft.bmp",true);
+//				left = IO.loadtex("res/Skybox/anachorism/anachronismlf.bmp",true);
+//				right = IO.loadtex("res/Skybox/anachorism/anachronismrt.bmp",true);
+//				top = IO.loadtex("res/Skybox/anachorism/anachronismup.bmp",true);
+//				bottom = IO.loadtex("res/Skybox/anachorism/anachronismdn.bmp",true);
 				//# 3 Sun set
-				front = IO.loadtex("res/Skybox/SunSetFront1024.png",true);
-				back = IO.loadtex("res/Skybox/SunSetBack1024.png",true);
-				left = IO.loadtex("res/Skybox/SunSetLeft1024.png",true);
-				right = IO.loadtex("res/Skybox/SunSetRight1024.png",true);
-				top = IO.loadtex("res/Skybox/SunSetUp1024.png",true);
-				bottom = IO.loadtex("res/Skybox/SunSetDown1024.png",true);
+//				front = IO.loadtex("res/Skybox/SunSetFront1024.png",true);
+//				back = IO.loadtex("res/Skybox/SunSetBack1024.png",true);
+//				left = IO.loadtex("res/Skybox/SunSetLeft1024.png",true);
+//				right = IO.loadtex("res/Skybox/SunSetRight1024.png",true);
+//				top = IO.loadtex("res/Skybox/SunSetUp1024.png",true);
+//				bottom = IO.loadtex("res/Skybox/SunSetDown1024.png",true);
+				// # 4 Sahara
+				front = IO.loadtex("res/Skybox/Sahara/north.bmp",true);
+				back = IO.loadtex("res/Skybox/Sahara/south.bmp",true);
+				left = IO.loadtex("res/Skybox/Sahara/west.bmp",true);
+				right = IO.loadtex("res/Skybox/Sahara/east.bmp",true);
+				top = IO.loadtex("res/Skybox/Sahara/up.bmp",true);
+				bottom = IO.loadtex("res/Skybox/Sahara/down.bmp",true);
 //				
 				
 			} catch (IOException e) {
