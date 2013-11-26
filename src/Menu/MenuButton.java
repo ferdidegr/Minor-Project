@@ -89,6 +89,7 @@ public class MenuButton {
 	public void text(int x, int y,float scale, String s){
 		int lineh = myfont.getHeight();
 		int width = myfont.getWidth(s);
+
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glPushMatrix();
@@ -97,7 +98,7 @@ public class MenuButton {
 		myfont.drawString(0, 0, s,Color.white);
 		GL11.glPopMatrix();
 		GL11.glDisable(GL11.GL_BLEND);
-	} 
+	}
 	
 	/** Initialiseert het font
 	 *  !Definieer hier het juiste font bestand!
