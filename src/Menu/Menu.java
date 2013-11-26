@@ -24,7 +24,7 @@ public class Menu {
 	 * ************************************
 	 */
 	public void start() throws LWJGLException{
-		Display.setDisplayMode(new DisplayMode(640, 480));
+		Display.setDisplayMode(new DisplayMode(1240, 680));
 		Display.create();
 		bottom = 0;
 		top = Display.getHeight();
@@ -113,7 +113,7 @@ public class Menu {
 		gamestate = GameState.MAIN;
 		int buttonwidth = Display.getWidth()/3;		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
-		MenuButton.setDimensions(buttonwidth, buttonheight);
+		MenuButton.setDimensions(226, 56);
 		
 		// MainMenu
 		main.init(buttonwidth, buttonheight);

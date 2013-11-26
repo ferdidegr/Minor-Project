@@ -108,7 +108,6 @@ public class MenuButton {
 			try {
 			Double size = new Double(0.7 * height);
 			float fontsize = size.floatValue();
-			System.out.println(size);
 			InputStream inputStream	= ResourceLoader.getResourceAsStream("BEBAS.ttf");
 
 			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
