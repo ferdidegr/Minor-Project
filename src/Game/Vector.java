@@ -53,6 +53,18 @@ public class Vector {
 		this.y*=factor;
 		this.z*=factor;
 	}
+	
+	public double length(){
+		return Math.sqrt(x*x+y*y+z*z);
+	}
+	
+	public void normalize(){
+		double length = length();
+		x /= length;
+		y /= length;
+		z /= length;
+	}
+	
 	/**
 	 * reset the vector to a zero vector
 	 */

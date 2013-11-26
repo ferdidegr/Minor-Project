@@ -35,7 +35,8 @@ public class Graphics {
 	 * @param size
 	 */
 	public static void renderCube(double size, boolean left, boolean right, boolean fore, boolean back){
-			double height = 6*size;	
+			double height = size;	
+			size = size/2;
 	      GL11.glBegin(GL11.GL_QUADS);
 	      if(!back){
 	        GL11.glNormal3d(0, 0, 1);

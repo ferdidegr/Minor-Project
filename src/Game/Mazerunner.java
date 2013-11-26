@@ -9,11 +9,9 @@ import java.util.Calendar;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.*;
 
-//import static org.lwjgl.opengl.GL12.*;
 import org.lwjgl.util.glu.GLU;
 
 
@@ -28,6 +26,7 @@ public class Mazerunner {
 	private UserInput input;								// The user input object that controls the player.
 	private int[][] maze; 									// The maze.
 	private ArrayList<VisibleObject> visibleObjects;		// A list of objects that will be displayed on screen.
+	private ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
 	private ArrayList<levelObject> objlijst;				// List of all collidable objects
 	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
 	private Wall wall;										// Wall Class, used to put one wall in for test TODO remove
@@ -47,12 +46,13 @@ public class Mazerunner {
 public void start() throws ClassNotFoundException, IOException{
 	// TODO remove
 	Display.setResizable(true);
-	
+	glFinish();
 	initObj();
 	init();
 	initDisp();
 	
-	while(!Display.isCloseRequested() && player.locationY>-50){
+	
+	while(!Display.isCloseRequested() && player.locationY>-20){
 		
 		// If the window is resized, might not be implemented
 		if(Display.getWidth()!=screenWidth || Display.getHeight()!=screenHeight) reshape();
@@ -80,6 +80,7 @@ public void start() throws ClassNotFoundException, IOException{
 public void initMaze() throws ClassNotFoundException, IOException{
 	maze = IO.readMaze(level);
 	objectindex = new int[maze.length][maze[0].length];
+	monsterlijst = new ArrayList<Monster>();
 	
 	minimap=new MiniMap(maze);		//load the minimap
 	
@@ -186,6 +187,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			objlijst.add(wall);
 			
 			objlijst.add(grond);
+			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0, 1+0.5*SQUARE_SIZE,SQUARE_SIZE));
 		
 	}
 	/**
@@ -199,10 +201,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				previousTime = currentTime;
 				// TODO remove
 				System.out.println(deltaTime);
+//				System.out.println(monsterlijst.size());
 				
 				//Update any movement since last frame.
+				Monster.setPlayerloc(new Vector(player.locationX, player.locationY, player.locationZ));
 				updateMovement(deltaTime);
-				updateCamera();				
+				
+				monsterlijst.get(0).update(deltaTime);
+				updateCamera();		
 				
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 				
@@ -223,9 +229,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 //		        	if(vo instanceof Wall){glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);}
 //		        	vo.display();
 //		        }
+		        	
 		        glCallList(objectDisplayList);
 		        }	
 		        
+		        monsterlijst.get(0).display();	
 		        
 				if(input.minimap){drawHUD();}
 				player.draw();
@@ -368,8 +376,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			if(colX){}else{player.updateX();}
 			px = player.locationX;
 			// collsion Z						
-			for(int i = 0; i< tempindex.size();i++){
-				
+			for(int i = 0; i< tempindex.size();i++){			
 			
 				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));		
 				if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+player.velocity.getZ())
@@ -419,6 +426,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			/*
 			 * Walls and ground
 			 */
+			glFinish();
 			 glNewList(objectDisplayList, GL_COMPILE);
 			 
 			 for(VisibleObject vo:visibleObjects){
@@ -441,7 +449,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				Graphics.renderSpike(0.5f, 1);
 				glPopMatrix();
 				
-
+				 
 			 glEndList();
 			 /*
 			  * SkyBox	
@@ -457,8 +465,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
 			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
 			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
-			        
+			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );			        
 			        
 			    glEnd();
 			 
@@ -468,8 +475,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
 			    	glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
 			    	glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );	
-			    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
-			        
+			    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );			        
 			       
 			    glEnd();
 			 
@@ -513,7 +519,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
 			        
 			    glEnd();
+			    
 			    glEndList();
-			 
+			   glFinish();
 		}
 	}
