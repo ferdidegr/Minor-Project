@@ -8,8 +8,13 @@ import java.io.IOException;
 import Game.Mazerunner;
 
 public class GameOver extends ButtonList {
+	
+	private Text titel;
+	
 	public GameOver(){
 		super();
+		titel = new Text(30, "Game Over");
+		
 	}
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
@@ -18,8 +23,9 @@ public class GameOver extends ButtonList {
 	 * @param buttonheight
 	 */
 	public void init(int buttonwidth, int buttonheight){
-		lijst.add(new MenuButton(buttonwidth, 3*buttonheight, Textures.start, Textures.startover,1, "Restart"));
-		lijst.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2, "Main Menu"));
+		titel.initFont();
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2*buttonheight, Textures.start, Textures.startover,1, "Restart"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3*buttonheight, Textures.start, Textures.startover,2, "Main Menu"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -48,5 +54,10 @@ public class GameOver extends ButtonList {
 			
 			default: break;
 		}
+	}
+	
+	public void display(){
+		super.display();
+		titel.draw(Menu.getScreenx()/2, Menu.getScreeny() - titel.getHeight(), 1);
 	}
 }

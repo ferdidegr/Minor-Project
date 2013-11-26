@@ -7,6 +7,8 @@ import org.lwjgl.input.Mouse;
 
 public class Settings extends ButtonList {
 	
+	private Text titel;
+	
 	/** Deze klasse definieert het Settings menu. 
 	 * 
 	 * @author Karin
@@ -14,6 +16,7 @@ public class Settings extends ButtonList {
 	 */
 	public Settings(){
 		super();
+		titel = new Text(30, "Settings");
 	}
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
@@ -22,8 +25,9 @@ public class Settings extends ButtonList {
 	 * @param buttonheight
 	 */
 	public void init(int buttonwidth, int buttonheight){
-		lijst.add(new MenuButton(buttonwidth, 2*buttonheight, Textures.start, Textures.startover,1, "Main Menu"));
-		lijst.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2, "Undefined"));
+		titel.initFont();
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2*buttonheight, Textures.start, Textures.startover,1, "Main Menu"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3*buttonheight, Textures.start, Textures.startover,2, "Undefined"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -40,4 +44,8 @@ public class Settings extends ButtonList {
 		}
 	}
 	
+	public void display(){
+		super.display();
+		titel.draw(Menu.getScreenx()/2, Menu.getScreeny() - titel.getHeight(), 1);
+	}
 }
