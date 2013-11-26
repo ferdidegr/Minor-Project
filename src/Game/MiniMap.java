@@ -1,6 +1,6 @@
 package Game;
 
-import org.lwjgl.opengl.GL11;
+import static org.lwjgl.opengl.GL11.*;
 
 
 public class MiniMap {
@@ -15,40 +15,61 @@ public class MiniMap {
 		int mapHeight = maze.length;
 		
 		int locX=player.getGridX(SQUARE_SIZE);
-		int locZ=mapHeight-player.getGridZ(SQUARE_SIZE);
+		int locZ=mapHeight-1-player.getGridZ(SQUARE_SIZE);
 		
+		int size=10;
 		
+		glColor3f(1.0f, 0.0f, 0.0f);
 		
-		
-		for (int i=0;i<mapHeight;i++){
-			for (int j=0;j<mapWidth;j++){
-				if (maze[i][j]>=1 && maze[i][j]<=10){
-					GL11.glBegin(GL11.GL_QUADS);
-					GL11.glColor3f(1.0f, 0.0f, 0.0f);
-					GL11.glVertex2f(0.0f, 0.0f);
-					GL11.glVertex2f(10.0f, 0.0f);
-					GL11.glVertex2f(10.0f, 10.0f);
-					GL11.glVertex2f(0.0f, 10.0f);
-					GL11.glEnd();
-					
+		for (int i=locZ-size;i<locZ+size;i++){
+			for (int j=locX-size;j<locX+size;j++){
+				if (i>=0 && j>=0 && i<mapHeight && j<mapWidth){
+					if (maze[mapHeight-i-1][j]>=1 && maze[i][j]<=10){
+						drawBlock();
+					}
 				}
-				GL11.glTranslatef(10f, 0f, 0f);
-				
-				
+				glTranslatef(10f, 0f, 0f);
 			}
-			GL11.glTranslatef(-10f*mapWidth, 10f, 0f);
+			glTranslatef(-10f*(2*size), 10f, 0f);
 		}
 		
-		GL11.glPushMatrix();
-		GL11.glTranslated(locX*10, -locZ*10, 0);
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glColor3f(1.0f, 1.0f, 1.0f);
-		GL11.glVertex2f(0.0f, 0.0f);
-		GL11.glVertex2f(10.0f, 0.0f);
-		GL11.glVertex2f(10.0f, 10.0f);
-		GL11.glVertex2f(0.0f, 10.0f);
-		GL11.glEnd();
-		GL11.glPopMatrix();
+		glPushMatrix();
+		glLoadIdentity();
+		for (int i=0;i<size*2;i++){
+			glColor4f(0.0f, 0.0f, 0.0f, 0.7f);
+			drawBlock();
+			glTranslatef(10f,0,0);
+		}
+		for (int i=0;i<size*2+1;i++){
+			drawBlock();
+			glTranslatef(0,10f,0);
+		}
+		glLoadIdentity();
+		for (int i=0;i<size*2;i++){
+			drawBlock();
+			glTranslatef(0,10f,0);
+		}
+		for (int i=0;i<size*2+1;i++){
+			drawBlock();
+			glTranslatef(10f,0,0);
+		}
+		glPopMatrix();
+		
+		
+		glPushMatrix();
+		glTranslated(size*10, -size*10, 0);
+		glColor3f(1.0f, 1.0f, 1.0f);
+		drawBlock();
+		glPopMatrix();
 
+	}
+	
+	public void drawBlock(){
+		glBegin(GL_QUADS);
+		glVertex2f(0.0f, 0.0f);
+		glVertex2f(10.0f, 0.0f);
+		glVertex2f(10.0f, 10.0f);
+		glVertex2f(0.0f, 10.0f);
+		glEnd();
 	}
 }
