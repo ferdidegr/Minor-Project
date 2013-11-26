@@ -16,6 +16,8 @@ public class Menu {
 	private Settings sets = new Settings();
 	private GameOver over = new GameOver();
 	private int top, bottom, scrollspeed;
+	private static int screenx = 1240;
+	private static int screeny = 680;
 	double height_width_ratio = 1/4f;			// Height/Width 
 	/**
 	 * ************************************
@@ -24,7 +26,7 @@ public class Menu {
 	 * ************************************
 	 */
 	public void start() throws LWJGLException{
-		Display.setDisplayMode(new DisplayMode(1240, 680));
+		Display.setDisplayMode(new DisplayMode(screenx, screeny));
 		Display.create();
 		bottom = 0;
 		top = Display.getHeight();
@@ -123,6 +125,8 @@ public class Menu {
 		
 		// Game Over
 		over.init(buttonwidth, buttonheight);
+		
+		
 	}
 	/**
 	 * ************************************
@@ -230,4 +234,7 @@ public class Menu {
 	public static void setState(GameState state){
 		gamestate = state;
 	}
+	
+	public static int getScreeny(){return screeny;}
+	public static int getScreenx(){return screenx;}
 }

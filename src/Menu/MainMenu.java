@@ -13,8 +13,11 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class MainMenu extends ButtonList {
 	
+	private Text welkom;
+	
 	public MainMenu(){
 		super();
+		welkom = new Text(30, "Welkom bij Trapper");
 	}
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
@@ -23,8 +26,9 @@ public class MainMenu extends ButtonList {
 	 * @param buttonheight
 	 */
 	public void init(int buttonwidth, int buttonheight){
-		lijst.add(new MenuButton(buttonwidth, 3*buttonheight, Textures.start, Textures.startover,1, "Start game"));
-		lijst.add(new MenuButton(buttonwidth, 0, Textures.start, Textures.startover,2, "Settings"));
+		welkom.initFont();
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2* buttonheight, Textures.start, Textures.startover,1, "Start game"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3* buttonheight, Textures.start, Textures.startover,2, "Settings"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -53,6 +57,11 @@ public class MainMenu extends ButtonList {
 			
 			default: break;
 		}
+	}
+	
+	public void display(){
+		super.display();
+		welkom.draw(Menu.getScreenx()/2, Menu.getScreeny() - welkom.getHeight(), 1);
 	}
 	
 }
