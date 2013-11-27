@@ -13,7 +13,7 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class MainMenu extends ButtonList {
 	
-	private Text welkom;
+	private static Text welkom = new Text(30, "Welkom bij Trapper");
 	
 	public MainMenu(){
 		super();
@@ -39,7 +39,7 @@ public class MainMenu extends ButtonList {
 		switch(buttonID){
 		
 		case 1:
-			Menu.setState(GameState.GAMEOVER);
+			Menu.setState(GameState.GAME);
 			Mazerunner game = new Mazerunner();
 			glPushMatrix();
 			try {

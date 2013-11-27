@@ -12,44 +12,47 @@ import static org.lwjgl.opengl.GL11.*;
 public class Menu {
 	
 	private static GameState gamestate;
-	private MainMenu main = new MainMenu();
-	private Settings sets = new Settings();
-	private GameOver over = new GameOver();
-	private int top, bottom, scrollspeed;
+	private static MainMenu main = new MainMenu();
+	private static Settings sets = new Settings();
+	private static GameOver over = new GameOver();
+	private static int top, bottom, scrollspeed;
 	private static int screenx = 1240;
 	private static int screeny = 680;
-	double height_width_ratio = 1/4f;			// Height/Width 
+	private static double height_width_ratio = 1/4f;			// Height/Width 
 	/**
 	 * ************************************
 	 * Main loop
 	 * @throws LWJGLException
 	 * ************************************
 	 */
-	public void start() throws LWJGLException{
+	public static void start() throws LWJGLException{
 		Display.setDisplayMode(new DisplayMode(screenx, screeny));
 		Display.create();
+		run();
+		
+	}
+	
+	public static void run() {
 		bottom = 0;
 		top = Display.getHeight();
 		scrollspeed = Display.getHeight()/15;
 		initButtons();initGL();
-		
 		// Main loop, while the X button is not clicked
-		while(!Display.isCloseRequested()){
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			
-			mousepoll();
-			display();
-			Display.update();
-			Display.sync(60);
-		}
-		
+				while(!Display.isCloseRequested()){
+					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+					glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			
+					mousepoll();
+					display();
+					Display.update();
+					Display.sync(60);
+				}
 	}
 	/**
 	 * ************************************
 	 * poll Mouse input using events
 	 * ************************************
 	 */
-	public void mousepoll(){
+	public static void mousepoll(){
 		
 		int wheeldx = Mouse.getDWheel();
 		if(wheeldx>0){top+=scrollspeed;bottom+=scrollspeed;initview();}
@@ -80,7 +83,7 @@ public class Menu {
 	 * !Define actions for buttons here!
 	 * ************************************
 	 */
-	public void ButtonActions(){
+	public static void ButtonActions(){
 		int ID = 0;
 		switch(gamestate){
 		
@@ -100,6 +103,11 @@ public class Menu {
 			GameOver.actionButtons(ID);
 			break;
 			
+		case PAUSE:
+			ID = PauseMenu.checkButtons(bottom);
+			PauseMenu.actionButtons(ID);
+			break;
+			
 		default: break;
 			
 		}
@@ -111,7 +119,7 @@ public class Menu {
 	 * Hier worden alle buttons geinitialiseerd met de init() functie
 	 * ************************************
 	 */
-	public void initButtons(){
+	public static void initButtons(){
 		gamestate = GameState.MAIN;
 		int buttonwidth = Display.getWidth()/3;		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
@@ -126,6 +134,9 @@ public class Menu {
 		// Game Over
 		over.init(buttonwidth, buttonheight);
 		
+		// Pauze
+		PauseMenu.init(buttonwidth, buttonheight);
+		
 		
 	}
 	/**
@@ -134,7 +145,7 @@ public class Menu {
 	 * Afhankelijk van huidige gamestate wordt de display van de juiste ButtonList aangeroepen
 	 * ************************************
 	 */
-	public void display(){
+	public static void display(){
 		drawBackground();
 		
 		switch(gamestate){
@@ -149,8 +160,15 @@ public class Menu {
 			
 		case GAMEOVER:
 			over.display();
-			
 			break;
+			
+		case GAME:
+			break;
+			
+		case PAUSE:
+			PauseMenu.display();
+			break;
+			
 		
 		default: break;
 		}
@@ -161,7 +179,7 @@ public class Menu {
 	 * Draw background, background texture can be mapped
 	 * ************************************
 	 */
-	public void drawBackground(){
+	public static void drawBackground(){
 		glColor3f(1.0f, 1.0f, 1.0f);						// When using textures, set this to white
 		
 		
@@ -191,7 +209,7 @@ public class Menu {
 	 * Initialize openGL
 	 * ************************************
 	 */
-	public void initGL(){
+	public static void initGL(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
@@ -204,7 +222,7 @@ public class Menu {
 	 * Initialize your view window
 	 * ************************************
 	 */
-	public void initview(){
+	public static  void initview(){
 		glMatrixMode(GL_PROJECTION);					// We'll use orthogonal projection.
 		glLoadIdentity();									// REset the current matrix.
 		glOrtho(0, Display.getWidth(), bottom, top, 1, -1);
@@ -217,14 +235,24 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void main(String[] args){
-		Menu menu = new Menu();
 		try {
-			menu.start();
+			Menu.start();
 		} catch (LWJGLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	/**
+	 * ************************************
+	 * SET GAMESTATE
+	 * @param state
+	 * ************************************
+	 */
+	
+	public static GameState getState(){
+		return gamestate;
+	}
+	
 	/**
 	 * ************************************
 	 * SET GAMESTATE
