@@ -1,8 +1,10 @@
 package Game;
 
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
@@ -17,11 +19,13 @@ import static org.lwjgl.opengl.GL11.*;
 
 //import static org.lwjgl.opengl.GL12.*;
 import org.lwjgl.util.glu.GLU;
+import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 
 import ModelLoader.Face;
 import ModelLoader.Model;
 import ModelLoader.OBJLoader;
+import ModelLoader.Object3D;
 
 
 public class Mazerunner {
@@ -60,12 +64,20 @@ public void start() throws ClassNotFoundException, IOException{
 	initDisp();
 	
 	// Loading the object
+/*	try {
+		FileReader fr = new FileReader("res/spike4.obj");
+		BufferedReader br = new BufferedReader(fr);
+		Object3D obj = new Object3D(br, false);
+		br.close();
+	} catch (FileNotFoundException e) {
+		e.printStackTrace();
+	} */
 	int objectDisplayList = glGenLists(1);
 	glNewList(objectDisplayList, GL_COMPILE);
 	{
 		Model m = null;
 		try {
-			m = OBJLoader.loadModel(new File("res/spike1.obj"));
+			m = OBJLoader.loadModel(new File("res/spike4.obj"));
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 	        	Display.destroy();
@@ -75,24 +87,33 @@ public void start() throws ClassNotFoundException, IOException{
 	        	Display.destroy();
 	        	System.exit(1);
 	        }
+			
 	        glBegin(GL_TRIANGLES);
 	        for (Face face : m.getFaces()) {
 	        	Vector3f n1 = m.getNormals().get((int) face.normal.x);
 	        	glNormal3f(n1.x, n1.y, n1.z);
+	        	Vector2f t1 = m.textures.get((int) face.texture.x);
+	            glTexCoord2f(t1.x, t1.y);
 	        	Vector3f v1 = m.getVertices().get((int) face.vertex.x);
 	        	glVertex3f(v1.x, v1.y, v1.z);
+	        	
 	        	Vector3f n2 = m.getNormals().get((int) face.normal.y);
 	        	glNormal3f(n2.x, n2.y, n2.z);
+	        	Vector2f t2 = m.textures.get((int) face.texture.y);
+	            glTexCoord2f(t2.x, t2.y);
 	        	Vector3f v2 = m.getVertices().get((int) face.vertex.y);
 	        	glVertex3f(v2.x, v2.y, v2.z);
+	        	
 	        	Vector3f n3 = m.getNormals().get((int) face.normal.z);
 	        	glNormal3f(n3.x, n3.y, n3.z);
+	        	Vector2f t3 = m.textures.get((int) face.texture.z);
+	            glTexCoord2f(t3.x, t3.y);
 	        	Vector3f v3 = m.getVertices().get((int) face.vertex.z);
 	        	glVertex3f(v3.x, v3.y, v3.z);
 	        }
 	        glEnd();
 	}
-	glEndList();
+	glEndList(); 
 	    
 	while(!Display.isCloseRequested() && player.locationY>-50){
 		
@@ -106,7 +127,9 @@ public void start() throws ClassNotFoundException, IOException{
 		display();
 		
 		// displaying the object
-		glTranslatef(SQUARE_SIZE * 2, 0.0f, SQUARE_SIZE * 2);
+		glTranslatef(SQUARE_SIZE * 2, SQUARE_SIZE, SQUARE_SIZE * 2);
+	//	glScalef(0.1f, 0.1f, 0.1f);
+	//	Object3D.opengldraw();
 		glCallList(objectDisplayList);
 		
 		// Location print player location
