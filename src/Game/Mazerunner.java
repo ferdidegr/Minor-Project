@@ -17,6 +17,9 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.opengl.TextureImpl;
 
+import Menu.GameState;
+import Menu.Menu;
+
 
 public class Mazerunner {
 	/*
@@ -70,12 +73,15 @@ public void start() throws ClassNotFoundException, IOException{
 		input.poll();
 		
 		// Check if pause menu is requested
-		if(input.pause){
-			for(int i = 0; i < 10000;i++){
-				Display.update();
-			}
-			input.pause = false;
+		if(!Menu.getState().equals(GameState.GAME)){
+			cleanup();
+			glPushMatrix();
+			glPushAttrib(GL_ENABLE_BIT);
+			Menu.run();
+			glPopMatrix();
+			glPopAttrib();
 			previousTime = Calendar.getInstance().getTimeInMillis();
+			Menu.setState(GameState.GAME);
 		}
 		
 		// Draw objects on screen

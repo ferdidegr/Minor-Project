@@ -8,6 +8,8 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
+import Menu.*;
+
 
 
 
@@ -75,7 +77,8 @@ public class UserInput extends Control
 		    	 * Key Pressed events
 		    	 */
 		        if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
-		        	pause = true;
+		   
+		        	Menu.setState(GameState.PAUSE);
 		        	Mouse.setGrabbed(false);
 		        	dX=0;
 		        	dY=0;

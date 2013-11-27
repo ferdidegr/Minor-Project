@@ -15,6 +15,7 @@ public class Menu {
 	private static MainMenu main = new MainMenu();
 	private static Settings sets = new Settings();
 	private static GameOver over = new GameOver();
+	private static PauseMenu pauze = new PauseMenu();
 	private static int top, bottom, scrollspeed;
 	private static int screenx = 1240;
 	private static int screeny = 680;
@@ -26,16 +27,21 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void start() throws LWJGLException{
+		gamestate = GameState.MAIN;
+
 		Display.setDisplayMode(new DisplayMode(screenx, screeny));
 		Display.create();
+		new Textures();
 		run();
 		
 	}
 	
 	public static void run() {
+		
 		bottom = 0;
 		top = Display.getHeight();
 		scrollspeed = Display.getHeight()/15;
+		glLoadIdentity();
 		initButtons();initGL();
 		// Main loop, while the X button is not clicked
 				while(!Display.isCloseRequested()){
@@ -104,7 +110,7 @@ public class Menu {
 			break;
 			
 		case PAUSE:
-			ID = PauseMenu.checkButtons(bottom);
+			ID = pauze.checkButtons(bottom);
 			PauseMenu.actionButtons(ID);
 			break;
 			
@@ -120,7 +126,7 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void initButtons(){
-		gamestate = GameState.MAIN;
+		
 		int buttonwidth = Display.getWidth()/3;		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
 		MenuButton.setDimensions(226, 56);
@@ -135,7 +141,7 @@ public class Menu {
 		over.init(buttonwidth, buttonheight);
 		
 		// Pauze
-		PauseMenu.init(buttonwidth, buttonheight);
+		pauze.init(buttonwidth, buttonheight);
 		
 		
 	}
@@ -166,7 +172,7 @@ public class Menu {
 			break;
 			
 		case PAUSE:
-			PauseMenu.display();
+			pauze.display();
 			break;
 			
 		

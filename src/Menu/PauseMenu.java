@@ -9,14 +9,13 @@ import org.lwjgl.input.Mouse;
 
 import Game.Mazerunner;
 
-public class PauseMenu{
+public class PauseMenu extends ButtonList{
 	
-	private static Text welkom = new Text(30, "Welkom bij Trapper");
-	private static ButtonList lijst;
+	private static Text welkom;
 	
 	public PauseMenu(){
-		lijst = new ButtonList();
-		welkom = new Text(30, "Spel gepauzeerd");
+		super();
+		welkom = new Text(30, "Pauze");
 	}
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
@@ -24,14 +23,10 @@ public class PauseMenu{
 	 * @param buttonwidth
 	 * @param buttonheight
 	 */
-	public static void init(int buttonwidth, int buttonheight){
+	public void init(int buttonwidth, int buttonheight){
 		welkom.initFont();
-		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2* buttonheight, Textures.start, Textures.startover,1, "Resume Game"));
-		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3* buttonheight, Textures.start, Textures.startover,2, "Main Menu"));
-	}
-	
-	public static int checkButtons(int bottom) {
-		return lijst.checkButtons(bottom);
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2* buttonheight, Textures.start, Textures.startover,1, "Resume game"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3* buttonheight, Textures.start, Textures.startover,2, "Settings"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -43,18 +38,18 @@ public class PauseMenu{
 		
 		case 1:
 			Menu.setState(GameState.GAME);
+			
 			break;
 			
 		case 2:
-			Menu.setState(GameState.MAIN);
-			break;
+			Menu.setState(GameState.SETTINGS);
 			
 			default: break;
 		}
 	}
 	
-	public static void display(){
-		lijst.display();
+	public void display(){
+		super.display();
 		welkom.draw(Menu.getScreenx()/2, Menu.getScreeny() - welkom.getHeight(), 1);
 	}
 }
