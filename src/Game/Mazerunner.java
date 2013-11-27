@@ -27,18 +27,21 @@ public class Mazerunner {
 	public Player player;									// The player object.
 	private Camera camera;									// The camera object.
 	private UserInput input;								// The user input object that controls the player.
-	private int[][] maze; 									// The maze.
+	public static int[][] maze; 									// The maze.
 	private ArrayList<VisibleObject> visibleObjects;		// A list of objects that will be displayed on screen.
-	private ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
-	private ArrayList<levelObject> objlijst;				// List of all collidable objects
+	
 	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
 	private Wall wall;										// Wall Class, used to put one wall in for test TODO remove
 	private Floor grond;									// Floor class used to put the floor in
-	private FloatBuffer lightPosition;						
-	private int[][] objectindex;							// reference to the arraylist entry
-	private int SQUARE_SIZE=1;								// Size of a unit block
+	private FloatBuffer lightPosition;		
+	
+	protected static ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
+	protected static ArrayList<levelObject> objlijst;				// List of all collidable objects
+	protected static int[][] objectindex;							// reference to the arraylist entry
+	protected static int SQUARE_SIZE=1;								// Size of a unit block
+	
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test6.maze";
+	private String level = "levels/test5.maze";
 	private int objectDisplayList = glGenLists(1);
 	private int skyboxDL = glGenLists(1);
 	/*
@@ -48,11 +51,11 @@ public class Mazerunner {
 	 */
 	
 public void start() throws ClassNotFoundException, IOException{
-	new Game.Textures();
+	new Game.Textures();			// Initialize textures
 	
 	// TODO remove
 	Display.setResizable(true);
-										// Force openGL to draw
+										
 	initObj();
 	initGL();
 	initDisp();
@@ -66,6 +69,15 @@ public void start() throws ClassNotFoundException, IOException{
 		// Check for Input
 		input.poll();
 		
+		// Check if pause menu is requested
+		if(input.pause){
+			for(int i = 0; i < 10000;i++){
+				Display.update();
+			}
+			input.pause = false;
+			previousTime = Calendar.getInstance().getTimeInMillis();
+		}
+		
 		// Draw objects on screen
 		display();
 		
@@ -73,7 +85,7 @@ public void start() throws ClassNotFoundException, IOException{
 		if(input.view_coord==true)System.out.println(player.getGridX(SQUARE_SIZE)+" "+player.getGridZ(SQUARE_SIZE));
 			
 		Display.update();
-//		Display.sync(120);
+		Display.sync(70);
 		
 	}
 	cleanup();
@@ -141,11 +153,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	        glEnable( GL_LIGHT0 );
 	        
 	     // Set the shading model.
-//	        glShadeModel( GL_SMOOTH );
+	        glShadeModel( GL_SMOOTH );
 	        
-			// Enable Textures
-//			glEnable(GL_TEXTURE_2D);
-//			
 //			glClearDepth(1.0f);			
 //			glDepthFunc(GL_LEQUAL);
 
@@ -173,49 +182,55 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			// displayed by MazeRunner.
 			visibleObjects = new ArrayList<VisibleObject>();
 			objlijst = new ArrayList<levelObject>();
+		 // Initialize Maze ( Loading in and setting the objects in the maze
 			initMaze();
-			
-			// Add the maze that we will be using.
-//			maze = new Maze();
-//			visibleObjects.add( maze );
+
 	     // Initialize the player.
 			player = new Player( 6 * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-								 SQUARE_SIZE *30/ 2.0 ,							// y-position
+								 SQUARE_SIZE *30/ 2.0 ,					// y-position
 								 5 * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
-								 0, 0 ,0.25,SQUARE_SIZE* 3/2.0);										// horizontal and vertical angle
+								 0, 0 ,									// horizontal and vertical angle
+								 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height							
 
 			camera = new Camera( player.getLocationX(), player.getLocationY(), player.getLocationZ(), 
 					             player.getHorAngle(), player.getVerAngle() );
 			
 			input = new UserInput();
 			player.setControl(input);
+			
+			/*
+			 * adding test objects
+			 */
+			
 			wall = new Wall(10, 10, 0, 5, 2,SQUARE_SIZE);
 			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1,SQUARE_SIZE);	
 			objlijst.add(wall);
 			
 			objlijst.add(grond);
 			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0, 1+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
+			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 1, 1+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
 		
 	}
 	/**
 	 * Display function, draw all visible objects
 	 */
 	public void display(){
-		// Calculating time since last frame.
+				// Calculating time since last frame.
 				Calendar now = Calendar.getInstance();		
 				long currentTime = now.getTimeInMillis();
 				int deltaTime = (int)(currentTime - previousTime);
 				previousTime = currentTime;
 				// TODO remove
 				Display.setTitle("dt: "+ deltaTime);
-				//System.out.println(deltaTime);
-//				System.out.println(monsterlijst.size());
-				
+	
 				//Update any movement since last frame.
 				Monster.setPlayerloc(new Vector(player.locationX, player.locationY, player.locationZ));
-				updateMovement(deltaTime);
+        	
+		        
+				if(input.minimap){drawHUD();}
 				
-				monsterlijst.get(0).update(deltaTime);
+				updateMovement(deltaTime);
+								
 				updateCamera();		
 				
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -230,21 +245,17 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        //update light positions
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
 		        
-		        
-		        // Display all the visible objects of MazeRunner.
-		        if(!input.debug){
-//		        for(VisibleObject vo:visibleObjects){
-//		        	if(vo instanceof Wall){glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.wallColour);}
-//		        	vo.display();
-//		        }
-		        	
-		        	glCallList(objectDisplayList);
+		        // Monsters
+		        for(Monster mo: monsterlijst){	
+		        	if(mo.isCollision(player.locationX, player.locationY-player.getHeight(), player.locationZ)){
+		        		player.velocity.scale(-5,1,-5);		        		
+		        	}
+		        	mo.display();
 		        }
-		        
-		        monsterlijst.get(0).display();	
-		        
-				if(input.minimap){drawHUD();}
-				player.draw();
+		        player.draw();
+		        // Display all the visible objects of MazeRunner.
+		        if(!input.debug){ 	glCallList(objectDisplayList); }
+
 	}
 	
 	/**
@@ -285,17 +296,18 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		camera.setVerAngle( player.getVerAngle() * (input.lookback? -1:1) );
 		camera.calculateVRP();
 	 // Store the current matrix
-	    glPushMatrix();
+		glPushMatrix();
 	 
 	    // Reset and transform the matrix.
 	    glLoadIdentity();
+	    
 	    GLU.gluLookAt(
-	        0f,0f,0f,
-	        (float) camera.getVrpX(), (float) camera.getVrpY(),(float) camera.getVrpZ(),
-	        0f,1f,0f);
+	        0f,0f,0f,																			// Set camera to origin
+	        (float) camera.getVrpX(), (float) camera.getVrpY(),(float) camera.getVrpZ(),		// set the view reference point
+	        0f,1f,0f);																			// View up vector
 	 
 	    glCallList(skyboxDL);
-	 
+	    glPopMatrix();
 
 	}
 
@@ -326,78 +338,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		 */
 		private void updateMovement(int deltaTime)
 		{
-			double px = player.getLocationX();				// Player X Location
-			double py = player.locationY;					// Player Y location
-			double pz = player.getLocationZ();				// Player Z location
-			double ph	  = player.getHeight();				// Player Height
-			double pw	  = player.getWidth();				// Player Width
 			player.update(deltaTime);						// Updating velocity vector
-			int Xin = player.getGridX(SQUARE_SIZE);
-			int Zin = player.getGridZ(SQUARE_SIZE);
-			int signX = (int) Math.signum(player.velocity.getX()); // Direction of the velocity in X
-			int signZ = (int) Math.signum(player.velocity.getZ()); // Direction of the velocity in Z
-			boolean colX = false;
-			boolean colZ = false;
-			boolean colY = false;
-			ArrayList<Integer> tempindex = new ArrayList<Integer>();
-			
-			// Get indices of the arraylist with collidable objects
-			for(int i = -1 ; i<=1;i++){
-				for(int j = -1; j<=1; j++){
-					if((Xin+i)>=0 && (Xin+i)<maze[0].length && (Zin+j)>=0 && (Zin+j)<maze.length){
-						if(objectindex[Zin+j][Xin+i]>=0){							// < zero means there is nothing so no index
-							tempindex.add(objectindex[Zin+j][Xin+i]);
-						}
-					}
-				}
-			}
-			//Add addition extra block
-			tempindex.add(objlijst.size()-2);
-			//Add floor
-			tempindex.add(objlijst.size()-1);
 
-			// Voor nu nog ff beunen
-
-			//collision X	
-			for(int i = 0; i< tempindex.size();i++){
-				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));				
-				if(tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz+pw)
-				|| tempobj.isCollision(px+player.velocity.getX()+pw*signX, py-ph, pz-pw)){
-					colX=true;
-					player.locationX+=tempobj.getmaxDistX(player.locationX+pw*signX);
-					break;
-				}
-
-			}			
-			if(colX){}else{player.updateX();}
-			px = player.locationX;
-			// collsion Z						
-			for(int i = 0; i< tempindex.size();i++){			
-			
-				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));		
-				if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+player.velocity.getZ())
-				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+player.velocity.getZ())){
-					colZ=true;
-					player.locationZ+=tempobj.getmaxDistZ(player.locationZ+pw*signZ);
-					break;
-				}
-			}
-			if(colZ){}else{	player.updateZ();}
-			pz= player.getLocationZ();
-			
-			// CollisionY
-			for(int i = 0; i< tempindex.size();i++){
-				levelObject tempobj = objlijst.get((tempindex.get(i).intValue()));		
-				if(tempobj.isCollision(px+pw,  py+player.velocity.getY()-ph , pz+pw)
-				|| tempobj.isCollision(px-pw,  py+player.velocity.getY()-ph , pz+pw)
-				|| tempobj.isCollision(px-pw,  py+player.velocity.getY()-ph , pz-pw)
-				|| tempobj.isCollision(px+pw,  py+player.velocity.getY()-ph , pz-pw)){
-					colY=true;
-					player.locationY+=tempobj.getmaxDistY(player.locationY-ph);
-				}				
-			}
-			if(colY){player.jump=false;}else{player.updateY();}
-			py = player.getLocationY();
 			/*
 			 * Monsters
 			 */
@@ -426,8 +368,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		public void initDisp(){
 			/*
 			 * Walls and ground
-			 */
-			
+			 */			
 			
 			glNewList(objectDisplayList, GL_COMPILE);
 			 
@@ -537,7 +478,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			    glEnd();
 			    // Restore enable bits and matrix
 			    glPopAttrib();
-			    glPopMatrix();
+			 
 			    glEndList();
 			    
 			   

@@ -39,7 +39,7 @@ public class Monster extends levelObject{
 	@Override
 	public boolean isCollision(double x, double y, double z) {
 		
-		return x>=(locationX-width) && x<=(locationX+width) && z>=(locationZ-width) && z<=(locationZ+width) && y>=0 && y<height;
+		return x>=(locationX-width/2f) && x<=(locationX+width/2f) && z>=(locationZ-width/2f) && z<=(locationZ+width/2f) && y>=0 && y<height;
 	}
 
 	@Override

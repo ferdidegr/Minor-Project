@@ -75,12 +75,7 @@ public class UserInput extends Control
 		    	 * Key Pressed events
 		    	 */
 		        if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
-		        	try {
-						Display.setFullscreen(false);
-					} catch (LWJGLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+		        	pause = true;
 		        	Mouse.setGrabbed(false);
 		        	dX=0;
 		        	dY=0;
@@ -110,6 +105,7 @@ public class UserInput extends Control
 				if(Keyboard.getEventKey() == Keyboard.KEY_E){lookback = false;}
 				if(Keyboard.getEventKey()== Keyboard.KEY_F2){debug = !debug;}
 				if(Keyboard.getEventKey()== Keyboard.KEY_M){minimap = ! minimap;}
+				
 		    }
 		}
 	}
