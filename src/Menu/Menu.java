@@ -16,6 +16,7 @@ public class Menu {
 	private static Settings sets = new Settings();
 	private static GameOver over = new GameOver();
 	private static PauseMenu pauze = new PauseMenu();
+	private static PSettings pset = new PSettings();
 	private static int top, bottom, scrollspeed;
 	private static int screenx = 1240;
 	private static int screeny = 680;
@@ -115,6 +116,11 @@ public class Menu {
 			PauseMenu.actionButtons(ID);
 			break;
 			
+		case PSETTINGS:
+			ID = pset.checkButtons(bottom);
+			PSettings.actionButtons(ID);
+			break;
+			
 		default: break;
 			
 		}
@@ -144,6 +150,9 @@ public class Menu {
 		// Pauze
 		pauze.init(buttonwidth, buttonheight);
 		
+		// Pauze
+		pset.init(buttonwidth, buttonheight);
+		
 		
 	}
 	/**
@@ -169,11 +178,12 @@ public class Menu {
 			over.display();
 			break;
 			
-		case GAME:
-			break;
-			
 		case PAUSE:
 			pauze.display();
+			break;
+			
+		case PSETTINGS:
+			pset.display();
 			break;
 			
 		

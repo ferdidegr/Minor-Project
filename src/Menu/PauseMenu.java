@@ -42,7 +42,7 @@ public class PauseMenu extends ButtonList{
 			break;
 			
 		case 2:
-			Menu.setState(GameState.SETTINGS);
+			Menu.setState(GameState.PSETTINGS);
 			
 			default: break;
 		}
