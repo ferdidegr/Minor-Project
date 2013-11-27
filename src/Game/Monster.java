@@ -3,21 +3,29 @@ import static org.lwjgl.opengl.GL11.*;
 public class Monster extends levelObject{
 
 	private int SQUARE_SIZE;
+	private double width;
+	private double height;
+	private double speed = 0.005;
 	public static Vector playerloc = new Vector(0, 0, 0);
 	
-	public Monster(double x, double y, double z, int SQUARE_SIZE) {
+	public Monster(double x, double y, double z, double width, double height,  int SQUARE_SIZE) {
 		super(x, y, z);
+		this.width = width;
+		this.height= height;
 		this.SQUARE_SIZE  =SQUARE_SIZE;
 		// TODO Auto-generated constructor stub
 	}
 	
 	public void update(int deltaTime){
 		Vector vec = new Vector(locationX, locationY, locationZ);
-		double dX = 
+		Vector toPlayer = playerloc.clone();
+		vec.scale(-1);
+		toPlayer.add(vec);
+		toPlayer.normalize2D();
 		
-		locationX += (playerloc.getX()-locationX)/1000 * deltaTime;
+		locationX += toPlayer.getX()*speed * deltaTime*0.5;
 
-		locationZ += (playerloc.getZ()-locationZ)/1000 * deltaTime;
+		locationZ += toPlayer.getZ()*speed * deltaTime*0.5;
 	}
 	
 	@Override
@@ -30,8 +38,8 @@ public class Monster extends levelObject{
 
 	@Override
 	public boolean isCollision(double x, double y, double z) {
-		// TODO Auto-generated method stub
-		return false;
+		
+		return x>=(locationX-width) && x<=(locationX+width) && z>=(locationZ-width) && z<=(locationZ+width) && y>=0 && y<height;
 	}
 
 	@Override

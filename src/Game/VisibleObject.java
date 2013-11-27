@@ -1,5 +1,7 @@
 package Game;
 
+import org.newdawn.slick.opengl.Texture;
+
 
 
 /**

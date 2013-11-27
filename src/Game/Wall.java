@@ -60,8 +60,6 @@ public class Wall extends levelObject{
 	public void display(){
 		double width = (right-left)/SQUARE_SIZE;
 		double depth = (front-back)/SQUARE_SIZE;
-//		glEnable(GL_TEXTURE_2D);
-//		Textures.start.bind();
 		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
 		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 		glBegin(GL_QUADS);
@@ -77,7 +75,7 @@ public class Wall extends levelObject{
 			Utils.glVertvec(boxvertices[boxfaces[i][3]]);
 		}
 		glEnd();
-//		glDisable(GL_TEXTURE_2D);
+
 	}
 	/**
 	 * Maximum distance you can travel till you collide

@@ -58,11 +58,36 @@ public class Vector {
 		return Math.sqrt(x*x+y*y+z*z);
 	}
 	
+	public double length2D(){
+		return Math.sqrt(x*x+z*z);
+	}
+	
+	public void normalize2D(){
+		double length = length2D();
+		x /= length;
+		z /= length;
+	}
+	
 	public void normalize(){
 		double length = length();
 		x /= length;
 		y /= length;
 		z /= length;
+	}
+	
+	public void normalizePerdir(){
+		x = Math.signum(x)*x/x;
+		y = Math.signum(y)*y/y;
+		z = Math.signum(z)*z/z;
+	}
+	
+	public void step(){
+		x = (x>0? 1:0);
+		y = (y>0? 1:0);
+		z = (z>0? 1:0);
+	}
+	public Vector clone(){
+		return new Vector(x, y, z);
 	}
 	
 	/**

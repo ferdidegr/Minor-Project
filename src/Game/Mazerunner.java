@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.lwjgl.BufferUtils;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.util.glu.GLU;
+import org.newdawn.slick.opengl.TextureImpl;
 
 
 public class Mazerunner {
@@ -35,8 +38,9 @@ public class Mazerunner {
 	private int[][] objectindex;							// reference to the arraylist entry
 	private int SQUARE_SIZE=1;								// Size of a unit block
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test5.maze";
-	private int objectDisplayList = glGenLists(1), skyboxDL = glGenLists(1);
+	private String level = "levels/test6.maze";
+	private int objectDisplayList = glGenLists(1);
+	private int skyboxDL = glGenLists(1);
 	/*
 	 *  *************************************************
 	 *  * 					Main Loop					*
@@ -44,11 +48,13 @@ public class Mazerunner {
 	 */
 	
 public void start() throws ClassNotFoundException, IOException{
+	new Game.Textures();
+	
 	// TODO remove
 	Display.setResizable(true);
-	glFinish();
+										// Force openGL to draw
 	initObj();
-	init();
+	initGL();
 	initDisp();
 	
 	
@@ -67,7 +73,8 @@ public void start() throws ClassNotFoundException, IOException{
 		if(input.view_coord==true)System.out.println(player.getGridX(SQUARE_SIZE)+" "+player.getGridZ(SQUARE_SIZE));
 			
 		Display.update();
-		Display.sync(70);
+//		Display.sync(120);
+		
 	}
 	cleanup();
 }
@@ -104,7 +111,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
  *  * 			Initialization methods				*
  *  *************************************************
  */
-	public void init(){		
+	public void initGL(){		
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -134,13 +141,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	        glEnable( GL_LIGHT0 );
 	        
 	     // Set the shading model.
-	        glShadeModel( GL_SMOOTH );
+//	        glShadeModel( GL_SMOOTH );
 	        
 			// Enable Textures
 //			glEnable(GL_TEXTURE_2D);
-			
-			glClearDepth(1.0f);			
-			glDepthFunc(GL_LEQUAL);
+//			
+//			glClearDepth(1.0f);			
+//			glDepthFunc(GL_LEQUAL);
 
 	        
 	}
@@ -187,7 +194,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			objlijst.add(wall);
 			
 			objlijst.add(grond);
-			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0, 1+0.5*SQUARE_SIZE,SQUARE_SIZE));
+			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0, 1+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
 		
 	}
 	/**
@@ -200,7 +207,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				int deltaTime = (int)(currentTime - previousTime);
 				previousTime = currentTime;
 				// TODO remove
-				System.out.println(deltaTime);
+				Display.setTitle("dt: "+ deltaTime);
+				//System.out.println(deltaTime);
 //				System.out.println(monsterlijst.size());
 				
 				//Update any movement since last frame.
@@ -230,15 +238,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 //		        	vo.display();
 //		        }
 		        	
-		        glCallList(objectDisplayList);
-		        }	
+		        	glCallList(objectDisplayList);
+		        }
 		        
 		        monsterlijst.get(0).display();	
 		        
 				if(input.minimap){drawHUD();}
 				player.draw();
-				
-//		        glLoadIdentity();
 	}
 	
 	/**
@@ -288,19 +294,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	        (float) camera.getVrpX(), (float) camera.getVrpY(),(float) camera.getVrpZ(),
 	        0f,1f,0f);
 	 
-	    // Enable/Disable features
-	    glPushAttrib(GL_ENABLE_BIT);
-	    glEnable(GL_TEXTURE_2D);
-	    
-	    glDisable(GL_DEPTH_TEST);
-	    glDisable(GL_LIGHTING);
-	    glDisable(GL_BLEND);
-	 
 	    glCallList(skyboxDL);
 	 
-	    // Restore enable bits and matrix
-	    glPopAttrib();
-	    glPopMatrix();
+
 	}
 
 	/**
@@ -401,8 +397,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				}				
 			}
 			if(colY){player.jump=false;}else{player.updateY();}
-			
-			
+			py = player.getLocationY();
+			/*
+			 * Monsters
+			 */
+			for(Monster mon: monsterlijst){
+				
+			}
 		}
 
 		/**
@@ -426,13 +427,18 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			/*
 			 * Walls and ground
 			 */
-			glFinish();
-			 glNewList(objectDisplayList, GL_COMPILE);
+			
+			
+			glNewList(objectDisplayList, GL_COMPILE);
 			 
+			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);
 			 for(VisibleObject vo:visibleObjects){
-		        	if(vo instanceof Wall){glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);Textures.ingamewall.bind();}
+		        	if(vo instanceof Wall){
+		        		Textures.ingamewall.bind();
+		        		}
 		        	vo.display();
 		        }
+			 
 		        glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);	  
 		        glMaterial(GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
 		        glMaterialf(GL_FRONT, GL_SHININESS, -1f);
@@ -443,6 +449,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 								
 				glMaterial( GL_FRONT, GL_SPECULAR, Graphics.white);
 				glMaterialf(GL_FRONT, GL_SHININESS,5f);
+				
 				glPushMatrix();
 
 				glTranslatef(0.5f, 1f, 0.5f);
@@ -451,10 +458,19 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				
 				 
 			 glEndList();
+			
 			 /*
 			  * SkyBox	
 			  */
 			 glNewList(skyboxDL, GL_COMPILE);
+			    // Enable/Disable features
+			    glPushAttrib(GL_ENABLE_BIT);
+			    glEnable(GL_TEXTURE_2D);
+			    
+			    glDisable(GL_DEPTH_TEST);
+			    glDisable(GL_LIGHTING);
+			    glDisable(GL_BLEND);
+			    
 			 float smallnumber = 0.002f;
 			    // Just in case we set all vertices to white.
 			    glColor4f(1,1,1,1);
@@ -519,8 +535,12 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
 			        
 			    glEnd();
-			    
+			    // Restore enable bits and matrix
+			    glPopAttrib();
+			    glPopMatrix();
 			    glEndList();
-			   glFinish();
+			    
+			   
+			   
 		}
 	}
