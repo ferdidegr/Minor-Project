@@ -74,12 +74,14 @@ public void start() throws ClassNotFoundException, IOException{
 		
 		// Check if pause menu is requested
 		if(!Menu.getState().equals(GameState.GAME)){
-			cleanup();
+			
 			glPushMatrix();
 			glPushAttrib(GL_ENABLE_BIT);
+			cleanup();
 			Menu.run();
-			glPopMatrix();
 			glPopAttrib();
+			glPopMatrix();
+			initGL();
 			previousTime = Calendar.getInstance().getTimeInMillis();
 			Menu.setState(GameState.GAME);
 		}
@@ -95,6 +97,7 @@ public void start() throws ClassNotFoundException, IOException{
 		
 	}
 	cleanup();
+	Menu.setState(GameState.MAIN);
 }
 
 /*

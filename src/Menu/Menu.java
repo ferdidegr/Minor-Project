@@ -32,6 +32,7 @@ public class Menu {
 		Display.setDisplayMode(new DisplayMode(screenx, screeny));
 		Display.create();
 		new Textures();
+		initButtons();
 		run();
 		
 	}
@@ -42,9 +43,9 @@ public class Menu {
 		top = Display.getHeight();
 		scrollspeed = Display.getHeight()/15;
 		glLoadIdentity();
-		initButtons();initGL();
+		initGL();
 		// Main loop, while the X button is not clicked
-				while(!Display.isCloseRequested()){
+				while(!Display.isCloseRequested() && !Menu.getState().equals(GameState.GAME)){
 					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 					glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			
 					mousepoll();
