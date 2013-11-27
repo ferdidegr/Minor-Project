@@ -161,8 +161,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	     // Set the shading model.
 	        glShadeModel( GL_SMOOTH );
 	        
-//			glClearDepth(1.0f);			
-//			glDepthFunc(GL_LEQUAL);
+			glClearDepth(1.0f);			
+			glDepthFunc(GL_LEQUAL);
 
 	        
 	}
@@ -214,7 +214,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			
 			objlijst.add(grond);
 			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0, 1+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
-			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 1, 1+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
+			
 		
 	}
 	/**
@@ -245,22 +245,23 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        		(float)camera.getVuvX(), (float)camera.getVuvY(), (float)camera.getVuvZ() );
 				
 		        drawSkybox();
+		        // Display all the visible objects of MazeRunner.
+		        if(!input.debug){ 	glCallList(objectDisplayList); }
 		        
 		        //update light positions
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
 		        
-		        // Monsters
-		        for(Monster mo: monsterlijst){	
-		        	if(mo.isCollision(player.locationX, player.locationY-player.getHeight(), player.locationZ)){
-		        		player.velocity.scale(-5,1,-5);		        		
-		        	}
-//		        	mo.update(deltaTime);
-		        	mo.display();
+		        // Monsters		        
+		        for(Monster mo: monsterlijst){			        	
+		        	mo.display();		        	
 		        }
-		        player.draw();
-		        // Display all the visible objects of MazeRunner.
-		        if(!input.debug){ 	glCallList(objectDisplayList); }
+		        
+		        glPushMatrix();
 		        if(input.minimap){drawHUD();}
+		        glPopMatrix();
+		        player.draw();
+
+
 
 	}
 	
@@ -269,11 +270,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 */
 	private void drawHUD(){
 		// Switch to 2D
+		
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glLoadIdentity();
 		glOrtho(0.0, Display.getWidth(), Display.getHeight(), 0.0, -1.0, 1.0);
+		
 		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
 		glPushAttrib(GL_ENABLE_BIT);
 		glLoadIdentity();
 		glDisable(GL_CULL_FACE);
@@ -288,6 +292,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glPopAttrib();
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
 	}
 	/**
 	 * Draw a unit cube around the camera
@@ -349,7 +354,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			 * Monsters
 			 */
 			for(Monster mon: monsterlijst){
-				
+				mon.update(deltaTime);
 			}
 		}
 
@@ -483,7 +488,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			    glEnd();
 			    // Restore enable bits and matrix
 			    glPopAttrib();
-			 
+
 			    glEndList();
 			    
 			   

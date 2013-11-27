@@ -13,6 +13,7 @@ public class Vector {
 		setY(y);
 		setZ(z);
 	}
+	
 	/**
 	 * Vector addition
 	 * @param vec another Vector object

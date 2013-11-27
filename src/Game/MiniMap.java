@@ -16,7 +16,7 @@ public class MiniMap {
 		
 		int locX=player.getGridX(SQUARE_SIZE);
 		int locZ=mapHeight-1-player.getGridZ(SQUARE_SIZE);
-		
+				
 		int size=10;
 		
 		glColor3f(1.0f, 0.0f, 0.0f);
@@ -32,7 +32,7 @@ public class MiniMap {
 			}
 			glTranslatef(-10f*(2*size), 10f, 0f);
 		}
-		
+		glFinish();
 		glPushMatrix();
 		glLoadIdentity();
 		for (int i=0;i<size*2;i++){
