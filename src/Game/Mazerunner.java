@@ -7,15 +7,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.Sys;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
 
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.util.glu.GLU;
-import org.newdawn.slick.opengl.TextureImpl;
 
 import Menu.GameState;
 import Menu.Menu;
@@ -234,10 +231,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	
 				//Update any movement since last frame.
 				Monster.setPlayerloc(new Vector(player.locationX, player.locationY, player.locationZ));
-        	
-		        
-				if(input.minimap){drawHUD();}
-				
+								
 				updateMovement(deltaTime);
 								
 				updateCamera();		
@@ -251,6 +245,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        		(float)camera.getVuvX(), (float)camera.getVuvY(), (float)camera.getVuvZ() );
 				
 		        drawSkybox();
+		        
 		        //update light positions
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
 		        
@@ -259,11 +254,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	if(mo.isCollision(player.locationX, player.locationY-player.getHeight(), player.locationZ)){
 		        		player.velocity.scale(-5,1,-5);		        		
 		        	}
+//		        	mo.update(deltaTime);
 		        	mo.display();
 		        }
 		        player.draw();
 		        // Display all the visible objects of MazeRunner.
 		        if(!input.debug){ 	glCallList(objectDisplayList); }
+		        if(input.minimap){drawHUD();}
 
 	}
 	
@@ -285,7 +282,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glClear(GL_DEPTH_BUFFER_BIT);
 
 		minimap.draw(player,SQUARE_SIZE);
-
 
 		// Making sure we can render 3d again
 		glMatrixMode(GL_PROJECTION);
