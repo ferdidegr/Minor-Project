@@ -2,6 +2,8 @@ package Game;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.util.ArrayList;
+
 
 /**
  * Player represents the actual player in MazeRunner.
@@ -186,8 +188,87 @@ public class Player extends GameObject {
 			} else{
 				run =1;
 			}
-			updateV(deltaTime);
 		}
+			updateV(deltaTime);
+			
+			/*
+			 * Collision detection
+			 */
+			// Reassign attribute names to make the equations shorter
+			
+			double px = getLocationX();				// Player X Location
+			double py = locationY;					// Player Y location
+			double pz = getLocationZ();				// Player Z location
+			double ph	  = getHeight();			// Player Height
+			double pw	  = getWidth();				// Player Width
+			int Xin = getGridX(Mazerunner.SQUARE_SIZE);
+			int Zin = getGridZ(Mazerunner.SQUARE_SIZE);
+			boolean colX = false;
+			boolean colZ = false;
+			boolean colY = false;
+			
+			int signX = (int) Math.signum(velocity.getX()); // Direction of the velocity in X
+			int signZ = (int) Math.signum(velocity.getZ()); // Direction of the velocity in Z
+			
+			ArrayList<Integer> tempindex = new ArrayList<Integer>();
+			
+			// Get indices of the arraylist with collidable objects
+			for(int i = -1 ; i<=1;i++){
+				for(int j = -1; j<=1; j++){
+					if((Xin+i)>=0 && (Xin+i)<Mazerunner.maze[0].length && (Zin+j)>=0 && (Zin+j)<Mazerunner.maze.length){
+						if(Mazerunner.objectindex[Zin+j][Xin+i]>=0){							// < zero means there is nothing so no index
+							tempindex.add(Mazerunner.objectindex[Zin+j][Xin+i]);
+						}
+					}
+				}
+			}
+			
+			//Add addition extra block
+			tempindex.add(Mazerunner.objlijst.size()-2);
+			//Add floor
+			tempindex.add(Mazerunner.objlijst.size()-1);
+			
+			//collision X	
+			for(int i = 0; i< tempindex.size();i++){
+				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));				
+				if(tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz+pw)
+				|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz-pw)){
+					colX=true;
+					locationX+=tempobj.getmaxDistX(locationX+pw*signX);
+					break;
+				}
+
+			}			
+			if(colX){}else{updateX();}
+			px = locationX;
+			// collsion Z						
+			for(int i = 0; i< tempindex.size();i++){			
+			
+				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
+				if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+velocity.getZ())
+				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+velocity.getZ())){
+					colZ=true;
+					locationZ+=tempobj.getmaxDistZ(locationZ+pw*signZ);
+					break;
+				}
+			}
+			if(colZ){}else{	updateZ();}
+			pz= getLocationZ();
+			
+			// CollisionY
+			for(int i = 0; i< tempindex.size();i++){
+				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
+				if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
+				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz+pw)
+				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
+				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){
+					colY=true;
+					locationY+=tempobj.getmaxDistY(locationY-ph);
+				}				
+			}
+			if(colY){jump=false;}else{updateY();}
+			py = getLocationY();
+		
 	}
 	/**
 	 * get X grid location
