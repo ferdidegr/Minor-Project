@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
@@ -297,7 +298,18 @@ public class MazeMaker {
 		// Check menu bar buttons Not object buttons
 		switch(ID){
 		    case 101:{exit = true; break;}
-			case 99:{IO.savechooser(maze);ID=-1;break;}
+			case 99:{
+				if (maze==null){
+					Sys.alert("Warning", "No maze loaded!");
+				}
+				else{
+				if (checkFlags(maze.getMaze())){
+				IO.savechooser(maze);}
+				else{
+					Sys.alert("Warning", "Start and/or ending flag not placed!");
+				}
+				ID=-1;
+				break;}}
 			case 98:{
 				int[][] tempmaze = null;
 				try {tempmaze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
@@ -405,9 +417,24 @@ public class MazeMaker {
 		glLoadIdentity();									// REset the current matrix.
 		glOrtho(left, right, bottom, top, 1, -1);
 		glMatrixMode(GL_MODELVIEW);	
-		
-	  
 	}
+	  
+	public static boolean checkFlags(int[][] maze){
+		boolean red_exists=false, green_exists=false;
+		for (int i=0;i<maze.length;i++){
+			for (int j=0;j<maze[0].length;j++){
+				if (maze[i][j]==11)
+					green_exists=true;
+				if (maze[i][j]==12)
+					red_exists=true;
+				System.out.println(i+" "+j+", output: "+maze[i][j]);
+				
+			}
+		}
+		return (red_exists && green_exists);
+	}
+		
+	
 	/**
 	 * Main program starts here
 	 * @param args
