@@ -1,5 +1,7 @@
 package Menu;
 
+import Game.StatusBars;
+
 public class PSettings extends ButtonList {
 private static Text welkom;
 	

@@ -13,6 +13,8 @@ public class Text {
 	private TrueTypeFont myfont;
 	private String s;
 	private Double size;
+	private int lineh;
+	private int width;
 	
 	public Text(double insize, String s){
 		this.s = s;
@@ -28,8 +30,7 @@ public class Text {
 	 * @param s
 	 */
 	public void draw(int x, int y,float scale){
-		int lineh = myfont.getHeight();
-		int width = myfont.getWidth(s);
+		
 
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
@@ -53,17 +54,18 @@ public class Text {
 			Font awtFont2 = Font.createFont(Font.TRUETYPE_FONT, inputStream);
 			awtFont2 = awtFont2.deriveFont(fontsize); // set font size
 			myfont = new TrueTypeFont(awtFont2, true);
-		
-
+			
+			lineh = myfont.getHeight();
+			width = myfont.getWidth(s);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public int getHeight(){
-		return myfont.getHeight();
+		return lineh;
 	}
 	public int getWidth(){
-		return myfont.getWidth(s);
+		return width;
 	}
 }
