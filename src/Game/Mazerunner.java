@@ -40,6 +40,7 @@ public class Mazerunner {
 	protected static int[][] objectindex;							// reference to the arraylist entry
 	protected static int SQUARE_SIZE=1;								// Size of a unit block
 	
+	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
 	private String level = "levels/test5.maze";
 	private int objectDisplayList = glGenLists(1);
@@ -95,7 +96,7 @@ public void start() throws ClassNotFoundException, IOException{
 		
 	}
 	cleanup();
-	Menu.setState(GameState.MAIN);
+	Menu.setState(GameState.GAMEOVER);
 }
 
 /*
@@ -109,6 +110,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	monsterlijst = new ArrayList<Monster>();
 	
 	minimap=new MiniMap(maze);		//load the minimap
+	StatusBars.init(100);
 	
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
@@ -288,6 +290,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glClear(GL_DEPTH_BUFFER_BIT);
 
 		minimap.draw(player,SQUARE_SIZE);
+		StatusBars.draw();
 
 		// Making sure we can render 3d again
 		glMatrixMode(GL_PROJECTION);

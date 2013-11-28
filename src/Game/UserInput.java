@@ -88,7 +88,7 @@ public class UserInput extends Control
 				if (Keyboard.getEventKey() == Keyboard.KEY_A) {   left = true;  }
 				if (Keyboard.getEventKey() == Keyboard.KEY_D) {   right = true;	}
 				if (Keyboard.getEventKey() == Keyboard.KEY_LSHIFT) {    run = true;	}
-				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE){	jump = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE){	jump = true; StatusBars.minHealth(10);}
 				if(Keyboard.getEventKey() == Keyboard.KEY_F1){	view_coord = true;}
 				if(Keyboard.getEventKey() == Keyboard.KEY_E){lookback = true;}
 		    } else {

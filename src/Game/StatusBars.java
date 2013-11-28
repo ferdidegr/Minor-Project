@@ -92,8 +92,8 @@ public class StatusBars {
 		if((health - hp) >= 0){
 			health -= hp;
 		} else {
+			Mazerunner.isdood = true;
 			Menu.setState(GameState.GAMEOVER);
-			Display.destroy();
 		}
 		
 	}
