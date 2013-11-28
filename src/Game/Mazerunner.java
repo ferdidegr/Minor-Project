@@ -42,7 +42,7 @@ public class Mazerunner {
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test5.maze";
+	private String level = "levels/scorps.maze";
 	private int objectDisplayList = glGenLists(1);
 	private int skyboxDL = glGenLists(1);
 	/*
@@ -126,7 +126,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
 									 0, 0 ,									// horizontal and vertical angle
 									 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height			
-			}else{			
+			}else if(maze[j][i]==14){
+				monsterlijst.add(new Monster(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
+									 SQUARE_SIZE/ 2.0 ,							// y-position
+									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 			// z position
+									 SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE));
+			}
+				else{			
+			
 				objectindex[j][i]=-200;
 			}
 		}
@@ -216,9 +223,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			objlijst.add(wall);
 			
 			objlijst.add(grond);
-			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0.5*SQUARE_SIZE, 1+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
-			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0.5*SQUARE_SIZE, 10+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
-			
+		
 		
 	}
 	/**

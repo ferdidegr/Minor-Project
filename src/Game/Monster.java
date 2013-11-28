@@ -2,6 +2,7 @@ package Game;
 import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
+
 public class Monster extends levelObject{
 
 	private int SQUARE_SIZE;
@@ -85,32 +86,53 @@ public class Monster extends levelObject{
 		tempindex.add(Mazerunner.objlijst.size()-2);
 		//Add floor
 		tempindex.add(Mazerunner.objlijst.size()-1);
-		
+		double maxX=100;
 		//collision X	
 		for(int i = 0; i< tempindex.size();i++){
 			levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));				
 			if(tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz+pw)
 			|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
 				colX=true;				
-				locationX+=tempobj.getmaxDistX(locationX+pw*signX);
+				maxX=tempobj.getmaxDistX(locationX+pw*signX);
 				break;
 			}
 		}
-		if(colX){}else{updateX();}		
+		for(Monster mo:Mazerunner.monsterlijst){
+			if(mo!=this){
+				if(mo.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz+pw)
+				|| mo.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
+					maxX=Math.min(maxX, mo.getmaxDistX(px));
+					colX=true;
+				}
+			}
+		}
+		
+		if(colX){locationX+=maxX;}else{updateX();}		
 		px = locationX;
 		
-		// collsion Z						
+		// collsion Z with wall		
+		double maxZ =100;
 		for(int i = 0; i< tempindex.size();i++){			
 		
 			levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
 			if(tempobj.isCollision(px+pw, py-ph/2f, pz+pw*signZ+velocity.getZ())
 			|| tempobj.isCollision(px-pw, py-ph/2f, pz+pw*signZ+velocity.getZ())){
 				colZ=true;
-				locationZ+=tempobj.getmaxDistZ(locationZ+pw*signZ);
+				maxZ=tempobj.getmaxDistZ(locationZ+pw*signZ);
 				break;
 			}
 		}
-		if(colZ){}else{	updateZ();}
+		// with eachother
+		for(Monster mo:Mazerunner.monsterlijst){
+			if(mo!=this){
+				if(mo.isCollision(px+pw, py-ph/2f, pz+pw*signZ+velocity.getZ())
+				|| mo.isCollision(px-pw, py-ph/2f, pz+pw*signZ+velocity.getZ())){
+					maxZ=Math.min(maxZ, mo.getmaxDistX(pz));
+					colZ=true;
+				}
+			}
+		}
+		if(colZ){locationZ+=maxZ;}else{	updateZ();}
 		pz= getLocationZ();
 		
 		// CollisionY
@@ -125,21 +147,22 @@ public class Monster extends levelObject{
 			}				
 		}
 		if(colY){}else{updateY();}
-		py = getLocationY();
-		
-		System.out.println(locationX+" "+locationY+" "+locationZ);
+		py = getLocationY();		
 		
 	}
 	
 	public void updateV(int deltaTime){
 		counter+=deltaTime;
+		// Friction
 		velocity.scale(0.1, 0.4, 0.1);
+		// Random motion
 		if(counter>3000){
 		rand = Math.random();
 		counter=0;
 		}
 		velocity.add(rand*speed*deltaTime,0,rand*speed*deltaTime);
-		velocity.scale(0.4);
+		velocity.scale(0.5);
+		// Movement to player
 		velocity.add(toPlayer.getX()*speed * deltaTime*0.5, -0.005*deltaTime, toPlayer.getZ()*speed * deltaTime*0.5);
 	}
 	
