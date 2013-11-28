@@ -42,7 +42,7 @@ public class Mazerunner {
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/scorps.maze";
+	private String level = "levels/scorpsdrop.maze";
 	private int objectDisplayList = glGenLists(1);
 	private int skyboxDL = glGenLists(1);
 	/*

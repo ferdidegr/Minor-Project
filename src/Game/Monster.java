@@ -175,7 +175,7 @@ public class Monster extends levelObject{
 	@Override
 	public void display() {
 		glPushMatrix();
-		glTranslated(locationX, 0, locationZ);
+		glTranslated(locationX, locationY, locationZ);
 		Graphics.renderCube(width/2.0, false, false, false, false);	
 
 		glPopMatrix();
