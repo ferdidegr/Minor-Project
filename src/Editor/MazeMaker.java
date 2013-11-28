@@ -178,6 +178,7 @@ public class MazeMaker {
 	 * 11 - Begin point
 	 * 12 - End point
 	 * 13 - Spike
+	 * 14 - Monster (scorpion)
 	 */
 	public void Mousepoll() throws IOException{
 		int x = Mouse.getX()+left;					// Transform to world coordinates
@@ -234,7 +235,7 @@ public class MazeMaker {
 							flagredy=y;
 							maze.setObject(12, x, y);
 							break;} 						// Flag red
-//					
+					case 14:{maze.setObject(14, x, y);break;}
 				}
 			}
 		}else if(Mouse.isButtonDown(1) && mousedown){
@@ -269,7 +270,7 @@ public class MazeMaker {
 						flagredy=y;
 						maze.setObject(12, x, y);
 						break;} 						// Flag red
-//					
+				case 14:{maze.setObject(14, x, y);break;}
 				}
 			}
 		}
@@ -382,6 +383,7 @@ public class MazeMaker {
 		buttonlist.add(new Button(0.05f, 5.6f,Textures.texflaggreen,11));	// 11 flaggreen
 		buttonlist.add(new Button(0.55f, 5.6f,Textures.texflagred,12));		// 12 flagred
 		buttonlist.add(new Button(0.05f, 6.7f,Textures.texspike, 13));		// 13
+		buttonlist.add(new Button(0.55f, 6.7f,Textures.scorpion, 14));		// 14
 
 		buttonlist.add(new Button(0.05f, 10.5f,Textures.texload, 98));		// 98 load button 
 		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button
