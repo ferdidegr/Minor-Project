@@ -11,21 +11,24 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTranslated;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
-import Menu.Text;
+
+import org.lwjgl.opengl.Display;
+
+import Menu.*;
 
 public class StatusBars {
-	private int health;
-	private int maxhealth=100;
-	private float squaresize = 1f;
-	private Text titel;
+	private static int health;
+	private static int maxhealth=100;
+	private static float squaresize = 1f;
+	private static Text titel;
 	
-	public StatusBars(int health) {
-		this.health = health;
+	public static void init(int hp) {
+		health = hp;
 		titel = new Text(15, "Health");
 		titel.initFont();
 	}
 
-	public void draw(){
+	public static void draw(){
 		
 		float barwidth = (maxhealth + 2) * squaresize;
 		
@@ -62,7 +65,7 @@ public class StatusBars {
 
 	}
 	
-	public void drawBlock(){
+	public static void drawBlock(){
 		glBegin(GL_QUADS);
 		glVertex2f(0.0f, 0.0f);
 		glVertex2f(squaresize, 0.0f);
@@ -70,7 +73,7 @@ public class StatusBars {
 		glVertex2f(0.0f, -10.0f);
 		glEnd();
 	}
-	public void drawBorder(){
+	public static void drawBorder(){
 		glBegin(GL_QUADS);
 		glVertex2f(0.0f, 0.0f);
 		glVertex2f(squaresize, 0.0f);
@@ -79,11 +82,19 @@ public class StatusBars {
 		glEnd();
 	}
 	
-	public void addHealth(int hp){
-		health += hp;
+	public static void addHealth(int hp){
+		if((health + hp) <= maxhealth){
+			health += hp;
+		}
 	}
 	
-	public void minHealth(int hp){
-		health -= hp;
+	public static void minHealth(int hp){
+		if((health - hp) >= 0){
+			health -= hp;
+		} else {
+			Menu.setState(GameState.GAMEOVER);
+			Display.destroy();
+		}
+		
 	}
 }
