@@ -11,7 +11,8 @@ public class Monster extends levelObject{
 	protected Vector velocity = new Vector(0, 0, 0);
 	public static Vector playerloc = new Vector(0, 0, 0);
 	private Vector toPlayer;
-	
+	private int counter =0;
+	private double rand = 0;
 	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
 		super(x, y, z);
 		this.width = width;
@@ -131,7 +132,14 @@ public class Monster extends levelObject{
 	}
 	
 	public void updateV(int deltaTime){
+		counter+=deltaTime;
 		velocity.scale(0.1, 0.4, 0.1);
+		if(counter>3000){
+		rand = Math.random();
+		counter=0;
+		}
+		velocity.add(rand*speed*deltaTime,0,rand*speed*deltaTime);
+		velocity.scale(0.4);
 		velocity.add(toPlayer.getX()*speed * deltaTime*0.5, -0.005*deltaTime, toPlayer.getZ()*speed * deltaTime*0.5);
 	}
 	
