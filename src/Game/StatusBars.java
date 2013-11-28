@@ -11,6 +11,9 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glTranslated;
 import static org.lwjgl.opengl.GL11.glTranslatef;
 import static org.lwjgl.opengl.GL11.glVertex2f;
+
+import org.lwjgl.opengl.Display;
+
 import Menu.*;
 
 public class StatusBars {
@@ -89,7 +92,9 @@ public class StatusBars {
 		if((health - hp) >= 0){
 			health -= hp;
 		} else {
-			Mazerunner.isdood = true;
+			Menu.setState(GameState.GAMEOVER);
+			Display.destroy();
 		}
+		
 	}
 }

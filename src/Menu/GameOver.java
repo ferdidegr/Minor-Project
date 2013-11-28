@@ -36,7 +36,7 @@ public class GameOver extends ButtonList {
 		switch(buttonID){
 		
 		case 1:
-			Menu.setState(GameState.GAME);
+			Menu.setState(GameState.GAMEOVER);
 			Mazerunner game = new Mazerunner();
 			glPushMatrix();
 			try {
