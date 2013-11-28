@@ -64,9 +64,12 @@ public class Vector {
 	}
 	
 	public void normalize2D(){
+		
 		double length = length2D();
+		if(length!=0){
 		x /= length;
 		z /= length;
+		}
 	}
 	
 	public void normalize(){
