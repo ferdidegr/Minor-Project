@@ -8,5 +8,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Slick"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/OGG"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

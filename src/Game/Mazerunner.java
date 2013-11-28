@@ -117,7 +117,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				visibleObjects.add(lvlo);
 				objlijst.add(lvlo);
 				objectindex[j][i]=visibleObjects.size()-1;
-			}else{
+			}else if(maze[j][i]==11){
+				// Initialize the player.
+				player = new Player( i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
+									 SQUARE_SIZE *30/ 2.0 ,					// y-position
+									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
+									 0, 0 ,									// horizontal and vertical angle
+									 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height			
+			}else{			
 				objectindex[j][i]=-200;
 			}
 		}
@@ -190,14 +197,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			visibleObjects = new ArrayList<VisibleObject>();
 			objlijst = new ArrayList<levelObject>();
 		 // Initialize Maze ( Loading in and setting the objects in the maze
-			initMaze();
-
-	     // Initialize the player.
-			player = new Player( 6 * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-								 SQUARE_SIZE *30/ 2.0 ,					// y-position
-								 5 * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
-								 0, 0 ,									// horizontal and vertical angle
-								 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height							
+			initMaze();	     			
 
 			camera = new Camera( player.getLocationX(), player.getLocationY(), player.getLocationZ(), 
 					             player.getHorAngle(), player.getVerAngle() );
@@ -215,6 +215,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			
 			objlijst.add(grond);
 			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0.5*SQUARE_SIZE, 1+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
+			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0.5*SQUARE_SIZE, 10+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
 			
 		
 	}
