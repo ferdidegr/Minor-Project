@@ -47,6 +47,7 @@ public class GameOver extends ButtonList {
 			}
 			glPopMatrix();
 			buttonID=0;
+			
 			break;
 			
 		case 2:

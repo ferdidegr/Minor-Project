@@ -63,7 +63,7 @@ public void start() throws ClassNotFoundException, IOException{
 	initDisp();
 	
 	
-	while(!Display.isCloseRequested() && player.locationY>-20){
+	while(!Display.isCloseRequested() && player.locationY>-20 && !isdood){
 		
 		// If the window is resized, might not be implemented
 		if(Display.getWidth()!=screenWidth || Display.getHeight()!=screenHeight) reshape();
@@ -96,7 +96,7 @@ public void start() throws ClassNotFoundException, IOException{
 		
 	}
 	cleanup();
-	Menu.setState(GameState.GAMEOVER);
+	
 }
 
 /*
