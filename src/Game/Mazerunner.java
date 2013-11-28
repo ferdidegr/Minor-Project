@@ -355,8 +355,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			 * Monsters
 			 */
 			for(Monster mon: monsterlijst){
-				mon.update(deltaTime);
+				mon.update(deltaTime);				
 			}
+			
+			
 		}
 
 		/**

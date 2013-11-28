@@ -228,6 +228,7 @@ public class Player extends GameObject {
 			//Add floor
 			tempindex.add(Mazerunner.objlijst.size()-1);
 			
+
 			//collision X	
 			for(int i = 0; i< tempindex.size();i++){
 				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));				

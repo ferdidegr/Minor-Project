@@ -126,7 +126,7 @@ public class Monster extends levelObject{
 		if(colY){}else{updateY();}
 		py = getLocationY();
 		
-		
+		System.out.println(locationX+" "+locationY+" "+locationZ);
 		
 	}
 	
@@ -153,7 +153,7 @@ public class Monster extends levelObject{
 	@Override
 	public boolean isCollision(double x, double y, double z) {
 		
-		return x>=(locationX-width/2f) && x<=(locationX+width/2f) && z>=(locationZ-width/2f) && z<=(locationZ+width/2f) && y>=0 && y<height;
+		return x>=(locationX-width/4f) && x<=(locationX+width/4f) && z>=(locationZ-width/4f) && z<=(locationZ+width/4f) && y>=0 && y<height;
 	}
 
 	@Override

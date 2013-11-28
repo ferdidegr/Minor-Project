@@ -7,7 +7,9 @@ import javax.swing.JOptionPane;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
+
 import static org.lwjgl.opengl.GL11.*;
 
 
@@ -25,6 +27,7 @@ public class MazeMaker {
 	private boolean exit = false;	
 	private float tilesize;
 	private int flaggreenx=-1,flaggreeny=-1,flagredx=-1,flagredy=-1;
+	private Sound sound;
 	/**
 	 * ***********************************************
 	 * Begin the program
@@ -42,9 +45,11 @@ public class MazeMaker {
 			Thread.sleep(500);
 		}
 		/*
-		 * Create Display
+		 * Create Display and Sound
 		 */
 			Display.create();
+			sound= new Sound();
+			sound.init();
 		/*
 		 * Initialize screen parameters
 		 */
@@ -78,6 +83,7 @@ public class MazeMaker {
 			Display.update();Display.sync(60);
 			
 		}
+		AL.destroy();
 	}
 	/**
 	 * ***********************************************
@@ -281,6 +287,7 @@ public class MazeMaker {
 						if(Mouse.isButtonDown(1)){rightID=ID;Button.setrightID(ID);}
 					}
 					System.out.println(ID);
+					sound.playButton();
 					
 					break;							// if found no need to check others
 				}
