@@ -52,6 +52,7 @@ public class Mazerunner {
 	
 public void start() throws ClassNotFoundException, IOException{
 	new Game.Textures();			// Initialize textures
+	new Graphics();					// Initialize graphics
 	
 	// TODO remove
 	Display.setResizable(true);
@@ -213,7 +214,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			objlijst.add(wall);
 			
 			objlijst.add(grond);
-			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0, 1+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
+			monsterlijst.add(new Monster(1+0.5*SQUARE_SIZE, 0.5*SQUARE_SIZE, 1+0.5*SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE,SQUARE_SIZE));
 			
 		
 	}
