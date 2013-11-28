@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -82,6 +83,7 @@ public class MazeMaker {
 			Display.update();Display.sync(60);
 			
 		}
+		AL.destroy();
 	}
 	/**
 	 * ***********************************************
