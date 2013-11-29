@@ -32,7 +32,7 @@ public class Mazerunner {
 	
 	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
 	private Wall wall;										// Wall Class, used to put one wall in for test TODO remove
-	private Floor grond;									// Floor class used to put the floor in
+	
 	private FloatBuffer lightPosition;		
 	
 	protected static ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
@@ -42,7 +42,7 @@ public class Mazerunner {
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/scorpsdrop.maze";
+	private String level = "levels/test6.maze";
 	private int objectDisplayList = glGenLists(1);
 	private int skyboxDL = glGenLists(1);
 	/*
@@ -114,32 +114,46 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
+						
+			// Parsing the walls
 			if(maze[j][i]>0 && maze[j][i]<11){
 				levelObject lvlo = new Wall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0, SQUARE_SIZE, maze[j][i],SQUARE_SIZE);
 				visibleObjects.add(lvlo);
 				objlijst.add(lvlo);
-				objectindex[j][i]=visibleObjects.size()-1;
-			}else if(maze[j][i]==11){
+				objectindex[j][i]=objlijst.size()-1;
+			}
+			// Parsing the begin point
+			else if(maze[j][i]==11){
 				// Initialize the player.
 				player = new Player( i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
 									 SQUARE_SIZE *30/ 2.0 ,					// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
 									 0, 0 ,									// horizontal and vertical angle
 									 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height			
-			}else if(maze[j][i]==14){
+			}
+			// Parsing the scorpions
+			else if(maze[j][i]==14){
 				monsterlijst.add(new Monster(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-									 SQUARE_SIZE/ 2.0 ,							// y-position
+									 SQUARE_SIZE/ 4.0 ,							// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 			// z position
-									 SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE));
+									 SQUARE_SIZE*0.7, SQUARE_SIZE*0.7, SQUARE_SIZE));
 			}
-				else{			
 			
-				objectindex[j][i]=-200;
+			
+			// Parsing the floor
+			if(maze[j][i]>10|| maze[j][i]==0){
+			levelObject lvlo = new Floor(i*SQUARE_SIZE, 0, j*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE, 1);
+			visibleObjects.add(lvlo);
+			objlijst.add(lvlo);
+			objectindex[j][i]=objlijst.size()-1;
 			}
+
 		}
 	}
-
-	
+	// TODO remove
+//	for(Monster mo:monsterlijst){
+//		System.out.println(mo.toString());
+//	}
 }
 /*
  *  *************************************************
@@ -219,10 +233,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			 */
 			
 			wall = new Wall(10, 10, 0, 5, 2,SQUARE_SIZE);
-			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1,SQUARE_SIZE);	
+//			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1,SQUARE_SIZE);	
 			objlijst.add(wall);
 			
-			objlijst.add(grond);
+//			objlijst.add(grond);
 		
 		
 	}
@@ -396,9 +410,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			 
 			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);
 			 for(VisibleObject vo:visibleObjects){
-		        	if(vo instanceof Wall){
-		        		Textures.ingamewall.bind();
-		        		}
+		        	if(vo instanceof Wall){	Textures.ingamewall.bind();}
+		        	if(vo instanceof Floor){ Textures.ground.bind();}
 		        	vo.display();
 		        }
 			 
@@ -406,8 +419,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        glMaterial(GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
 		        glMaterialf(GL_FRONT, GL_SHININESS, -1f);
 		        wall.display();		
-				Textures.ground.bind();
-				grond.display();
+//				Textures.ground.bind();
+//				grond.display();
 				
 								
 				glMaterial( GL_FRONT, GL_SPECULAR, Graphics.white);

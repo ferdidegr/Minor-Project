@@ -58,7 +58,7 @@ public class Monster extends levelObject{
 		double py = locationY;					// Player Y location
 		double pz = getLocationZ();				// Player Z location
 		double ph	  = getHeight();			// Player Height
-		double pw	  = getWidth()/4f;			// Player Width
+		double pw	  = getWidth()/2f;			// Player Width
 		int Xin = getGridX(Mazerunner.SQUARE_SIZE);
 		int Zin = getGridZ(Mazerunner.SQUARE_SIZE);
 		boolean colX = false;
@@ -101,7 +101,7 @@ public class Monster extends levelObject{
 			if(mo!=this){
 				if(mo.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz+pw)
 				|| mo.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
-					maxX=Math.min(maxX, mo.getmaxDistX(px));
+					maxX=Math.min(maxX, mo.getmaxDistX(locationX+pw*signX));
 					colX=true;
 				}
 			}
@@ -127,7 +127,7 @@ public class Monster extends levelObject{
 			if(mo!=this){
 				if(mo.isCollision(px+pw, py-ph/2f, pz+pw*signZ+velocity.getZ())
 				|| mo.isCollision(px-pw, py-ph/2f, pz+pw*signZ+velocity.getZ())){
-					maxZ=Math.min(maxZ, mo.getmaxDistX(pz));
+					maxZ=Math.min(maxZ, mo.getmaxDistZ(locationZ+pw*signZ));
 					colZ=true;
 				}
 			}
@@ -161,7 +161,7 @@ public class Monster extends levelObject{
 		counter=0;
 		}
 		velocity.add(rand*speed*deltaTime,0,rand*speed*deltaTime);
-		velocity.scale(0.5);
+		velocity.scale(0.7d);
 		// Movement to player
 		velocity.add(toPlayer.getX()*speed * deltaTime*0.5, -0.005*deltaTime, toPlayer.getZ()*speed * deltaTime*0.5);
 	}
@@ -176,7 +176,7 @@ public class Monster extends levelObject{
 	public void display() {
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);
-		Graphics.renderCube(width/2.0, false, false, false, false);	
+		Graphics.renderCube(width, false, false, false, false);	
 
 		glPopMatrix();
 	}
@@ -184,12 +184,15 @@ public class Monster extends levelObject{
 	@Override
 	public boolean isCollision(double x, double y, double z) {
 		
-		return x>=(locationX-width/4f) && x<=(locationX+width/4f) && z>=(locationZ-width/4f) && z<=(locationZ+width/4f) && y>=0 && y<height;
+		return x>=(locationX-width/2f) && x<=(locationX+width/2f) && z>=(locationZ-width/2f) && z<=(locationZ+width/2f) && y>=0 && y<height;
 	}
 
 	@Override
 	public double getmaxDistX(double X) {
-		// TODO Auto-generated method stub
+//		double right = locationX+width/2;
+//		double left = locationX - width/2;
+//		if(X>locationX) return right-X;
+//		return left-X;
 		return 0;
 	}
 
@@ -201,8 +204,14 @@ public class Monster extends levelObject{
 
 	@Override
 	public double getmaxDistZ(double Z) {
-		// TODO Auto-generated method stub
+//		double back = locationZ+width/2;
+//		double front = locationZ - width/2;
+//		if(Z>locationZ) return back-Z;
+//		return front-Z;
 		return 0;
+	}
+	public String toString(){
+		return locationX+" "+locationY+" "+locationZ;
 	}
 	
 	public static void setPlayerloc(Vector playerlocatie){

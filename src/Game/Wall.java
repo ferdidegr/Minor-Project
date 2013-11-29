@@ -57,6 +57,9 @@ public class Wall extends levelObject{
 	public void setSZ(int SQUARE_SIZE){
 		this.SQUARE_SIZE= SQUARE_SIZE;
 	}
+	/**
+	 * Draw the wall
+	 */
 	public void display(){
 		double width = (right-left)/SQUARE_SIZE;
 		double depth = (front-back)/SQUARE_SIZE;
@@ -95,8 +98,9 @@ public class Wall extends levelObject{
 		if(locationZ>Z)return back-Z;
 		return front - Z;
 	}
-	
-	
+	/**
+	 * Check if you collide with the wall	
+	 */
 	public boolean isCollision(double x, double y, double z){
 		return x>left && x<right && z<front && z>back && y>=bottom && y<top;	
 	}
