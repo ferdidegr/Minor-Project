@@ -205,75 +205,10 @@ public class MazeMaker {
 			bottom-=dy;top-=dy;
 			initGL();
 		}else if(Mouse.isButtonDown(0) && mousedown){
-			// If you are on the left side of the screen (Maze side)
-			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
-				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
-				switch(leftID){
-					case 0:{maze.setObject(0, x, y);break;} // Empty spot
-					case 1:{maze.setObject(1, x, y);break;}	// Wall
-					case 2:{maze.setObject(2, x, y);break;}	// Wall
-					case 3:{maze.setObject(3, x, y);break;}	// Wall
-					case 4:{maze.setObject(4, x, y);break;}	// Wall
-					case 5:{maze.setObject(5, x, y);break;}	// Wall
-					case 6:{maze.setObject(6, x, y);break;}	// Wall
-					case 7:{maze.setObject(7, x, y);break;}	// Wall
-					
-					case 13:{maze.setObject(13, x, y);break;}	// Spikes
-					case 11:{if (flaggreenx>0 && flaggreeny>0 && flaggreeny<(maze.getHeight()*MazeMap.getSize())&& 
-							flaggreenx<(maze.getWidth()*MazeMap.getSize())&& 
-							maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
-								maze.setObject(0, flaggreenx, flaggreeny);
-							}
-							flaggreenx=x;
-							flaggreeny=y;
-							maze.setObject(11, x, y);
-							break;} 						// Flag green
-					case 12:{if (flagredx>0 && flagredy>0 && flagredy<(maze.getHeight()*MazeMap.getSize())&& 
-							flagredx<(maze.getWidth()*MazeMap.getSize())&&  maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
-								maze.setObject(0, flagredx, flagredy);
-							}
-							flagredx=x;
-							flagredy=y;
-							maze.setObject(12, x, y);
-							break;} 						// Flag red
-					case 14:{maze.setObject(14, x, y);break;}
-				}
-			}
+			executeselectedbut(leftID, x, y);
+			
 		}else if(Mouse.isButtonDown(1) && mousedown){
-			// If you are on the left side of the screen (Maze side)
-			if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
-				System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
-				switch(rightID){
-				case 0:{maze.setObject(0, x, y);break;} // Empty spot
-				case 1:{maze.setObject(1, x, y);break;}	// Wall
-				case 2:{maze.setObject(2, x, y);break;}	// Wall
-				case 3:{maze.setObject(3, x, y);break;}	// Wall
-				case 4:{maze.setObject(4, x, y);break;}	// Wall
-				case 5:{maze.setObject(5, x, y);break;}	// Wall
-				case 6:{maze.setObject(6, x, y);break;}	// Wall
-				case 7:{maze.setObject(7, x, y);break;}	// Wall
-				
-				case 13:{maze.setObject(13, x, y);break;}	// Spikes
-				case 11:{if (flaggreenx>0 && flaggreeny>0 && flaggreeny<(maze.getHeight()*MazeMap.getSize())&& 
-						flaggreenx<(maze.getWidth()*MazeMap.getSize())&& 
-						maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
-							maze.setObject(0, flaggreenx, flaggreeny);
-						}
-						flaggreenx=x;
-						flaggreeny=y;
-						maze.setObject(11, x, y);
-						break;} 						// Flag green
-				case 12:{if (flagredx>0 && flagredy>0 && flagredy<(maze.getHeight()*MazeMap.getSize())&& 
-						flagredx<(maze.getWidth()*MazeMap.getSize())&&  maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
-							maze.setObject(0, flagredx, flagredy);
-						}
-						flagredx=x;
-						flagredy=y;
-						maze.setObject(12, x, y);
-						break;} 						// Flag red
-				case 14:{maze.setObject(14, x, y);break;}
-				}
-			}
+			executeselectedbut(rightID,x,y);
 		}
 		/*
 		 * Mouse click
@@ -373,6 +308,7 @@ public class MazeMaker {
 	 * 11 - Begin point
 	 * 12 - End point
 	 * 13 - Spikes
+	 * 14 - Scorpion
 	 */
 	public void initButtons(){
 		/*
@@ -418,8 +354,12 @@ public class MazeMaker {
 		glOrtho(left, right, bottom, top, 1, -1);
 		glMatrixMode(GL_MODELVIEW);	
 	}
-	  
-	public static boolean checkFlags(int[][] maze){
+	/**
+	 * Check if the flags are set, if not the maze will not be saved  
+	 * @param maze
+	 * @return
+	 */
+	public boolean checkFlags(int[][] maze){
 		boolean red_exists=false, green_exists=false;
 		for (int i=0;i<maze.length;i++){
 			for (int j=0;j<maze[0].length;j++){
@@ -433,7 +373,48 @@ public class MazeMaker {
 		}
 		return (red_exists && green_exists);
 	}
-		
+	/**
+	 * execute selected button, 
+	 * @param Nummer the int identifying the button pressed for left mouse button or right mouse button
+	 * @param x
+	 * @param y
+	 */
+	public void executeselectedbut(int Nummer, int x, int y){
+		// If you are on the left side of the screen (Maze side)
+		if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
+			System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
+			switch(Nummer){
+			case 0:{maze.setObject(0, x, y);break;} // Empty spot
+			case 1:{maze.setObject(1, x, y);break;}	// Wall
+			case 2:{maze.setObject(2, x, y);break;}	// Wall
+			case 3:{maze.setObject(3, x, y);break;}	// Wall
+			case 4:{maze.setObject(4, x, y);break;}	// Wall
+			case 5:{maze.setObject(5, x, y);break;}	// Wall
+			case 6:{maze.setObject(6, x, y);break;}	// Wall
+			case 7:{maze.setObject(7, x, y);break;}	// Wall
+			
+			case 13:{maze.setObject(13, x, y);break;}	// Spikes
+			case 11:{if (flaggreenx>0 && flaggreeny>0 && flaggreeny<(maze.getHeight()*MazeMap.getSize())&& 
+					flaggreenx<(maze.getWidth()*MazeMap.getSize())&& 
+					maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
+						maze.setObject(0, flaggreenx, flaggreeny);
+					}
+					flaggreenx=x;
+					flaggreeny=y;
+					maze.setObject(11, x, y);
+					break;} 						// Flag green
+			case 12:{if (flagredx>0 && flagredy>0 && flagredy<(maze.getHeight()*MazeMap.getSize())&& 
+					flagredx<(maze.getWidth()*MazeMap.getSize())&&  maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
+						maze.setObject(0, flagredx, flagredy);
+					}
+					flagredx=x;
+					flagredy=y;
+					maze.setObject(12, x, y);
+					break;} 						// Flag red
+			case 14:{maze.setObject(14, x, y);break;}
+			}
+		}
+	}
 	
 	/**
 	 * Main program starts here
