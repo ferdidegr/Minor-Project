@@ -2,10 +2,7 @@ package Utils;
 
 import static org.lwjgl.opengl.GL11.*;
 
-
 import java.nio.FloatBuffer;
-
-import org.lwjgl.BufferUtils;
 
 import org.lwjgl.util.glu.Cylinder;
 import org.lwjgl.util.glu.GLU;
@@ -16,14 +13,14 @@ public class Graphics {
 	
 	// Shortcuts to buffers
 	static{
-		darkgrey = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.3f).put(0.3f).put(0.3f).put(0.0f).flip();
-		lightgrey = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.7f).put(0.7f).put(0.7f).put(0.0f).flip();
-		white = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();
-		black = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.0f).put(0.0f).put(0.0f).put(0.0f).flip();
-		green = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.0f).put(1.0f).put(0.0f).put(0.0f).flip();
-		blue = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.0f).put(0.0f).put(1.0f).put(0.0f).flip();
-		red = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(0.0f).put(0.0f).put(0.0f).flip();
-		grey = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0.5f).put(0.5f).put(0.5f).put(0.0f).flip();
+		darkgrey = Utils.createFloatBuffer(0.3f,0.3f,0.3f,0.0f);
+		lightgrey = Utils.createFloatBuffer(0.7f,0.7f,0.7f,0.0f);
+		white = Utils.createFloatBuffer(1f,1f,1f,0.0f);
+		black = Utils.createFloatBuffer(0f,0f,0f,0.0f);
+		green = Utils.createFloatBuffer(0f,1f,0f,0.0f);
+		blue = Utils.createFloatBuffer(0f,0f,1f,0.0f);
+		red = Utils.createFloatBuffer(1f,0f,0f,0.0f);
+		grey = Utils.createFloatBuffer(0.5f,0.5f,0.5f,0.0f);
 	}
 	
 	
