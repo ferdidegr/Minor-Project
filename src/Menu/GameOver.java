@@ -6,6 +6,7 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import java.io.IOException;
 
 import Game.Mazerunner;
+import Game.Sound;
 
 public class GameOver extends ButtonList {
 	
@@ -37,6 +38,7 @@ public class GameOver extends ButtonList {
 		
 		case 1:
 			Menu.setState(GameState.GAME);
+			Sound.playMusic("background_game");
 			Mazerunner game = new Mazerunner();
 			glPushMatrix();
 			try {
@@ -47,7 +49,6 @@ public class GameOver extends ButtonList {
 			}
 			glPopMatrix();
 			buttonID=0;
-			
 			break;
 			
 		case 2:

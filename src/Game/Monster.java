@@ -15,8 +15,11 @@ public class Monster extends levelObject{
 	protected Vector velocity = new Vector(0, 0, 0);
 	public static Vector playerloc = new Vector(0, 0, 0);
 	private Vector toPlayer;
+	private Vector dir= new Vector(1, 0, 0);
 	private int counter =0;
 	private double rand = 0;
+	private boolean colX,colZ,colY;
+	
 	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
 		super(x, y, z);
 		this.width = width;
@@ -47,9 +50,13 @@ public class Monster extends levelObject{
 	public void update(int deltaTime){
 		Vector vec = new Vector(locationX, locationY, locationZ);
 		toPlayer = playerloc.clone();
-		vec.scale(-1);
+		vec.scale(-0.8);
 		toPlayer.add(vec);
 		toPlayer.normalize2D();
+		
+		dir.add(toPlayer);
+		dir.normalize2D();
+		
 		updateV(deltaTime);
 		
 		/*
@@ -64,9 +71,9 @@ public class Monster extends levelObject{
 		double pw	  = getWidth()/2f;			// Player Width
 		int Xin = getGridX(Mazerunner.SQUARE_SIZE);
 		int Zin = getGridZ(Mazerunner.SQUARE_SIZE);
-		boolean colX = false;
-		boolean colZ = false;
-		boolean colY = false;
+		colX = false;
+		colZ = false;
+		colY = false;
 		
 		int signX = (int) Math.signum(velocity.getX()); // Direction of the velocity in X
 		int signZ = (int) Math.signum(velocity.getZ()); // Direction of the velocity in Z
@@ -95,7 +102,8 @@ public class Monster extends levelObject{
 			levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));				
 			if(tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz+pw)
 			|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
-				colX=true;				
+				colX=true;	
+				dir.rotate(Math.PI/3);
 				maxX=tempobj.getmaxDistX(locationX+pw*signX);
 				break;
 			}
@@ -106,6 +114,7 @@ public class Monster extends levelObject{
 				|| mo.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
 					maxX=Math.min(maxX, mo.getmaxDistX(locationX+pw*signX));
 					colX=true;
+					dir.rotate(Math.PI/3);
 				}
 			}
 		}
@@ -121,6 +130,7 @@ public class Monster extends levelObject{
 			if(tempobj.isCollision(px+pw, py-ph/2f, pz+pw*signZ+velocity.getZ())
 			|| tempobj.isCollision(px-pw, py-ph/2f, pz+pw*signZ+velocity.getZ())){
 				colZ=true;
+				dir.rotate(Math.PI/3);
 				maxZ=tempobj.getmaxDistZ(locationZ+pw*signZ);
 				break;
 			}
@@ -129,9 +139,10 @@ public class Monster extends levelObject{
 		for(Monster mo:Mazerunner.monsterlijst){
 			if(mo!=this){
 				if(mo.isCollision(px+pw, py-ph/2f, pz+pw*signZ+velocity.getZ())
-				|| mo.isCollision(px-pw, py-ph/2f, pz+pw*signZ+velocity.getZ())){
+				){
 					maxZ=Math.min(maxZ, mo.getmaxDistZ(locationZ+pw*signZ));
 					colZ=true;
+					dir.rotate(Math.PI/3);
 				}
 			}
 		}
@@ -159,14 +170,14 @@ public class Monster extends levelObject{
 		// Friction
 		velocity.scale(0.1, 0.4, 0.1);
 		// Random motion
-		if(counter>3000){
-		rand = Math.random();
-		counter=0;
-		}
+		//if(counter>3000){
+		//rand = Math.random();
+		//counter=0;
+		//}
 		velocity.add(rand*speed*deltaTime,0,rand*speed*deltaTime);
 		velocity.scale(0.0);
 		// Movement to player
-		velocity.add(toPlayer.getX()*speed * deltaTime*0.5, -0.005*deltaTime, toPlayer.getZ()*speed * deltaTime*0.5);
+		velocity.add(dir.getX()*speed * deltaTime*0.5, -0.005*deltaTime, dir.getZ()*speed * deltaTime*0.5);
 	}
 	
 	public void updateX(){	locationX += velocity.getX();	}

@@ -14,6 +14,24 @@ public class Vector {
 		setZ(z);
 	}
 	
+	public Vector avg(Vector vec){
+		double xnew = (vec.getX() + x)/2;
+		double ynew = (vec.getY() + y)/2;
+		double znew = (vec.getZ() + z)/2;
+		return new Vector(xnew, ynew, znew);
+	}
+	
+	public void rotate(double deg){
+		x = x *Math.cos(deg) - z * Math.cos(deg);
+		z = x *Math.sin(deg) + z * Math.cos(deg);
+	}
+	
+	public double angle2D(Vector vec){
+		vec.normalize2D();
+		normalize2D();
+		return vec.getX()*x + vec.getZ() * z;
+	}
+	
 	/**
 	 * Vector addition
 	 * @param vec another Vector object
@@ -44,6 +62,18 @@ public class Vector {
 		this.x*=factor1;
 		this.y*=factor2;
 		this.z*=factor3;
+	}
+	
+	/**
+	 * Scale each component independently by a vector
+	 * @param factor1
+	 * @param factor2
+	 * @param factor3
+	 */
+	public void scale(Vector vec){
+		this.x*=vec.getX();
+		this.y*=vec.getY();
+		this.z*=vec.getZ();
 	}
 	/**
 	 * Scale all components with the same factor
