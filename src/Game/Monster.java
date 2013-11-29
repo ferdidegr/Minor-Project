@@ -164,7 +164,7 @@ public class Monster extends levelObject{
 		counter=0;
 		}
 		velocity.add(rand*speed*deltaTime,0,rand*speed*deltaTime);
-		velocity.scale(0.7d);
+		velocity.scale(0.0);
 		// Movement to player
 		velocity.add(toPlayer.getX()*speed * deltaTime*0.5, -0.005*deltaTime, toPlayer.getZ()*speed * deltaTime*0.5);
 	}

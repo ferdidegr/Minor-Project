@@ -79,8 +79,8 @@ public class Floor extends levelObject{
 	@Override
 	public boolean isCollision(double x, double y, double z) {
 		
-		return y<this.locationY && x>this.locationX && x<this.locationX+width &&
-				z>this.locationZ && z<this.locationZ+height;
+		return y<this.locationY && x>this.locationX && x<(this.locationX+width) &&
+				z>this.locationZ && z<(this.locationZ+height);
 	}
 	/**
 	 * Get the maximum distance in X you can travel before you collide, not applicable for a floor

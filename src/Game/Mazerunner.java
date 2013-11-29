@@ -16,8 +16,7 @@ import org.lwjgl.util.glu.GLU;
 
 import Menu.GameState;
 import Menu.Menu;
-import Utils.Graphics;
-import Utils.Vector;
+import Utils.*;
 
 
 public class Mazerunner {
@@ -136,7 +135,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			// Parsing the scorpions
 			else if(maze[j][i]==14){
 				monsterlijst.add(new Monster(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-									 SQUARE_SIZE/ 4.0 ,							// y-position
+									 SQUARE_SIZE*0.7 ,							// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 			// z position
 									 SQUARE_SIZE*0.7, SQUARE_SIZE*0.7, SQUARE_SIZE));
 			}
