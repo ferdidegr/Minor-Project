@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.* ;
 
 import org.lwjgl.opengl.GL11;
 
+import Utils.Utils;
+
 public class Wall extends levelObject{
 	/**
 	 * 		 7 +--------+ 6

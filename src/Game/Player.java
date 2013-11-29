@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 
+import Utils.Vector;
+
 
 /**
  * Player represents the actual player in MazeRunner.

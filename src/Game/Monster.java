@@ -3,6 +3,9 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 
+import Utils.Graphics;
+import Utils.Vector;
+
 public class Monster extends levelObject{
 
 	private int SQUARE_SIZE;

@@ -1,4 +1,4 @@
-package Game;
+package Utils;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -6,7 +6,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.nio.FloatBuffer;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
+
 import org.lwjgl.util.glu.Cylinder;
 import org.lwjgl.util.glu.GLU;
 
@@ -37,42 +37,42 @@ public class Graphics {
 	public static void renderCube(double size, boolean left, boolean right, boolean fore, boolean back){
 			double height = size;	
 			size = size/2;
-	      GL11.glBegin(GL11.GL_QUADS);
+	      glBegin(GL_QUADS);
 	      if(!back){
-	        GL11.glNormal3d(0, 0, 1);
-	        GL11.glVertex3d(-size, height, size);	 	        
-	        GL11.glVertex3d(-size, 0, size);	
-	        GL11.glVertex3d(size, 0, size);	      	     
-	        GL11.glVertex3d(size, height, size);		     
+	        glNormal3d(0, 0, 1);
+	        glVertex3d(-size, height, size);	 	        
+	        glVertex3d(-size, 0, size);	
+	        glVertex3d(size, 0, size);	      	     
+	        glVertex3d(size, height, size);		     
 	      }
 	      if(!right){
-	        GL11.glNormal3d(1, 0, 0);
-	        GL11.glVertex3d(size, height, size);	      	     
-	        GL11.glVertex3d(size, 0, size);	
-	        GL11.glVertex3d(size, 0, -size);	      	     
-	        GL11.glVertex3d(size, height, -size);	
+	        glNormal3d(1, 0, 0);
+	        glVertex3d(size, height, size);	      	     
+	        glVertex3d(size, 0, size);	
+	        glVertex3d(size, 0, -size);	      	     
+	        glVertex3d(size, height, -size);	
 	      }
 	      if(!fore){
-	        GL11.glNormal3d(0, 0, -1);
-	        GL11.glVertex3d(size, height, -size);	      	     
-	        GL11.glVertex3d(size, 0, -size);
-	        GL11.glVertex3d(-size, 0, -size);	      	     
-	        GL11.glVertex3d(-size, height, -size);		        
+	        glNormal3d(0, 0, -1);
+	        glVertex3d(size, height, -size);	      	     
+	        glVertex3d(size, 0, -size);
+	        glVertex3d(-size, 0, -size);	      	     
+	        glVertex3d(-size, height, -size);		        
 	      }
 	      if(!left){
-	        GL11.glNormal3d(-1, 0, 0);
-	        GL11.glVertex3d(-size, height, -size);	      	     
-	        GL11.glVertex3d(-size, 0, -size);
-	        GL11.glVertex3d(-size, 0, size);	 	        
-	        GL11.glVertex3d(-size, height, size);		        
+	        glNormal3d(-1, 0, 0);
+	        glVertex3d(-size, height, -size);	      	     
+	        glVertex3d(-size, 0, -size);
+	        glVertex3d(-size, 0, size);	 	        
+	        glVertex3d(-size, height, size);		        
 	      }
 	        	        
-	      GL11.glNormal3d(0, 1, 0);
-	        GL11.glVertex3d(-size, height, size);	 
-	        GL11.glVertex3d(size, height, size);
-	        GL11.glVertex3d(size, height, -size);
-	        GL11.glVertex3d(-size, height, -size);	        
-	        GL11.glEnd();
+	      glNormal3d(0, 1, 0);
+	        glVertex3d(-size, height, size);	 
+	        glVertex3d(size, height, size);
+	        glVertex3d(size, height, -size);
+	        glVertex3d(-size, height, -size);	        
+	        glEnd();
 	}
 	
 	public static void renderSpike(float baseradius, float height){
@@ -81,11 +81,11 @@ public class Graphics {
 
 		for(int i = -1; i <=1;i++){
 			for(int j = -1; j<=1;j++){
-				GL11.glPushMatrix();
-				GL11.glRotated(-90, 1, 0, 0);
-				GL11.glTranslatef(i*baseradius*2/3f, j*baseradius*2/3f, 0);
+				glPushMatrix();
+				glRotated(-90, 1, 0, 0);
+				glTranslatef(i*baseradius*2/3f, j*baseradius*2/3f, 0);
 				cylinder.draw(baseradius/3, 0, height, 50, 50);
-				GL11.glPopMatrix();
+				glPopMatrix();
 			}
 		}
 
