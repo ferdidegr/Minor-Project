@@ -43,7 +43,7 @@ public class Mazerunner {
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test6.maze";
+	private String level = "levels/scorps.maze";
 	private int objectDisplayList = glGenLists(1);
 	private int skyboxDL = glGenLists(1);
 	/*
@@ -309,7 +309,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glDisable(GL_TEXTURE_2D);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-		minimap.draw(player,SQUARE_SIZE);
+		minimap.draw(player,monsterlijst,SQUARE_SIZE);
 		StatusBars.draw();
 
 		// Making sure we can render 3d again
