@@ -32,6 +32,7 @@ public class Menu {
 
 		Display.setDisplayMode(new DisplayMode(screenx, screeny));
 		Display.create();
+		Sound.init();
 		new Textures();
 		initButtons();
 		run();

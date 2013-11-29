@@ -15,9 +15,9 @@ public class Sound {
 	public void init() {
 
 		try {
-			background = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/background.ogg"));
+			background = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/background_menu.ogg"));
 			background.playAsMusic(1f, 1f, true);
-			button = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/button-3.wav"));
+			button = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/sound/button-3.wav"));
 			
 			
 		} catch (IOException e) {

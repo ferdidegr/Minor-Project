@@ -8,6 +8,7 @@ import java.io.IOException;
 import org.lwjgl.input.Mouse;
 
 import Game.Mazerunner;
+import Game.Sound;
 
 public class PauseMenu extends ButtonList{
 	
@@ -37,7 +38,9 @@ public class PauseMenu extends ButtonList{
 		switch(buttonID){
 		
 		case 1:
+			Sound.resume();
 			Menu.setState(GameState.GAME);
+			
 			
 			break;
 			
@@ -52,5 +55,6 @@ public class PauseMenu extends ButtonList{
 	public void display(){
 		super.display();
 		welkom.draw(Menu.getScreenx()/2, Menu.getScreeny() - welkom.getHeight(), 1);
+		Sound.pause();
 	}
 }
