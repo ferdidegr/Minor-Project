@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.newdawn.slick.opengl.Texture;
 
+import Utils.IO;
+
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
@@ -11,22 +13,22 @@ public class Textures {
 	
 	static {
 		try {
-			texempty = IO.readtexture("res/Textures/Editor/empty.jpg");
-			texmenubar = IO.readtexture("res/Textures/Editor/Wooden_floor_original.jpg");
-			texnewmaze = IO.readtexture("res/Textures/Editor/newmaze.jpg");
-			texwall1 = IO.readtexture("res/Textures/Editor/wall1.jpg");
-			texwall2 = IO.readtexture("res/Textures/Editor/wall2.jpg");
-			texwall3 = IO.readtexture("res/Textures/Editor/wall3.jpg");
-			texwall4 = IO.readtexture("res/Textures/Editor/wall4.jpg");
-			texwall5 = IO.readtexture("res/Textures/Editor/wall5.jpg");
-			texwall6 = IO.readtexture("res/Textures/Editor/wall6.jpg");
-			texwall7 = IO.readtexture("res/Textures/Editor/wall7.jpg");
-			texsave = IO.readtexture("res/Textures/Editor/save.jpg");
-			texload = IO.readtexture("res/Textures/Editor/load.jpg");
-			texspike = IO.readtexture("res/Textures/Editor/spikes.jpg");
-			texflaggreen= IO.readtexture("res/Textures/Editor/flaggreen.jpg");
-			texflagred= IO.readtexture("res/Textures/Editor/flagred.jpg");
-			scorpion = IO.readtexture("res/Textures/Editor/scorpion.jpg");
+			texempty = IO.loadtexture("res/Textures/Editor/empty.jpg",false);
+			texmenubar = IO.loadtexture("res/Textures/Editor/Wooden_floor_original.jpg",false);
+			texnewmaze = IO.loadtexture("res/Textures/Editor/newmaze.jpg",false);
+			texwall1 = IO.loadtexture("res/Textures/Editor/wall1.jpg",false);
+			texwall2 = IO.loadtexture("res/Textures/Editor/wall2.jpg",false);
+			texwall3 = IO.loadtexture("res/Textures/Editor/wall3.jpg",false);
+			texwall4 = IO.loadtexture("res/Textures/Editor/wall4.jpg",false);
+			texwall5 = IO.loadtexture("res/Textures/Editor/wall5.jpg",false);
+			texwall6 = IO.loadtexture("res/Textures/Editor/wall6.jpg",false);
+			texwall7 = IO.loadtexture("res/Textures/Editor/wall7.jpg",false);
+			texsave = IO.loadtexture("res/Textures/Editor/save.jpg",false);
+			texload = IO.loadtexture("res/Textures/Editor/load.jpg",false);
+			texspike = IO.loadtexture("res/Textures/Editor/spikes.jpg",false);
+			texflaggreen= IO.loadtexture("res/Textures/Editor/flaggreen.jpg",false);
+			texflagred= IO.loadtexture("res/Textures/Editor/flagred.jpg",false);
+			scorpion = IO.loadtexture("res/Textures/Editor/scorpion.jpg",false);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

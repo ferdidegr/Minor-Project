@@ -1,4 +1,4 @@
-package Editor;
+package Utils;
 
 
 import java.io.File;
@@ -14,6 +14,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
+
+import Editor.MazeMap;
 
 
 public class IO {
@@ -94,9 +96,12 @@ public class IO {
 	 * @return
 	 * @throws IOException
 	 */
-	public static Texture readtexture(String input) throws IOException{
+	public static Texture loadtexture(String input, boolean flip) throws IOException{
 					
-		return TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream(input));
+		if(input.toLowerCase().endsWith(".jpg")){return TextureLoader.getTexture("JPG", ResourceLoader.getResourceAsStream(input),flip);}
+		if(input.toLowerCase().endsWith(".png")){return TextureLoader.getTexture("PNG", ResourceLoader.getResourceAsStream(input),flip);}
+		if(input.toLowerCase().endsWith(".bmp")){return TextureLoader.getTexture("BMP", ResourceLoader.getResourceAsStream(input),flip);}
+		throw new IOException();
 
 	}
 	
