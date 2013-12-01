@@ -19,7 +19,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="Editor.IO" project="WI3620TU-GROUP2" file="/WI3620TU-GROUP2/src/Editor/IO.java" 
+  <class id="3" language="java" name="Utils.IO" project="WI3620TU-GROUP2" file="/WI3620TU-GROUP2/src/Utils/IO.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="563" y="107"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 

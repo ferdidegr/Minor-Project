@@ -109,7 +109,9 @@ public class Modelviewer {
 		//depth
 		glEnable(GL_DEPTH_TEST);
 		
-		//
+	     // Set the shading model.
+        glShadeModel( GL_SMOOTH );
+        
 		glClearDepth(1.0f);			
 		glDepthFunc(GL_LEQUAL);
 		//
@@ -123,7 +125,7 @@ public class Modelviewer {
 	}
 	
 	public File choosefile() throws IOException{
-		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir")+"\\res\\Models");		
+		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir"));		
 		jfc.setMultiSelectionEnabled(false);
 		jfc.setAcceptAllFileFilterUsed(false);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("OBJ Files", "obj");

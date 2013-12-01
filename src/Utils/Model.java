@@ -250,7 +250,7 @@ class Materialm{
 	public void setName(String name){ this.name = name;}
 	
 	public Texture getTexture(){ return tex;}
-	public void setTexture(String texpath) throws IOException{tex = IO.loadtexture(texpath, false);}
+	public void setTexture(String texpath) throws IOException{tex = IO.loadtexture(texpath, true);}
 	
 	public void useMtl(){
 		FloatBuffer ambientB = (FloatBuffer) BufferUtils.createFloatBuffer(4). put(ambient.x). put(ambient.y). put(ambient.z).put(alpha).flip();
