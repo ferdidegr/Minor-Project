@@ -49,7 +49,7 @@ public class IO {
 		oos.close();
 	}
 	/**
-	 * opens a Jfilechooser to select a maze to load
+	 * opens a Jfilechooser to select a maze to load 
 	 * @return an int[][] containing the maze
 	 * @throws ClassNotFoundException
 	 * @throws IOException
