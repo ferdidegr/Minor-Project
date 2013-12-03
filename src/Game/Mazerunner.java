@@ -389,10 +389,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			 * Movable objects
 			 */
 			for(Hatch lvlo: hatch){
-				lvlo.update(deltaTime);
-				if(input.triggered)lvlo.change();
+				lvlo.update(deltaTime);				
 			}
-			input.triggered=false;
+			
 			/*
 			 * Monsters
 			 */

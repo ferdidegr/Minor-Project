@@ -103,5 +103,10 @@ public class Floor extends levelObject{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void change() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

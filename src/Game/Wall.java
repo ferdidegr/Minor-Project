@@ -119,6 +119,11 @@ public class Wall extends levelObject{
 	public void update(int deltaTime) {
 		// TODO Auto-generated method stub
 		
+	}
+	@Override
+	public void change() {
+		// TODO Auto-generated method stub
+		
 	}	
 
 }

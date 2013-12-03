@@ -316,5 +316,11 @@ public class Monster extends levelObject{
 	public static void setPlayerloc(Vector playerlocatie){
 		playerloc = playerlocatie;
 	}
+
+	@Override
+	public void change() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

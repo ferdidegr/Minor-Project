@@ -10,4 +10,5 @@ public abstract class levelObject extends GameObject implements VisibleObject{
 	public abstract double getmaxDistY(double Y);
 	public abstract double getmaxDistZ(double Z);
 	public abstract void update(int deltaTime);
+	public abstract void change();
 }

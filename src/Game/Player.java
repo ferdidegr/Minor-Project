@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 
+import org.xml.sax.InputSource;
+
 import Utils.Vector;
 
 
@@ -225,9 +227,8 @@ public class Player extends GameObject {
 				}
 			}
 			
-			//Add addition extra block
-			tempindex.add(Mazerunner.objlijst.size()-2);
-			//Add floor
+	
+			//Add extra block
 			tempindex.add(Mazerunner.objlijst.size()-1);
 			
 
@@ -272,6 +273,13 @@ public class Player extends GameObject {
 			if(colY){jump=false;}else{updateY();}
 			py = getLocationY();
 		
+			// Check trigger
+			if(control.triggered){
+				for(int i = 0; i< tempindex.size();i++){
+					Mazerunner.objlijst.get((tempindex.get(i).intValue())).change();						
+				}
+				control.triggered=false;
+			}
 	}
 	/**
 	 * get X grid location

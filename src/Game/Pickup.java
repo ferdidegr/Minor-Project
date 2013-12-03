@@ -75,4 +75,16 @@ public class Pickup extends levelObject {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public void update(int deltaTime) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void change() {
+		// TODO Auto-generated method stub
+		
+	}
 }
