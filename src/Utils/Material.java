@@ -30,4 +30,17 @@ public class Material {
 		glMaterial(GL_FRONT, GL_SPECULAR, Utils.createFloatBuffer(1f,0f,0f,0f));
 		glMaterialf(GL_FRONT, GL_SHININESS, 2f);
 	}
+	
+	public static void setMtlPickup(boolean on){
+		if (on){
+			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.red);
+			glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
+		}
+		else {
+			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.blue);
+			glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.lightgrey);
+		}
+		glMaterial(GL_FRONT, GL_SPECULAR, Utils.createFloatBuffer(1f,0f,0f,0f));
+		glMaterialf(GL_FRONT, GL_SHININESS, 2f);
+	}
 }
