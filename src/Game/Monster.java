@@ -50,13 +50,13 @@ public class Monster extends levelObject{
 	public void update(int deltaTime){
 		Vector vec = new Vector(locationX, locationY, locationZ);
 		toPlayer = playerloc.clone();
-		vec.scale(-0.8);
+		vec.scale(-1);
 		toPlayer.add(vec);
 		toPlayer.normalize2D();
-		
+		toPlayer.scale(0.6);
 		dir.add(toPlayer);
 		dir.normalize2D();
-		
+
 		updateV(deltaTime);
 		
 		/*
@@ -103,7 +103,8 @@ public class Monster extends levelObject{
 			if(tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz+pw)
 			|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
 				colX=true;	
-				dir.rotate(Math.PI/3);
+				
+				dir.add(0.0 , 0.0,  Math.signum(toPlayer.getZ()));
 				maxX=tempobj.getmaxDistX(locationX+pw*signX);
 				break;
 			}
@@ -114,7 +115,7 @@ public class Monster extends levelObject{
 				|| mo.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
 					maxX=Math.min(maxX, mo.getmaxDistX(locationX+pw*signX));
 					colX=true;
-					dir.rotate(Math.PI/3);
+					dir = new Vector(0.0, 0.0 , Math.signum(toPlayer.getZ()));
 				}
 			}
 		}
@@ -130,7 +131,8 @@ public class Monster extends levelObject{
 			if(tempobj.isCollision(px+pw, py-ph/2f, pz+pw*signZ+velocity.getZ())
 			|| tempobj.isCollision(px-pw, py-ph/2f, pz+pw*signZ+velocity.getZ())){
 				colZ=true;
-				dir.rotate(Math.PI/3);
+				dir.add(Math.signum(toPlayer.getX()), 0.0, 0.0);
+				
 				maxZ=tempobj.getmaxDistZ(locationZ+pw*signZ);
 				break;
 			}
@@ -142,7 +144,8 @@ public class Monster extends levelObject{
 				){
 					maxZ=Math.min(maxZ, mo.getmaxDistZ(locationZ+pw*signZ));
 					colZ=true;
-					dir.rotate(Math.PI/3);
+					dir.add(Math.signum(toPlayer.getX()), 0.0, 0.0);
+					
 				}
 			}
 		}
@@ -161,20 +164,15 @@ public class Monster extends levelObject{
 			}				
 		}
 		if(colY){}else{updateY();}
-		py = getLocationY();		
+		py = getLocationY();
+		
+	
 		
 	}
 	
+	
 	public void updateV(int deltaTime){
-		counter+=deltaTime;
-		// Friction
-		velocity.scale(0.1, 0.4, 0.1);
-		// Random motion
-		//if(counter>3000){
-		//rand = Math.random();
-		//counter=0;
-		//}
-		velocity.add(rand*speed*deltaTime,0,rand*speed*deltaTime);
+		
 		velocity.scale(0.0);
 		// Movement to player
 		velocity.add(dir.getX()*speed * deltaTime*0.5, -0.005*deltaTime, dir.getZ()*speed * deltaTime*0.5);
