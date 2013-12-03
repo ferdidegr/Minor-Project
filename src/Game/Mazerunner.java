@@ -23,6 +23,7 @@ public class Mazerunner {
 	/*
 	 * Local Variables
 	 */
+	public static boolean soundon = false;
 	
 	private int screenWidth = 1280, screenHeight = 720;		// Deprecated
 	public Player player;									// The player object.
@@ -527,4 +528,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			   
 			   
 		}
+		
+		public static boolean getSound(){
+			return soundon;
+		}
 	}
+
+
