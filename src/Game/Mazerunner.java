@@ -23,19 +23,22 @@ public class Mazerunner {
 	/*
 	 * Local Variables
 	 */
+	public static boolean soundon = false;
 	
 	private int screenWidth = 1280, screenHeight = 720;		// Deprecated
 	public Player player;									// The player object.
 	private Camera camera;									// The camera object.
 	private UserInput input;								// The user input object that controls the player.
 	public static int[][] maze; 									// The maze.
-	private ArrayList<VisibleObject> visibleObjects;		// A list of objects that will be displayed on screen.
+	
 	
 	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
 	private Wall wall;										// Wall Class, used to put one wall in for test TODO remove
 	
 	private FloatBuffer lightPosition;		
 	
+	private ArrayList<VisibleObject> immediatedraw;					// A list of objects that will be displayed on screen. (immediate mode)
+	private ArrayList<VisibleObject> visibleObjects;				// A list of objects that will be displayed on screen. (DLlist mode)
 	protected static ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
 	protected static ArrayList<levelObject> objlijst;				// List of all collidable objects
 	protected static int[][] objectindex;							// reference to the arraylist entry
@@ -109,6 +112,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	maze = IO.readMaze(level);
 	objectindex = new int[maze.length][maze[0].length];
 	monsterlijst = new ArrayList<Monster>();
+	immediatedraw = new ArrayList<VisibleObject>();
 	
 	minimap=new MiniMap(maze);		//load the minimap
 	StatusBars.init(100);
@@ -139,10 +143,15 @@ public void initMaze() throws ClassNotFoundException, IOException{
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 			// z position
 									 SQUARE_SIZE*0.7, SQUARE_SIZE*0.7, SQUARE_SIZE));
 			}
-			
-			
+			// parsing the hatch
+			else if(maze[j][i]==16){
+				levelObject lvlo = new Hatch(i*SQUARE_SIZE, 0, j*SQUARE_SIZE);
+				immediatedraw.add(lvlo);
+				objlijst.add(lvlo);
+				objectindex[j][i]=objlijst.size()-1;
+			}
 			// Parsing the floor
-			if(maze[j][i]>10|| maze[j][i]==0){
+			if((maze[j][i]>10|| maze[j][i]==0) && maze[j][i]!=15 && maze[j][i]!=16){
 			levelObject lvlo = new Floor(i*SQUARE_SIZE, 0, j*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE, 1);
 			visibleObjects.add(lvlo);
 			objlijst.add(lvlo);
@@ -151,10 +160,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 
 		}
 	}
-	// TODO remove
-//	for(Monster mo:monsterlijst){
-//		System.out.println(mo.toString());
-//	}
+
 }
 /*
  *  *************************************************
@@ -220,7 +226,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			// displayed by MazeRunner.
 			visibleObjects = new ArrayList<VisibleObject>();
 			objlijst = new ArrayList<levelObject>();
-		 // Initialize Maze ( Loading in and setting the objects in the maze
+		 // Initialize Maze ( Loading in and setting the objects in the maze )
 			initMaze();	     			
 
 			camera = new Camera( player.getLocationX(), player.getLocationY(), player.getLocationZ(), 
@@ -234,10 +240,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			 */
 			
 			wall = new Wall(10, 10, 0, 5, 2,SQUARE_SIZE);
-//			grond = new Floor(0, 0, 0, maze[0].length*SQUARE_SIZE, maze.length*SQUARE_SIZE,1,SQUARE_SIZE);	
+
 			objlijst.add(wall);
-			
-//			objlijst.add(grond);
+
 		
 		
 	}
@@ -271,6 +276,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        drawSkybox();
 		        // Display all the visible objects of MazeRunner.
 		        if(!input.debug){ 	glCallList(objectDisplayList); }
+		        
+		        // Display all movable visible objects (immediate mode)
+		        for(VisibleObject vo:immediatedraw){
+		        	vo.display();
+		        }
 		        
 		        //update light positions
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
@@ -422,8 +432,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        glMaterialf(GL_FRONT, GL_SHININESS, -1f);
 		        wall.display();		
 
-				
-								
+												
 				Material.setMtlsteel();
 				glDisable(GL_TEXTURE_2D);
 				glPushMatrix();
@@ -519,4 +528,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			   
 			   
 		}
+		
+		public static boolean getSound(){
+			return soundon;
+		}
 	}
+
+

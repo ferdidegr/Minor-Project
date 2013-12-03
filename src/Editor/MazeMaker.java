@@ -310,8 +310,11 @@ public class MazeMaker {
 	 * 12 - End point
 	 * 13 - Spikes
 	 * 14 - Scorpion
+	 * 15 - pit
 	 */
 	public void initButtons(){
+		final float LEFT = 0.05f;
+		final float RIGHT = 0.55f;
 		/*
 		 * Set the menu coordinates in world coordinates
 		 */
@@ -319,25 +322,27 @@ public class MazeMaker {
 		/*
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
-		buttonlist.add(new Button(0.05f, 0.1f,Textures.texempty, 0));		// 0
-		buttonlist.add(new Button(0.55f, 0.1f,Textures.texwall1, 1));		// 1 
-		buttonlist.add(new Button(0.05f, 1.2f,Textures.texwall2, 2));		// 2 
-		buttonlist.add(new Button(0.55f, 1.2f,Textures.texwall3, 3));		// 3 
-		buttonlist.add(new Button(0.05f, 2.3f,Textures.texwall4, 4));		// 4 
-		buttonlist.add(new Button(0.55f, 2.3f,Textures.texwall5, 5));		// 5 
-		buttonlist.add(new Button(0.05f, 3.4f,Textures.texwall6, 6));		// 6 
-		buttonlist.add(new Button(0.55f, 3.4f,Textures.texwall7, 7));		// 7 
+		buttonlist.add(new Button(LEFT, 0.1f,Textures.texempty, 0));		// 0
+		buttonlist.add(new Button(RIGHT, 0.1f,Textures.texwall1, 1));		// 1 
+		buttonlist.add(new Button(LEFT, 1.2f,Textures.texwall2, 2));		// 2 
+		buttonlist.add(new Button(RIGHT, 1.2f,Textures.texwall3, 3));		// 3 
+		buttonlist.add(new Button(LEFT, 2.3f,Textures.texwall4, 4));		// 4 
+		buttonlist.add(new Button(RIGHT, 2.3f,Textures.texwall5, 5));		// 5 
+		buttonlist.add(new Button(LEFT, 3.4f,Textures.texwall6, 6));		// 6 
+		buttonlist.add(new Button(RIGHT, 3.4f,Textures.texwall7, 7));		// 7 
 
 		
-		buttonlist.add(new Button(0.05f, 5.6f,Textures.texflaggreen,11));	// 11 flaggreen
-		buttonlist.add(new Button(0.55f, 5.6f,Textures.texflagred,12));		// 12 flagred
-		buttonlist.add(new Button(0.05f, 6.7f,Textures.texspike, 13));		// 13
-		buttonlist.add(new Button(0.55f, 6.7f,Textures.scorpion, 14));		// 14
+		buttonlist.add(new Button(LEFT, 5.6f,Textures.texflaggreen,11));	// 11 flaggreen
+		buttonlist.add(new Button(RIGHT, 5.6f,Textures.texflagred,12));		// 12 flagred
+		buttonlist.add(new Button(LEFT, 6.7f,Textures.texspike, 13));		// 13
+		buttonlist.add(new Button(RIGHT, 6.7f,Textures.scorpion, 14));		// 14
+		buttonlist.add(new Button(LEFT, 7.8f,Textures.pit, 15));			// 15
+		buttonlist.add(new Button(RIGHT, 7.8f,Textures.hatch, 16));			// 15
 
-		buttonlist.add(new Button(0.05f, 10.5f,Textures.texload, 98));		// 98 load button 
-		buttonlist.add(new Button(0.55f, 10.5f,Textures.texsave, 99));		// 99 save button
-		buttonlist.add(new Button(0.05f, 11.6f,Textures.texnewmaze, 100));	// 100 New maze
-		buttonlist.add(new Button(0.55f, 11.6f,Textures.texempty,101)); 	// 101 Exit button
+		buttonlist.add(new Button(LEFT, 10.5f,Textures.texload, 98));		// 98 load button 
+		buttonlist.add(new Button(RIGHT, 10.5f,Textures.texsave, 99));		// 99 save button
+		buttonlist.add(new Button(LEFT, 11.6f,Textures.texnewmaze, 100));	// 100 New maze
+		buttonlist.add(new Button(RIGHT, 11.6f,Textures.texempty,101)); 	// 101 Exit button
 
 	}
 	/**
@@ -413,6 +418,8 @@ public class MazeMaker {
 					maze.setObject(12, x, y);
 					break;} 						// Flag red
 			case 14:{maze.setObject(14, x, y);break;}
+			case 15:{maze.setObject(15, x, y);break;}
+			case 16:{maze.setObject(16, x, y);break;}
 			}
 		}
 	}

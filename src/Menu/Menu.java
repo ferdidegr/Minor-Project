@@ -32,7 +32,9 @@ public class Menu {
 
 		Display.setDisplayMode(new DisplayMode(screenx, screeny));
 		Display.create();
+		if (Mazerunner.getSound()==true){
 		Sound.init();
+		}
 		new Textures();
 		initButtons();
 		run();

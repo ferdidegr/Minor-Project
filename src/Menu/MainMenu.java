@@ -40,7 +40,9 @@ public class MainMenu extends ButtonList {
 		
 		case 1:
 			Menu.setState(GameState.GAME);
+			if (Mazerunner.getSound()==true){
 			Sound.playMusic("background_game");
+			}
 			Mazerunner game = new Mazerunner();
 			glPushMatrix();
 			try {
