@@ -98,5 +98,10 @@ public class Floor extends levelObject{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public void update(int deltaTime) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

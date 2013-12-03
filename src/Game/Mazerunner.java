@@ -37,7 +37,7 @@ public class Mazerunner {
 	
 	private FloatBuffer lightPosition;		
 	
-	private ArrayList<VisibleObject> immediatedraw;					// A list of objects that will be displayed on screen. (immediate mode)
+	protected ArrayList<Hatch> hatch;					// A list of objects that will be displayed on screen. (immediate mode)
 	private ArrayList<VisibleObject> visibleObjects;				// A list of objects that will be displayed on screen. (DLlist mode)
 	protected static ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
 	protected static ArrayList<levelObject> objlijst;				// List of all collidable objects
@@ -112,7 +112,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	maze = IO.readMaze(level);
 	objectindex = new int[maze.length][maze[0].length];
 	monsterlijst = new ArrayList<Monster>();
-	immediatedraw = new ArrayList<VisibleObject>();
+	hatch = new ArrayList<Hatch>();
 	
 	minimap=new MiniMap(maze);		//load the minimap
 	StatusBars.init(100);
@@ -145,9 +145,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			}
 			// parsing the hatch
 			else if(maze[j][i]==16){
-				levelObject lvlo = new Hatch(i*SQUARE_SIZE, 0, j*SQUARE_SIZE);
-				immediatedraw.add(lvlo);
-				objlijst.add(lvlo);
+				Hatch h = new Hatch(i*SQUARE_SIZE, 0, j*SQUARE_SIZE);
+				hatch.add(h);
+				objlijst.add(h);
 				objectindex[j][i]=objlijst.size()-1;
 			}
 			// Parsing the floor
@@ -278,7 +278,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        if(!input.debug){ 	glCallList(objectDisplayList); }
 		        
 		        // Display all movable visible objects (immediate mode)
-		        for(VisibleObject vo:immediatedraw){
+		        for(VisibleObject vo:hatch){
 		        	vo.display();
 		        }
 		        
@@ -385,7 +385,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		private void updateMovement(int deltaTime)
 		{
 			player.update(deltaTime);						// Updating velocity vector
-
+			/*
+			 * Movable objects
+			 */
+			for(Hatch lvlo: hatch){
+				lvlo.update(deltaTime);
+				if(input.triggered)lvlo.change();
+			}
+			input.triggered=false;
 			/*
 			 * Monsters
 			 */
@@ -524,9 +531,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			    glPopAttrib();
 
 			    glEndList();
-			    
-			   
-			   
+				   
 		}
 		
 		public static boolean getSound(){

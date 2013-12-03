@@ -114,6 +114,11 @@ public class Wall extends levelObject{
 		if(top<Y) return (top-Y);
 		if(bottom>Y)return bottom-Y;
 		return 0;
+	}
+	@Override
+	public void update(int deltaTime) {
+		// TODO Auto-generated method stub
+		
 	}	
 
 }
