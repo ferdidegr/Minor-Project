@@ -18,7 +18,6 @@ public class Monster extends levelObject{
 	private Vector dir= new Vector(1, 0, 0);
 	private boolean colX,colZ,colY;
 	protected double distanceToPlayer;
-	private int colCount = 0;
 	private boolean followplayer =true;
 	private int Count = 0;
 	
@@ -49,6 +48,10 @@ public class Monster extends levelObject{
 		return (int) Math.floor(locationZ/SQUARE_SIZE);
 	}
 	
+	/**
+	 * Dit is de loop waarin beslissingen gemaakt worden en beweging uitgevoerd wordt.
+	 * @param deltaTime
+	 */
 	public void update(int deltaTime){
 		
 		toPlayer();
@@ -67,12 +70,17 @@ public class Monster extends levelObject{
 		
 		collision();
 		
-		System.out.println(Count);
+		//System.out.println(Count);
 
 		updateV(deltaTime);
 		
 	}
 	
+	/** 
+	 * Controleert de count en past deze aan. Wanneer er collision is: count verhogen. 
+	 * Wanneer count groter dan een threshold value is, wordt geswitcht van followplayer (wel/niet) modus.
+	 * 
+	 */
 	public void checkCount(){
 		if(colX | colZ){
 			Count++;
@@ -83,6 +91,10 @@ public class Monster extends levelObject{
 		}
 	}
 	
+	/**
+	 * Voert een random walk uit. Wanneer er sprake is van collision wordt de richting
+	 * veranderd, anders loopt monster door.
+	 */
 	public void randomWalk(){
 		if(colX | colZ){
 			dir.rotate(Math.random()* 2 * Math.PI);
@@ -90,6 +102,10 @@ public class Monster extends levelObject{
 		} else { Count++; }
 	}
 	
+	/**
+	 * Controleert of het monster vast zit. (wordt nu niet gebruikt, in plaats daarvan checkcount)
+	 * @return
+	 */
 	public boolean isStuck(){
 		if(colX | colZ){
 			Count++;
@@ -97,6 +113,9 @@ public class Monster extends levelObject{
 		return Count > 200;
 	}
 	
+	/**
+	 * Bepaalt de vector die naar de player wijst (toPlayer)
+	 */
 	public void toPlayer(){
 		Vector vec = new Vector(locationX, locationY, locationZ);
 		toPlayer = playerloc.clone();
@@ -106,12 +125,18 @@ public class Monster extends levelObject{
 		toPlayer.normalize2D();
 	}
 	
+	/**
+	 * Laat de monster richting player lopen.
+	 */
 	public void dirToPlayer(){
 		toPlayer.scale(0.6);
 		dir.add(toPlayer);
 		
 	}
 	
+	/**
+	 * Wanneer er collision is loopt het monster om de muur heen, in richting van de player.
+	 */
 	public void avoidWalls(){
 		if(colX){	
 			dir.add(0.0 , 0.0,  Math.signum(toPlayer.getZ()));
@@ -122,7 +147,9 @@ public class Monster extends levelObject{
 		
 	}
 	
-	
+	/**
+	 * Controleert of er sprake is van collision en past zonodig de beweging van het monster aan.
+	 */
 	public void collision(){
 		/*
 		 * Collision detection
