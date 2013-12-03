@@ -16,9 +16,11 @@ public class Monster extends levelObject{
 	public static Vector playerloc = new Vector(0, 0, 0);
 	private Vector toPlayer;
 	private Vector dir= new Vector(1, 0, 0);
-	private int counter =0;
-	private double rand = 0;
 	private boolean colX,colZ,colY;
+	protected double distanceToPlayer;
+	private int colCount = 0;
+	private boolean followplayer =true;
+	private int Count = 0;
 	
 	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
 		super(x, y, z);
@@ -48,17 +50,80 @@ public class Monster extends levelObject{
 	}
 	
 	public void update(int deltaTime){
+		
+		toPlayer();
+		
+		checkCount();
+		
+		if(followplayer){
+			dirToPlayer();
+		} else {
+			randomWalk();
+		}
+		
+		avoidWalls();
+		
+		dir.normalize2D();
+		
+		collision();
+		
+		System.out.println(Count);
+
+		updateV(deltaTime);
+		
+	}
+	
+	public void checkCount(){
+		if(colX | colZ){
+			Count++;
+		}
+		if(Count > 200){
+			followplayer = !followplayer;
+			Count = 0;
+		}
+	}
+	
+	public void randomWalk(){
+		if(colX | colZ){
+			dir.rotate(Math.random()* 2 * Math.PI);
+			Count++;
+		} else { Count++; }
+	}
+	
+	public boolean isStuck(){
+		if(colX | colZ){
+			Count++;
+		} else { Count = 0 ;}
+		return Count > 200;
+	}
+	
+	public void toPlayer(){
 		Vector vec = new Vector(locationX, locationY, locationZ);
 		toPlayer = playerloc.clone();
 		vec.scale(-1);
 		toPlayer.add(vec);
+		distanceToPlayer = toPlayer.length2D();
 		toPlayer.normalize2D();
+	}
+	
+	public void dirToPlayer(){
 		toPlayer.scale(0.6);
 		dir.add(toPlayer);
-		dir.normalize2D();
-
-		updateV(deltaTime);
 		
+	}
+	
+	public void avoidWalls(){
+		if(colX){	
+			dir.add(0.0 , 0.0,  Math.signum(toPlayer.getZ()));
+		}
+		if(colZ){
+			dir.add(Math.signum(toPlayer.getX()), 0.0, 0.0);
+		}
+		
+	}
+	
+	
+	public void collision(){
 		/*
 		 * Collision detection
 		 */
@@ -104,7 +169,7 @@ public class Monster extends levelObject{
 			|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
 				colX=true;	
 				
-				dir.add(0.0 , 0.0,  Math.signum(toPlayer.getZ()));
+				
 				maxX=tempobj.getmaxDistX(locationX+pw*signX);
 				break;
 			}
@@ -115,7 +180,7 @@ public class Monster extends levelObject{
 				|| mo.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
 					maxX=Math.min(maxX, mo.getmaxDistX(locationX+pw*signX));
 					colX=true;
-					dir = new Vector(0.0, 0.0 , Math.signum(toPlayer.getZ()));
+					
 				}
 			}
 		}
@@ -131,8 +196,6 @@ public class Monster extends levelObject{
 			if(tempobj.isCollision(px+pw, py-ph/2f, pz+pw*signZ+velocity.getZ())
 			|| tempobj.isCollision(px-pw, py-ph/2f, pz+pw*signZ+velocity.getZ())){
 				colZ=true;
-				dir.add(Math.signum(toPlayer.getX()), 0.0, 0.0);
-				
 				maxZ=tempobj.getmaxDistZ(locationZ+pw*signZ);
 				break;
 			}
@@ -144,7 +207,6 @@ public class Monster extends levelObject{
 				){
 					maxZ=Math.min(maxZ, mo.getmaxDistZ(locationZ+pw*signZ));
 					colZ=true;
-					dir.add(Math.signum(toPlayer.getX()), 0.0, 0.0);
 					
 				}
 			}
@@ -165,9 +227,7 @@ public class Monster extends levelObject{
 		}
 		if(colY){}else{updateY();}
 		py = getLocationY();
-		
-	
-		
+				
 	}
 	
 	
