@@ -1,6 +1,5 @@
 package Editor;
 
-
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -8,6 +7,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -25,8 +25,9 @@ public class Chooser extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 7746449571087818959L;
 	private DisplayMode[] lijst;	
+	private String[] lijst2;
 	private DisplayMode displaymodus;
-	private JComboBox<DisplayMode> box;
+	private JComboBox<String> box;
 	private JCheckBox checkbox;
 	private boolean fullscreen;
 	private int bitdepth = Display.getDesktopDisplayMode().getBitsPerPixel();
@@ -46,10 +47,12 @@ public class Chooser extends JFrame implements ActionListener{
 				if(dpm.getBitsPerPixel()==bitdepth && dpm.getFrequency()==freq)teller++;
 			}
 			lijst = new DisplayMode[teller];
+			lijst2 = new String[teller];
 			int teller2 = 0;
 			for(DisplayMode dpm:templijst){
 				if(dpm.getBitsPerPixel()==bitdepth && dpm.getFrequency()==freq){
 					lijst[teller2]=dpm;
+					lijst2[teller2] = dpm.toString();
 					teller2++;
 				}
 			}
@@ -57,11 +60,12 @@ public class Chooser extends JFrame implements ActionListener{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Arrays.sort(lijst2);
 		setResizable(false);		
 		setUndecorated(true);
 		
 		// Declare and create new combo box
-		box = new JComboBox<DisplayMode>(lijst);
+		box = new JComboBox<String>(lijst2);
 		// Declare new button to confirm
 		JButton button = new JButton("Select resolution");
 		// declare checkbox to set fullscreen or not
@@ -72,8 +76,7 @@ public class Chooser extends JFrame implements ActionListener{
 		setLayout(new FlowLayout());
 		add(box);
 		add(checkbox);
-		add(button);
-		
+		add(button);		
 		/*
 		 * Only pressing the set resolution button will cause any action
 		 */
@@ -109,7 +112,16 @@ public class Chooser extends JFrame implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		displaymodus = (DisplayMode) box.getSelectedItem();
+//		displaymodus = (DisplayMode) box.getSelectedItem();
+		String modus = (String) box.getSelectedItem();
+		
+		// Get the display mode matching this string
+		for(DisplayMode dpm:lijst){
+			if(dpm.toString().equals(modus)){
+				displaymodus = dpm;
+			}
+		}
+		
 		fullscreen = checkbox.isSelected();
 		
 		try {
