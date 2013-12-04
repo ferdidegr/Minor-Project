@@ -13,6 +13,7 @@ import org.lwjgl.opengl.Display;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.util.glu.GLU;
+import org.newdawn.slick.opengl.TextureImpl;
 
 import Menu.GameState;
 import Menu.Menu;
@@ -274,6 +275,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				
 				glLoadIdentity();
 				
+//				glRotated(-player.getVerAngle(), 1, 0, 0);
+//				glRotated(-player.getHorAngle(), 0, 1, 0);
+//				glTranslated(-player.locationX, -player.locationY, -player.locationZ);
+				
+				
 		        GLU.gluLookAt( (float)camera.getLocationX(), (float)camera.getLocationY(),(float) camera.getLocationZ(), 
 		        		(float)camera.getVrpX(), (float)camera.getVrpY(), (float)camera.getVrpZ(),
 		        		(float)camera.getVuvX(), (float)camera.getVuvY(), (float)camera.getVuvZ() );
@@ -291,7 +297,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
 		        
 		        // Monsters		
-		        Material.setMtlScorp();
+//		        Material.setMtlScorp();
+		        
 		        for(Monster mo: monsterlijst){			        	
 		        	mo.display();		        	
 		        }
@@ -382,14 +389,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	public void reshape(){
 		screenWidth = Display.getWidth();
 		screenHeight = Display.getHeight();
-		glViewport(0, 0, Display.getWidth(), Display.getHeight());
-		
-		// Now we set up our viewpoint.
-		glMatrixMode(GL_PROJECTION);					// We'll use orthogonal projection.
-		glLoadIdentity();									// REset the current matrix.
-		GLU.gluPerspective(60, (float)Display.getWidth()/(float)Display.getHeight(), 0.001f, 1000);	// Set up the parameters for perspective viewing. 
-		glMatrixMode(GL_MODELVIEW);
-		
+		glViewport(0, 0, Display.getWidth(), Display.getHeight());	
 	}
 	/*
 	 * **********************************************

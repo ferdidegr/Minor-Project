@@ -1,6 +1,6 @@
 # Blender v2.69 (sub 0) OBJ File: 'scorpion_blender2.blend'
 # www.blender.org
-mtllib scorpion2.mtl
+mtllib scorpion.mtl
 o Sphere.029_Sphere.047
 v 0.131611 -0.267815 0.316578
 v 0.120093 -0.268808 0.307517
