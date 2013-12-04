@@ -148,6 +148,33 @@ public class Monster extends levelObject{
 	}
 	
 	/**
+	 * Determines whether a location (Vector) b is in the line of sight of a monster.
+	 * Not working yet!
+	 */
+	public boolean lineOfSight(Vector b){
+		//Calculate the necessary vectors
+		Vector a = new Vector(locationX, locationY, locationZ);
+		Vector direc = a.difference(b);
+		
+		Double length = direc.length() * 10;
+		int distance = length.intValue();
+		direc.normalize();
+		direc.scale(0.1);
+		
+		Vector loc = a;
+		for(int i = 0; i < distance; i++){
+			loc.add(direc);
+			//TODO: detect collision.
+			if(loc.distance(b) < 0.5){
+				return true;
+			}
+		}
+		
+		return false;
+		
+	}
+	
+	/**
 	 * Controleert of er sprake is van collision en past zonodig de beweging van het monster aan.
 	 */
 	public void collision(){

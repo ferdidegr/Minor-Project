@@ -33,6 +33,28 @@ public class Vector {
 	}
 	
 	/**
+	 *  Gives the difference between Vector and a given Vector as a Vector. 
+	 *  The direction is from the current Vector location to the given Vector location.
+	 * @param vec
+	 * @return
+	 */
+	public Vector difference(Vector vec){
+		Vector minusa = this.clone();
+		minusa.scale(-1);
+		vec.add(minusa);
+		return vec;
+	}
+	
+	/**
+	 * Gives the distance between current vector and given vector as a double.
+	 * @param vec
+	 * @return
+	 */
+	public double distance(Vector vec){
+		return difference(vec).length();
+	}
+	
+	/**
 	 * Vector addition
 	 * @param vec another Vector object
 	 */
