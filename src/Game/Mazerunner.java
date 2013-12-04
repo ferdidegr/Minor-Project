@@ -268,11 +268,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				
 				glLoadIdentity();
 				
-				glRotated(-player.getVerAngle(), 1, 0, 0);
-				glRotated(-player.getHorAngle(), 0, 1, 0);
+				glRotated(-player.getVerAngle()*(input.lookback?-1:1), 1, 0, 0);
+				glRotated(-player.getHorAngle()+(input.lookback?180:0), 0, 1, 0);
+				// Draw sky box, the skybox is always in the origin, so no need to translate
+				glCallList(Models.skybox);
+				
 				glTranslated(-player.locationX, -player.locationY, -player.locationZ);					
 				
-		        drawSkybox();
+		        
 		        // Display all the visible objects of MazeRunner.
 		        if(!input.debug){ 	glCallList(objectDisplayList); }
 		        
@@ -343,23 +346,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
-	}
-	/**
-	 * Draw a unit cube around the camera
-	 */
-	public void drawSkybox(){
-
-	 // Store the current matrix
-		glPushMatrix();
-	 
-	    // Reset and transform the matrix.
-	    glLoadIdentity();
-	    glRotated(-player.getVerAngle(), 1, 0, 0);
-	    glRotated(-player.getHorAngle(), 0, 1, 0);	    
-	 
-	    glCallList(Models.skybox);
-	    glPopMatrix();
-
 	}
 
 	/**
