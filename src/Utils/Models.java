@@ -7,7 +7,7 @@ public class Models {
 	public static int monster;
 	static{
 		try {
-			monster = Model.loadModel("res/Models/", "scorpion_small.obj").generateDList();
+			monster = Model.loadModel("res/Models/", "scorpion2.obj").generateDList();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
