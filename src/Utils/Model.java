@@ -16,6 +16,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureImpl;
 
 /**
  * 
@@ -99,6 +100,9 @@ public class Model {
 	public int generateDList(){
 		String currentMTL = null;
 		int objectDisplayList = glGenLists(1);
+		
+		TextureImpl.unbind();
+		
 		glNewList(objectDisplayList, GL_COMPILE);
 		
 		

@@ -4,10 +4,12 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Hatch extends levelObject{
 	private float rotangle = 0;
-	private float rotspeed = 0.1f;
-	private HatchState hatchstatus= HatchState.CLOSED;
+	private float rotspeed = 0f;
+	private HatchState hatchstatus;
 	public Hatch(double x, double y, double z) {
-		super(x, y, z);	
+		super(x, y, z);
+		hatchstatus=(Math.random()>0.5?HatchState.CLOSED:HatchState.OPEN);
+		rotangle = (hatchstatus==HatchState.OPEN?90:0);
 	}
 	
 	@Override
