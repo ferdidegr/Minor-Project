@@ -1,10 +1,10 @@
-# Blender MTL File: 'scorpion_small.blend'
+# Blender MTL File: 'scorpion_blender.blend'
 # Material Count: 2
 
 newmtl black
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
-Kd 0.351726 0.351726 0.378825
+Kd 0.035564 0.035564 0.035564
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
@@ -13,7 +13,7 @@ illum 2
 newmtl light_brown
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
-Kd 0.351726 0.351726 0.378825
+Kd 0.186412 0.174563 0.097017
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
 d 1.000000
