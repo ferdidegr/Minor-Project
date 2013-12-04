@@ -83,12 +83,15 @@ public class StatusBars {
 	}
 	
 	public static void addHealth(int hp){
+		System.out.println("add health");
 		if((health + hp) <= maxhealth){
 			health += hp;
 		}
+		else health=maxhealth;
 	}
 	
 	public static void minHealth(int hp){
+		System.out.println("min health");
 		if((health - hp) >= 0){
 			health -= hp;
 		} else {

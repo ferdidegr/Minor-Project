@@ -18,7 +18,6 @@ public class MiniMap {
 		int locX = player.getGridX(SQUARE_SIZE);
 		int locZ = mapHeight - 1 - player.getGridZ(SQUARE_SIZE);
 		
-		System.out.println(locX+" "+locZ);
 
 		int size = 10;
 

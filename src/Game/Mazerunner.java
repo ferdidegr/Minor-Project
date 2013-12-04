@@ -36,7 +36,8 @@ public class Mazerunner {
 	private Wall wall;										// Wall Class, used to put one wall in for test TODO remove
 	
 	private FloatBuffer lightPosition;		
-	
+
+	protected ArrayList<Pickup> pickuplijst;						// A list of pickup items
 	protected ArrayList<Hatch> hatch;					// A list of objects that will be displayed on screen. (immediate mode)
 	private ArrayList<VisibleObject> visibleObjects;				// A list of objects that will be displayed on screen. (DLlist mode)
 	protected static ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
@@ -113,6 +114,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	objectindex = new int[maze.length][maze[0].length];
 	monsterlijst = new ArrayList<Monster>();
 	hatch = new ArrayList<Hatch>();
+	pickuplijst = new ArrayList<Pickup>();
 	
 	minimap=new MiniMap(maze);		//load the minimap
 	StatusBars.init(100);
@@ -160,6 +162,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 
 		}
 	}
+	// Parsing test pickups
+	pickuplijst.add(new Pickup(SQUARE_SIZE*2,SQUARE_SIZE,SQUARE_SIZE*2,0,SQUARE_SIZE/4f));
+	pickuplijst.add(new Pickup(SQUARE_SIZE*18,SQUARE_SIZE,SQUARE_SIZE*18,1,SQUARE_SIZE/4f));
 
 }
 /*
@@ -290,7 +295,21 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        for(Monster mo: monsterlijst){			        	
 		        	mo.display();		        	
 		        }
+		        // Pickups
+		        ArrayList<Pickup> rmpu = new ArrayList<Pickup>();
+		        for(Pickup pu: pickuplijst){
+		        	pu.display();
+		        	if(pu.check(player)){
+		        		rmpu.add(pu);
+		        	}
+		        }
+		        for (Pickup pu: rmpu){
+		        	if (pickuplijst.remove(pu)){
+		        		pu.effect();
+		        	}
+		        }
 		        
+		        // HUD
 		        glPushMatrix();
 		        if(input.minimap){drawHUD();}
 		        glPopMatrix();

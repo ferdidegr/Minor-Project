@@ -15,12 +15,11 @@ public class Pickup extends levelObject {
 		this.origsize = size;
 	}
 
-	int type = 0;
+	int type;
 	float size;
 	float origsize;
-	boolean on = true;
-	boolean beenaway = true;
-	int stijn=0;
+	boolean on = false;
+	
 
 	@Override
 	public void display() {
@@ -36,22 +35,17 @@ public class Pickup extends levelObject {
 
 	}
 
-	public void check(Player player) {
-		if (Math.sqrt(Math.pow(player.locationX - this.locationX, 2) + Math.pow(player.locationZ - this.locationZ, 2)) < size) {
-			if (beenaway) {
-				StatusBars.addHealth(1);
-				on = !on;
-				System.out.println("stijn: "+ stijn++);
-				beenaway = false;
-				//stijn++;
-			}
-			
-		} else {
-			beenaway = true;
+	public boolean check(Player player) {
+		return ((Math.abs(player.locationX - this.locationX)) + (Math.abs(player.locationZ - this.locationZ)) < size);
 		}
 
+	public void effect(){
+		System.out.println("effect!");
+		switch(this.type){
+		case 0: {StatusBars.addHealth(30);break;}
+		case 1: {StatusBars.minHealth(30);break;}
+		}
 	}
-
 	@Override
 	public boolean isCollision(double x, double y, double z) {
 		// TODO Auto-generated method stub
@@ -79,12 +73,12 @@ public class Pickup extends levelObject {
 	@Override
 	public void update(int deltaTime) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void change() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
