@@ -48,7 +48,7 @@ public class Mazerunner {
 	private MiniMap minimap;								// The minimap object.
 	private String level = "levels/scorps.maze";
 	private int objectDisplayList = glGenLists(1);
-	private int skyboxDL = glGenLists(1);
+	
 	/*
 	 *  *************************************************
 	 *  * 					Main Loop					*
@@ -132,7 +132,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			else if(maze[j][i]==11){
 				// Initialize the player.
 				player = new Player( i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-									 SQUARE_SIZE *30/ 2.0 ,					// y-position
+									 SQUARE_SIZE *40/ 2.0 ,					// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
 									 0, 0 ,									// horizontal and vertical angle
 									 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height			
@@ -357,7 +357,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	    glRotated(-player.getVerAngle(), 1, 0, 0);
 	    glRotated(-player.getHorAngle(), 0, 1, 0);	    
 	 
-	    glCallList(skyboxDL);
+	    glCallList(Models.skybox);
 	    glPopMatrix();
 
 	}
@@ -417,9 +417,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	vo.display();
 		        }
 			 	Material.setMtlWall();
-		        glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);	  
-		        glMaterial(GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
-		        glMaterialf(GL_FRONT, GL_SHININESS, -1f);
 		        wall.display();		
 
 												
@@ -432,88 +429,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				glPopMatrix();
 				
 				 
-			 glEndList();
-			
-			 /*
-			  * SkyBox	
-			  */
-			 glNewList(skyboxDL, GL_COMPILE);
-			    // Enable/Disable features
-			    glPushAttrib(GL_ENABLE_BIT);
-			    glEnable(GL_TEXTURE_2D);
-			    
-			    glDisable(GL_DEPTH_TEST);
-			    glDisable(GL_LIGHTING);
-			    glDisable(GL_BLEND);
-			    
-			 float smallnumber = 0.002f;
-			    // Just in case we set all vertices to white.
-			    glColor4f(1,1,1,1);
-			 
-			    // Render the front quad
-			    Textures.front.bind();
-			    glBegin(GL_QUADS);
-			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
-			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );			        
-			        
-			    glEnd();
-			 
-			    // Render the left quad
-			    Textures.left.bind();
-			    glBegin(GL_QUADS);
-			    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
-			    	glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
-			    	glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );	
-			    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );			        
-			       
-			    glEnd();
-			 
-			    // Render the back quad
-			    Textures.back.bind();
-			    glBegin(GL_QUADS);
-			    	
-			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
-			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
-			 
-			    glEnd();
-			 
-			    // Render the right quad
-			    Textures.right.bind();
-			    glBegin(GL_QUADS);
-			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
-			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
-			        
-			    glEnd();
-			 
-			    // Render the top quad
-			    Textures.top.bind();
-			    glBegin(GL_QUADS);
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
-			        
-			    glEnd();
-			 
-			    // Render the bottom quad
-			    Textures.bottom.bind();
-			    glBegin(GL_QUADS);
-			    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
-			    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );  		       
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
-			        
-			    glEnd();
-			    // Restore enable bits and matrix
-			    glPopAttrib();
-
-			    glEndList();
+			 glEndList();			 
 				   
 		}
 		
