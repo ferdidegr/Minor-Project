@@ -58,7 +58,7 @@ public class Mazerunner {
 public void start() throws ClassNotFoundException, IOException{
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
-	
+	new Models();
 	// TODO remove
 	Display.setResizable(true);
 										

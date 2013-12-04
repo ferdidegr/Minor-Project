@@ -4,6 +4,7 @@ import static org.lwjgl.opengl.GL11.*;
 import java.util.ArrayList;
 
 import Utils.Graphics;
+import Utils.Models;
 import Utils.Vector;
 
 public class Monster extends levelObject{
@@ -275,7 +276,8 @@ public class Monster extends levelObject{
 	public void display() {
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);
-		Graphics.renderCube(width, false, false, false, false);	
+//		Graphics.renderCube(width, false, false, false, false);	
+		glCallList(Models.monster);
 
 		glPopMatrix();
 	}

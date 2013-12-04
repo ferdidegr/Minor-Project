@@ -68,7 +68,29 @@ public class Modelviewer {
 			glRotatef(verangle, 1, 0, 0);
 			
 			glCallList(drawlist1);
+			
+			glPushAttrib(GL_ENABLE_BIT);
+			glDisable(GL_LIGHTING);
+			glColor3f(1f, 1f, 1f);
+			glLineWidth(10f);
+			glBegin(GL_LINE_LOOP);
+			glVertex3d(-0.5, 0.5,-0.5);
+			glVertex3d(-0.5, 0.5,0.5);
+			glVertex3d(0.5, 0.5,0.5);
+			glVertex3d(0.5, 0.5,-0.5);
+			
+			glVertex3d(0.5, -0.5,-0.5);
+			glVertex3d(-0.5, -0.5,-0.5);
+			glVertex3d(-0.5, -0.5,0.5);
+			glVertex3d(0.5, -0.5,0.5);
+			
+			glEnd();
+			glPopAttrib();
 			glPopMatrix();
+			
+
+			
+			
 			glLight(GL_LIGHT0, GL_POSITION, (FloatBuffer) BufferUtils.createFloatBuffer(4).put(0).put(0).put(-10).put(1).flip());
 			inputpoll();
 			
