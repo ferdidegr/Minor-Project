@@ -26,12 +26,17 @@ public class StatusBars {
 		glColor3f(1.0f, 0.0f, 0.0f);
 		glPushMatrix();
 		glLoadIdentity();
+		
 		glTranslatef(1000f, 50f,0);
 		
+		glPushMatrix();
+		glScalef(-1, 1, 1);
 		glEnable(GL_TEXTURE_2D);
 		TextureImpl.unbind();
 		titel.draw(titel.getWidth()/2, -titel.getHeight(), -1);
 		glDisable(GL_TEXTURE_2D);
+		glPopMatrix();
+		
 		for (int i=0; i<(maxhealth +2); i++){
 			glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
 			drawBorder();
