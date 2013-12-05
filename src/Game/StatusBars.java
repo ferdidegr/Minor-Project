@@ -2,6 +2,7 @@ package Game;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import Menu.*;
@@ -32,7 +33,7 @@ public class StatusBars {
 		glScalef(-1, 1, 1);
 		glEnable(GL_TEXTURE_2D);
 		TextureImpl.unbind();
-		titel.draw(titel.getWidth()/2, -titel.getHeight(), -1);
+		titel.draw(Display.getWidth()/2, -titel.getHeight(), -1);
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		

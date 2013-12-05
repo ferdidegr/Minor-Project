@@ -119,9 +119,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	hatch = new ArrayList<Hatch>();
 	pickuplijst = new ArrayList<Pickup>();
 	
-	minimap=new MiniMap(maze);		//load the minimap
+	minimap = new MiniMap(maze);		//load the minimap
 	StatusBars.init(100);
-	StatusBars.init(5000);
+	Score.init(5000);
 	
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
@@ -344,6 +344,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 
 		minimap.draw(player,monsterlijst,SQUARE_SIZE);
 		StatusBars.draw();
+		Score.draw();
 
 		// Making sure we can render 3d again
 		glMatrixMode(GL_PROJECTION);
