@@ -63,7 +63,7 @@ public class Hatch extends levelObject{
 
 	@Override
 	public double getmaxDistY(double Y) {
-		return Y-locationY;
+		return locationY-Y;
 	}
 
 	@Override
