@@ -2,7 +2,6 @@ package Game;
 
 import static org.lwjgl.opengl.GL11.*;
 
-import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import Menu.*;
@@ -10,13 +9,18 @@ import Menu.*;
 public class StatusBars {
 	private static int health;
 	private static int maxhealth=100;
+	private static int score;
 	private static float squaresize = 1f;
 	private static Text titel;
+	private static Text scorenr;
 	
-	public static void init(int hp) {
+	public static void init(int hp, int sc) {
 		health = hp;
 		titel = new Text(15, "Health");
 		titel.initFont();
+		score = sc;
+		scorenr = new Text(15, "Score:  " + score);
+		scorenr.initFont();
 	}
 
 	public static void draw(){
@@ -34,6 +38,7 @@ public class StatusBars {
 		glEnable(GL_TEXTURE_2D);
 		TextureImpl.unbind();
 		titel.draw(titel.getWidth()/2, -titel.getHeight(), -1);
+		scorenr.draw(scorenr.getWidth()/2, -scorenr.getHeight()/4, -1);
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		
@@ -43,7 +48,8 @@ public class StatusBars {
 			glTranslatef(1f,0,0);
 		}
 		glTranslatef(-barwidth, 10.0f, 0.0f);
-		for (int i=0;i<barwidth;i++){
+		
+		for (int i=0; i<barwidth; i++){
 			if(i<= health && i>0){
 				glColor4f(0.0f, 1.0f, 0.0f, 0.7f);
 			}else {
@@ -53,6 +59,7 @@ public class StatusBars {
 			glTranslatef(1f,0,0);
 		}
 		glTranslatef(-barwidth, 1.0f, 0.0f);
+		
 		for (int i=0; i<(maxhealth +2); i++){
 			glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
 			drawBorder();
@@ -97,6 +104,10 @@ public class StatusBars {
 			Mazerunner.isdood = true;
 			Menu.setState(GameState.GAMEOVER);
 		}
-		
+	}
+	
+	public static void addScore(int sc){
+		System.out.println("add score");
+		score += sc;
 	}
 }

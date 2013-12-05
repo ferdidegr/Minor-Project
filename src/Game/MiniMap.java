@@ -63,6 +63,10 @@ public class MiniMap {
 
 		glColor3f(0.2f, 0.2f, 1f);
 		for (Monster monster : monsterlijst) {
+			glColor3f(0.2f, 0.2f, 1f);
+			if (monster.playerSight()){
+				glColor3f(0.2f, 1.0f, 0.2f);
+			}
 
 			int relX = (locX - monster.getGridX(SQUARE_SIZE));
 			int relZ = -(locZ - (mapHeight - 1 - monster.getGridZ(SQUARE_SIZE)));

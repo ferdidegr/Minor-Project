@@ -62,6 +62,9 @@ public class Monster extends levelObject{
 		if(followplayer){
 			dirToPlayer();
 		} else {
+			if(lineOfSight(playerloc)){
+				followplayer = !followplayer;
+			}
 			randomWalk();
 		}
 		
@@ -99,6 +102,7 @@ public class Monster extends levelObject{
 	 * veranderd, anders loopt monster door.
 	 */
 	public void randomWalk(){
+		
 		if(colX | colZ){
 			dir.rotate(Math.random()* 2 * Math.PI);
 			Count++;
@@ -155,34 +159,72 @@ public class Monster extends levelObject{
 	 * Not working yet!
 	 */
 	public boolean lineOfSight(Vector b){
-		//Calculate the necessary vectors
-		Vector a = new Vector(locationX, locationY, locationZ);
-		Vector direc = a.difference(b);
 		
-		Double length = direc.length() * 10;
-		int distance = length.intValue();
-		direc.normalize();
-		direc.scale(0.1);
+		// Convert all location to integers
+		Double tmp = locationX;
+		int x0 = tmp.intValue();
+		tmp = locationZ;
+		int z0 = tmp.intValue();
+		tmp = b.getX();
+		int x1 = tmp.intValue();
+		tmp = b.getZ();
+		int z1 = tmp.intValue();
+		boolean swapxy = Math.abs(z1 - z0) > Math.abs(x1-x0);
 		
-		Vector loc = a;
-		for(int i = 0; i < distance; i++){
-			loc.add(direc);
-			loc.scale(1/SQUARE_SIZE);
-			Double xd=loc.getX();
-			Double zd=loc.getZ();
-			int x = xd.intValue();
-			int z = zd.intValue();
-			System.out.println(x + ", " + z);
-			//if(Mazerunner.maze[x][z]>0 && Mazerunner.maze[x][z] <11){
-			//	return false;
-			//}
-			if(loc.distance(b) < 0.5){
-				return true;
-			}
+		int temp;
+		if(swapxy){
+			//swap x and z
+			temp = x0; x0 = z0; z0 = temp; //swap x0 and z0
+			temp = x1; x1 = z1; z1 = temp; //swap x1 and z1
 		}
 		
-		return false;
+		if(x0 > x1){
+			//make sure x0<x1
+			temp = x0; x0 = x1; x1 = temp; //swap x0 and x1
+			temp = z0; z0 = z1; z1 = temp; //swap z0 and z1
+		}
 		
+		// Calculate step and error
+		int deltax = x1 - x0;
+		int deltaz = Math.abs(z1 - z0);
+		double error = Math.floor(deltax / 2);
+		int z = z0;
+		int zstep = -1;
+		if(z0 < z1) { zstep = 1; }
+		
+		// Return false if line goes through wall
+		if ( swapxy ){
+			for (int x = x0; x <= (x1 +1); x++){
+				int block = Mazerunner.maze[z][x];
+				if ( block > 0 && block < 11 ){
+					return false;
+				}
+				error -= deltaz;
+				if (error < 0) {
+					z = z + zstep;
+					error = error + deltax;
+				}
+			}
+		}
+		else {
+			for (int x = x0; x <= (x1 +1); x++){
+				int block = Mazerunner.maze[x][z];
+				if ( block > 0 && block < 11 ){
+					return false;
+				}
+				error -= deltaz;
+				if (error < 0) {
+					z = z + zstep;
+					error = error + deltax;
+				}
+			}
+		}
+		return true;
+		
+	}
+	
+	public boolean playerSight(){
+		return lineOfSight(playerloc);
 	}
 	
 	/**
