@@ -34,10 +34,10 @@ public class ButtonList {
 	 * 			De onderkant van het scherm, nodig voor definite van coordinaten.
 	 * @return
 	 */
-	public int checkButtons(int bottom) {
+	public int checkButtons(int top) {
 		int buttonID = 0;
 		for(MenuButton knop:lijst){
-			if(knop.isButton(Mouse.getX(), Mouse.getY() + bottom))
+			if(knop.isButton(Mouse.getX(), top - Mouse.getY()))
 			{buttonID = knop.getID();break;}
 		}
 		return buttonID;

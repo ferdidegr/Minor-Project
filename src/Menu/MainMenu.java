@@ -2,7 +2,9 @@ package Menu;
 import java.io.IOException;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.opengl.TextureImpl;
 
+import Utils.Text;
 import Game.*;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -11,13 +13,11 @@ import static org.lwjgl.opengl.GL11.*;
  * @author Karin
  *
  */
-public class MainMenu extends ButtonList {
-	
-	private static Text welkom = new Text(30, "Welkom bij Trapper");
-	
+public class MainMenu extends ButtonList {	
+		
 	public MainMenu(){
 		super();
-		welkom = new Text(30, "Welkom bij Trapper");
+//		welkom = new Text2(30, "Welkom bij Trapper");
 	}
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
@@ -26,10 +26,10 @@ public class MainMenu extends ButtonList {
 	 * @param buttonheight
 	 */
 	public void init(int buttonwidth, int buttonheight){
-		welkom.initFont();
-		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2* buttonheight, Textures.start, Textures.startover,1, "Start game"));
-		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3* buttonheight, Textures.start, Textures.startover,2, "Settings"));
-		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 4* buttonheight, Textures.start, Textures.startover,3, "Exit"));
+		
+		lijst.add(new MenuButton(Menu.getScreenx()/2, 2* buttonheight, Textures.start, Textures.startover,1, "Start game"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, 3* buttonheight, Textures.start, Textures.startover,2, "Settings"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, 4* buttonheight, Textures.start, Textures.startover,3, "Exit"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -70,7 +70,9 @@ public class MainMenu extends ButtonList {
 	
 	public void display(){
 		super.display();
-		welkom.draw(Menu.getScreenx()/2, Menu.getScreeny() - welkom.getHeight(), 1);
+		TextureImpl.unbind();
+		Text.draw(Display.getWidth()*2f/5, 0, 30, "WELKOM BIJ TRAPPER");
+//		welkom.draw(Menu.getScreenx()/2, welkom.getHeight(), 1);
 	}
 	
 }

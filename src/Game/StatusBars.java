@@ -6,17 +6,18 @@ import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import Menu.*;
+import Utils.Text;
 
 public class StatusBars {
 	private static int health;
 	private static int maxhealth = 100;
 	private static float squaresize = 1f;
-	private static Text titel;
+//	private static Text2 titel;
 	
 	public static void init(int hp) {
 		health = hp;
-		titel = new Text(15, "Health");
-		titel.initFont();
+//		titel = new Text2(15, "Health");
+//		titel.initFont();
 	}
 
 	public static void draw(){
@@ -30,10 +31,13 @@ public class StatusBars {
 		glTranslatef(1000f, 50f,0);
 		
 		glPushMatrix();
-		glScalef(-1, 1, 1);
+		glTranslatef(-Display.getWidth(), 0, 0);
+		glScalef(1, 1, 1);
 		glEnable(GL_TEXTURE_2D);
 		TextureImpl.unbind();
-		titel.draw(Display.getWidth()/2, -titel.getHeight(), -1);
+		double height = Text.getHeight(15);
+		Text.draw(Display.getWidth()/2, (float) (2*height), 15, "Health");
+//		titel.draw(Display.getWidth()/2, -titel.getHeight(), -1);
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		

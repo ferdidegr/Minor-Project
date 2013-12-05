@@ -1,6 +1,7 @@
 package Menu;
 import Game.*;
 import Utils.Chooser;
+import Utils.Text;
 
 import java.util.ArrayList;
 
@@ -9,6 +10,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import org.newdawn.slick.opengl.TextureImpl;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -25,6 +27,7 @@ public class Menu {
 	private static int screenx;
 	private static int screeny;
 	private static double height_width_ratio = 1/4f;			// Height/Width 
+	
 	/**
 	 * ************************************
 	 * Main loop
@@ -40,6 +43,8 @@ public class Menu {
 		}
 		
 		Display.create();
+		
+		new Utils.Text();
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
 		if (Mazerunner.getSound()==true){
@@ -58,13 +63,14 @@ public class Menu {
 		scrollspeed = Display.getHeight()/15;
 		glLoadIdentity();
 		initGL();
+		
 		// Main loop, while the X button is not clicked
 				while(!Display.isCloseRequested() && !gamestate.equals(GameState.GAME) && !gamestate.equals(GameState.EXIT)
 						&& !gamestate.equals(GameState.TOMAIN)){
 					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 					glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			
 					mousepoll();
-					display();
+					display();					
 					Display.update();
 					Display.sync(60);
 				}
@@ -86,9 +92,10 @@ public class Menu {
 	public static void mousepoll(){
 		
 		int wheeldx = Mouse.getDWheel();
-		if(wheeldx>0){top+=scrollspeed;bottom+=scrollspeed;initview();}
-		if(wheeldx<0){top-=scrollspeed;bottom-=scrollspeed;initview();}
-		MenuButton.setMouse(Mouse.getX(), Mouse.getY()+bottom);
+		if(wheeldx>0){top-=scrollspeed;bottom-=scrollspeed;initview();}
+		if(wheeldx<0){top+=scrollspeed;bottom+=scrollspeed;initview();}
+		MenuButton.setMouse(Mouse.getX(), top - Mouse.getY());
+	
 		while(Mouse.next()){
 			/*
 			 * Button pressed
@@ -119,28 +126,28 @@ public class Menu {
 		switch(gamestate){
 		
 		case SETTINGS:
-			ID = sets.checkButtons(bottom);
+			ID = sets.checkButtons(top);
 			Settings.actionButtons(ID);
 			
 			break;
 			
 		case MAIN:
-			ID = main.checkButtons(bottom);
+			ID = main.checkButtons(top);
 			MainMenu.actionButtons(ID);
 			break;
 			
 		case GAMEOVER:
-			ID = over.checkButtons(bottom);
+			ID = over.checkButtons(top);
 			GameOver.actionButtons(ID);
 			break;
 			
 		case PAUSE:
-			ID = pauze.checkButtons(bottom);
+			ID = pauze.checkButtons(top);
 			PauseMenu.actionButtons(ID);
 			break;
 			
 		case PSETTINGS:
-			ID = pset.checkButtons(bottom);
+			ID = pset.checkButtons(top);
 			PSettings.actionButtons(ID);
 			break;
 			
@@ -225,7 +232,7 @@ public class Menu {
 		
 		glMatrixMode(GL_PROJECTION);						// We'll use orthogonal projection.
 		glLoadIdentity();									// REset the current matrix.
-		glOrtho(0, Display.getWidth(), 0, Display.getHeight(), 1, -1);
+		glOrtho(0, Display.getWidth(),  Display.getHeight(),0, 1, -1);
 		glMatrixMode(GL_MODELVIEW);	
 		
 		glEnable(GL_TEXTURE_2D);
@@ -265,7 +272,7 @@ public class Menu {
 	public static  void initview(){
 		glMatrixMode(GL_PROJECTION);					// We'll use orthogonal projection.
 		glLoadIdentity();									// REset the current matrix.
-		glOrtho(0, Display.getWidth(), bottom, top, 1, -1);
+		glOrtho(0, Display.getWidth(), top, bottom, 1, -1);
 		glMatrixMode(GL_MODELVIEW);	
 	}
 	/**

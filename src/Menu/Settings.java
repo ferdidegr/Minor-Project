@@ -3,11 +3,14 @@ package Menu;
 import java.util.ArrayList;
 
 import org.lwjgl.input.Mouse;
+import org.newdawn.slick.opengl.TextureImpl;
+
+import Utils.Text;
 
 
 public class Settings extends ButtonList {
 	
-	private Text titel;
+
 	
 	/** Deze klasse definieert het Settings menu. 
 	 * 
@@ -16,7 +19,7 @@ public class Settings extends ButtonList {
 	 */
 	public Settings(){
 		super();
-		titel = new Text(30, "Settings");
+
 	}
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
@@ -25,9 +28,9 @@ public class Settings extends ButtonList {
 	 * @param buttonheight
 	 */
 	public void init(int buttonwidth, int buttonheight){
-		titel.initFont();
-		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2*buttonheight, Textures.start, Textures.startover,1, "Main Menu"));
-		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3*buttonheight, Textures.start, Textures.startover,2, "Undefined"));
+
+		lijst.add(new MenuButton(Menu.getScreenx()/2, 2*buttonheight, Textures.start, Textures.startover,1, "Main Menu"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, 3*buttonheight, Textures.start, Textures.startover,2, "Undefined"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -46,6 +49,7 @@ public class Settings extends ButtonList {
 	
 	public void display(){
 		super.display();
-		titel.draw(Menu.getScreenx()/2, Menu.getScreeny() - titel.getHeight(), 1);
+		TextureImpl.unbind();
+		Text.draw(Menu.getScreenx()/2, 0, 30, "SETTINGS");
 	}
 }

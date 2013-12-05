@@ -5,16 +5,17 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.TextureImpl;
 
-import Menu.Text;
+//import Menu.Text2;
+import Utils.Text;
 
 public class Score {
 	private static int score;
-	private static Text scorenr;
+//	private static Text2 scorenr;
 	
 	public static void init(int sc) {
 		score = sc;
-		scorenr = new Text(15, "Score:  " + score);
-		scorenr.initFont();
+//		scorenr = new Text2(15, "Score:  " + score);
+//		scorenr.initFont();
 	}
 
 	public static void draw(){
@@ -26,10 +27,12 @@ public class Score {
 		glTranslatef(1000f, 50f,0);
 		
 		glPushMatrix();
-		glScalef(-1, 1, 1);
+		glTranslatef(-Display.getWidth(), 0, 0);
+//		glScalef(-1, 1, 1);
 		glEnable(GL_TEXTURE_2D);
 		TextureImpl.unbind();
-		scorenr.draw(Display.getWidth()/2, -scorenr.getHeight()/2, -1);
+		Text.draw(Display.getWidth()/2, 0, 15, "Score:  " + score);
+//		scorenr.draw(Display.getWidth()/2, -scorenr.getHeight()/2, -1);
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		

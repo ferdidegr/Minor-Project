@@ -13,6 +13,7 @@ import org.lwjgl.opengl.Display;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.util.glu.GLU;
+import org.newdawn.slick.opengl.TextureImpl;
 
 import Menu.GameState;
 import Menu.Menu;
@@ -217,11 +218,12 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 * Cleanup after shut down
 	 */
 	public void cleanup(){
+		TextureImpl.unbind();
 		glDisable(GL_LIGHTING);
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_LIGHT0);
-		glDisable(GL_BLEND);
+//		glDisable(GL_BLEND);
 		Mouse.setGrabbed(false);
 	}  
 	/**
@@ -331,7 +333,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glLoadIdentity();
-		glOrtho(0.0, Display.getWidth(), Display.getHeight(), 0.0, 1.0, -1.0);
+		glOrtho(0, Display.getWidth(), Display.getHeight(), 0.0, 1.0, -1.0);
 		
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();

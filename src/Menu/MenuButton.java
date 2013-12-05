@@ -24,13 +24,14 @@ import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.util.ResourceLoader;
 
+import Utils.Text;
+
 public class MenuButton {
 	private int x, y, ID;
 	Texture normal = null, mouseover = null;
 	public static int width, height;
 	public static int mousex, mousey;
-	private TrueTypeFont myfont;
-	private Text content;
+	private TrueTypeFont myfont;	
 	private String name;
 	/**
 	 * Constructor
@@ -46,9 +47,9 @@ public class MenuButton {
 		this.mouseover = Mouseover;
 		this.ID = ID;
 		this.name = name;
-		this.content = new Text(0.7 * height, name);
+		
 		//TODO: Volgens mij kan dit beter ergens anders gebeuren, bedenken waar!
-		content.initFont();
+		
 	}
 	/**
 	 * draw the buttons
@@ -78,7 +79,8 @@ public class MenuButton {
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
 		
-		content.draw(x +width/2, y+height/2, 1);
+//		content.draw(x +width/2, y-height/2, 1);
+		Text.draw(x, y, (float) (0.7*height), name);
 
 	}
 	

@@ -5,17 +5,17 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 
 import java.io.IOException;
 
+import org.newdawn.slick.opengl.TextureImpl;
+
+import Utils.Text;
 import Game.Mazerunner;
 import Game.Sound;
 
 public class GameOver extends ButtonList {
 	
-	private Text titel;
 	
 	public GameOver(){
-		super();
-		titel = new Text(30, "Game Over");
-		
+		super();		
 	}
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
@@ -24,9 +24,9 @@ public class GameOver extends ButtonList {
 	 * @param buttonheight
 	 */
 	public void init(int buttonwidth, int buttonheight){
-		titel.initFont();
-		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2*buttonheight, Textures.start, Textures.startover,1, "Restart"));
-		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3*buttonheight, Textures.start, Textures.startover,2, "Main Menu"));
+		
+		lijst.add(new MenuButton(Menu.getScreenx()/2, 2*buttonheight, Textures.start, Textures.startover,1, "Restart"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, 3*buttonheight, Textures.start, Textures.startover,2, "Main Menu"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -60,6 +60,8 @@ public class GameOver extends ButtonList {
 	
 	public void display(){
 		super.display();
-		titel.draw(Menu.getScreenx()/2, Menu.getScreeny() - titel.getHeight(), 1);
+		TextureImpl.unbind();
+		Text.draw(Menu.getScreenx(), 0, 30, "GAME OVER");
+
 	}
 }
