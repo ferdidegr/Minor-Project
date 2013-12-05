@@ -61,7 +61,7 @@ public class GameOver extends ButtonList {
 	public void display(){
 		super.display();
 		TextureImpl.unbind();
-		Text.draw(Menu.getScreenx(), 0, 30, "GAME OVER");
+		Text.draw(Menu.getScreenx()/2, 0, 30, "GAME OVER");
 
 	}
 }
