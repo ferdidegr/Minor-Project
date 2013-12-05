@@ -22,24 +22,16 @@ public class StatusBars {
 
 	public static void draw(){
 		
-		float barwidth = (maxhealth + 2) * squaresize;
+		float barwidth = (maxhealth + 2) * squaresize;		
 		
-		glColor3f(1.0f, 0.0f, 0.0f);
 		glPushMatrix();
 		glLoadIdentity();
-		
-		glTranslatef(1000f, 50f,0);
-		
-		glPushMatrix();
-		glTranslatef(-Display.getWidth(), 0, 0);
-		glScalef(1, 1, 1);
-		glEnable(GL_TEXTURE_2D);
-		TextureImpl.unbind();
 		double height = Text.getHeight(15);
+		
 		Text.draw(Display.getWidth()/2, (float) (2*height), 15, "Health");
-//		titel.draw(Display.getWidth()/2, -titel.getHeight(), -1);
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
+		
+		glTranslatef((float)(Display.getWidth()-1.5*barwidth), 50f,0);
+
 		
 		for (int i=0; i<(maxhealth +2); i++){
 			glColor4f(0.0f, 0.0f, 0.0f, 0.0f);

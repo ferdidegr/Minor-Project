@@ -1,10 +1,5 @@
 package Menu;
 
-import java.util.ArrayList;
-
-import org.lwjgl.input.Mouse;
-import org.newdawn.slick.opengl.TextureImpl;
-
 import Utils.Text;
 
 
@@ -49,7 +44,6 @@ public class Settings extends ButtonList {
 	
 	public void display(){
 		super.display();
-		TextureImpl.unbind();
 		Text.draw(Menu.getScreenx()/2, 0, 30, "SETTINGS");
 	}
 }

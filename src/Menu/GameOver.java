@@ -5,8 +5,6 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 
 import java.io.IOException;
 
-import org.newdawn.slick.opengl.TextureImpl;
-
 import Utils.Text;
 import Game.Mazerunner;
 import Game.Sound;
@@ -59,8 +57,7 @@ public class GameOver extends ButtonList {
 	}
 	
 	public void display(){
-		super.display();
-		TextureImpl.unbind();
+		super.display();		
 		Text.draw(Menu.getScreenx()/2, 0, 30, "GAME OVER");
 
 	}

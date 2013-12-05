@@ -2,7 +2,7 @@ package Menu;
 import java.io.IOException;
 
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.TextureImpl;
+
 
 import Utils.Text;
 import Game.*;
@@ -17,7 +17,7 @@ public class MainMenu extends ButtonList {
 		
 	public MainMenu(){
 		super();
-//		welkom = new Text2(30, "Welkom bij Trapper");
+
 	}
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
@@ -70,9 +70,7 @@ public class MainMenu extends ButtonList {
 	
 	public void display(){
 		super.display();
-		TextureImpl.unbind();
 		Text.draw(Display.getWidth()*2f/5, 0, 30, "WELKOM BIJ TRAPPER");
-//		welkom.draw(Menu.getScreenx()/2, welkom.getHeight(), 1);
 	}
 	
 }

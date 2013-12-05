@@ -5,6 +5,7 @@ import java.io.InputStream;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.opengl.TextureImpl;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Text{
@@ -24,6 +25,7 @@ public class Text{
 		glPushMatrix();
 		glTranslatef(x, y, 0);
 		glScalef(derivedFont, derivedFont, derivedFont);
+		TextureImpl.unbind();
 		myfont.drawString(0, 0, text);
 		glPopMatrix();
 		glPopAttrib();

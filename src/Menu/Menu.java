@@ -6,6 +6,7 @@ import Utils.Text;
 import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
@@ -70,6 +71,8 @@ public class Menu {
 					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 					glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			
 					mousepoll();
+					// Discard all keyboard events
+					while(Keyboard.next()){}
 					display();					
 					Display.update();
 					Display.sync(60);

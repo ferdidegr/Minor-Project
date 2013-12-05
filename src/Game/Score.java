@@ -18,25 +18,10 @@ public class Score {
 //		scorenr.initFont();
 	}
 
-	public static void draw(){
+	public static void draw(){		
 		
-		glColor3f(1.0f, 0.0f, 0.0f);
-		glPushMatrix();
-		glLoadIdentity();
-		
-		glTranslatef(1000f, 50f,0);
-		
-		glPushMatrix();
-		glTranslatef(-Display.getWidth(), 0, 0);
-//		glScalef(-1, 1, 1);
-		glEnable(GL_TEXTURE_2D);
-		TextureImpl.unbind();
 		Text.draw(Display.getWidth()/2, 0, 15, "Score:  " + score);
-//		scorenr.draw(Display.getWidth()/2, -scorenr.getHeight()/2, -1);
-		glDisable(GL_TEXTURE_2D);
-		glPopMatrix();
-		
-		glPopMatrix();
+
 	}
 	
 	public static void addScore(int sc){

@@ -343,10 +343,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glDisable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);
 		glClear(GL_DEPTH_BUFFER_BIT);
-
-		minimap.draw(player,monsterlijst,SQUARE_SIZE);
-		StatusBars.draw();
+		
 		Score.draw();
+		StatusBars.draw();
+		
+		
+		glPushMatrix();
+		minimap.draw(player,monsterlijst,SQUARE_SIZE);
+		glPopMatrix();
 
 		// Making sure we can render 3d again
 		glMatrixMode(GL_PROJECTION);

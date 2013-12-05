@@ -1,6 +1,5 @@
 package Menu;
 
-import org.newdawn.slick.opengl.TextureImpl;
 
 import Utils.Text;
 import Game.StatusBars;
@@ -40,7 +39,6 @@ public class PSettings extends ButtonList {
 	
 	public void display(){
 		super.display();
-		TextureImpl.unbind();
 		Text.draw(Menu.getScreenx()/2, 0, 30, "IN GAME SETTINGS");
 
 	}

@@ -1,12 +1,5 @@
 package Menu;
 
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-
-import java.io.IOException;
-
-import org.lwjgl.input.Mouse;
-import org.newdawn.slick.opengl.TextureImpl;
 
 import Utils.Text;
 import Game.Mazerunner;
@@ -61,7 +54,6 @@ public class PauseMenu extends ButtonList{
 	
 	public void display(){
 		super.display();
-		TextureImpl.unbind();
 		Text.draw(Menu.getScreenx()/2, 0, 30, "PAUSE");
 		if (Mazerunner.getSound()==true){
 		Sound.pause();
