@@ -60,6 +60,7 @@ public void start() throws ClassNotFoundException, IOException{
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
 	new Models();
+	isdood=false;					// needs a better way to implement this
 	// TODO remove
 	Display.setResizable(true);
 										
@@ -67,6 +68,10 @@ public void start() throws ClassNotFoundException, IOException{
 	initGL();
 	initDisp();
 	
+	for(int i = 0 ; i <20;i++){
+		glClear(GL_COLOR_BUFFER_BIT);
+		Display.update();Display.sync(70);
+	}
 	
 	while(!Display.isCloseRequested() && player.locationY>-20 && !isdood){
 		
@@ -102,7 +107,9 @@ public void start() throws ClassNotFoundException, IOException{
 		Display.sync(70);
 		
 	}
-	if(Menu.getState().equals(GameState.GAME))Menu.setState(GameState.GAMEOVER);
+	if(Menu.getState().equals(GameState.GAME) || isdood){
+		Menu.setState(GameState.GAMEOVER);
+	}
 	else Menu.setState(GameState.MAIN);
 	cleanup();
 	
@@ -138,7 +145,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			else if(maze[j][i]==11){
 				// Initialize the player.
 				player = new Player( i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-									 SQUARE_SIZE *40/ 2.0 ,					// y-position
+									 SQUARE_SIZE *20/ 2.0 ,					// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
 									 0, 0 ,									// horizontal and vertical angle
 									 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height			

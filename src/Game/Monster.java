@@ -324,7 +324,7 @@ public class Monster extends levelObject{
 		for(Monster mo:Mazerunner.monsterlijst){
 			if(mo!=this){
 				if(mo.isCollision(px+pw, py-ph/2f, pz+pw*signZ+velocity.getZ())
-				){
+				|| mo.isCollision(px-pw, py-ph/2f, pz+pw*signZ+velocity.getZ())){
 					maxZ=Math.min(maxZ, mo.getmaxDistZ(locationZ+pw*signZ));
 					colZ=true;
 					
