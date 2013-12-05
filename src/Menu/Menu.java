@@ -282,27 +282,17 @@ public class Menu {
 			e.printStackTrace();
 		}
 	}
-	/**
-	 * ************************************
-	 * SET GAMESTATE
-	 * @param state
-	 * ************************************
-	 */
-	
-	public static GameState getState(){
-		return gamestate;
-	}
+
 	
 	/**
 	 * ************************************
-	 * SET GAMESTATE
+	 * GET/SET GAMESTATE
 	 * @param state
 	 * ************************************
 	 */
-	public static void setState(GameState state){
-		gamestate = state;
-	}
+	public static GameState getState() {return gamestate;}
+	public static void setState(GameState state) {gamestate = state;}
 	
-	public static int getScreeny(){return screeny;}
-	public static int getScreenx(){return screenx;}
+	public static int getScreeny() {return screeny;}
+	public static int getScreenx() {return screenx;}
 }
