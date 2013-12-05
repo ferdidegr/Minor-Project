@@ -99,6 +99,7 @@ public void start() throws ClassNotFoundException, IOException{
 		Display.sync(70);
 		
 	}
+	Menu.setState(GameState.GAMEOVER);
 	cleanup();
 	
 }

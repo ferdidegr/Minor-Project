@@ -38,7 +38,7 @@ public class Models {
 		    glColor4f(1,1,1,1);
 		 
 		    // Render the front quad
-		    Textures.front.bind();
+		    Game.Textures.front.bind();
 		    glBegin(GL_QUADS);
 		        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
 		        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
@@ -48,7 +48,7 @@ public class Models {
 		    glEnd();
 		 
 		    // Render the left quad
-		    Textures.left.bind();
+		    Game.Textures.left.bind();
 		    glBegin(GL_QUADS);
 		    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
 		    	glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
@@ -58,7 +58,7 @@ public class Models {
 		    glEnd();
 		 
 		    // Render the back quad
-		    Textures.back.bind();
+		    Game.Textures.back.bind();
 		    glBegin(GL_QUADS);
 		    	
 		        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
@@ -69,7 +69,7 @@ public class Models {
 		    glEnd();
 		 
 		    // Render the right quad
-		    Textures.right.bind();
+		    Game.Textures.right.bind();
 		    glBegin(GL_QUADS);
 		        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
 		        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
@@ -79,7 +79,7 @@ public class Models {
 		    glEnd();
 		 
 		    // Render the top quad
-		    Textures.top.bind();
+		    Game.Textures.top.bind();
 		    glBegin(GL_QUADS);
 		        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
 		        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
@@ -89,7 +89,7 @@ public class Models {
 		    glEnd();
 		 
 		    // Render the bottom quad
-		    Textures.bottom.bind();
+		    Game.Textures.bottom.bind();
 		    glBegin(GL_QUADS);
 		    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
 		    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );

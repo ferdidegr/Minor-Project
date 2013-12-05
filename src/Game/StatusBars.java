@@ -1,18 +1,9 @@
 package Game;
 
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor3f;
-import static org.lwjgl.opengl.GL11.glColor4f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glLoadIdentity;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glTranslated;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex2f;
+import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.opengl.TextureImpl;
 
 import Menu.*;
 
@@ -37,7 +28,10 @@ public class StatusBars {
 		glLoadIdentity();
 		glTranslatef(1000f, 50f,0);
 		
-		//titel.draw(titel.getWidth()/2, -titel.getHeight(), -1);
+		glEnable(GL_TEXTURE_2D);
+		TextureImpl.unbind();
+		titel.draw(titel.getWidth()/2, -titel.getHeight(), -1);
+		glDisable(GL_TEXTURE_2D);
 		for (int i=0; i<(maxhealth +2); i++){
 			glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
 			drawBorder();

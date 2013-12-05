@@ -38,11 +38,11 @@ public class GameOver extends ButtonList {
 		
 		case 1:
 			Menu.setState(GameState.GAME);
-			Sound.playMusic("background_game");
-			Mazerunner game = new Mazerunner();
+//			Sound.playMusic("background_game");
+			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				game.start();
+				Menu.game.start();
 			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -53,7 +53,7 @@ public class GameOver extends ButtonList {
 			
 		case 2:
 			Menu.setState(GameState.MAIN);
-			
+			Menu.game=null;
 			default: break;
 		}
 	}
