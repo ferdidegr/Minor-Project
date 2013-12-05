@@ -182,7 +182,7 @@ public class Player extends GameObject {
 			}
 			if(jump){
 
-				tempVy-=0.002;
+				tempVy-=0.002*deltaTime/14f;
 				velocity.add(0, deltaTime*tempVy, 0);
 			}
 			

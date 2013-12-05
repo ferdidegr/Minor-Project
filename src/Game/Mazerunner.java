@@ -28,7 +28,7 @@ public class Mazerunner {
 	private int screenWidth = 1280, screenHeight = 720;		// Deprecated
 	public Player player;									// The player object.
 	private UserInput input;								// The user input object that controls the player.
-	public static int[][] maze; 									// The maze.
+	public static int[][] maze; 								// The maze.
 	
 	
 	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
@@ -46,7 +46,7 @@ public class Mazerunner {
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/scorps.maze";
+	private String level = "levels/test5.maze";
 	private int objectDisplayList = glGenLists(1);
 	
 	/*
@@ -327,7 +327,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glLoadIdentity();
-		glOrtho(0.0, Display.getWidth(), Display.getHeight(), 0.0, -1.0, 1.0);
+		glOrtho(0.0, Display.getWidth(), Display.getHeight(), 0.0, 1.0, -1.0);
 		
 		glMatrixMode(GL_MODELVIEW);
 		glPushMatrix();
