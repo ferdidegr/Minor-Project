@@ -39,11 +39,9 @@ public class Menu {
 		new Textures();
 		initButtons();
 		run();
-		
 	}
 	
 	public static void run() {
-		
 		bottom = 0;
 		top = Display.getHeight();
 		scrollspeed = Display.getHeight()/15;
@@ -79,7 +77,6 @@ public class Menu {
 					ButtonActions();
 				}
 			}
-			
 			/*
 			 * Button released
 			 */
@@ -157,7 +154,6 @@ public class Menu {
 		// Pauze
 		pset.init(buttonwidth, buttonheight);
 		
-		
 	}
 	/**
 	 * ************************************
@@ -203,7 +199,6 @@ public class Menu {
 	public static void drawBackground(){
 		glColor3f(1.0f, 1.0f, 1.0f);						// When using textures, set this to white
 		
-		
 		glMatrixMode(GL_PROJECTION);						// We'll use orthogonal projection.
 		glLoadIdentity();									// REset the current matrix.
 		glOrtho(0, Display.getWidth(), 0, Display.getHeight(), 1, -1);
@@ -236,7 +231,6 @@ public class Menu {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		// Now we set up our viewpoint.
 		initview();
-
 	}
 	/**
 	 * ************************************
@@ -269,21 +263,9 @@ public class Menu {
 	 * @param state
 	 * ************************************
 	 */
+	public static GameState getState() {return gamestate;}
+	public static void setState(GameState state) {gamestate = state;}
 	
-	public static GameState getState(){
-		return gamestate;
-	}
-	
-	/**
-	 * ************************************
-	 * SET GAMESTATE
-	 * @param state
-	 * ************************************
-	 */
-	public static void setState(GameState state){
-		gamestate = state;
-	}
-	
-	public static int getScreeny(){return screeny;}
-	public static int getScreenx(){return screenx;}
+	public static int getScreeny() {return screeny;}
+	public static int getScreenx() {return screenx;}
 }
