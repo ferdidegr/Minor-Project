@@ -8,19 +8,14 @@ import Menu.*;
 
 public class StatusBars {
 	private static int health;
-	private static int maxhealth=100;
-	private static int score;
+	private static int maxhealth = 100;
 	private static float squaresize = 1f;
 	private static Text titel;
-	private static Text scorenr;
 	
-	public static void init(int hp, int sc) {
+	public static void init(int hp) {
 		health = hp;
 		titel = new Text(15, "Health");
 		titel.initFont();
-		score = sc;
-		scorenr = new Text(15, "Score:  " + score);
-		scorenr.initFont();
 	}
 
 	public static void draw(){
@@ -38,7 +33,6 @@ public class StatusBars {
 		glEnable(GL_TEXTURE_2D);
 		TextureImpl.unbind();
 		titel.draw(titel.getWidth()/2, -titel.getHeight(), -1);
-		scorenr.draw(scorenr.getWidth()/2, -scorenr.getHeight()/4, -1);
 		glDisable(GL_TEXTURE_2D);
 		glPopMatrix();
 		
@@ -67,8 +61,6 @@ public class StatusBars {
 		}
 		
 		glPopMatrix();
-		
-
 	}
 	
 	public static void drawBlock(){
@@ -104,10 +96,5 @@ public class StatusBars {
 			Mazerunner.isdood = true;
 			Menu.setState(GameState.GAMEOVER);
 		}
-	}
-	
-	public static void addScore(int sc){
-		System.out.println("add score");
-		score += sc;
 	}
 }

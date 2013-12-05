@@ -120,7 +120,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	pickuplijst = new ArrayList<Pickup>();
 	
 	minimap=new MiniMap(maze);		//load the minimap
-	StatusBars.init(100, 50);
+	StatusBars.init(100);
+	StatusBars.init(5000);
 	
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
