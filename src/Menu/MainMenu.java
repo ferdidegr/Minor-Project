@@ -27,9 +27,9 @@ public class MainMenu extends ButtonList {
 	 */
 	public void init(int buttonwidth, int buttonheight){
 		
-		lijst.add(new MenuButton(Menu.getScreenx()/2, 2* buttonheight, Textures.start, Textures.startover,1, "Start game"));
-		lijst.add(new MenuButton(Menu.getScreenx()/2, 3* buttonheight, Textures.start, Textures.startover,2, "Settings"));
-		lijst.add(new MenuButton(Menu.getScreenx()/2, 4* buttonheight, Textures.start, Textures.startover,3, "Exit"));
+		lijst.add(new MenuButton(Menu.getScreenx()/3, 2* buttonheight, Textures.start, Textures.startover,1, "Start game"));
+		lijst.add(new MenuButton(Menu.getScreenx()/3, 4* buttonheight, Textures.start, Textures.startover,2, "Settings"));
+		lijst.add(new MenuButton(Menu.getScreenx()/3, 6* buttonheight, Textures.start, Textures.startover,3, "Exit"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.

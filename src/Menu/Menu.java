@@ -166,7 +166,7 @@ public class Menu {
 		
 		int buttonwidth = Display.getWidth()/3;		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
-		MenuButton.setDimensions(226, 56);
+		MenuButton.setDimensions(buttonwidth, buttonheight);
 		
 		// MainMenu
 		main.init(buttonwidth, buttonheight);
@@ -180,7 +180,7 @@ public class Menu {
 		// Pauze
 		pauze.init(buttonwidth, buttonheight);
 		
-		// Pauze
+		// Pauze ingame settings
 		pset.init(buttonwidth, buttonheight);
 		
 		
