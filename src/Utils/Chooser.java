@@ -1,4 +1,4 @@
-package Editor;
+package Utils;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -32,11 +32,13 @@ public class Chooser extends JFrame implements ActionListener{
 	private boolean fullscreen;
 	private int bitdepth = Display.getDesktopDisplayMode().getBitsPerPixel();
 	private int freq = Display.getDesktopDisplayMode().getFrequency();
+	private boolean enableFS;
 	/**
 	 * constructor
 	 */
-	public Chooser(){
+	public Chooser(boolean enableFS){
 		this.displaymodus = null;
+		this.enableFS = enableFS;
 		/*
 		 * Get all displaymodes that matches the bitdepth and the frequency of the pc
 		 */
@@ -93,6 +95,7 @@ public class Chooser extends JFrame implements ActionListener{
 		box.setForeground(Color.WHITE);
 		button.setForeground(Color.WHITE);
 		Font font = new Font(Font.SANS_SERIF, Font.BOLD, 16);
+		checkbox.setEnabled(enableFS);
 		checkbox.setFont(font);
 		box.setFont(font);
 		button.setFont(font);
