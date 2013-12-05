@@ -195,7 +195,13 @@ public class Monster extends levelObject{
 		// Return false if line goes through wall
 		if ( swapxy ){
 			for (int x = x0; x <= (x1 +1); x++){
-				int block = Mazerunner.maze[z][x];
+				System.out.println(x + ", " + z);
+				int block;
+				try {
+					block = Mazerunner.maze[z][x];
+				} catch (ArrayIndexOutOfBoundsException e) {
+					return false;
+				}
 				if ( block > 0 && block < 11 ){
 					return false;
 				}
@@ -208,7 +214,14 @@ public class Monster extends levelObject{
 		}
 		else {
 			for (int x = x0; x <= (x1 +1); x++){
-				int block = Mazerunner.maze[x][z];
+				System.out.println(x + ", " + z);
+				int block;
+				try {
+					block = Mazerunner.maze[x][z];
+				} catch (ArrayIndexOutOfBoundsException e) {
+					// TODO Auto-generated catch block
+					return false;
+				}
 				if ( block > 0 && block < 11 ){
 					return false;
 				}
