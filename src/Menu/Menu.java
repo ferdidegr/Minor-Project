@@ -12,6 +12,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class Menu {
 	
 	private static GameState gamestate;
+	public static Mazerunner game;
 	private static MainMenu main = new MainMenu();
 	private static Settings sets = new Settings();
 	private static GameOver over = new GameOver();

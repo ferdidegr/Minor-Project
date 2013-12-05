@@ -101,14 +101,10 @@ public class Model {
 		String currentMTL = null;
 		int objectDisplayList = glGenLists(1);
 		
+		
 		TextureImpl.unbind();
-		
 		glNewList(objectDisplayList, GL_COMPILE);
-		
-		
-		glEnable(GL_TEXTURE_2D);
-	
-		
+
 		/*
 		 * Draw all faces
 		 */
@@ -119,7 +115,7 @@ public class Model {
         	if(!face.getMTL().equals(currentMTL)){
         		for(Materialm mat:mtl){
         			if(mat.getName().equals(face.getMTL())){
-        				currentMTL = face.getMTL();
+        				currentMTL = face.getMTL();        				
         				mat.useMtl();
         			}
         		}
@@ -265,8 +261,12 @@ class Materialm{
 		glMaterial(GL_FRONT, GL_DIFFUSE, diffuseB);
 		glMaterial(GL_FRONT, GL_SPECULAR, specularB);
 		glMaterialf(GL_FRONT, GL_SHININESS, shininess);
+		
 		if(tex!=null){
+			glEnable(GL_TEXTURE_2D);
 			tex.bind();
+		}else{
+			glDisable(GL_TEXTURE_2D);
 		}
 		System.out.println(name);
 	}

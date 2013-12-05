@@ -27,7 +27,6 @@ public class Mazerunner {
 	
 	private int screenWidth = 1280, screenHeight = 720;		// Deprecated
 	public Player player;									// The player object.
-	private Camera camera;									// The camera object.
 	private UserInput input;								// The user input object that controls the player.
 	public static int[][] maze; 									// The maze.
 	
@@ -49,7 +48,7 @@ public class Mazerunner {
 	private MiniMap minimap;								// The minimap object.
 	private String level = "levels/scorps.maze";
 	private int objectDisplayList = glGenLists(1);
-	private int skyboxDL = glGenLists(1);
+	
 	/*
 	 *  *************************************************
 	 *  * 					Main Loop					*
@@ -100,6 +99,7 @@ public void start() throws ClassNotFoundException, IOException{
 		Display.sync(70);
 		
 	}
+	Menu.setState(GameState.GAMEOVER);
 	cleanup();
 	
 }
@@ -133,7 +133,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			else if(maze[j][i]==11){
 				// Initialize the player.
 				player = new Player( i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-									 SQUARE_SIZE *30/ 2.0 ,					// y-position
+									 SQUARE_SIZE *40/ 2.0 ,					// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
 									 0, 0 ,									// horizontal and vertical angle
 									 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height			
@@ -233,9 +233,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			objlijst = new ArrayList<levelObject>();
 		 // Initialize Maze ( Loading in and setting the objects in the maze )
 			initMaze();	     			
-
-			camera = new Camera( player.getLocationX(), player.getLocationY(), player.getLocationZ(), 
-					             player.getHorAngle(), player.getVerAngle() );
 			
 			input = new UserInput();
 			player.setControl(input);
@@ -266,19 +263,20 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				//Update any movement since last frame.
 				Monster.setPlayerloc(new Vector(player.locationX, player.locationY, player.locationZ));
 								
-				updateMovement(deltaTime);
-								
-				updateCamera();		
+				updateMovement(deltaTime);	
 				
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 				
 				glLoadIdentity();
 				
-		        GLU.gluLookAt( (float)camera.getLocationX(), (float)camera.getLocationY(),(float) camera.getLocationZ(), 
-		        		(float)camera.getVrpX(), (float)camera.getVrpY(), (float)camera.getVrpZ(),
-		        		(float)camera.getVuvX(), (float)camera.getVuvY(), (float)camera.getVuvZ() );
+				glRotated(-player.getVerAngle()*(input.lookback?-1:1), 1, 0, 0);
+				glRotated(-player.getHorAngle()+(input.lookback?180:0), 0, 1, 0);
+				// Draw sky box, the skybox is always in the origin, so no need to translate
+				glCallList(Models.skybox);
 				
-		        drawSkybox();
+				glTranslated(-player.locationX, -player.locationY, -player.locationZ);					
+				
+		        
 		        // Display all the visible objects of MazeRunner.
 		        if(!input.debug){ 	glCallList(objectDisplayList); }
 		        
@@ -291,7 +289,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
 		        
 		        // Monsters		
-		        Material.setMtlScorp();
+//		        Material.setMtlScorp();
+		        
 		        for(Monster mo: monsterlijst){			        	
 		        	mo.display();		        	
 		        }
@@ -349,32 +348,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
 	}
-	/**
-	 * Draw a unit cube around the camera
-	 */
-	public void drawSkybox(){
-
-		camera.setLocationX( 0 );
-		camera.setLocationY( 0 );  
-		camera.setLocationZ( 0 );
-		camera.setHorAngle( player.getHorAngle()+(input.lookback? 180:0) );
-		camera.setVerAngle( player.getVerAngle() * (input.lookback? -1:1) );
-		camera.calculateVRP();
-	 // Store the current matrix
-		glPushMatrix();
-	 
-	    // Reset and transform the matrix.
-	    glLoadIdentity();
-	    
-	    GLU.gluLookAt(
-	        0f,0f,0f,																			// Set camera to origin
-	        (float) camera.getVrpX(), (float) camera.getVrpY(),(float) camera.getVrpZ(),		// set the view reference point
-	        0f,1f,0f);																			// View up vector
-	 
-	    glCallList(skyboxDL);
-	    glPopMatrix();
-
-	}
 
 	/**
 	 * if the window is reshaped, change accordingly
@@ -382,14 +355,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	public void reshape(){
 		screenWidth = Display.getWidth();
 		screenHeight = Display.getHeight();
-		glViewport(0, 0, Display.getWidth(), Display.getHeight());
-		
-		// Now we set up our viewpoint.
-		glMatrixMode(GL_PROJECTION);					// We'll use orthogonal projection.
-		glLoadIdentity();									// REset the current matrix.
-		GLU.gluPerspective(60, (float)Display.getWidth()/(float)Display.getHeight(), 0.001f, 1000);	// Set up the parameters for perspective viewing. 
-		glMatrixMode(GL_MODELVIEW);
-		
+		glViewport(0, 0, Display.getWidth(), Display.getHeight());	
 	}
 	/*
 	 * **********************************************
@@ -420,20 +386,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			
 			
 		}
-
-		/**
-		 * updateCamera() updates the camera position and orientation.
-		 * <p>
-		 * This is done by copying the locations from the Player, since MazeRunner runs on a first person view.
-		 */
-		private void updateCamera() {
-			camera.setLocationX( player.getLocationX() );
-			camera.setLocationY( player.getLocationY() );  
-			camera.setLocationZ( player.getLocationZ() );
-			camera.setHorAngle( player.getHorAngle()+(input.lookback? 180:0) );
-			camera.setVerAngle( player.getVerAngle() * (input.lookback? -1:1) );
-			camera.calculateVRP();
-		}
 		
 		/**
 		 * Setting up the displayLists
@@ -452,9 +404,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	vo.display();
 		        }
 			 	Material.setMtlWall();
-		        glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);	  
-		        glMaterial(GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
-		        glMaterialf(GL_FRONT, GL_SHININESS, -1f);
 		        wall.display();		
 
 												
@@ -467,88 +416,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				glPopMatrix();
 				
 				 
-			 glEndList();
-			
-			 /*
-			  * SkyBox	
-			  */
-			 glNewList(skyboxDL, GL_COMPILE);
-			    // Enable/Disable features
-			    glPushAttrib(GL_ENABLE_BIT);
-			    glEnable(GL_TEXTURE_2D);
-			    
-			    glDisable(GL_DEPTH_TEST);
-			    glDisable(GL_LIGHTING);
-			    glDisable(GL_BLEND);
-			    
-			 float smallnumber = 0.002f;
-			    // Just in case we set all vertices to white.
-			    glColor4f(1,1,1,1);
-			 
-			    // Render the front quad
-			    Textures.front.bind();
-			    glBegin(GL_QUADS);
-			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
-			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );			        
-			        
-			    glEnd();
-			 
-			    // Render the left quad
-			    Textures.left.bind();
-			    glBegin(GL_QUADS);
-			    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
-			    	glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
-			    	glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );	
-			    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );			        
-			       
-			    glEnd();
-			 
-			    // Render the back quad
-			    Textures.back.bind();
-			    glBegin(GL_QUADS);
-			    	
-			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
-			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
-			 
-			    glEnd();
-			 
-			    // Render the right quad
-			    Textures.right.bind();
-			    glBegin(GL_QUADS);
-			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );
-			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
-			        
-			    glEnd();
-			 
-			    // Render the top quad
-			    Textures.top.bind();
-			    glBegin(GL_QUADS);
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f,  0.5f, -0.5f );
-			        glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f,  0.5f,  0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f,  0.5f,  0.5f );
-			        
-			    glEnd();
-			 
-			    // Render the bottom quad
-			    Textures.bottom.bind();
-			    glBegin(GL_QUADS);
-			    	glTexCoord2f(0+smallnumber, 0+smallnumber); glVertex3f(  0.5f, -0.5f,  0.5f );
-			    	glTexCoord2f(0+smallnumber, 1-smallnumber); glVertex3f(  0.5f, -0.5f, -0.5f );
-			        glTexCoord2f(1-smallnumber, 1-smallnumber); glVertex3f( -0.5f, -0.5f, -0.5f );  		       
-			        glTexCoord2f(1-smallnumber, 0+smallnumber); glVertex3f( -0.5f, -0.5f,  0.5f );
-			        
-			    glEnd();
-			    // Restore enable bits and matrix
-			    glPopAttrib();
-
-			    glEndList();
+			 glEndList();			 
 				   
 		}
 		

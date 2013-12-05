@@ -43,10 +43,10 @@ public class MainMenu extends ButtonList {
 			if (Mazerunner.getSound()==true){
 			Sound.playMusic("background_game");
 			}
-			Mazerunner game = new Mazerunner();
+			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				game.start();
+				Menu.game.start();
 			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

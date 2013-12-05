@@ -313,7 +313,7 @@ public class Monster extends levelObject{
 	public void display() {
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);
-//		Graphics.renderCube(width, false, false, false, false);	
+
 		glCallList(Models.monster);
 
 		glPopMatrix();
