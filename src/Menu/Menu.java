@@ -1,9 +1,12 @@
 package Menu;
 import Game.*;
+import Utils.Chooser;
+
 import java.util.ArrayList;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
@@ -19,8 +22,8 @@ public class Menu {
 	private static PauseMenu pauze = new PauseMenu();
 	private static PSettings pset = new PSettings();
 	private static int top, bottom, scrollspeed;
-	private static int screenx = 1240;
-	private static int screeny = 680;
+	private static int screenx;
+	private static int screeny;
 	private static double height_width_ratio = 1/4f;			// Height/Width 
 	/**
 	 * ************************************
@@ -31,24 +34,33 @@ public class Menu {
 	public static void start() throws LWJGLException{
 		gamestate = GameState.MAIN;
 
-		Display.setDisplayMode(new DisplayMode(screenx, screeny));
+		Chooser keuze = new Chooser(true);
+		while(keuze.getDisplay()==null){
+			try {Thread.sleep(500);	} catch (InterruptedException e) {	}
+		}
+		
 		Display.create();
+		screenx = Display.getWidth();
+		screeny = Display.getHeight();
 		if (Mazerunner.getSound()==true){
 		Sound.init();
 		}
 		new Textures();
 		initButtons();
 		run();
+		
 	}
 	
 	public static void run() {
+		
 		bottom = 0;
 		top = Display.getHeight();
 		scrollspeed = Display.getHeight()/15;
 		glLoadIdentity();
 		initGL();
 		// Main loop, while the X button is not clicked
-				while(!Display.isCloseRequested() && !Menu.getState().equals(GameState.GAME)){
+				while(!Display.isCloseRequested() && !gamestate.equals(GameState.GAME) && !gamestate.equals(GameState.EXIT)
+						&& !gamestate.equals(GameState.TOMAIN)){
 					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 					glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			
 					mousepoll();
@@ -56,7 +68,16 @@ public class Menu {
 					Display.update();
 					Display.sync(60);
 				}
+		if(Menu.getState() == GameState.EXIT){
+			cleanup();
+		}
+			
 	}
+	private static void cleanup() {
+		AL.destroy();
+		Display.destroy();
+	}
+
 	/**
 	 * ************************************
 	 * poll Mouse input using events
@@ -77,6 +98,7 @@ public class Menu {
 					ButtonActions();
 				}
 			}
+			
 			/*
 			 * Button released
 			 */
@@ -154,6 +176,7 @@ public class Menu {
 		// Pauze
 		pset.init(buttonwidth, buttonheight);
 		
+		
 	}
 	/**
 	 * ************************************
@@ -197,7 +220,8 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void drawBackground(){
-		glColor3f(1.0f, 1.0f, 1.0f);						// When using textures, set this to white
+		glColor4f(1.0f, 1.0f, 1.0f, (gamestate==GameState.PAUSE?0.0f:1.0f));						// When using textures, set this to white
+		
 		
 		glMatrixMode(GL_PROJECTION);						// We'll use orthogonal projection.
 		glLoadIdentity();									// REset the current matrix.
@@ -231,6 +255,7 @@ public class Menu {
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		// Now we set up our viewpoint.
 		initview();
+
 	}
 	/**
 	 * ************************************
@@ -257,9 +282,11 @@ public class Menu {
 			e.printStackTrace();
 		}
 	}
+
+	
 	/**
 	 * ************************************
-	 * SET GAMESTATE
+	 * GET/SET GAMESTATE
 	 * @param state
 	 * ************************************
 	 */

@@ -86,6 +86,8 @@ public void start() throws ClassNotFoundException, IOException{
 			glPopMatrix();
 			initGL();
 			previousTime = Calendar.getInstance().getTimeInMillis();
+			Mouse.setGrabbed(true);
+			if(Menu.getState()==GameState.TOMAIN)break;
 			Menu.setState(GameState.GAME);
 		}
 		
@@ -99,7 +101,8 @@ public void start() throws ClassNotFoundException, IOException{
 		Display.sync(70);
 		
 	}
-	Menu.setState(GameState.GAMEOVER);
+	if(Menu.getState().equals(GameState.GAME))Menu.setState(GameState.GAMEOVER);
+	else Menu.setState(GameState.MAIN);
 	cleanup();
 	
 }

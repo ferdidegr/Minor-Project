@@ -11,6 +11,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 
+import Utils.Chooser;
 import Utils.IO;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -42,7 +43,7 @@ public class MazeMaker {
 		/*
 		 * Select resolution
 		 */
-		Chooser keuze = new Chooser();
+		Chooser keuze = new Chooser(false);
 		while(keuze.getDisplay()==null){
 			Thread.sleep(500);
 		}

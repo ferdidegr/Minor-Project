@@ -29,6 +29,7 @@ public class MainMenu extends ButtonList {
 		welkom.initFont();
 		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2* buttonheight, Textures.start, Textures.startover,1, "Start game"));
 		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3* buttonheight, Textures.start, Textures.startover,2, "Settings"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 4* buttonheight, Textures.start, Textures.startover,3, "Exit"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -57,9 +58,14 @@ public class MainMenu extends ButtonList {
 			
 		case 2:
 			Menu.setState(GameState.SETTINGS);
+			break;
+		case 3:
+			Menu.setState(GameState.EXIT);
+			break;
 			
-			default: break;
+		default: break;
 		}
+	
 	}
 	
 	public void display(){

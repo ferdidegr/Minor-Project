@@ -28,6 +28,7 @@ public class PauseMenu extends ButtonList{
 		welkom.initFont();
 		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 2* buttonheight, Textures.start, Textures.startover,1, "Resume game"));
 		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 3* buttonheight, Textures.start, Textures.startover,2, "Settings"));
+		lijst.add(new MenuButton(Menu.getScreenx()/2, Menu.getScreeny() - 4* buttonheight, Textures.start, Textures.startover,3, "Main Menu"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -48,6 +49,10 @@ public class PauseMenu extends ButtonList{
 			
 		case 2:
 			Menu.setState(GameState.PSETTINGS);
+			break;
+		case 3:
+			Menu.setState(GameState.TOMAIN);
+			
 			break;
 			
 			default: break;
