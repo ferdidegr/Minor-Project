@@ -75,6 +75,8 @@ public class Monster extends levelObject{
 
 		updateV(deltaTime);
 		
+		System.out.println(lineOfSight(playerloc));
+		
 	}
 	
 	/** 
@@ -165,7 +167,15 @@ public class Monster extends levelObject{
 		Vector loc = a;
 		for(int i = 0; i < distance; i++){
 			loc.add(direc);
-			//TODO: detect collision.
+			loc.scale(1/SQUARE_SIZE);
+			Double xd=loc.getX();
+			Double zd=loc.getZ();
+			int x = xd.intValue();
+			int z = zd.intValue();
+			System.out.println(x + ", " + z);
+			//if(Mazerunner.maze[x][z]>0 && Mazerunner.maze[x][z] <11){
+			//	return false;
+			//}
 			if(loc.distance(b) < 0.5){
 				return true;
 			}
