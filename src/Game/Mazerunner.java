@@ -46,7 +46,7 @@ public class Mazerunner {
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test5.maze";
+	private String level = "levels/test8.maze";
 	private int objectDisplayList = glGenLists(1);
 	
 	/*
