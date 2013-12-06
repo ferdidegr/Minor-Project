@@ -22,6 +22,7 @@ public class Monster extends levelObject{
 	protected double distanceToPlayer;
 	private boolean followplayer =true;
 	private int Count = 0;
+	public boolean isDead = false;
 	
 	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
 		super(x, y, z);
@@ -55,10 +56,19 @@ public class Monster extends levelObject{
 	 * @param deltaTime
 	 */
 	public void update(int deltaTime){
+		//If monster is falling, it's dead.
+		//Will be removed from the game next iteration
+		if(locationY<-5){
+			isDead = true;
+		}
 		
-		toPlayer();
-		
+		//Check the count, to know whether the monster has been stuck for a while
 		checkCount();
+		
+		//If the player is in sight, follow the player
+		if(playerSight()){
+			followplayer = true;
+		}
 		
 		if(followplayer){
 			dirToPlayer();
@@ -132,6 +142,7 @@ public class Monster extends levelObject{
 	 * Laat de monster richting player lopen.
 	 */
 	public void dirToPlayer(){
+		toPlayer();
 		toPlayer.scale(0.6);
 		dir.add(toPlayer);
 		
@@ -141,6 +152,7 @@ public class Monster extends levelObject{
 	 * Wanneer er collision is loopt het monster om de muur heen, in richting van de player.
 	 */
 	public void avoidWalls(){
+		toPlayer();
 		if(colX){	
 			dir.add(0.0 , 0.0,  Math.signum(toPlayer.getZ()));
 		}
