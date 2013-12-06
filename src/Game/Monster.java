@@ -1,6 +1,7 @@
 package Game;
 import static org.lwjgl.opengl.GL11.*;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
 import Utils.Graphics;
@@ -416,11 +417,21 @@ public class Monster extends levelObject{
 	@Override
 	public void display() {
 		glPushMatrix();
+		
 		glTranslated(locationX, locationY, locationZ);
+		if(!isStuck())
+		rotateV();
 
 		glCallList(Models.monster);
 
 		glPopMatrix();
+	}
+	
+	public void rotateV(){
+		float x=(float) dir.getX();
+		float z=(float) dir.getZ();
+		FloatBuffer m = Utils.Utils.createFloatBuffer(z,0,-x,0,0,1,0,0,x,0,z,0,0,0,0,1);
+		glMultMatrix(m);
 	}
 
 	@Override
