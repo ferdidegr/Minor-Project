@@ -30,7 +30,7 @@ public class Player extends GameObject {
 	private double horAngle, verAngle, width, height;
 	private double speed;
 	private Control control = null;
-	
+	private boolean spikejump= false;
 	
 	private double run;
 	protected boolean jump = false;
@@ -260,16 +260,20 @@ public class Player extends GameObject {
 			pz= getLocationZ();
 			
 			// CollisionY
+			spikejump=false;
+			
 			for(int i = 0; i< tempindex.size();i++){
 				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
 				if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz+pw)
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
 				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){
+					if(tempobj instanceof Spikes){control.jump=true;spikejump=true;}
 					colY=true;
 					locationY+=tempobj.getmaxDistY(locationY-ph);
 				}				
 			}
+			if(!spikejump){control.jump = false;}
 			if(colY){jump=false;}else{updateY();}
 			py = getLocationY();
 		

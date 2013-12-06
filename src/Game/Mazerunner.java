@@ -47,7 +47,7 @@ public class Mazerunner {
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/test8.maze";
+	private String level = "levels/GOED.maze";
 	private int objectDisplayList = glGenLists(1);
 	
 	/*
@@ -129,6 +129,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	StatusBars.init(100);
 	Score.init(5000);
 	
+		
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
 						
@@ -148,6 +149,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 									 0, 0 ,									// horizontal and vertical angle
 									 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height			
 			}
+			// Parsing the spikes
+			else if(maze[j][i]==13){				
+				Spikes s = new Spikes(i*SQUARE_SIZE, 0, j*SQUARE_SIZE);
+				objlijst.add(s);
+				visibleObjects.add(s);
+				objectindex[j][i]=objlijst.size()-1;
+			}
 			// Parsing the scorpions
 			else if(maze[j][i]==14){
 				monsterlijst.add(new Monster(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
@@ -163,7 +171,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				objectindex[j][i]=objlijst.size()-1;
 			}
 			// Parsing the floor
-			if((maze[j][i]>10|| maze[j][i]==0) && maze[j][i]!=15 && maze[j][i]!=16){
+			if((maze[j][i]>10|| maze[j][i]==0) && maze[j][i]!=15 && maze[j][i]!=16 && maze[j][i]!=13){
 			levelObject lvlo = new Floor(i*SQUARE_SIZE, 0, j*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE, 1);
 			visibleObjects.add(lvlo);
 			objlijst.add(lvlo);
@@ -175,6 +183,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	// Parsing test pickups
 	pickuplijst.add(new Pickup(SQUARE_SIZE*2,SQUARE_SIZE,SQUARE_SIZE*2,0,SQUARE_SIZE/4f));
 	pickuplijst.add(new Pickup(SQUARE_SIZE*18,SQUARE_SIZE,SQUARE_SIZE*18,1,SQUARE_SIZE/4f));
+	
 
 }
 /*
@@ -416,20 +425,22 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			
 			 for(VisibleObject vo:visibleObjects){
 		        	if(vo instanceof Wall){	Material.setMtlWall();}
-		        	if(vo instanceof Floor){ Material.setMtlGround();}
+		        	if(vo instanceof Floor){ Material.setMtlGround();}		        	
 		        	vo.display();
 		        }
 			 	Material.setMtlWall();
 		        wall.display();		
 
 												
-				Material.setMtlsteel();
-				glDisable(GL_TEXTURE_2D);
-				glPushMatrix();
-
-				glTranslatef(0.5f, 1f, 0.5f);
-				Graphics.renderSpike(0.5f, 1);
-				glPopMatrix();
+//				Material.setMtlsteel();
+//				glDisable(GL_TEXTURE_2D);
+//				glPushMatrix();
+//
+//				glTranslatef(1.5f, 1f, 1.5f);
+//				Graphics.renderSpike(0.5f, 1);
+//				glTranslatef(1.5f, -2f, 1.5f);
+//				Graphics.renderSpike(0.5f, 1);
+//				glPopMatrix();
 				
 				 
 			 glEndList();			 

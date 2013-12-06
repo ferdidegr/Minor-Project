@@ -30,7 +30,7 @@ public class Pickup extends levelObject {
 	}
 
 	public boolean check(Player player) {
-		return ((Math.abs(player.locationX - this.locationX)) + (Math.abs(player.locationZ - this.locationZ)) < size);
+		return Math.abs(player.locationX - this.locationX)<size && Math.abs(player.locationZ - this.locationZ) < size;
 		}
 
 	public void effect(){

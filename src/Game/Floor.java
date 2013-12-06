@@ -81,6 +81,7 @@ public class Floor extends levelObject{
 		
 		return y<this.locationY && x>this.locationX && x<(this.locationX+width) &&
 				z>this.locationZ && z<(this.locationZ+height);
+				
 	}
 	/**
 	 * Get the maximum distance in X you can travel before you collide, not applicable for a floor
