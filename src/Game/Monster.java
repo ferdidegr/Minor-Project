@@ -62,9 +62,6 @@ public class Monster extends levelObject{
 		if(followplayer){
 			dirToPlayer();
 		} else {
-			if(lineOfSight(playerloc)){
-				followplayer = !followplayer;
-			}
 			randomWalk();
 		}
 		
@@ -236,8 +233,61 @@ public class Monster extends levelObject{
 		
 	}
 	
+	public boolean line(Vector b) {
+		
+		// Convert all location to integers
+		Double tmp = locationX;
+		int x0 = tmp.intValue();
+		tmp = locationZ;
+		int z0 = tmp.intValue();
+		tmp = b.getX();
+		int x1 = tmp.intValue();
+		tmp = b.getZ();
+		int z1 = tmp.intValue();
+				
+	    int w = x1 - x0 ;
+	    int h = z1 - z0;
+	    int dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0 ;
+	    if (w<0) dx1 = -1 ; else if (w>0) dx1 = 1 ;
+	    if (h<0) dy1 = -1 ; else if (h>0) dy1 = 1 ;
+	    if (w<0) dx2 = -1 ; else if (w>0) dx2 = 1 ;
+	    int longest = Math.abs(w) ;
+	    int shortest = Math.abs(h) ;
+	    if (!(longest>shortest)) {
+	        longest = Math.abs(h) ;
+	        shortest = Math.abs(w) ;
+	        if (h<0) dy2 = -1 ; else if (h>0) dy2 = 1 ;
+	        dx2 = 0 ;            
+	    }
+	    int numerator = longest >> 1 ;
+	    for (int i=0;i<=longest;i++) {
+	    	
+	    	int block;
+			try {
+				block = Mazerunner.maze[x0][z0];
+			} catch (ArrayIndexOutOfBoundsException e) {
+				// TODO Auto-generated catch block
+				return false;
+			}
+			if ( block > 0 && block < 11 ){
+				return false;
+			}
+	        	
+	        numerator += shortest ;
+	        if (!(numerator<longest)) {
+	            numerator -= longest ;
+	            x0 += dx1 ;
+	            z0 += dy1 ;
+	        } else {
+	            x0 += dx2 ;
+	            z0 += dy2 ;
+	        }
+	    }
+	    return true;
+	}
+	
 	public boolean playerSight(){
-		return lineOfSight(playerloc);
+		return line(playerloc);
 	}
 	
 	/**
