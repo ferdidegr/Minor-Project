@@ -40,7 +40,8 @@ public class Mazerunner {
 	protected ArrayList<Pickup> pickuplijst;						// A list of pickup items
 	protected ArrayList<Hatch> hatch;					// A list of objects that will be displayed on screen. (immediate mode)
 	private ArrayList<VisibleObject> visibleObjects;				// A list of objects that will be displayed on screen. (DLlist mode)
-	protected static ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
+	protected static ArrayList<Monster> monsterlijst;	// Lijst met alle monsters
+	private static ArrayList<Monster> deathlist;
 	protected static ArrayList<levelObject> objlijst;				// List of all collidable objects
 	protected static int[][] objectindex;							// reference to the arraylist entry
 	protected static int SQUARE_SIZE=1;								// Size of a unit block
@@ -122,6 +123,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	maze = IO.readMaze(level);
 	objectindex = new int[maze.length][maze[0].length];
 	monsterlijst = new ArrayList<Monster>();
+	deathlist = new ArrayList<Monster>();
 	hatch = new ArrayList<Hatch>();
 	pickuplijst = new ArrayList<Pickup>();
 	
@@ -311,9 +313,17 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        // Monsters		
 //		        Material.setMtlScorp();
 		        
-		        for(Monster mo: monsterlijst){			        	
+		        for(Monster mo: monsterlijst){	
+		        	if(mo.isDead){
+		        		deathlist.add(mo);
+		        	}
 		        	mo.display();		        	
 		        }
+		        
+		        for(Monster mo: deathlist){	
+		        	monsterlijst.remove(mo);	        	
+		        }
+		        
 		        // Pickups
 		        ArrayList<Pickup> rmpu = new ArrayList<Pickup>();
 		        for(Pickup pu: pickuplijst){
