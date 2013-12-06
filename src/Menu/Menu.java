@@ -44,7 +44,7 @@ public class Menu {
 		}
 		
 		Display.create();
-		
+		Display.setResizable(true);
 		new Utils.Text();
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
@@ -55,6 +55,16 @@ public class Menu {
 		initButtons();
 		run();
 		
+	}
+	
+	/**
+	 * if the window is reshaped, change accordingly
+	 */
+	public static void reshape(){
+		screenx = Display.getWidth();
+		screeny = Display.getHeight();
+		bottom = top  - screeny;
+		glViewport(0, 0, Display.getWidth(), Display.getHeight());	
 	}
 	
 	public static void run() {
@@ -70,6 +80,10 @@ public class Menu {
 						&& !gamestate.equals(GameState.TOMAIN)){
 					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 					glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			
+					
+					// If the window is resized, might not be implemented
+					if(Display.getWidth()!=screenx || Display.getHeight()!=screeny) reshape();
+					
 					mousepoll();
 					// Discard all keyboard events
 					while(Keyboard.next()){}
