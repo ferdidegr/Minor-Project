@@ -32,7 +32,7 @@ public class Mazerunner {
 	public static int[][] maze; 								// The maze.
 	
 	
-	private long previousTime = Calendar.getInstance().getTimeInMillis(); // Used to calculate elapsed time.
+	private long previousTime; // Used to calculate elapsed time.
 	private Wall wall;										// Wall Class, used to put one wall in for test TODO remove
 	
 	private FloatBuffer lightPosition;		
@@ -68,10 +68,8 @@ public void start() throws ClassNotFoundException, IOException{
 	initGL();
 	initDisp();
 	
-	for(int i = 0 ; i <20;i++){
-		glClear(GL_COLOR_BUFFER_BIT);
-		Display.update();Display.sync(70);
-	}
+	
+	previousTime = Calendar.getInstance().getTimeInMillis();
 	
 	while(!Display.isCloseRequested() && player.locationY>-20 && !isdood){
 		
@@ -104,7 +102,7 @@ public void start() throws ClassNotFoundException, IOException{
 		if(input.view_coord==true)System.out.println(player.getGridX(SQUARE_SIZE)+" "+player.getGridZ(SQUARE_SIZE));
 			
 		Display.update();
-		Display.sync(70);
+		Display.sync(60);
 		
 	}
 	if(Menu.getState().equals(GameState.GAME) || isdood){
