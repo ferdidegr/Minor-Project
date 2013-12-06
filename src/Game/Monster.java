@@ -75,9 +75,7 @@ public class Monster extends levelObject{
 		//System.out.println(Count);
 
 		updateV(deltaTime);
-		
-		System.out.println(lineOfSight(playerloc));
-		
+				
 	}
 	
 	/** 
@@ -152,89 +150,8 @@ public class Monster extends levelObject{
 		
 	}
 	
-	/**
-	 * Determines whether a location (Vector) b is in the line of sight of a monster.
-	 * Not working yet!
-	 */
-	public boolean lineOfSight(Vector b){
-		
-		// Convert all location to integers
-		Double tmp = locationX;
-		int x0 = tmp.intValue();
-		tmp = locationZ;
-		int z0 = tmp.intValue();
-		tmp = b.getX();
-		int x1 = tmp.intValue();
-		tmp = b.getZ();
-		int z1 = tmp.intValue();
-		boolean swapxy = Math.abs(z1 - z0) > Math.abs(x1-x0);
-		
-		int temp;
-		if(swapxy){
-			//swap x and z
-			temp = x0; x0 = z0; z0 = temp; //swap x0 and z0
-			temp = x1; x1 = z1; z1 = temp; //swap x1 and z1
-		}
-		
-		if(x0 > x1){
-			//make sure x0<x1
-			temp = x0; x0 = x1; x1 = temp; //swap x0 and x1
-			temp = z0; z0 = z1; z1 = temp; //swap z0 and z1
-		}
-		
-		// Calculate step and error
-		int deltax = x1 - x0;
-		int deltaz = Math.abs(z1 - z0);
-		double error = Math.floor(deltax / 2);
-		int z = z0;
-		int zstep = -1;
-		if(z0 < z1) { zstep = 1; }
-		
-		// Return false if line goes through wall
-		if ( swapxy ){
-			for (int x = x0; x <= (x1 +1); x++){
-				System.out.println(x + ", " + z);
-				int block;
-				try {
-					block = Mazerunner.maze[z][x];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					return false;
-				}
-				if ( block > 0 && block < 11 ){
-					return false;
-				}
-				error -= deltaz;
-				if (error < 0) {
-					z = z + zstep;
-					error = error + deltax;
-				}
-			}
-		}
-		else {
-			for (int x = x0; x <= (x1 +1); x++){
-				System.out.println(x + ", " + z);
-				int block;
-				try {
-					block = Mazerunner.maze[x][z];
-				} catch (ArrayIndexOutOfBoundsException e) {
-					// TODO Auto-generated catch block
-					return false;
-				}
-				if ( block > 0 && block < 11 ){
-					return false;
-				}
-				error -= deltaz;
-				if (error < 0) {
-					z = z + zstep;
-					error = error + deltax;
-				}
-			}
-		}
-		return true;
-		
-	}
 	
-	public boolean line(Vector b) {
+	public boolean lineOfSight(Vector b) {
 		
 		// Convert all location to integers
 		Double tmp = locationX;
@@ -262,12 +179,10 @@ public class Monster extends levelObject{
 	    }
 	    int numerator = longest >> 1 ;
 	    for (int i=0;i<=longest;i++) {
-	    	
 	    	int block;
 			try {
-				block = Mazerunner.maze[x0][z0];
+				block = Mazerunner.maze[z0][x0];
 			} catch (ArrayIndexOutOfBoundsException e) {
-				// TODO Auto-generated catch block
 				return false;
 			}
 			if ( block > 0 && block < 11 ){
@@ -288,7 +203,7 @@ public class Monster extends levelObject{
 	}
 	
 	public boolean playerSight(){
-		return line(playerloc);
+		return lineOfSight(playerloc);
 	}
 	
 	/**
