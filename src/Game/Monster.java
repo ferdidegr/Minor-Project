@@ -16,7 +16,7 @@ public class Monster extends levelObject{
 	protected Vector velocity = new Vector(0, 0, 0);
 	public static Vector playerloc = new Vector(0, 0, 0);
 	private Vector toPlayer;
-	private Vector dir= new Vector(1, 0, 0);
+	private Vector dir= new Vector(0, 0, 0);
 	private boolean colX,colZ,colY;
 	protected double distanceToPlayer;
 	private boolean followplayer =true;
@@ -288,8 +288,7 @@ public class Monster extends levelObject{
 			if(tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz+pw)
 			|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph/2f, pz-pw)){
 				colX=true;	
-				
-				
+			
 				maxX=tempobj.getmaxDistX(locationX+pw*signX);
 				break;
 			}
