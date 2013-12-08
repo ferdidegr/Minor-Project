@@ -72,17 +72,24 @@ public class Menu {
 		bottom = 0;
 		top = Display.getHeight();
 		scrollspeed = Display.getHeight()/15;
-		glLoadIdentity();
-		initGL();
+		if(!gamestate.equals(GameState.PAUSE)){
+			glLoadIdentity();
+			initGL();
+		}
+	
 		
 		// Main loop, while the X button is not clicked
 				while(!Display.isCloseRequested() && !gamestate.equals(GameState.GAME) && !gamestate.equals(GameState.EXIT)
 						&& !gamestate.equals(GameState.TOMAIN)){
-					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-					glClearColor(0.0f, 0.0f, 0.0f, 0.0f);			
+			
 					
 					// If the window is resized, might not be implemented
-					if(Display.getWidth()!=screenx || Display.getHeight()!=screeny) reshape();
+					if(Display.getWidth()!=screenx || Display.getHeight()!=screeny){
+						reshape();	
+						if(game!=null){
+							game.reshape();
+						}
+					}
 					
 					mousepoll();
 					// Discard all keyboard events
@@ -209,7 +216,13 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void display(){
-		drawBackground();
+					
+			if(!gamestate.equals(GameState.GAME)){	
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+				drawBackground();
+			}
+			
+
 		
 		switch(gamestate){
 			
@@ -225,11 +238,13 @@ public class Menu {
 			over.display();
 			break;
 			
-		case PAUSE:
+		case PAUSE:		
+			drawGameAsBackground();					
 			pauze.display();
 			break;
 			
 		case PSETTINGS:
+			drawGameAsBackground();
 			pset.display();
 			break;
 			
@@ -267,6 +282,23 @@ public class Menu {
 		glDisable(GL_TEXTURE_2D);
 		
 		initview();
+	}
+	/**
+	 * ************************************
+	 * Draw the ingame situation as background
+	 * ************************************
+	 */
+	public static void drawGameAsBackground(){
+		glPushAttrib(GL_ENABLE_BIT);
+		game.changetoWorld();
+		game.display();
+		glPopAttrib();
+		game.changetoHUD();
+		initview();
+		glDisable(GL_CULL_FACE);
+		glDisable(GL_LIGHTING);
+		glDisable(GL_TEXTURE_2D);
+		glClear(GL_DEPTH_BUFFER_BIT);
 	}
 	/**
 	 * ************************************

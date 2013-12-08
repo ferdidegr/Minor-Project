@@ -11,6 +11,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.util.glu.GLU.gluPerspective;
 
 import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.opengl.TextureImpl;
@@ -51,6 +52,7 @@ public class Mazerunner {
 	private String level = "levels/GOED.maze";
 	private int objectDisplayList = glGenLists(1);
 	
+	private FloatBuffer projectionWorld, projectionHUD;			// Buffer for the projection matrices
 	/*
 	 *  *************************************************
 	 *  * 					Main Loop					*
@@ -80,21 +82,14 @@ public void start() throws ClassNotFoundException, IOException{
 		// Check for Input
 		input.poll();
 		
-		// Check if pause menu is requested
-		if(!Menu.getState().equals(GameState.GAME)){
-			
-			glPushMatrix();
-			glPushAttrib(GL_ENABLE_BIT);
-			cleanup();
-			Menu.run();
-			glPopAttrib();
-			glPopMatrix();
-			initGL();
-			previousTime = Calendar.getInstance().getTimeInMillis();
-			Mouse.setGrabbed(true);
-			if(Menu.getState()==GameState.TOMAIN)break;
-			Menu.setState(GameState.GAME);
-		}
+		// Check if pause menu is requested				
+		checkPause();
+		// If the option to main menu is selectd in the pause menu
+		if(Menu.getState()==GameState.TOMAIN)break;
+		Menu.setState(GameState.GAME);
+		
+		// Update all objects in the maze
+		updateMovement();
 		
 		// Draw objects on screen
 		display();
@@ -194,14 +189,26 @@ public void initMaze() throws ClassNotFoundException, IOException{
  *  *************************************************
  */
 	public void initGL(){		
+		// Initialize projection buffers
+		projectionWorld = BufferUtils.createFloatBuffer(16);
+		projectionHUD = BufferUtils.createFloatBuffer(16);
 		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		// Now we set up our viewpoint.
+		
+		// World projection matrix
 		glMatrixMode(GL_PROJECTION);					// We'll use orthogonal projection.
-		glLoadIdentity();									// REset the current matrix.
-		GLU.gluPerspective(60, (float)Display.getWidth()/Display.getHeight(), 0.001f, 1000);	// Set up the parameters for perspective viewing. 
+		glLoadIdentity();
+		gluPerspective(60, (float)Display.getWidth()/Display.getHeight(), 0.001f, 100f);
+		glGetFloat(GL_PROJECTION_MATRIX, projectionWorld);
+		
+		// HUD projection matrix
+		glLoadIdentity();
+		glOrtho(0, Display.getWidth(), Display.getHeight(), 0, -1, 1);
+		glGetFloat(GL_PROJECTION_MATRIX, projectionHUD);
+		
 		glMatrixMode(GL_MODELVIEW);
 		
 		// Enable back-face culling.
@@ -274,18 +281,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 * Display function, draw all visible objects
 	 */
 	public void display(){
-				// Calculating time since last frame.
-				Calendar now = Calendar.getInstance();		
-				long currentTime = now.getTimeInMillis();
-				int deltaTime = (int)(currentTime - previousTime);
-				previousTime = currentTime;
-				// TODO remove
-				Display.setTitle("dt: "+ deltaTime);
-	
-				//Update any movement since last frame.
-				Monster.setPlayerloc(new Vector(player.locationX, player.locationY, player.locationZ));
-								
-				updateMovement(deltaTime);	
 				
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 				
@@ -311,7 +306,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
 		        
 		        // Monsters		
-//		        Material.setMtlScorp();
 		        
 		        for(Monster mo: monsterlijst){	
 		        	if(mo.isDead){
@@ -353,37 +347,63 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 */
 	private void drawHUD(){
 		// Switch to 2D
-		
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		glOrtho(0, Display.getWidth(), Display.getHeight(), 0.0, 1.0, -1.0);
-		
-		glMatrixMode(GL_MODELVIEW);
-		glPushMatrix();
 		glPushAttrib(GL_ENABLE_BIT);
-		glLoadIdentity();
+		changetoHUD();	
+		
+		Score.draw();
+		StatusBars.draw();		
+
+		minimap.draw(player,monsterlijst,SQUARE_SIZE);
+
+
+		// Making sure we can render 3d again	
+		glPopAttrib();
+		changetoWorld();
+
+	}
+	/**
+	 * Pause menu options
+	 */
+	public void checkPause(){
+		if(!Menu.getState().equals(GameState.GAME)){				
+			glPushAttrib(GL_ENABLE_BIT);			
+			Menu.run();
+			glPopAttrib();			
+			changetoWorld();
+			// Reset deltaTime
+			previousTime = Calendar.getInstance().getTimeInMillis();
+			Mouse.setGrabbed(true);
+		}
+	}
+
+	/**
+	 * Change projection matrix to ortho
+	 */
+	public void changetoHUD(){
+		glMatrixMode(GL_PROJECTION);		
+		glLoadMatrix(projectionHUD);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();		
+				
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);
 		glClear(GL_DEPTH_BUFFER_BIT);
-		
-		Score.draw();
-		StatusBars.draw();
-		
-		
-		glPushMatrix();
-		minimap.draw(player,monsterlijst,SQUARE_SIZE);
-		glPopMatrix();
-
-		// Making sure we can render 3d again
-		glMatrixMode(GL_PROJECTION);
-		glPopAttrib();
-		glPopMatrix();
-		glMatrixMode(GL_MODELVIEW);
-		glPopMatrix();
 	}
-
+	
+	/**
+	 * Change projection matrix to perspective
+	 */
+	public void changetoWorld(){
+		glMatrixMode(GL_PROJECTION);
+		glLoadMatrix(projectionWorld);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_LIGHTING);
+		glEnable(GL_TEXTURE_2D);
+	}
+	
 	/**
 	 * if the window is reshaped, change accordingly
 	 */
@@ -391,6 +411,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		screenWidth = Display.getWidth();
 		screenHeight = Display.getHeight();
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());	
+		initGL();
 	}
 	/*
 	 * **********************************************
@@ -402,8 +423,19 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		 * updateMovement(int) updates the position of all objects that need moving.
 		 * This includes rudimentary collision checking and collision reaction.
 		 */
-		private void updateMovement(int deltaTime)
+		private void updateMovement()
 		{
+			// Calculating time since last frame.
+			Calendar now = Calendar.getInstance();		
+			long currentTime = now.getTimeInMillis();
+			int deltaTime = (int)(currentTime - previousTime);
+			previousTime = currentTime;
+			// TODO remove
+			Display.setTitle("dt: "+ deltaTime);
+
+			//Update any movement since last frame.
+			Monster.setPlayerloc(new Vector(player.locationX, player.locationY, player.locationZ));	
+				
 			player.update(deltaTime);						// Updating velocity vector
 			/*
 			 * Movable objects
