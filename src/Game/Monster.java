@@ -23,6 +23,7 @@ public class Monster extends levelObject{
 	private boolean followplayer =true;
 	private int Count = 0;
 	public boolean isDead = false;
+	private boolean PlayerinSight=true;
 	
 	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
 		super(x, y, z);
@@ -66,7 +67,8 @@ public class Monster extends levelObject{
 		checkCount();
 		
 		//If the player is in sight, follow the player
-		if(playerSight()){
+		PlayerinSight = playerSight();
+		if(PlayerinSight){
 			followplayer = true;
 		}
 		
@@ -80,12 +82,12 @@ public class Monster extends levelObject{
 		
 		dir.normalize2D();
 		
+		updateV(deltaTime);
+		
 		collision();
 		
 		//System.out.println(Count);
-
-		updateV(deltaTime);
-				
+		
 	}
 	
 	/** 
@@ -343,15 +345,17 @@ public class Monster extends levelObject{
 	
 	@Override
 	public void display() {
-		glPushMatrix();
-		
-		glTranslated(locationX, locationY, locationZ);
-		if(!isStuck())
-		rotateV();
-
-		glCallList(Models.monster);
-
-		glPopMatrix();
+		if(PlayerinSight){
+			glPushMatrix();
+			
+			glTranslated(locationX, locationY, locationZ);
+			if(!isStuck())
+			rotateV();
+	
+			glCallList(Models.monster);
+	
+			glPopMatrix();
+		}
 	}
 	
 	public void rotateV(){

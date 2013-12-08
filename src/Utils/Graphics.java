@@ -73,15 +73,15 @@ public class Graphics {
 	}
 	
 	public static void renderSpike(float baseradius, float height){
-		//Cylinder spike = new Cylinder();
-		cylinder.setNormals(GLU.GLU_OUTSIDE);
+		
+		cylinder.setNormals(GLU.GLU_OUTSIDE);		
 
 		for(int i = -1; i <=1;i++){
 			for(int j = -1; j<=1;j++){
 				glPushMatrix();
 				glRotated(-90, 1, 0, 0);
 				glTranslatef(i*baseradius*2/3f, j*baseradius*2/3f, 0);
-				cylinder.draw(baseradius/3, 0, height, 50, 50);
+				cylinder.draw(baseradius/3, 0, height, 16, 1);
 				glPopMatrix();
 			}
 		}
