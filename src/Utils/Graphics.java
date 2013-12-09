@@ -81,10 +81,12 @@ public class Graphics {
 				glPushMatrix();
 				glRotated(-90, 1, 0, 0);
 				glTranslatef(i*baseradius*2/3f, j*baseradius*2/3f, 0);
-				cylinder.draw(baseradius/3, 0, height, 16, 1);
+				cylinder.draw(baseradius/3, 0, height, 25, 1);
 				glPopMatrix();
 			}
 		}
 
 	}
+	
+
 }

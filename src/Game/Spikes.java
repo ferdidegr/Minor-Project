@@ -3,16 +3,22 @@ import static org.lwjgl.opengl.GL11.*;
 import Utils.Graphics;
 
 public class Spikes extends levelObject{
-
+private static int spike =0;
 	public Spikes(double x, double y, double z) {
 		super(x, y, z);		
+		if(spike == 0){
+			spike = glGenLists(1);
+			glNewList(spike, GL_COMPILE);
+			Graphics.renderSpike(Mazerunner.SQUARE_SIZE/2f, Mazerunner.SQUARE_SIZE);
+			glEndList();
+		}
 	}
 
 	@Override
 	public void display() {
 		glPushMatrix();
 		glTranslated(locationX+Mazerunner.SQUARE_SIZE/2f, locationY-Mazerunner.SQUARE_SIZE, locationZ+Mazerunner.SQUARE_SIZE/2f);		
-		Graphics.renderSpike(Mazerunner.SQUARE_SIZE/2f, Mazerunner.SQUARE_SIZE);
+		glCallList(spike);
 		
 		glPopMatrix();
 		
