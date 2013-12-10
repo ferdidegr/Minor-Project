@@ -12,12 +12,9 @@ public class StatusBars {
 	private static int health;
 	private static int maxhealth = 100;
 	private static float squaresize = 1f;
-//	private static Text2 titel;
 	
 	public static void init(int hp) {
 		health = hp;
-//		titel = new Text2(15, "Health");
-//		titel.initFont();
 	}
 
 	public static void draw(){
