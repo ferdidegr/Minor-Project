@@ -60,8 +60,7 @@ public class MazechooserMenu extends ButtonList{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			glPopMatrix();
-			Menu.setState(GameState.GAMEOVER);
+			glPopMatrix();			
 		}
 	}
 	
