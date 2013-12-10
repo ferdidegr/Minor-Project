@@ -3,6 +3,8 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 
+import org.newdawn.slick.opengl.TextureImpl;
+
 import Game.Textures;
 
 public class Material {
@@ -33,7 +35,7 @@ public class Material {
 			glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
 			glMaterial(GL_FRONT, GL_SPECULAR, Graphics.grey);
 			glMaterialf(GL_FRONT, GL_SHININESS, 15);
-
+			TextureImpl.bindNone();
 
 	}
 	

@@ -468,7 +468,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			
 			 for(VisibleObject vo:visibleObjects){
 		        	if(vo instanceof Wall){	Material.setMtlWall();}
-		        	if(vo instanceof Floor){ Material.setMtlGround();}		        	
+		        	if(vo instanceof Floor){ Material.setMtlGround();}	
+		        	if(vo instanceof Spikes){ Material.setMtlsteel();}
 		        	vo.display();
 		        }
 			 	Material.setMtlWall();
