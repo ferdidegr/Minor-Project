@@ -1,9 +1,5 @@
 package Game;
 
-import org.newdawn.slick.opengl.Texture;
-
-
-
 /**
  * VisibleObject is the interface for all classes that have to be displayed on screen.
  * <p> 

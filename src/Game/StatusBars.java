@@ -2,13 +2,14 @@ package Game;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.text.DecimalFormat;
+
 import org.lwjgl.opengl.Display;
 
 import Utils.Text;
 
 public class StatusBars {
-	private static int health;
-	private static int score;
+	private static int health, score;
 	private static int maxhealth = 100;
 	private static float squaresize = 1f;
 	
@@ -23,14 +24,19 @@ public class StatusBars {
 		
 		glPushMatrix();
 		glLoadIdentity();
-		double height = Text.getHeight(15);
+		float fontSize = 15 * Display.getWidth() / 1024f;
+		double height = Text.getHeight(fontSize);
+		double width = Text.getWidth(fontSize, "Textbreedthe lalalalalalalaa");
+		int second = Mazerunner.timer/1000 % 60;
+		int minute = Mazerunner.timer/1000 / 60;
+		DecimalFormat df = new DecimalFormat("00");
 		
-		Text.draw(Display.getWidth()/2, (float) (2*height), 15, "Health");
-		Text.draw(Display.getWidth()/2, 0, 15, "Score:  " + score);
-		Text.draw(Display.getWidth()/2, 20, 15, "Monsters:  " + Mazerunner.monsterlijst.size());
+		Text.draw((float)(Display.getWidth() - width), (float)(height), 15, "Time:  " + minute + ":" + df.format(second));
+		Text.draw((float)(Display.getWidth() - width), (float)(2*height), 15, "Health:");
+		Text.draw((float)(Display.getWidth() - width), (float)(3*height), 15, "Score:  " + score);
+		Text.draw((float)(Display.getWidth() - width), (float)(4*height), 15, "Monsters:  " + Mazerunner.monsterlijst.size());
 		
 		glTranslatef((float)(Display.getWidth()-1.5*barwidth), 50f,0);
-
 		
 		for (int i=0; i<(maxhealth +2); i++){
 			glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
@@ -97,7 +103,7 @@ public class StatusBars {
 		System.out.println("add score");
 		score += sc;
 	}
-
+	
 	public static int getHealth() {return health;}
 	public static void setHealth(int hp) {health = hp;}
 

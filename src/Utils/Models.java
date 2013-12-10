@@ -5,18 +5,14 @@ import static org.lwjgl.opengl.GL11.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import Game.Textures;
-
 public class Models {
 	public static int monster, skybox;
 	static{
 		try {
 			monster = Model.loadModel("res/Models/", "scorpion.obj").generateDList();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

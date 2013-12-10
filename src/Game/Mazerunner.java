@@ -1,6 +1,5 @@
 package Game;
 
-
 import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import org.lwjgl.opengl.Display;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.util.glu.GLU.gluPerspective;
 
-import org.lwjgl.util.glu.GLU;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import Menu.GameState;
@@ -46,6 +44,7 @@ public class Mazerunner {
 	protected static ArrayList<levelObject> objlijst;				// List of all collidable objects
 	protected static int[][] objectindex;							// reference to the arraylist entry
 	protected static int SQUARE_SIZE=1;								// Size of a unit block
+	protected static int timer = 0;
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
@@ -362,7 +361,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 * Pause menu options
 	 */
 	public void checkPause(){
-		if(!Menu.getState().equals(GameState.GAME)){				
+		if(!Menu.getState().equals(GameState.GAME)){	
+			boolean buffer = input.minimap;
+			input.minimap = false;
 			glPushAttrib(GL_ENABLE_BIT);			
 			Menu.run();
 			glPopAttrib();			
@@ -370,6 +371,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			// Reset deltaTime
 			previousTime = Calendar.getInstance().getTimeInMillis();
 			Mouse.setGrabbed(true);
+			input.minimap = buffer;
 		}
 	}
 
@@ -427,6 +429,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			long currentTime = now.getTimeInMillis();
 			int deltaTime = (int)(currentTime - previousTime);
 			previousTime = currentTime;
+			timer += deltaTime;
+			
 			// TODO remove
 			Display.setTitle("dt: "+ deltaTime);
 
