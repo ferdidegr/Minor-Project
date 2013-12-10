@@ -192,7 +192,7 @@ public class Monster extends levelObject{
 	        dx2 = 0 ;            
 	    }
 	    int numerator = longest >> 1 ;
-	    for (int i=0;i<=longest;i++) {
+	    for (int i=0;i<longest;i++) {
 	    	int block;
 			try {
 				block = Mazerunner.maze[z0][x0];
@@ -345,7 +345,7 @@ public class Monster extends levelObject{
 	
 	@Override
 	public void display() {
-		if(PlayerinSight){
+		if(PlayerinSight || distanceToPlayer <5){
 			glPushMatrix();
 			
 			glTranslated(locationX, locationY, locationZ);
