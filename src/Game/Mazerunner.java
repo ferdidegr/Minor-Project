@@ -219,7 +219,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		
 		// Set and enable the lighting.
 		
-		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(maze[0].length*SQUARE_SIZE).put(5.0f).put(maze.length*SQUARE_SIZE).put(1.0f).flip();	// High up in the sky!
+		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(maze[0].length*SQUARE_SIZE).put(100f).put(maze.length*SQUARE_SIZE/2f).put(1.0f).flip();	// High up in the sky!
 	        FloatBuffer lightColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();		// White light!
 	        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	// Note that we're setting Light0.
 	        glLight( GL_LIGHT0, GL_AMBIENT, lightColour);
@@ -462,7 +462,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			/*
 			 * Walls and ground
 			 */			
-			
+			TextureImpl.bindNone();
 			glNewList(objectDisplayList, GL_COMPILE);
 			 
 			
