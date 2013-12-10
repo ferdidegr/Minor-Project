@@ -38,8 +38,8 @@ public class Pickup extends levelObject {
 		switch(this.type){
 		case 0: {StatusBars.addHealth(30);break;}
 		case 1: {StatusBars.minHealth(30);break;}
-		case 2: {Score.addScore(50);break;}
-		case 3: {Score.addScore(-50);break;}
+		case 2: {StatusBars.addScore(50);break;}
+		case 3: {StatusBars.addScore(-50);break;}
 		}
 	}
 
