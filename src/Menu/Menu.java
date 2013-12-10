@@ -29,6 +29,7 @@ public class Menu {
 	private static int screenx;
 	private static int screeny;
 	private static double height_width_ratio = 1/8f;			// Height/Width 
+	static int currentlevel = 0;
 	
 	/**
 	 * ************************************

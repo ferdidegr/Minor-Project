@@ -40,7 +40,7 @@ public class GameOver extends ButtonList {
 			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				Menu.game.start("GOED.maze");
+				Menu.game.start(MazechooserMenu.MazeList.get(Menu.currentlevel));
 			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -9,7 +9,7 @@ import Game.Sound;
 import Utils.Text;
 
 public class MazechooserMenu extends ButtonList{
-	private static ArrayList<String> MazeList = new ArrayList<String>();
+	static ArrayList<String> MazeList = new ArrayList<String>();
 	
 	public MazechooserMenu() {
 		super();		
@@ -48,6 +48,7 @@ public class MazechooserMenu extends ButtonList{
 	public static void actionButtons(int buttonID){
 		if(buttonID >=0 && buttonID<MazeList.size()){
 			Menu.setState(GameState.GAME);
+			Menu.currentlevel = buttonID;
 			if (Mazerunner.getSound()==true){
 			Sound.playMusic("background_game");
 			}
@@ -60,7 +61,7 @@ public class MazechooserMenu extends ButtonList{
 				e.printStackTrace();
 			}
 			glPopMatrix();
-			Menu.setState(GameState.MAIN);
+			Menu.setState(GameState.GAMEOVER);
 		}
 	}
 	
