@@ -3,18 +3,18 @@ package Game;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.opengl.Display;
-import org.newdawn.slick.opengl.TextureImpl;
 
-import Menu.*;
 import Utils.Text;
 
 public class StatusBars {
 	private static int health;
+	private static int score;
 	private static int maxhealth = 100;
 	private static float squaresize = 1f;
 	
-	public static void init(int hp) {
-		health = hp;
+	public static void init(int hp, int sc) {
+		setHealth(hp);
+		setScore(sc);
 	}
 
 	public static void draw(){
@@ -26,6 +26,8 @@ public class StatusBars {
 		double height = Text.getHeight(15);
 		
 		Text.draw(Display.getWidth()/2, (float) (2*height), 15, "Health");
+		Text.draw(Display.getWidth()/2, 0, 15, "Score:  " + score);
+		Text.draw(Display.getWidth()/2, 20, 15, "Monsters:  " + Mazerunner.monsterlijst.size());
 		
 		glTranslatef((float)(Display.getWidth()-1.5*barwidth), 50f,0);
 
@@ -90,4 +92,15 @@ public class StatusBars {
 			Mazerunner.isdood = true;
 		}
 	}
+	
+	public static void addScore(int sc){
+		System.out.println("add score");
+		score += sc;
+	}
+
+	public static int getHealth() {return health;}
+	public static void setHealth(int hp) {health = hp;}
+
+	public static int getScore() {return score;}
+	public static void setScore(int sc) {score = sc;}
 }

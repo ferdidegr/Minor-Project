@@ -12,7 +12,7 @@ import org.lwjgl.input.Mouse;
  * @author Karin
  *
  */
-public class ButtonList {
+public abstract class ButtonList {
 	protected ArrayList<MenuButton> lijst;
 	
 	public ButtonList(){
@@ -26,7 +26,14 @@ public class ButtonList {
 	public void add(MenuButton button){
 		lijst.add(button);
 	}
-	 
+	/**
+	 * Every button needs to have some left x and top y
+	 * @param x
+	 * @param y
+	 * @param leftallignment
+	 */
+	public abstract void init(int x, int y);
+	
 	/** Wanneer de muis op een button in de lijst staat geeft deze methode 
 	 *  de ID van die button.
 	 * 
