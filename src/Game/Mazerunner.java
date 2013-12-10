@@ -59,10 +59,11 @@ public class Mazerunner {
 	 *  *************************************************
 	 */
 	
-public void start() throws ClassNotFoundException, IOException{
+public void start(String levelname) throws ClassNotFoundException, IOException{
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
 	new Models();
+	level = "levels/"+levelname;
 	isdood=false;					// needs a better way to implement this
 	// TODO remove
 	Display.setResizable(true);

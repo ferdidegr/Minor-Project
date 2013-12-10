@@ -14,14 +14,14 @@ public class PauseMenu extends ButtonList{
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
 	 * 
-	 * @param buttonwidth
-	 * @param buttonheight
+	 * @param x
+	 * @param y
 	 */
-	public void init(int buttonwidth, int buttonheight){
+	public void init(int x, int y){
 		
-		lijst.add(new MenuButton(Menu.getScreenx()/3,2* buttonheight, Textures.start, Textures.startover,1, "Resume game"));
-		lijst.add(new MenuButton(Menu.getScreenx()/3, 4* buttonheight, Textures.start, Textures.startover,2, "Settings"));
-		lijst.add(new MenuButton(Menu.getScreenx()/3, 6* buttonheight, Textures.start, Textures.startover,3, "Main Menu"));
+		lijst.add(new MenuButton(x,2* y, Textures.start, Textures.startover,1, "Resume game"));
+		lijst.add(new MenuButton(x, 4* y, Textures.start, Textures.startover,2, "Settings"));
+		lijst.add(new MenuButton(x, 6* y, Textures.start, Textures.startover,3, "Main Menu"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.

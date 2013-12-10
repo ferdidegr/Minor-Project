@@ -24,10 +24,11 @@ public class Menu {
 	private static GameOver over = new GameOver();
 	private static PauseMenu pauze = new PauseMenu();
 	private static PSettings pset = new PSettings();
+	private static MazechooserMenu mazemenu= new MazechooserMenu();
 	private static int top, bottom, scrollspeed;
 	private static int screenx;
 	private static int screeny;
-	private static double height_width_ratio = 1/4f;			// Height/Width 
+	private static double height_width_ratio = 1/8f;			// Height/Width 
 	
 	/**
 	 * ************************************
@@ -174,6 +175,11 @@ public class Menu {
 			ID = pset.checkButtons(top);
 			PSettings.actionButtons(ID);
 			break;
+		
+		case SELECTLVL:
+			ID  =mazemenu.checkButtons(top);
+			MazechooserMenu.actionButtons(ID);
+			break;
 			
 		default: break;
 			
@@ -206,6 +212,9 @@ public class Menu {
 		
 		// Pauze ingame settings
 		pset.init(buttonwidth, buttonheight);
+		
+		// Mazechooser
+		mazemenu.init(buttonwidth, buttonheight);
 		
 		
 	}
@@ -247,7 +256,9 @@ public class Menu {
 			drawGameAsBackground();
 			pset.display();
 			break;
-			
+		
+		case SELECTLVL:
+			mazemenu.display();
 		
 		default: break;
 		}

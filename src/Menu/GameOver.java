@@ -18,13 +18,13 @@ public class GameOver extends ButtonList {
 	
 	/** Maak hier de knoppen en voeg toe aan "lijst"
 	 * 
-	 * @param buttonwidth
-	 * @param buttonheight
+	 * @param x
+	 * @param y
 	 */
-	public void init(int buttonwidth, int buttonheight){
+	public void init(int x, int y){
 		
-		lijst.add(new MenuButton(Menu.getScreenx()/3, 2*buttonheight, Textures.start, Textures.startover,1, "Restart"));
-		lijst.add(new MenuButton(Menu.getScreenx()/3, 4*buttonheight, Textures.start, Textures.startover,2, "Main Menu"));
+		lijst.add(new MenuButton(x, 2*y, Textures.start, Textures.startover,1, "Restart"));
+		lijst.add(new MenuButton(x, 4*y, Textures.start, Textures.startover,2, "Main Menu"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -40,7 +40,7 @@ public class GameOver extends ButtonList {
 			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				Menu.game.start();
+				Menu.game.start("GOED.maze");
 			} catch (ClassNotFoundException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
