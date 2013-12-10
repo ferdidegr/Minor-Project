@@ -31,10 +31,10 @@ public class StatusBars {
 		int minute = Mazerunner.timer/1000 / 60;
 		DecimalFormat df = new DecimalFormat("00");
 		
-		Text.draw((float)(Display.getWidth() - width), (float)(height), 15, "Time:  " + minute + ":" + df.format(second));
-		Text.draw((float)(Display.getWidth() - width), (float)(2*height), 15, "Health:");
-		Text.draw((float)(Display.getWidth() - width), (float)(3*height), 15, "Score:  " + score);
-		Text.draw((float)(Display.getWidth() - width), (float)(4*height), 15, "Monsters:  " + Mazerunner.monsterlijst.size());
+		Text.draw((float)(Display.getWidth() - width), (float)(height), fontSize, "Time:  " + minute + ":" + df.format(second));
+		Text.draw((float)(Display.getWidth() - width), (float)(2*height), fontSize, "Health:");
+		Text.draw((float)(Display.getWidth() - width), (float)(3*height), fontSize, "Score:  " + score);
+		Text.draw((float)(Display.getWidth() - width), (float)(4*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size());
 		
 		glTranslatef((float)(Display.getWidth()-1.5*barwidth), 50f,0);
 		

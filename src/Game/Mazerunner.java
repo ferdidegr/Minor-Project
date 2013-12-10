@@ -371,7 +371,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		/*
 		 * Please use odd numbers
 		 */
-		float factor = (float) Math.pow(playerlookat.dotprod(playertosun),15);
+		float factor = (float) Math.pow(playerlookat.dotprod(playertosun),25);
 		
 		changetoHUD();
 		glEnable(GL_BLEND);
