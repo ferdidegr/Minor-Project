@@ -14,6 +14,7 @@ public class Vector {
 		setZ(z);
 	}
 	
+		
 	public Vector avg(Vector vec){
 		double xnew = (vec.getX() + x)/2;
 		double ynew = (vec.getY() + y)/2;
@@ -144,6 +145,10 @@ public class Vector {
 	}
 	public Vector clone(){
 		return new Vector(x, y, z);
+	}
+	
+	public double dotprod(Vector v2){
+		return this.x*v2.x+this.y*v2.y+this.z*v2.z;
 	}
 	
 	/**

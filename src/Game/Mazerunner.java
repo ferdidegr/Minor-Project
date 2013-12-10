@@ -63,6 +63,7 @@ public void start(String levelname) throws ClassNotFoundException, IOException{
 	new Graphics();					// Initialize graphics
 	new Models();
 	level = "levels/"+levelname;
+	timer = 0 ;
 	isdood=false;					// needs a better way to implement this
 	// TODO remove
 	Display.setResizable(true);
@@ -219,7 +220,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		
 		// Set and enable the lighting.
 		
-		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(maze[0].length*SQUARE_SIZE).put(100f).put(maze.length*SQUARE_SIZE/2f).put(1.0f).flip();	// High up in the sky!
+		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(maze[0].length*SQUARE_SIZE+500).put(210f).put(maze.length*SQUARE_SIZE/2f).put(1.0f).flip();	// High up in the sky!
 	        FloatBuffer lightColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();		// White light!
 	        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	// Note that we're setting Light0.
 	        glLight( GL_LIGHT0, GL_AMBIENT, lightColour);
@@ -279,7 +280,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 * Display function, draw all visible objects
 	 */
 	public void display(){
-				
+
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 				
 				glLoadIdentity();
@@ -330,14 +331,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	}
 		        }
 		        
-		        // HUD
+		        
+		        // HUD  and glare
 		        glPushMatrix();
+		        drawglare();
 		        if(input.minimap){drawHUD();}
 		        glPopMatrix();
 		        player.draw();
-
-
-
 	}
 	
 	/**
@@ -346,7 +346,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	private void drawHUD(){
 		// Switch to 2D
 		glPushAttrib(GL_ENABLE_BIT);
-		changetoHUD();	
+		changetoHUD();		
 		
 		StatusBars.draw();		
 
@@ -357,6 +357,35 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		changetoWorld();
 
 	}
+	
+	public void drawglare(){
+		double horanglerad = Math.toRadians(player.getHorAngle()+90);
+		double veranglerad = Math.toRadians(player.getVerAngle());
+		
+		Vector playerlookat = new Vector(Math.cos(horanglerad), Math.sin(veranglerad), -Math.sin(horanglerad));
+		playerlookat.normalize();
+		
+		Vector playertosun = new Vector(lightPosition.get(0)-player.locationX,lightPosition.get(1)-player.locationY,lightPosition.get(2)-player.locationZ);
+		playertosun.normalize();
+		
+		/*
+		 * Please use odd numbers
+		 */
+		float factor = (float) Math.pow(playerlookat.dotprod(playertosun),15);
+		
+		changetoHUD();
+		glEnable(GL_BLEND);
+		glColor4f(1, 1, 1, factor*0.5f);
+		glBegin(GL_QUADS);
+		glVertex2f(0, 0);
+		glVertex2f(0, Display.getHeight());
+		glVertex2f(Display.getWidth(), Display.getHeight());
+		glVertex2f(Display.getWidth(), 0);
+		glEnd();
+		glDisable(GL_BLEND);
+		changetoWorld();
+	}
+	
 	/**
 	 * Pause menu options
 	 */
@@ -460,7 +489,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		 */
 		public void initDisp(){
 			/*
-			 * Walls and ground
+			 * Walls, ground and spikes
 			 */			
 			TextureImpl.bindNone();
 			glNewList(objectDisplayList, GL_COMPILE);
@@ -473,19 +502,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	vo.display();
 		        }
 			 	Material.setMtlWall();
-		        wall.display();		
-
-												
-//				Material.setMtlsteel();
-//				glDisable(GL_TEXTURE_2D);
-//				glPushMatrix();
-//
-//				glTranslatef(1.5f, 1f, 1.5f);
-//				Graphics.renderSpike(0.5f, 1);
-//				glTranslatef(1.5f, -2f, 1.5f);
-//				Graphics.renderSpike(0.5f, 1);
-//				glPopMatrix();
-				
+		        wall.display();						
 				 
 			 glEndList();			 
 				   
