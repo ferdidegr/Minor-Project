@@ -42,7 +42,7 @@ public class Mazerunner {
 	protected ArrayList<Hatch> hatch;					// A list of objects that will be displayed on screen. (immediate mode)
 	private ArrayList<VisibleObject> visibleObjects;				// A list of objects that will be displayed on screen. (DLlist mode)
 	protected static ArrayList<Monster> monsterlijst;	// Lijst met alle monsters
-	private static ArrayList<Monster> deathlist;
+	protected static ArrayList<Monster> deathlist;
 	protected static ArrayList<levelObject> objlijst;				// List of all collidable objects
 	protected static int[][] objectindex;							// reference to the arraylist entry
 	protected static int SQUARE_SIZE=1;								// Size of a unit block

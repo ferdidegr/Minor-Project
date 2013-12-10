@@ -61,32 +61,28 @@ public class Monster extends levelObject{
 		//Will be removed from the game next iteration
 		if(locationY<-5){
 			isDead = true;
-		}
-		
-		//Check the count, to know whether the monster has been stuck for a while
-		checkCount();
-		
-		//If the player is in sight, follow the player
-		PlayerinSight = playerSight();
-		if(PlayerinSight){
-			followplayer = true;
-		}
-		
-		if(followplayer){
-			dirToPlayer();
+			Count = 0;
 		} else {
-			randomWalk();
+		
+			//Check the count, to know whether the monster has been stuck for a while, or can see the player
+			checkSituation();
+		
+		
+			if(followplayer){
+				dirToPlayer();
+			} else {
+				randomWalk();
+			}
+		
+			avoidWalls();
+		
+			dir.normalize2D();
+		
+			updateV(deltaTime);
+		
+			collision();
+		
 		}
-		
-		avoidWalls();
-		
-		dir.normalize2D();
-		
-		updateV(deltaTime);
-		
-		collision();
-		
-		//System.out.println(Count);
 		
 	}
 	
@@ -95,14 +91,24 @@ public class Monster extends levelObject{
 	 * Wanneer count groter dan een threshold value is, wordt geswitcht van followplayer (wel/niet) modus.
 	 * 
 	 */
-	public void checkCount(){
+	public void checkSituation(){
 		if(colX | colZ){
 			Count++;
 		}
-		if(Count > 200){
+		if(Count > 200 | playerSight()){
 			followplayer = !followplayer;
 			Count = 0;
 		}
+	}
+	
+	/**
+	 * Voert een random walk uit. Wanneer er sprake is van collision wordt de richting
+	 * veranderd, anders loopt monster door.
+	 */
+	public boolean deathCount(){
+		Count++;
+		System.out.println(Count);
+		return Count < 100000  ;
 	}
 	
 	/**
@@ -284,6 +290,17 @@ public class Monster extends levelObject{
 			}
 		}
 		
+		for(Monster mo:Mazerunner.deathlist){
+			if(mo.deathCount()){
+				if(mo.isCollision(px+velocity.getX()+pw*signX*3, py-ph/2f, pz+pw)
+				|| mo.isCollision(px+velocity.getX()+pw*signX*3, py-ph/2f, pz-pw)){
+					maxX=Math.min(maxX, mo.getmaxDistX(locationX+pw*signX));
+					colX=true;
+					
+				}
+			}
+		}
+		
 		if(colX){locationX+=maxX;}else{updateX();}		
 		px = locationX;
 		
@@ -304,6 +321,17 @@ public class Monster extends levelObject{
 			if(mo!=this){
 				if(mo.isCollision(px+pw, py-ph/2f, pz+pw*signZ+velocity.getZ())
 				|| mo.isCollision(px-pw, py-ph/2f, pz+pw*signZ+velocity.getZ())){
+					maxZ=Math.min(maxZ, mo.getmaxDistZ(locationZ+pw*signZ));
+					colZ=true;
+					
+				}
+			}
+		}
+		
+		for(Monster mo:Mazerunner.deathlist){
+			if(mo.deathCount()){
+				if(mo.isCollision(px+pw, py-ph/2f, pz+pw*3*signZ+velocity.getZ())
+				|| mo.isCollision(px-pw, py-ph/2f, pz+pw*3*signZ+velocity.getZ())){
 					maxZ=Math.min(maxZ, mo.getmaxDistZ(locationZ+pw*signZ));
 					colZ=true;
 					
