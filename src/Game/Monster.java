@@ -229,6 +229,13 @@ public class Monster extends levelObject{
 	}
 	
 	/**
+	 * 
+	 */
+	public void intelligence(){
+		
+	}
+	
+	/**
 	 * Controleert of er sprake is van collision en past zonodig de beweging van het monster aan.
 	 */
 	public void collision(){
@@ -292,17 +299,6 @@ public class Monster extends levelObject{
 			}
 		}
 		
-		for(Monster mo:Mazerunner.deathlist){
-			if(mo.deathCount()){
-				if(mo.isCollision(px+velocity.getX()+pw*signX*3, py-ph/2f, pz+pw)
-				|| mo.isCollision(px+velocity.getX()+pw*signX*3, py-ph/2f, pz-pw)){
-					maxX=Math.min(maxX, mo.getmaxDistX(locationX+pw*signX));
-					colX=true;
-					
-				}
-			}
-		}
-		
 		if(colX){locationX+=maxX;}else{updateX();}		
 		px = locationX;
 		
@@ -330,16 +326,7 @@ public class Monster extends levelObject{
 			}
 		}
 		
-		for(Monster mo:Mazerunner.deathlist){
-			if(mo.deathCount()){
-				if(mo.isCollision(px+pw, py-ph/2f, pz+pw*3*signZ+velocity.getZ())
-				|| mo.isCollision(px-pw, py-ph/2f, pz+pw*3*signZ+velocity.getZ())){
-					maxZ=Math.min(maxZ, mo.getmaxDistZ(locationZ+pw*signZ));
-					colZ=true;
-					
-				}
-			}
-		}
+		
 		if(colZ){locationZ+=maxZ;}else{	updateZ();}
 		pz= getLocationZ();
 		
