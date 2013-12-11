@@ -76,7 +76,7 @@ public void start(String levelname) throws ClassNotFoundException, IOException{
 	
 	previousTime = Calendar.getInstance().getTimeInMillis();
 	
-	while(!Display.isCloseRequested() && player.locationY>-20 && !isdood){
+	while(!Display.isCloseRequested() && player.locationY>-20 && player.getHealth().getHealth()>0){
 		
 		// If the window is resized, might not be implemented
 		if(Display.getWidth()!=screenWidth || Display.getHeight()!=screenHeight) reshape();
@@ -158,7 +158,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				monsterlijst.add(new Monster(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
 									 SQUARE_SIZE*0.7 ,							// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 			// z position
-									 SQUARE_SIZE*0.7, SQUARE_SIZE*0.7, SQUARE_SIZE));
+									 SQUARE_SIZE*0.7, SQUARE_SIZE*0.7, SQUARE_SIZE)); // Width, height, squae size
 			}
 			// parsing the hatch
 			else if(maze[j][i]==16){

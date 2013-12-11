@@ -38,6 +38,7 @@ public class Player extends GameObject {
 	double y_begin;
 	Vector velocity = new Vector(0, 0, 0);
 	private Health health = new Health(100);
+	private int immunitycounter = 0;
 	
 	/**
 	 * The Player constructor.
@@ -164,9 +165,13 @@ public class Player extends GameObject {
 	 * @param deltaTime The time in milliseconds since the last update.
 	 */
 	public void update(int deltaTime)
-	{
+	{	
+		// TODO remove
 		System.out.println(health.getHealth());
-
+		// Update immunity counter when you are hit, only when you are hit
+		if(immunitycounter>0)immunitycounter+=deltaTime;
+		if(immunitycounter>1000)immunitycounter=0;
+		
 		if (control != null)
 		{
 			control.update();
@@ -270,7 +275,7 @@ public class Player extends GameObject {
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz+pw)
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
 				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){
-					if(tempobj instanceof Spikes){control.jump=true;spikejump=true;health.addHealth(-10);}
+					if(tempobj instanceof Spikes){spikereaction();}
 					colY=true;
 					locationY+=tempobj.getmaxDistY(locationY-ph);
 				}				
@@ -285,6 +290,16 @@ public class Player extends GameObject {
 					Mazerunner.objlijst.get((tempindex.get(i).intValue())).change();						
 				}
 				control.triggered=false;
+			}
+			
+			// Check collision with all monsters
+			for(Monster mo:Mazerunner.monsterlijst){
+				if(mo.isCollision(px+pw,  py-ph , pz+pw)
+				|| mo.isCollision(px-pw,  py-ph , pz+pw)
+				|| mo.isCollision(px-pw,  py-ph , pz-pw)
+				|| mo.isCollision(px+pw,  py-ph , pz-pw)){
+					Scorpreaction();
+				}
 			}
 	}
 	/**
@@ -363,6 +378,21 @@ public class Player extends GameObject {
 		glVertex3d(locationX+width, locationY-height, locationZ-width);
 		glEnd();
 		glEnable(GL_LIGHTING);
+	}
+	
+	private void Scorpreaction(){
+		if(immunitycounter==0){
+			health.addHealth(-5);
+			immunitycounter+=1;
+		}
+		
+	}
+	
+	private void spikereaction(){
+		if(!spikejump){	health.addHealth(-10);}
+		
+		control.jump=true;
+		spikejump=true;		
 	}
 	
 	public Health getHealth(){return health;}
