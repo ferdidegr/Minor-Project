@@ -48,10 +48,10 @@ public class Sound {
 		if (on) {
 			switch (string) {
 			case "button":
-				button.playAsSoundEffect(1f, 0.1f, false);
+				button.playAsSoundEffect(1f, 0.1f, false); break;
 				// case "jump": jump.playAsSoundEffect(1f, 1f, false);
 			case "hurt":
-				hurt.playAsSoundEffect(1f, 1f, false);
+				hurt.playAsSoundEffect(1f, 1f, false); break;
 			}
 		}
 	}
@@ -67,8 +67,10 @@ public class Sound {
 			switch (string) {
 			case "background_menu":
 				background_menu.playAsMusic(1f, 1f, true);
+				break;
 			case "background_game":
 				background_game.playAsMusic(1f, 1f, true);
+				break;
 			}
 		}
 	}

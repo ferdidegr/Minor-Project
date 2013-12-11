@@ -87,7 +87,7 @@ public class MazeMaker {
 			Display.update();Display.sync(60);
 			
 		}
-		AL.destroy();
+		Sound.exit();
 	}
 	/**
 	 * ***********************************************
