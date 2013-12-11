@@ -1,9 +1,10 @@
-package Game;
+package Depricated;
 
 
 
 import java.io.IOException;
 import java.nio.FloatBuffer;
+
 
 
 
@@ -14,6 +15,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
+import Game.VisibleObject;
 import Utils.Graphics;
 
 

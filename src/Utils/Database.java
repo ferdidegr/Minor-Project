@@ -16,6 +16,11 @@ public class Database {
 		}
 	}
 
+	public static void reset() {
+		update("DROP TABLE IF EXISTS highscores;");
+		update("CREATE TABLE highscores (level STRING, name STRING, score INT)");
+	}
+	
 	public static void update(String sql){
 		try {
 			stat.executeUpdate(sql);
@@ -34,17 +39,26 @@ public class Database {
 	}
 	
 	public static void main(String[] args){
-		connect();
-//		update("INSERT INTO highscores (name, score) values ('Ferdi', 10000)");
-		ResultSet rs=query("SELECT * FROM highscores;");
 		try {
+			connect();
+//			reset();
+//			update("INSERT INTO highscores (level, name, score) values ('level 1', 'Ferdi', 10000);");
+			ResultSet rs = query("SELECT * FROM highscores;");
+			
 			while (rs.next()){
-				System.out.println(rs.getString("name"));
-				System.out.println(rs.getInt("score"));
+				String lvl = rs.getString("level");
+				String nm = rs.getString("name");
+				int sc = rs.getInt("score");
+				System.out.println("Level: " + lvl);
+				System.out.println("Name: " + nm);
+				System.out.println("Score: " + sc);
+				System.out.println();
 			}
+			rs.close();
+			stat.close();
+			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }

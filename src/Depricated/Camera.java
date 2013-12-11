@@ -1,4 +1,6 @@
-package Game;
+package Depricated;
+
+import Game.GameObject;
 
 /**
  * Camera represents the camera player in MazeRunner.
