@@ -1,6 +1,7 @@
 package Menu;
 import Game.*;
 import Utils.Chooser;
+import Utils.Sound;
 import Utils.Text;
 
 import java.util.ArrayList;

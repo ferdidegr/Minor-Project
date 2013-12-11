@@ -1,9 +1,9 @@
 package Menu;
 
 
+import Utils.Sound;
 import Utils.Text;
 import Game.Mazerunner;
-import Game.Sound;
 
 public class PauseMenu extends ButtonList{	
 	
