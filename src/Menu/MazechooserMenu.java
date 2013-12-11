@@ -2,10 +2,10 @@ package Menu;
 
 import java.io.File;
 import java.util.ArrayList;
-import static org.lwjgl.opengl.GL11.*;
 
+import static org.lwjgl.opengl.GL11.*;
 import Game.Mazerunner;
-import Game.Sound;
+import Utils.Sound;
 import Utils.Text;
 
 public class MazechooserMenu extends ButtonList{

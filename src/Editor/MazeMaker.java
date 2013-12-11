@@ -13,6 +13,7 @@ import org.lwjgl.opengl.Display;
 
 import Utils.Chooser;
 import Utils.IO;
+import Utils.Sound;
 import static org.lwjgl.opengl.GL11.*;
 
 
@@ -226,7 +227,7 @@ public class MazeMaker {
 						if(Mouse.isButtonDown(1)){rightID=ID;Button.setrightID(ID);}
 					}
 					System.out.println(ID);
-					sound.playButton();
+					sound.playEffect("button");
 					
 					break;							// if found no need to check others
 				}

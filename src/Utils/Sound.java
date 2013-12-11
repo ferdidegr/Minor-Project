@@ -1,4 +1,4 @@
-package Game;
+package Utils;
 
 import java.io.IOException;
 
@@ -13,6 +13,10 @@ public class Sound {
 	private static Audio button, jump;
 //	private static SoundStore sounds;
 
+	
+	/**
+	 * initialize and load all sounds and music
+	 */
 	public static void init() {
 
 		try {
@@ -27,10 +31,10 @@ public class Sound {
 		}
 	}
 
-	public static void playButton() {
-		button.playAsSoundEffect(1f, 0.1f, false);
-	}
-
+	/**
+	 * play a sound effect
+	 * @param string name of sound effect to be played
+	 */
 	public static void playEffect(String string) {
 		switch (string) {
 		case "button": button.playAsSoundEffect(1f, 0.1f, false);
@@ -38,6 +42,10 @@ public class Sound {
 		}
 	}
 
+	/**
+	 * play background music
+	 * @param string name of music to be played
+	 */
 	public static void playMusic(String string) {
 		switch (string) {
 		case "background_menu": background_menu.playAsMusic(1f, 1f, true);
@@ -45,14 +53,24 @@ public class Sound {
 		}
 	}
 
+	/**
+	 * exit and cleanup AL
+	 */
 	public static void exit() {
 		AL.destroy();
 	}
 	
+	/**
+	 * pause the current background music
+	 */
 	public static void pause(){
 		SoundStore.get().pauseLoop();
 	}
 	
+	
+	/**
+	 * restart the paused music
+	 */
 	public static void resume(){
 		SoundStore.get().restartLoop();
 	}
