@@ -32,12 +32,8 @@ public class PauseMenu extends ButtonList{
 		switch(buttonID){
 		
 		case 1:
-			if (Mazerunner.getSound()==true){
 			Sound.resume();
-			}
-			Menu.setState(GameState.GAME);
-			
-			
+			Menu.setState(GameState.GAME);			
 			break;
 			
 		case 2:
@@ -55,8 +51,6 @@ public class PauseMenu extends ButtonList{
 	public void display(){
 		super.display();
 		Text.draw(Menu.getScreenx()/2, 0, 30, "PAUSE");
-		if (Mazerunner.getSound()==true){
 		Sound.pause();
-		}
 	}
 }

@@ -1,15 +1,19 @@
 package Game;
 
+import Utils.Sound;
+
 public class Health {
 	private int health;
 	private int maxHealth;
+	private boolean isPlayer;
 	/**
 	 * 
 	 * @param health
 	 */
-	public Health(int health){
+	public Health(int health, boolean isPlayer){
 		setmaxHealth(health);
 		setHealth(health);
+		this.isPlayer=isPlayer;
 	}
 	/**
 	 * 
@@ -40,6 +44,9 @@ public class Health {
 		this.health+=addition;
 		if(health>maxHealth){
 			setHealth(maxHealth);
+		}
+		if (isPlayer && addition<0){
+			Sound.playEffect("hurt");
 		}
 	}
 }

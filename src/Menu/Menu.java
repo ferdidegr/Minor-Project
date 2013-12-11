@@ -51,9 +51,7 @@ public class Menu {
 		new Utils.Text();
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
-		if (Mazerunner.getSound()==true){
 		Sound.init();
-		}
 		new Textures();
 		initButtons();
 		run();
@@ -107,7 +105,7 @@ public class Menu {
 			
 	}
 	private static void cleanup() {
-		AL.destroy();
+		Sound.exit();
 		Display.destroy();
 	}
 

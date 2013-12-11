@@ -23,8 +23,6 @@ public class Mazerunner {
 	/*
 	 * Local Variables
 	 */
-	public static boolean soundon = false;
-	
 	private int screenWidth = 1280, screenHeight = 720;		// Deprecated
 	protected static Player player;									// The player object.
 	private UserInput input;								// The user input object that controls the player.
@@ -509,10 +507,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				 
 			 glEndList();			 
 				   
-		}
-		
-		public static boolean getSound(){
-			return soundon;
 		}
 		
 		public Player getPlayer(){return player;}

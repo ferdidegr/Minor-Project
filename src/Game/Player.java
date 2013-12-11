@@ -37,7 +37,7 @@ public class Player extends GameObject {
 	double tempVy =0 ;
 	double y_begin;
 	Vector velocity = new Vector(0, 0, 0);
-	private Health health = new Health(100);
+	private Health health = new Health(100, true);
 	private int immunitycounter = 0;
 	
 	/**
