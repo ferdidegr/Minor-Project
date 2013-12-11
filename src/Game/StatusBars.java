@@ -9,16 +9,23 @@ import org.lwjgl.opengl.Display;
 import Utils.Text;
 
 public class StatusBars {
-	private static int health, score;
-	private static int maxhealth = 100;
-	private static float squaresize = 1f;
+	private int health, score;
+	private int maxhealth = 100;
+	private float squaresize = 1f;
+	private Player player;
 	
-	public static void init(int hp, int sc) {
-		setHealth(hp);
+	public void init(int hp, int sc, Player player) {
+//		setHealth(hp);
 		setScore(sc);
+		setPlayer(player);
 	}
 
-	public static void draw(){
+	private void setPlayer(Player player) {
+		this.player = player;
+		
+	}
+
+	public void draw(){
 		
 		float barwidth = (maxhealth + 2) * squaresize;		
 		
@@ -46,7 +53,7 @@ public class StatusBars {
 		glTranslatef(-barwidth, 10.0f, 0.0f);
 		
 		for (int i=0; i<barwidth; i++){
-			if(i<= health && i>0){
+			if(i<= player.getHealth().getHealth() && i>0){
 				glColor4f(0.0f, 1.0f, 0.0f, 0.7f);
 			}else {
 				glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
@@ -65,7 +72,7 @@ public class StatusBars {
 		glPopMatrix();
 	}
 	
-	public static void drawBlock(){
+	public void drawBlock(){
 		glBegin(GL_QUADS);
 		glVertex2f(0.0f, 0.0f);
 		glVertex2f(squaresize, 0.0f);
@@ -73,7 +80,7 @@ public class StatusBars {
 		glVertex2f(0.0f, -10.0f);
 		glEnd();
 	}
-	public static void drawBorder(){
+	public void drawBorder(){
 		glBegin(GL_QUADS);
 		glVertex2f(0.0f, 0.0f);
 		glVertex2f(squaresize, 0.0f);
@@ -82,31 +89,31 @@ public class StatusBars {
 		glEnd();
 	}
 	
-	public static void addHealth(int hp){
-		System.out.println("add health");
-		if((health + hp) <= maxhealth){
-			health += hp;
-		}
-		else health=maxhealth;
-	}
-	
-	public static void minHealth(int hp){
-		System.out.println("min health");
-		if((health - hp) >= 0){
-			health -= hp;
-		} else {
-			Mazerunner.isdood = true;
-		}
-	}
-	
-	public static void addScore(int sc){
+//	public static void addHealth(int hp){
+//		System.out.println("add health");
+//		if((health + hp) <= maxhealth){
+//			health += hp;
+//		}
+//		else health=maxhealth;
+//	}
+//	
+//	public static void minHealth(int hp){
+//		System.out.println("min health");
+//		if((health - hp) >= 0){
+//			health -= hp;
+//		} else {
+//			Mazerunner.isdood = true;
+//		}
+//	}
+//	
+	public void addScore(int sc){
 		System.out.println("add score");
 		score += sc;
 	}
-	
-	public static int getHealth() {return health;}
-	public static void setHealth(int hp) {health = hp;}
+//	
+//	public static int getHealth() {return health;}
+//	public static void setHealth(int hp) {health = hp;}
 
-	public static int getScore() {return score;}
-	public static void setScore(int sc) {score = sc;}
+	public int getScore() {return score;}
+	public void setScore(int sc) {score = sc;}
 }

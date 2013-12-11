@@ -36,10 +36,10 @@ public class Pickup extends levelObject {
 	public void effect(){
 		System.out.println("effect!");
 		switch(this.type){
-		case 0: {StatusBars.addHealth(30);break;}
-		case 1: {StatusBars.minHealth(30);break;}
-		case 2: {StatusBars.addScore(50);break;}
-		case 3: {StatusBars.addScore(-50);break;}
+		case 0: {Mazerunner.player.getHealth().addHealth(30);break;}
+		case 1: {Mazerunner.player.getHealth().addHealth(-30);break;}
+		case 2: {Mazerunner.status.addScore(50);break;}
+		case 3: {Mazerunner.status.addScore(-50);break;}
 		}
 	}
 

@@ -26,7 +26,7 @@ public class Mazerunner {
 	public static boolean soundon = false;
 	
 	private int screenWidth = 1280, screenHeight = 720;		// Deprecated
-	public Player player;									// The player object.
+	protected static Player player;									// The player object.
 	private UserInput input;								// The user input object that controls the player.
 	public static int[][] maze; 								// The maze.
 	
@@ -45,6 +45,7 @@ public class Mazerunner {
 	protected static int[][] objectindex;							// reference to the arraylist entry
 	protected static int SQUARE_SIZE=1;								// Size of a unit block
 	protected static int timer = 0;
+	protected static StatusBars status = new StatusBars();
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
@@ -124,7 +125,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	pickuplijst = new ArrayList<Pickup>();
 	
 	minimap = new MiniMap(maze);		//load the minimap
-	StatusBars.init(100, 0);
+	
 		
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
@@ -180,6 +181,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	pickuplijst.add(new Pickup(SQUARE_SIZE*2,SQUARE_SIZE,SQUARE_SIZE*2,0,SQUARE_SIZE/4f));
 	pickuplijst.add(new Pickup(SQUARE_SIZE*18,SQUARE_SIZE,SQUARE_SIZE*18,1,SQUARE_SIZE/4f));
 	
+	status.init(100, 0, player);
 
 }
 /*
@@ -349,7 +351,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glPushAttrib(GL_ENABLE_BIT);
 		changetoHUD();		
 		
-		StatusBars.draw();		
+		status.draw();		
 
 		minimap.draw(player,monsterlijst,SQUARE_SIZE);
 
@@ -512,6 +514,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		public static boolean getSound(){
 			return soundon;
 		}
+		
+		public Player getPlayer(){return player;}
 	}
 
 

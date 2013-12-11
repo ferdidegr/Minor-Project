@@ -37,6 +37,7 @@ public class Player extends GameObject {
 	double tempVy =0 ;
 	double y_begin;
 	Vector velocity = new Vector(0, 0, 0);
+	private Health health = new Health(100);
 	
 	/**
 	 * The Player constructor.
@@ -164,6 +165,7 @@ public class Player extends GameObject {
 	 */
 	public void update(int deltaTime)
 	{
+		System.out.println(health.getHealth());
 
 		if (control != null)
 		{
@@ -268,7 +270,7 @@ public class Player extends GameObject {
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz+pw)
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
 				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){
-					if(tempobj instanceof Spikes){control.jump=true;spikejump=true;}
+					if(tempobj instanceof Spikes){control.jump=true;spikejump=true;health.addHealth(-10);}
 					colY=true;
 					locationY+=tempobj.getmaxDistY(locationY-ph);
 				}				
@@ -362,4 +364,6 @@ public class Player extends GameObject {
 		glEnd();
 		glEnable(GL_LIGHTING);
 	}
+	
+	public Health getHealth(){return health;}
 }

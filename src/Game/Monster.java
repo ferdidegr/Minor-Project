@@ -63,7 +63,7 @@ public class Monster extends levelObject{
 			isDead = true;
 			Count = 0;
 			System.out.println("Monster is dood");
-			StatusBars.addScore(100);
+			Mazerunner.status.addScore(100);
 		} else {
 		
 			//Check the count, to know whether the monster has been stuck for a while, or can see the player
