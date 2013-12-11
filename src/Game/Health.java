@@ -49,4 +49,8 @@ public class Health {
 			Sound.playEffect("hurt");
 		}
 	}
+	
+	public int getmaxHealth(){
+		return maxHealth;
+	}
 }

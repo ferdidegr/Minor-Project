@@ -9,111 +9,63 @@ import org.lwjgl.opengl.Display;
 import Utils.Text;
 
 public class StatusBars {
-	private int health, score;
-	private int maxhealth = 100;
-	private float squaresize = 1f;
+	private int score;	
 	private Player player;
-	
-	public void init(int hp, int sc, Player player) {
-//		setHealth(hp);
+	private DecimalFormat df = new DecimalFormat("00");
+	public void init(int sc, Player player) {
 		setScore(sc);
 		setPlayer(player);
 	}
-
+	/**
+	 * Give the status bar access to the player object, this is needed to retrieve the health of the player
+	 * @param player
+	 */
 	private void setPlayer(Player player) {
-		this.player = player;
-		
+		this.player = player;		
 	}
-
+	/**
+	 * Draw the health bar and all other overlay
+	 */
 	public void draw(){
 		
-		float barwidth = (maxhealth + 2) * squaresize;		
+		double barwidth = 150* Display.getWidth()/1024f;		// Bar width in pixels
+		int borderwidth = 2;									// Border width in pixels
+		double dwidth = Display.getWidth();						// get current display width
+		int plhealth = player.getHealth().getHealth();
+		double healthwidth = (barwidth - 2* borderwidth)*plhealth/player.getHealth().getmaxHealth();
+		float fontSize = 15 * Display.getWidth() / 1024f;
+		double height = Text.getHeight(fontSize);
+		double width = Text.getWidth(fontSize, "WWWWWWWWWWWWWWWWWWWWWWW");
+		double healthtextwidth = Text.getWidth(fontSize, plhealth+"/100");
+		int second = Mazerunner.timer/1000 % 60;
+		int minute = Mazerunner.timer/1000 / 60;
+		
 		
 		glPushMatrix();
 		glLoadIdentity();
-		float fontSize = 15 * Display.getWidth() / 1024f;
-		double height = Text.getHeight(fontSize);
-		double width = Text.getWidth(fontSize, "Textbreedthe lalalalalalalaa");
-		int second = Mazerunner.timer/1000 % 60;
-		int minute = Mazerunner.timer/1000 / 60;
-		DecimalFormat df = new DecimalFormat("00");
 		
-		Text.draw((float)(Display.getWidth() - width), (float)(height), fontSize, "Time:  " + minute + ":" + df.format(second));
-		Text.draw((float)(Display.getWidth() - width), (float)(2*height), fontSize, "Health:");
-		Text.draw((float)(Display.getWidth() - width), (float)(3*height), fontSize, "Score:  " + score);
-		Text.draw((float)(Display.getWidth() - width), (float)(4*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size());
+		Text.draw((float)(dwidth - Text.getWidth(fontSize, "10:00"))/2, (float)(height), fontSize, "Time:  " + minute + ":" + df.format(second));
+		Text.draw((float) (dwidth*0.8+barwidth-healthtextwidth), (float)(height), fontSize, plhealth +"/"+ player.getHealth().getmaxHealth());
+		Text.draw((float)(dwidth - width), (float)(2*height), fontSize, "Health:");
+		Text.draw((float)(dwidth - width), (float)(3*height), fontSize, "Score:  " + score);
+		Text.draw((float)(dwidth - width), (float)(4*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size());
 		
-		glTranslatef((float)(Display.getWidth()-1.5*barwidth), 50f,0);
-		
-		for (int i=0; i<(maxhealth +2); i++){
-			glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
-			drawBorder();
-			glTranslatef(1f,0,0);
-		}
-		glTranslatef(-barwidth, 10.0f, 0.0f);
-		
-		for (int i=0; i<barwidth; i++){
-			if(i<= player.getHealth().getHealth() && i>0){
-				glColor4f(0.0f, 1.0f, 0.0f, 0.7f);
-			}else {
-				glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
-			}
-			drawBlock();
-			glTranslatef(1f,0,0);
-		}
-		glTranslatef(-barwidth, 1.0f, 0.0f);
-		
-		for (int i=0; i<(maxhealth +2); i++){
-			glColor4f(0.0f, 0.0f, 0.0f, 0.0f);
-			drawBorder();
-			glTranslatef(1f,0,0);
-		}
+		glColor4d(0, 0, 0, 1);
+		glRectd(dwidth*0.8, 2.1*height,dwidth*0.8+barwidth, 2.9*height);
+		glColor4d(0, 1, 0, 1);
+		glRectd(dwidth*0.8+borderwidth, 2.1*height+borderwidth,dwidth*0.8+borderwidth+healthwidth, 2.9*height-borderwidth);
 		
 		glPopMatrix();
 	}
-	
-	public void drawBlock(){
-		glBegin(GL_QUADS);
-		glVertex2f(0.0f, 0.0f);
-		glVertex2f(squaresize, 0.0f);
-		glVertex2f(squaresize, -10.0f);
-		glVertex2f(0.0f, -10.0f);
-		glEnd();
-	}
-	public void drawBorder(){
-		glBegin(GL_QUADS);
-		glVertex2f(0.0f, 0.0f);
-		glVertex2f(squaresize, 0.0f);
-		glVertex2f(squaresize, -1.0f);
-		glVertex2f(0.0f, -1.0f);
-		glEnd();
-	}
-	
-//	public static void addHealth(int hp){
-//		System.out.println("add health");
-//		if((health + hp) <= maxhealth){
-//			health += hp;
-//		}
-//		else health=maxhealth;
-//	}
-//	
-//	public static void minHealth(int hp){
-//		System.out.println("min health");
-//		if((health - hp) >= 0){
-//			health -= hp;
-//		} else {
-//			Mazerunner.isdood = true;
-//		}
-//	}
-//	
+	/**
+	 * method to add score (Needs a better place to implement
+	 * @param sc
+	 */
 	public void addScore(int sc){
 		System.out.println("add score");
 		score += sc;
 	}
-//	
-//	public static int getHealth() {return health;}
-//	public static void setHealth(int hp) {health = hp;}
-
+	
 	public int getScore() {return score;}
 	public void setScore(int sc) {score = sc;}
 }

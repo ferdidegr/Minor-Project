@@ -179,7 +179,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	pickuplijst.add(new Pickup(SQUARE_SIZE*2,SQUARE_SIZE,SQUARE_SIZE*2,0,SQUARE_SIZE/4f));
 	pickuplijst.add(new Pickup(SQUARE_SIZE*18,SQUARE_SIZE,SQUARE_SIZE*18,1,SQUARE_SIZE/4f));
 	
-	status.init(100, 0, player);
+	status.init( 0, player);
 
 }
 /*
