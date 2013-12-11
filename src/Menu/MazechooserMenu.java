@@ -61,6 +61,8 @@ public class MazechooserMenu extends ButtonList{
 				e.printStackTrace();
 			}
 			glPopMatrix();			
+		}else{
+			Menu.setState(GameState.MAIN);
 		}
 	}
 	

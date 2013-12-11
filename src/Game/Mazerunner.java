@@ -48,7 +48,7 @@ public class Mazerunner {
 	
 	protected static boolean isdood;
 	private MiniMap minimap;								// The minimap object.
-	private String level = "levels/GOED.maze";
+	private String level;
 	private int objectDisplayList = glGenLists(1);
 	
 	private FloatBuffer projectionWorld, projectionHUD;			// Buffer for the projection matrices
@@ -221,7 +221,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		// Set and enable the lighting.
 		
 		 	lightPosition = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(maze[0].length*SQUARE_SIZE+500).put(210f).put(maze.length*SQUARE_SIZE/2f).put(1.0f).flip();	// High up in the sky!
-	        FloatBuffer lightColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();		// White light!
+
+		 	FloatBuffer lightColour = (FloatBuffer) BufferUtils.createFloatBuffer(4).put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();		// White light!
 	        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	// Note that we're setting Light0.
 	        glLight( GL_LIGHT0, GL_AMBIENT, lightColour);
 	        

@@ -148,7 +148,7 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void ButtonActions(){
-		int ID = 0;
+		int ID = -1;
 		switch(gamestate){
 		
 		case SETTINGS:

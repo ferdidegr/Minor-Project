@@ -42,7 +42,7 @@ public abstract class ButtonList {
 	 * @return
 	 */
 	public int checkButtons(int top) {
-		int buttonID = 0;
+		int buttonID = -1;
 		for(MenuButton knop:lijst){
 			if(knop.isButton(Mouse.getX(), top - Mouse.getY()))
 			{buttonID = knop.getID();break;}
