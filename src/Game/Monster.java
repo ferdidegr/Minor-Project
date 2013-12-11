@@ -62,6 +62,7 @@ public class Monster extends levelObject{
 		if(locationY<-5){
 			isDead = true;
 			Count = 0;
+			//Intelligence.addAvoid(playerloc);
 			System.out.println("Monster is dood");
 			Mazerunner.status.addScore(100);
 		} else {
@@ -81,6 +82,8 @@ public class Monster extends levelObject{
 			dir.normalize2D();
 		
 			updateV(deltaTime);
+			
+			avoidPlayer();
 		
 			collision();
 		
@@ -100,6 +103,12 @@ public class Monster extends levelObject{
 		if(Count > 200 | playerSight()){
 			followplayer = !followplayer;
 			Count = 0;
+		}
+	}
+	
+	public void avoidPlayer(){
+		if(Intelligence.inAvoidArea(playerloc)){
+			dir.scale(0);
 		}
 	}
 	
