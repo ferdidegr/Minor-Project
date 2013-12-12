@@ -27,7 +27,7 @@ public class AvoidArea {
 	 */
 	public boolean isForgotten(){
 			long currentTime = Calendar.getInstance().getTimeInMillis();
-			if((currentTime - startTime) < forgetTime){
+			if((currentTime - startTime) > forgetTime){
 				return true;
 			} else { return false;}
 	}

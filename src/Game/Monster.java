@@ -24,12 +24,14 @@ public class Monster extends levelObject{
 	private int Count = 0;
 	public boolean isDead = false;
 	private boolean PlayerinSight=true;
+	private boolean  wait;
 	
 	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
 		super(x, y, z);
 		this.width = width;
 		this.height= height;
 		this.SQUARE_SIZE  =SQUARE_SIZE;
+		wait = false;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -63,7 +65,7 @@ public class Monster extends levelObject{
 			isDead = true;
 			Count = 0;
 			
-			Intelligence.addAvoid(new Vector(locationX, locationY, locationZ));
+			Intelligence.addAvoid(playerloc.clone());
 			System.out.println("Monster is dood");
 			Mazerunner.status.addScore(100);
 		} else {
@@ -82,7 +84,7 @@ public class Monster extends levelObject{
 			dir.normalize2D();
 			
 			avoidPlayer();
-		
+			
 			updateV(deltaTime);
 			
 		
@@ -107,10 +109,15 @@ public class Monster extends levelObject{
 		}
 	}
 	
+	/**
+	 * Wanneer het monster in een gebied staat dat vermeden dient te worden, draait hij om.
+	 */
 	public void avoidPlayer(){
-		if(Intelligence.inAvoidArea(new Vector(locationX, locationY, locationZ))){
+		wait = false;
+		if(Intelligence.inAvoidArea(playerloc.clone())){
 			System.out.println("Weg hier!");
 			dir.scale(-1);
+			wait = true;
 		}
 	}
 	
@@ -343,7 +350,8 @@ public class Monster extends levelObject{
 	public void updateV(int deltaTime){
 		
 		velocity.scale(0.0);
-		// Movement to player
+		// Movement to dir vector
+		if(!wait)		
 		velocity.add(dir.getX()*speed * deltaTime*0.5, -0.005*deltaTime, dir.getZ()*speed * deltaTime*0.5);
 	}
 	
@@ -359,7 +367,7 @@ public class Monster extends levelObject{
 			glPushMatrix();
 			
 			glTranslated(locationX, locationY, locationZ);
-			if(!isStuck())
+			if(!isStuck() && !wait)
 			rotateV();
 	
 			glCallList(Models.monster);
