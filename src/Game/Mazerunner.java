@@ -364,11 +364,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	}
 	
 	public void drawglare(){
-		double horanglerad = Math.toRadians(player.getHorAngle()+90);
-		double veranglerad = Math.toRadians(player.getVerAngle());
-		
-		Vector playerlookat = new Vector(Math.cos(horanglerad), Math.sin(veranglerad), -Math.sin(horanglerad));
-		playerlookat.normalize();
+
 		
 		Vector playertosun = new Vector(lightPosition.get(0)-player.locationX,lightPosition.get(1)-player.locationY,lightPosition.get(2)-player.locationZ);
 		playertosun.normalize();
@@ -376,7 +372,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		/*
 		 * Please use odd numbers
 		 */
-		float factor = (float) Math.pow(playerlookat.dotprod(playertosun),25);
+		float factor = (float) Math.pow(player.lookat().dotprod(playertosun),25);
 		
 		changetoHUD();
 		glEnable(GL_BLEND);

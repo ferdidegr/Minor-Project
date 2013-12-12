@@ -415,6 +415,16 @@ public class Player extends GameObject {
 		spikejump=true;		
 	}
 	
+	public Vector lookat(){
+		double horanglerad = Math.toRadians(getHorAngle()+90);
+		double veranglerad = Math.toRadians(getVerAngle());
+		
+		Vector playerlookat = new Vector(Math.cos(horanglerad), Math.sin(veranglerad), -Math.sin(horanglerad));
+		playerlookat.normalize();
+		
+		return playerlookat;
+	}
+	
 	public Health getHealth(){return health;}
 	public int getRunMod(){return runcounter;}
 }
