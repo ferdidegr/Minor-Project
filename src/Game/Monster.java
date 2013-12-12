@@ -62,14 +62,14 @@ public class Monster extends levelObject{
 		if(locationY<-5){
 			isDead = true;
 			Count = 0;
-			//Intelligence.addAvoid(playerloc);
+			
+			Intelligence.addAvoid(new Vector(locationX, locationY, locationZ));
 			System.out.println("Monster is dood");
 			Mazerunner.status.addScore(100);
 		} else {
 		
 			//Check the count, to know whether the monster has been stuck for a while, or can see the player
 			checkSituation();
-		
 		
 			if(followplayer){
 				dirToPlayer();
@@ -80,10 +80,11 @@ public class Monster extends levelObject{
 			avoidWalls();
 		
 			dir.normalize2D();
+			
+			avoidPlayer();
 		
 			updateV(deltaTime);
 			
-//			avoidPlayer();
 		
 			collision();
 		
@@ -107,19 +108,9 @@ public class Monster extends levelObject{
 	}
 	
 	public void avoidPlayer(){
-		if(Intelligence.inAvoidArea(playerloc)){
-			dir.scale(0);
+		if(Intelligence.inAvoidArea(new Vector(locationX, locationY, locationZ))){
+			dir.scale(-1);
 		}
-	}
-	
-	/**
-	 * Voert een random walk uit. Wanneer er sprake is van collision wordt de richting
-	 * veranderd, anders loopt monster door.
-	 */
-	public boolean deathCount(){
-		Count++;
-		System.out.println(Count);
-		return Count < 100000  ;
 	}
 	
 	/**
@@ -301,17 +292,6 @@ public class Monster extends levelObject{
 			}
 		}
 		
-		for(Monster mo:Mazerunner.deathlist){
-			if(mo.deathCount()){
-				if(mo.isCollision(px+velocity.getX()+pw*signX*3, py-ph/2f, pz+pw)
-				|| mo.isCollision(px+velocity.getX()+pw*signX*3, py-ph/2f, pz-pw)){
-					maxX=Math.min(maxX, mo.getmaxDistX(locationX+pw*signX));
-					colX=true;
-					
-				}
-			}
-		}
-		
 		if(colX){locationX+=maxX;}else{updateX();}		
 		px = locationX;
 		
@@ -338,17 +318,7 @@ public class Monster extends levelObject{
 				}
 			}
 		}
-		
-		for(Monster mo:Mazerunner.deathlist){
-			if(mo.deathCount()){
-				if(mo.isCollision(px+pw, py-ph/2f, pz+pw*3*signZ+velocity.getZ())
-				|| mo.isCollision(px-pw, py-ph/2f, pz+pw*3*signZ+velocity.getZ())){
-					maxZ=Math.min(maxZ, mo.getmaxDistZ(locationZ+pw*signZ));
-					colZ=true;
-					
-				}
-			}
-		}
+	
 		if(colZ){locationZ+=maxZ;}else{	updateZ();}
 		pz= getLocationZ();
 		
