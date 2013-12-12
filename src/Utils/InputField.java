@@ -1,4 +1,5 @@
 package Utils;
+
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.input.Keyboard;
@@ -74,8 +75,8 @@ public class InputField {
 	/*
 	 * Getters and setters
 	 */
-	public void setStringlength(int Stringlength){	this.Stringlength = Stringlength;	}
-	public void setFontsize(int Fontsize){ this.Fontsize = Fontsize;}
+	public void setStringlength(int Stringlength){this.Stringlength = Stringlength;}
+	public void setFontsize(int Fontsize){this.Fontsize = Fontsize;}
 	public void setX(int x){this.x = x;}
 	public void setY(int y){this.y = y;}
 }
