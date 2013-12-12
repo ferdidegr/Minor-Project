@@ -39,6 +39,7 @@ public class Player extends GameObject {
 	Vector velocity = new Vector(0, 0, 0);
 	private Health health = new Health(100, true);
 	private int immunitycounter = 0;
+	private int runcounter = 1000;
 	
 	/**
 	 * The Player constructor.
@@ -166,11 +167,14 @@ public class Player extends GameObject {
 	 */
 	public void update(int deltaTime)
 	{	
-		// TODO remove
-		System.out.println(health.getHealth());
+		
+		
 		// Update immunity counter when you are hit, only when you are hit
 		if(immunitycounter>0)immunitycounter+=deltaTime;
 		if(immunitycounter>1000)immunitycounter=0;
+		// Update run modifier
+		runcounter = Math.min(runcounter+deltaTime, 1000);
+		
 		
 		if (control != null)
 		{
@@ -194,8 +198,9 @@ public class Player extends GameObject {
 			}
 			
 					
-			if (control.getRun()){
+			if (control.getRun() && runcounter > 0){
 				run = 2;
+				runcounter -= 2*deltaTime;
 			} else{
 				run =1;
 			}
