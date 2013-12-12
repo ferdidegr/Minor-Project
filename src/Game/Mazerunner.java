@@ -123,6 +123,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	deathlist = new ArrayList<Monster>();
 	hatch = new ArrayList<Hatch>();
 	pickuplijst = new ArrayList<Pickup>();
+	Intelligence.init();
 	
 	minimap = new MiniMap(maze);		//load the minimap
 	
@@ -319,6 +320,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        for(Monster mo: deathlist){	
 		        	monsterlijst.remove(mo);	        	
 		        }
+		        deathlist.clear();
 		        
 		        // Pickups
 		        ArrayList<Pickup> rmpu = new ArrayList<Pickup>();
