@@ -19,6 +19,7 @@ import static org.lwjgl.opengl.GL11.*;
 public class Menu {
 	
 	private static GameState gamestate;
+	public static Difficulty difficulty;
 	public static Mazerunner game;
 	private static MainMenu main = new MainMenu();
 	private static Settings sets = new Settings();
@@ -40,6 +41,7 @@ public class Menu {
 	 */
 	public static void start() throws LWJGLException{
 		gamestate = GameState.MAIN;
+		difficulty = Difficulty.EASY;
 
 		Chooser keuze = new Chooser(true);
 		while(keuze.getDisplay()==null){
@@ -359,6 +361,9 @@ public class Menu {
 	 */
 	public static GameState getState() {return gamestate;}
 	public static void setState(GameState state) {gamestate = state;}
+	
+	public static Difficulty getDifficulty() {return difficulty;}
+	public static void setDifficulty(Difficulty dif) {difficulty = dif;}
 	
 	public static int getScreeny() {return screeny;}
 	public static int getScreenx() {return screenx;}

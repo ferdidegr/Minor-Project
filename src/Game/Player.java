@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import org.xml.sax.InputSource;
 
 import Utils.Vector;
+import Menu.Difficulty;
+import Menu.Menu;
 
 
 /**
@@ -37,7 +39,7 @@ public class Player extends GameObject {
 	double tempVy =0 ;
 	double y_begin;
 	Vector velocity = new Vector(0, 0, 0);
-	private Health health = new Health(100, true);
+	private Health health;
 	private int immunitycounter = 0;
 	private int runcounter = 1000;
 	
@@ -64,6 +66,19 @@ public class Player extends GameObject {
 		setSpeed(0.005);
 		setHeight(height);
 		setWidth(width);
+		Difficulty diff = Menu.getDifficulty();
+		switch(diff){
+		case EASY: health =  new Health(200, true);
+		break;
+		case MEDIUM: health = new Health(100, true);
+		break;
+		case HARD: health = new Health(50, true);
+		break;
+		case INSANE: health = new Health(10, true);
+		break;
+		default: health = new Health(100, true);
+		break;
+		}
 	}
 	
 	/**
