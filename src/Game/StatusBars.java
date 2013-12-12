@@ -33,10 +33,15 @@ public class StatusBars {
 		double dwidth = Display.getWidth();						// get current display width
 		int plhealth = player.getHealth().getHealth();
 		double healthwidth = (barwidth - 2* borderwidth)*plhealth/player.getHealth().getmaxHealth();
+		
+		double runperc = (double)player.getRunMod()/player.runcountermax;
+		double runwidth = (barwidth - 2* borderwidth)*runperc;
+		
 		float fontSize = 15 * Display.getWidth() / 1024f;
 		double height = Text.getHeight(fontSize);
 		double width = Text.getWidth(fontSize, "WWWWWWWWWWWWWWWWWWWWWWW");
 		double healthtextwidth = Text.getWidth(fontSize, plhealth+"/100");
+		double runtextwidth = Text.getWidth(fontSize, (int)(Math.max(runperc*100,0))+"%");
 		int second = Mazerunner.timer/1000 % 60;
 		int minute = Mazerunner.timer/1000 / 60;
 		
@@ -47,13 +52,25 @@ public class StatusBars {
 		Text.draw((float)(dwidth - Text.getWidth(fontSize, "10:00"))/2, (float)(height), fontSize, "Time:  " + minute + ":" + df.format(second));
 		Text.draw((float) (dwidth*0.8+barwidth-healthtextwidth), (float)(height), fontSize, plhealth +"/"+ player.getHealth().getmaxHealth());
 		Text.draw((float)(dwidth - width), (float)(2*height), fontSize, "Health:");
-		Text.draw((float)(dwidth - width), (float)(3*height), fontSize, "Score:  " + score);
-		Text.draw((float)(dwidth - width), (float)(4*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size());
+		Text.draw((float) (dwidth*0.8+barwidth-runtextwidth), (float)(3*height), fontSize, (int)(Math.max(runperc*100,0))+"%");
+		Text.draw((float)(dwidth - width), (float)(4*height), fontSize, "Fatigue:");
+		Text.draw((float)(dwidth - width), (float)(5*height), fontSize, "Score:  " + score);
+		Text.draw((float)(dwidth - width), (float)(6*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size());
 		
+		/*
+		 * Draw the health bar
+		 */
 		glColor4d(0, 0, 0, 1);
 		glRectd(dwidth*0.8, 2.1*height,dwidth*0.8+barwidth, 2.9*height);
 		glColor4d(0, 1, 0, 1);
 		glRectd(dwidth*0.8+borderwidth, 2.1*height+borderwidth,dwidth*0.8+borderwidth+healthwidth, 2.9*height-borderwidth);
+		/*
+		 * Draw the run bar
+		 */
+		glColor4d(0, 0, 0, 1);
+		glRectd(dwidth*0.8, 4.1*height,dwidth*0.8+barwidth, 4.9*height);
+		glColor4d(1, 1, 0, 1);
+		glRectd(dwidth*0.8+borderwidth, 4.1*height+borderwidth,dwidth*0.8+borderwidth+runwidth, 4.9*height-borderwidth);
 		
 		glPopMatrix();
 	}

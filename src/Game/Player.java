@@ -4,8 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 
-import org.xml.sax.InputSource;
-
 import Utils.Vector;
 
 
@@ -40,6 +38,7 @@ public class Player extends GameObject {
 	private Health health = new Health(100, true);
 	private int immunitycounter = 0;
 	private int runcounter = 1000;
+	protected final int runcountermax = 1000;
 	
 	/**
 	 * The Player constructor.
@@ -173,8 +172,9 @@ public class Player extends GameObject {
 		if(immunitycounter>0)immunitycounter+=deltaTime;
 		if(immunitycounter>1000)immunitycounter=0;
 		// Update run modifier
-		runcounter = Math.min(runcounter+deltaTime, 1000);
-		
+		runcounter = (int) Math.min(runcounter+0.1*deltaTime, 1000);
+		// TODO remove
+		System.out.println(runcounter);
 		
 		if (control != null)
 		{
@@ -200,7 +200,7 @@ public class Player extends GameObject {
 					
 			if (control.getRun() && runcounter > 0){
 				run = 2;
-				runcounter -= 2*deltaTime;
+				runcounter -= deltaTime;
 			} else{
 				run =1;
 			}
@@ -401,4 +401,5 @@ public class Player extends GameObject {
 	}
 	
 	public Health getHealth(){return health;}
+	public int getRunMod(){return runcounter;}
 }
