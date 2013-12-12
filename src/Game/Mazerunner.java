@@ -342,7 +342,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        glPopMatrix();
 		        player.draw();
 		        
-		        if (monsterlijst.size() == 0) {
+		        if (monsterlijst.size() == 0 && !isdood) {
 		    		Menu.setState(GameState.SUCCES);
 		        }
 	}
