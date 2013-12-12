@@ -91,6 +91,9 @@ public void start(String levelname) throws ClassNotFoundException, IOException{
 		// Update all objects in the maze
 		updateMovement();
 		
+		// Update intelligence
+		Intelligence.update();
+		
 		// Draw objects on screen
 		display();
 		

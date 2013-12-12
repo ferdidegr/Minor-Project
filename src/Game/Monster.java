@@ -109,6 +109,7 @@ public class Monster extends levelObject{
 	
 	public void avoidPlayer(){
 		if(Intelligence.inAvoidArea(new Vector(locationX, locationY, locationZ))){
+			System.out.println("Weg hier!");
 			dir.scale(-1);
 		}
 	}

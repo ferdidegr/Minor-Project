@@ -10,14 +10,21 @@ public class AvoidArea {
 	public long forgetTime = 60000;
 	public double radius = 2;
 	
+	/**
+	 *  De avoidarea wordt gemaakt om een gegeven locatie heen. Huidige tijd wordt opgeslagen als starttijd.
+	 * @param loc
+	 */
 	public AvoidArea(Vector loc){
-		System.out.println("AvoidArea gemaakt");
 		double x = loc.getX();
 		double z = loc.getZ();
 		location = new Vector(x,0,z);
 		startTime = Calendar.getInstance().getTimeInMillis();
 	}
 	
+	/**
+	 * Checkt of het verschil tussen de huidige tijd en de starttijd niet groter is dan de vergeettijd.
+	 * @return
+	 */
 	public boolean isForgotten(){
 			long currentTime = Calendar.getInstance().getTimeInMillis();
 			if((currentTime - startTime) < forgetTime){
@@ -25,6 +32,11 @@ public class AvoidArea {
 			} else { return false;}
 	}
 	
+	/**
+	 * Geeft true wanneer een gegeven vector (locatie) zich in de area bevindt.
+	 * @param vec
+	 * @return
+	 */
 	public boolean inArea(Vector vec){
 		if(location.distance(vec) < radius){
 			return true;
