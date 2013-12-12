@@ -83,32 +83,33 @@ public class UserInput extends Control
 		        	dX=0;
 		        	dY=0;
 		        	}
-				if (Keyboard.getEventKey() == Keyboard.KEY_W) {   forward = true;}
-				if (Keyboard.getEventKey() == Keyboard.KEY_S) {   back = true; 	}
-				if (Keyboard.getEventKey() == Keyboard.KEY_A) {   left = true;  }
-				if (Keyboard.getEventKey() == Keyboard.KEY_D) {   right = true;	}
-				if (Keyboard.getEventKey() == Keyboard.KEY_LSHIFT) {    run = true;	}
-				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE){	jump = true;}
-				if(Keyboard.getEventKey() == Keyboard.KEY_F1){	view_coord = true;}
-				if(Keyboard.getEventKey() == Keyboard.KEY_E){lookback = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_W) {forward = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_S) {back = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_A) {left = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_D) {right = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_LSHIFT) {run = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE) {jump = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_F1) {view_coord = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_E) {lookback = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_L) {Menu.setState(GameState.SUCCES);}
 		    } else {
 		    	/*
 		    	 * Key Released events
 		    	 */
-		        if (Keyboard.getEventKey() == Keyboard.KEY_W) {   forward=false;}
-		    	if (Keyboard.getEventKey() == Keyboard.KEY_S) {   back=false;  	}
-		    	if (Keyboard.getEventKey() == Keyboard.KEY_A) {   left = false; }
-				if (Keyboard.getEventKey() == Keyboard.KEY_D) {   right = false;}
+		        if (Keyboard.getEventKey() == Keyboard.KEY_W) {forward=false;}
+		    	if (Keyboard.getEventKey() == Keyboard.KEY_S) {back=false;}
+		    	if (Keyboard.getEventKey() == Keyboard.KEY_A) {left = false;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_D) {right = false;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_LSHIFT) {run = false;}
-				if(Keyboard.getEventKey() == Keyboard.KEY_F12){
+				if (Keyboard.getEventKey() == Keyboard.KEY_F12){
 					Fullscreen.setDisplayMode(Display.getWidth(), Display.getHeight(), true);
 				}
-				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE){jump = false;	}
-				if(Keyboard.getEventKey() == Keyboard.KEY_F1){view_coord = false;}
-				if(Keyboard.getEventKey() == Keyboard.KEY_E){lookback = false;}
-				if(Keyboard.getEventKey()== Keyboard.KEY_F2){debug = !debug;}
-				if(Keyboard.getEventKey()== Keyboard.KEY_M){minimap = ! minimap;}
-				if(Keyboard.getEventKey()==Keyboard.KEY_Q){triggered = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE) {jump = false;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_F1) {view_coord = false;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_E) {lookback = false;}
+				if (Keyboard.getEventKey()== Keyboard.KEY_F2) {debug = !debug;}
+				if (Keyboard.getEventKey()== Keyboard.KEY_M) {minimap = ! minimap;}
+				if (Keyboard.getEventKey()==Keyboard.KEY_Q) {triggered = true;}
 				if(Keyboard.getEventKey()==Keyboard.KEY_H){Mazerunner.player.getHealth().addHealth(100000);}
 				
 		    }
