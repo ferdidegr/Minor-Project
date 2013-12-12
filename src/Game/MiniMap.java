@@ -2,10 +2,14 @@ package Game;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
+
+import Utils.Vector;
 
 public class MiniMap {
 	private int[][] maze;
+	Vector dir;
 
 	public MiniMap(int[][] maze) {
 		this.maze = maze;
@@ -88,9 +92,12 @@ public class MiniMap {
 
 		// draw white player dot
 		glPushMatrix();
-		glTranslated(size * 10, -size * 10, 0);
-		glColor4f(1.0f, 1.0f, 1.0f,0.5f);
-		drawBlock();
+		glTranslated(size * 10.5, -size * 9.5, 0);
+		dir=player.lookat();
+		rotateV();
+		
+		glColor4f(1.0f, 1.0f, 1.0f,0.8f);
+		drawPlayer();
 		glPopMatrix();
 
 	}
@@ -102,5 +109,21 @@ public class MiniMap {
 		glVertex2f(10.0f, 10.0f);
 		glVertex2f(0.0f, 10.0f);
 		glEnd();
+	}
+	
+	public void drawPlayer() {
+		int size=2;
+		glBegin(GL_TRIANGLES);
+		glVertex2f(0.0f, 6.0f*size);
+		glVertex2f(3.0f*size, -3.0f*size);
+		glVertex2f(-3.0f*size, -3.0f*size);
+		glEnd();
+	}
+	
+	public void rotateV(){
+		float x=(float) dir.getX();
+		float z=(float) dir.getZ();
+		FloatBuffer m = Utils.Utils.createFloatBuffer(z,-x,0,0,x,z,0,0,0,0,1,0,0,0,0,1);
+		glMultMatrix(m);
 	}
 }
