@@ -103,6 +103,8 @@ public void start(String levelname) throws ClassNotFoundException, IOException{
 	}
 	if(Menu.getState().equals(GameState.GAME) || isdood){
 		Menu.setState(GameState.GAMEOVER);
+	} else if (Menu.getState().equals(GameState.GAME) && monsterlijst.size() == 0) {
+		Menu.setState(GameState.SUCCES);
 	}
 	else Menu.setState(GameState.MAIN);
 	cleanup();
@@ -121,6 +123,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	deathlist = new ArrayList<Monster>();
 	hatch = new ArrayList<Hatch>();
 	pickuplijst = new ArrayList<Pickup>();
+	Intelligence.init();
 	
 	minimap = new MiniMap(maze);		//load the minimap
 	
@@ -317,6 +320,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        for(Monster mo: deathlist){	
 		        	monsterlijst.remove(mo);	        	
 		        }
+		        deathlist.clear();
 		        
 		        // Pickups
 		        ArrayList<Pickup> rmpu = new ArrayList<Pickup>();

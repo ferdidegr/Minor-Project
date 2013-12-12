@@ -83,7 +83,7 @@ public class Monster extends levelObject{
 		
 			updateV(deltaTime);
 			
-			avoidPlayer();
+//			avoidPlayer();
 		
 			collision();
 		
