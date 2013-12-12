@@ -34,7 +34,7 @@ public class Menu {
 	private static int screeny;
 	private static double height_width_ratio = 1/8f;			// Height/Width 
 	static int currentlevel = 0;
-	
+	private static boolean closerequested = false;
 	/**
 	 * ************************************
 	 * Main loop
@@ -82,7 +82,7 @@ public class Menu {
 		}
 		
 		// Main loop, while the X button is not clicked
-				while(!Display.isCloseRequested() && !gamestate.equals(GameState.GAME) && !gamestate.equals(GameState.EXIT)
+				while(!( closerequested = Display.isCloseRequested()) && !gamestate.equals(GameState.GAME) && !gamestate.equals(GameState.EXIT)
 						&& !gamestate.equals(GameState.TOMAIN)){
 			
 					
@@ -101,7 +101,7 @@ public class Menu {
 					Display.update();
 					Display.sync(60);
 				}
-		if(Menu.getState() == GameState.EXIT){
+		if(Menu.getState() == GameState.EXIT || closerequested){
 			cleanup();
 		}
 			
