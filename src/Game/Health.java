@@ -46,6 +46,7 @@ public class Health {
 			setHealth(maxHealth);
 		}
 		if (isPlayer && addition<0){
+			
 			Sound.playEffect("hurt");
 		}
 	}

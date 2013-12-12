@@ -35,7 +35,7 @@ public class StatusBars {
 		double healthwidth = (barwidth - 2* borderwidth)*plhealth/player.getHealth().getmaxHealth();
 		
 		double runperc = (double)player.getRunMod()/player.runcountermax;
-		double runwidth = (barwidth - 2* borderwidth)*runperc;
+		double runwidth = Math.max((barwidth - 2* borderwidth)*runperc,0);
 		
 		float fontSize = 15 * Display.getWidth() / 1024f;
 		double height = Text.getHeight(fontSize);
