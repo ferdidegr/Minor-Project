@@ -17,7 +17,7 @@ public class inputTest {
 		Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.create();
 		initGL();
-		ipf = new InputField(8, 30, 50, 50);
+		ipf = new InputField(12, 30, 50, 50);
 		
 		while(!Display.isCloseRequested()){
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -50,7 +50,6 @@ public class inputTest {
 		try {
 			new inputTest().start();
 		} catch (LWJGLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

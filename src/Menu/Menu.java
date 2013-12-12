@@ -26,6 +26,7 @@ public class Menu {
 	private static GameOver over = new GameOver();
 	private static PauseMenu pauze = new PauseMenu();
 	private static PSettings pset = new PSettings();
+	private static Succes sces = new Succes();
 	private static MazechooserMenu mazemenu= new MazechooserMenu();
 	private static int top, bottom, scrollspeed;
 	private static int screenx;
@@ -71,7 +72,6 @@ public class Menu {
 	}
 	
 	public static void run() {
-		
 		bottom = 0;
 		top = Display.getHeight();
 		scrollspeed = Display.getHeight()/15;
@@ -79,7 +79,6 @@ public class Menu {
 			glLoadIdentity();
 			initGL();
 		}
-	
 		
 		// Main loop, while the X button is not clicked
 				while(!Display.isCloseRequested() && !gamestate.equals(GameState.GAME) && !gamestate.equals(GameState.EXIT)
@@ -155,7 +154,6 @@ public class Menu {
 		case SETTINGS:
 			ID = sets.checkButtons(top);
 			Settings.actionButtons(ID);
-			
 			break;
 			
 		case MAIN:
@@ -179,8 +177,13 @@ public class Menu {
 			break;
 		
 		case SELECTLVL:
-			ID  =mazemenu.checkButtons(top);
+			ID = mazemenu.checkButtons(top);
 			MazechooserMenu.actionButtons(ID);
+			break;
+			
+		case SUCCES:
+			ID = sces.checkButtons(top);
+			Succes.actionButtons(ID);
 			break;
 			
 		default: break;
@@ -218,7 +221,8 @@ public class Menu {
 		// Mazechooser
 		mazemenu.init(buttonwidth, buttonheight);
 		
-		
+		// Succes
+		sces.init(buttonwidth, buttonheight);
 	}
 	/**
 	 * ************************************
@@ -232,9 +236,7 @@ public class Menu {
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 				drawBackground();
 			}
-			
 
-		
 		switch(gamestate){
 			
 		case MAIN:
@@ -261,7 +263,12 @@ public class Menu {
 		
 		case SELECTLVL:
 			mazemenu.display();
+			break;
 		
+		case SUCCES:
+			sces.display();
+			break;
+			
 		default: break;
 		}
 			
