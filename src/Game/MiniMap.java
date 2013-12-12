@@ -16,7 +16,7 @@ public class MiniMap {
 		int mapHeight = maze.length;
 
 		int locX = player.getGridX(SQUARE_SIZE);
-		int locZ = mapHeight - 1 - player.getGridZ(SQUARE_SIZE);
+		int locZ = player.getGridZ(SQUARE_SIZE);
 		
 
 		int size = 10;
@@ -24,20 +24,22 @@ public class MiniMap {
 		// draw red maze
 		glEnable(GL_BLEND);
 		glColor4f(1.0f, 0.0f, 0.0f,0.5f);
-
-		for (int i = locZ - size; i < locZ + size; i++) {
-			for (int j = locX + size; j > locX - size; j--) {
-				if (i >= 0 && j >= 0 && i < mapHeight && j < mapWidth) {
-					if (maze[mapHeight - i - 1][j] >= 1 && maze[mapHeight - i - 1][j] <= 10) {
-						for(int k=0; k<maze[mapHeight - i - 1][j]; k++){
+		
+		for (int z=locZ-size;z<locZ+size;z++){
+			for (int x=locX-size;x<locX+size;x++){
+				if (x >= 0 && z >= 0 && x < mapHeight && z < mapWidth) {
+					if (maze[z][x] >= 1 && maze[z][x] <= 10) {
+						for(int k=0; k<maze[z][x]; k++){
 							drawBlock();
 						}
 					}
 				}
-				glTranslatef(10f, 0f, 0f);
+				glTranslatef(10f,0f,0f);
 			}
-			glTranslatef(-10f * (2 * size), 10f, 0f);
+			glTranslatef(-10f*(2*size),10f,0f);
 		}
+		
+		
 		
 		// draw black box around the minimap
 		glPushMatrix();
@@ -71,13 +73,13 @@ public class MiniMap {
 				glColor4f(0.2f, 1.0f, 0.2f,0.5f);
 			}
 
-			int relX = (locX - monster.getGridX(SQUARE_SIZE));
-			int relZ = -(locZ - (mapHeight - 1 - monster.getGridZ(SQUARE_SIZE)));
-//			System.out.println(relX + " " + relZ);
+			
+			int relX=locX-monster.getGridX(SQUARE_SIZE);
+			int relZ=locZ-monster.getGridZ(SQUARE_SIZE);
 			if ((Math.abs(relX) < 10) && (Math.abs(relZ) < 10)) {
 				glPushMatrix();
 				glTranslated(size * 10, -size * 10, 0);
-				glTranslated(relX * size, relZ * size, 0);
+				glTranslated(-relX * size, -relZ * size, 0);
 				drawBlock();
 				glPopMatrix();
 			}
