@@ -1,4 +1,5 @@
 package Menu;
+
 import Game.*;
 import Utils.Chooser;
 import Utils.Sound;
@@ -26,7 +27,7 @@ public class Menu {
 	private static GameOver over = new GameOver();
 	private static PauseMenu pauze = new PauseMenu();
 	private static PSettings pset = new PSettings();
-	private static Succes sces = new Succes();
+	private static Succes succes = new Succes();
 	private static MazechooserMenu mazemenu= new MazechooserMenu();
 	private static int top, bottom, scrollspeed;
 	private static int screenx;
@@ -182,7 +183,7 @@ public class Menu {
 			break;
 			
 		case SUCCES:
-			ID = sces.checkButtons(top);
+			ID = succes.checkButtons(top);
 			Succes.actionButtons(ID);
 			break;
 			
@@ -222,7 +223,7 @@ public class Menu {
 		mazemenu.init(buttonwidth, buttonheight);
 		
 		// Succes
-		sces.init(buttonwidth, buttonheight);
+		succes.init(buttonwidth, buttonheight);
 	}
 	/**
 	 * ************************************
@@ -266,7 +267,7 @@ public class Menu {
 			break;
 		
 		case SUCCES:
-			sces.display();
+			succes.display();
 			break;
 			
 		default: break;

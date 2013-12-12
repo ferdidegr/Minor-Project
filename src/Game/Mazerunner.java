@@ -103,9 +103,7 @@ public void start(String levelname) throws ClassNotFoundException, IOException{
 	}
 	if(Menu.getState().equals(GameState.GAME) || isdood){
 		Menu.setState(GameState.GAMEOVER);
-	} else if (Menu.getState().equals(GameState.GAME) && monsterlijst.size() == 0) {
-		Menu.setState(GameState.SUCCES);
-	}
+	} 
 	else Menu.setState(GameState.MAIN);
 	cleanup();
 	
@@ -343,6 +341,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        if(input.minimap){drawHUD();}
 		        glPopMatrix();
 		        player.draw();
+		        
+		        if (monsterlijst.size() == 0) {
+		    		Menu.setState(GameState.SUCCES);
+		        }
 	}
 	
 	/**
