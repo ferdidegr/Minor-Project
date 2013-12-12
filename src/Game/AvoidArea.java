@@ -8,7 +8,7 @@ public class AvoidArea {
 	public Vector location;
 	public long startTime;
 	public long forgetTime = 60000;
-	public double radius = 5;
+	public double radius = 2;
 	
 	public AvoidArea(Vector loc){
 		System.out.println("AvoidArea gemaakt");
