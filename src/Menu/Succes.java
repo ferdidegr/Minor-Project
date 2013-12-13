@@ -47,7 +47,7 @@ public class Succes extends ButtonList {
 			glPushMatrix();
 			try {
 				Menu.game.start(MazechooserMenu.MazeList.get(Menu.currentlevel));
-			} catch (ClassNotFoundException | IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			glPopMatrix();

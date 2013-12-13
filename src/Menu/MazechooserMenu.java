@@ -3,6 +3,10 @@ package Menu;
 import java.io.File;
 import java.util.ArrayList;
 
+import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.Display;
+
 import static org.lwjgl.opengl.GL11.*;
 import Game.Mazerunner;
 import Utils.Sound;
@@ -46,14 +50,16 @@ public class MazechooserMenu extends ButtonList{
 	 * @param buttonID
 	 */
 	public static void actionButtons(int buttonID){
-		if(buttonID >=0 && buttonID<MazeList.size()){
+		int score = 0;
+		if(buttonID >=0 && buttonID<MazeList.size()){			
 			Menu.setState(GameState.GAME);
 			Menu.currentlevel = buttonID;
 			Sound.playMusic("background_game");
 			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				Menu.game.start(MazeList.get(buttonID));
+				score= Menu.game.start(MazeList.get(buttonID));
+				System.out.println(Display.isCloseRequested());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -62,9 +68,14 @@ public class MazechooserMenu extends ButtonList{
 		}else{
 			Menu.setState(GameState.MAIN);
 		}
+		System.out.println(score);
+		if(score>=-200){
+			ScoreScreen.displayScoreatGO(score);
+		}
 	}
 	
 	public void display(){
 		super.display();
-	}
+	}	
+
 }

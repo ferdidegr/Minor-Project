@@ -35,18 +35,23 @@ public class GameOver extends ButtonList {
 		switch(buttonID){
 		
 		case 1:
+			int score = 0;
 			Menu.setState(GameState.GAME);
 //			Sound.playMusic("background_game");
 			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				Menu.game.start(MazechooserMenu.MazeList.get(Menu.currentlevel));
-			} catch (ClassNotFoundException | IOException e) {
+				score = Menu.game.start(MazechooserMenu.MazeList.get(Menu.currentlevel));
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 			glPopMatrix();
 			buttonID=0;
+			if(score>=-200){
+				ScoreScreen.displayScoreatGO(score);
+			}
 			break;
 			
 		case 2:

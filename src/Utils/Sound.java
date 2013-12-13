@@ -11,7 +11,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Sound {
 	private static Audio background_menu, background_game;
 	private static Audio button, jump, hurt;
-	private static boolean on = true;
+	private static boolean on = false;
 
 	// private static SoundStore sounds;
 
@@ -19,22 +19,23 @@ public class Sound {
 	 * initialize and load all sounds and music
 	 */
 	public static void init() {
-
-		try {
-			background_menu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/background_menu.ogg"));
-			background_game = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/background_x.ogg"));
-			
-			hurt = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/hurt.ogg"));
-			button = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/sound/button-3.wav"));
-			// jump = AudioLoader.getAudio("WAV",
-			// ResourceLoader.getResourceAsStream("res/sound/jump.wav"));
-			
-			//start background music
-			if(on)
-			background_menu.playAsMusic(1f, 1f, true);
-
-		} catch (IOException e) {
-			e.printStackTrace();
+		if(on){
+			try {
+				background_menu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/background_menu.ogg"));
+				background_game = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/background_x.ogg"));
+				
+				hurt = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/hurt.ogg"));
+				button = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/sound/button-3.wav"));
+				// jump = AudioLoader.getAudio("WAV",
+				// ResourceLoader.getResourceAsStream("res/sound/jump.wav"));
+				
+				//start background music
+				if(on)
+				background_menu.playAsMusic(1f, 1f, true);
+	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

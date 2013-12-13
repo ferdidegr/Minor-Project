@@ -4,8 +4,12 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.ArrayList;
 
+import org.lwjgl.opengl.Display;
+
+import Utils.Text;
 import Utils.Vector;
 import Menu.Difficulty;
+import Menu.GameState;
 import Menu.Menu;
 
 
@@ -188,8 +192,6 @@ public class Player extends GameObject {
 		if(immunitycounter>1000)immunitycounter=0;
 		// Update run modifier
 		runcounter = (int) Math.min(runcounter+0.1*deltaTime, 1000);
-		// TODO remove
-		System.out.println(runcounter);
 		
 		if (control != null)
 		{
@@ -248,9 +250,9 @@ public class Player extends GameObject {
 			for(int i = -1 ; i<=1;i++){
 				for(int j = -1; j<=1; j++){
 					if((Xin+i)>=0 && (Xin+i)<Mazerunner.maze[0].length && (Zin+j)>=0 && (Zin+j)<Mazerunner.maze.length){
-						if(Mazerunner.objectindex[Zin+j][Xin+i]>=0){							// < zero means there is nothing so no index
-							tempindex.add(Mazerunner.objectindex[Zin+j][Xin+i]);
-						}
+//						if(Mazerunner.objectindex[Zin+j][Xin+i]>=0){							// < zero means there is nothing so no index
+							tempindex.add(Mazerunner.objectindex[Zin+j][Xin+i]);							
+//						}
 					}
 				}
 			}
@@ -267,6 +269,7 @@ public class Player extends GameObject {
 				|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz-pw)){
 					colX=true;
 					locationX+=tempobj.getmaxDistX(locationX+pw*signX);
+					collsionreaction(tempobj);
 					break;
 				}
 
@@ -281,6 +284,7 @@ public class Player extends GameObject {
 				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+velocity.getZ())){
 					colZ=true;
 					locationZ+=tempobj.getmaxDistZ(locationZ+pw*signZ);
+					collsionreaction(tempobj);
 					break;
 				}
 			}
@@ -295,10 +299,10 @@ public class Player extends GameObject {
 				if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz+pw)
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
-				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){
-					if(tempobj instanceof Spikes){spikereaction();}
+				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){					
 					colY=true;
 					locationY+=tempobj.getmaxDistY(locationY-ph);
+					collsionreaction(tempobj);
 				}				
 			}
 			if(!spikejump){control.jump = false;}
@@ -414,6 +418,17 @@ public class Player extends GameObject {
 		
 		control.jump=true;
 		spikejump=true;		
+	}
+	
+	public void collsionreaction(levelObject obj){
+		if(obj instanceof Spikes){spikereaction();}
+		if(obj instanceof EndObelisk){
+			if(Mazerunner.monsterlijst.size()!=0){
+				System.out.println("Niet alle monsters zijn nog dood!");
+			}else{
+				Menu.setState(GameState.GAMEOVER);
+			}
+		}
 	}
 	
 	public Vector lookat(){

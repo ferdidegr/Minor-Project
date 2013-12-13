@@ -57,7 +57,7 @@ public class Mazerunner {
 	 *  *************************************************
 	 */
 	
-public void start(String levelname) throws ClassNotFoundException, IOException{
+public int start(String levelname) throws Exception{
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
 	new Models();
@@ -90,7 +90,7 @@ public void start(String levelname) throws ClassNotFoundException, IOException{
 		
 		// Update all objects in the maze
 		updateMovement();
-		
+		if(Menu.getState()==GameState.GAMEOVER)break;
 		// Update intelligence
 		Intelligence.update();
 		
@@ -104,12 +104,17 @@ public void start(String levelname) throws ClassNotFoundException, IOException{
 		Display.sync(60);
 		
 	}
+	cleanup();
+	System.out.println(Menu.getState().toString());
 	if(Menu.getState().equals(GameState.GAME) || isdood){
 		Menu.setState(GameState.GAMEOVER);
+		return -200;
 	} 
-	else Menu.setState(GameState.MAIN);
-	cleanup();
-	
+	else if(Menu.getState()==GameState.TOMAIN){
+		Menu.setState(GameState.MAIN);
+		return -400;
+	}	
+	return status.getScore();
 }
 
 /*
@@ -181,7 +186,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				objectindex[j][i]=objlijst.size()-1;
 			}
 			// Parsing the floor
-			if((maze[j][i]>10|| maze[j][i]==0) && maze[j][i]!=15 && maze[j][i]!=16 && maze[j][i]!=13){
+			if((maze[j][i]>10|| maze[j][i]==0) && maze[j][i]!=15 && maze[j][i]!=16 && maze[j][i]!=13 && maze[j][i]!=12){
 			levelObject lvlo = new Floor(i*SQUARE_SIZE, 0, j*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE, 1);
 			visibleObjects.add(lvlo);
 			objlijst.add(lvlo);
@@ -264,14 +269,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_LIGHT0);
 //		glDisable(GL_BLEND);
-		Mouse.setGrabbed(false);
+		Mouse.setGrabbed(false);		
 	}  
 	/**
 	 * Initialize all objects
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	   public void initObj() throws ClassNotFoundException, IOException{  
+	   public void initObj() throws Exception{  
 		   
 	     // We define an ArrayList of VisibleObjects to store all the objects that need to be
 			// displayed by MazeRunner.

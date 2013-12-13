@@ -30,16 +30,15 @@ public class EndObelisk extends levelObject{
 
 	@Override
 	public boolean isCollision(double x, double y, double z) {
-		double width = Mazerunner.SQUARE_SIZE/2f;		
-		System.out.println("hier");
-		return x>(locationX-width) && x<(locationX+width);
+		double width = Mazerunner.SQUARE_SIZE/2f;			
+		return x>(locationX-width) && x<(locationX+width) && z>(locationZ-width) && z<(locationZ+width);
 		
 	}
 
 	@Override
 	public double getmaxDistX(double X) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(locationX>X)return locationX-Mazerunner.SQUARE_SIZE/2f-X;
+		return locationX+Mazerunner.SQUARE_SIZE/2f-X;
 	}
 
 	@Override
@@ -50,8 +49,8 @@ public class EndObelisk extends levelObject{
 
 	@Override
 	public double getmaxDistZ(double Z) {
-		// TODO Auto-generated method stub
-		return 0;
+		if(locationZ>Z)return locationZ-Mazerunner.SQUARE_SIZE/2f-Z;
+		return locationZ+Mazerunner.SQUARE_SIZE/2f-Z;
 	}
 
 	@Override
