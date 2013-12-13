@@ -1,6 +1,7 @@
 
 package tests;
 import org.lwjgl.LWJGLException;
+import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
@@ -17,24 +18,19 @@ public class inputTest {
 		Display.setDisplayMode(new DisplayMode(800, 600));
 		Display.create();
 		initGL();
-		ipf = new InputField(12, 30, 50, 50);
+		ipf = new InputField(12, 50, Display.getWidth()/4, Display.getHeight()/2,"BEBAS.TTF");
 		
 		while(!Display.isCloseRequested()){
 			glClear(GL_COLOR_BUFFER_BIT);
 			ipf.display();
-			
-			mousepoll();
+			while(Keyboard.next()){}			
 			
 			Display.update();Display.sync(60);
 		}
 		
 	}
 	
-	public void mousepoll(){
-		if(ipf.isField(Mouse.getX(), Display.getHeight() - Mouse.getY())){
-			ipf.setFocus();
-		}
-	}
+
 	
 	public void initGL(){
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());

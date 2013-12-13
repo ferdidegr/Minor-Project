@@ -60,7 +60,7 @@ public class Settings extends ButtonList {
 	
 	public void display(){
 		super.display();
-		Text.draw(Menu.getScreenx()/2, 0, 30, "SETTINGS");
-		Text.draw(Menu.getScreenx()/2, 40, 30, "CURRENT DIFFICULTY: " + Menu.getDifficulty());
+		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "SETTINGS");
+		Menu.bebas.draw(Menu.getScreenx()/2, 40, 30, "CURRENT DIFFICULTY: " + Menu.getDifficulty());
 	}
 }

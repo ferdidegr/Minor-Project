@@ -70,7 +70,9 @@ public class MazechooserMenu extends ButtonList{
 		}
 		System.out.println(score);
 		if(score>=-200){
+		
 			ScoreScreen.displayScoreatGO(score);
+		
 		}
 	}
 	

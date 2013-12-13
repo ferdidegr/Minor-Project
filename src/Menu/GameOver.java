@@ -63,7 +63,7 @@ public class GameOver extends ButtonList {
 	
 	public void display(){
 		super.display();		
-		Text.draw(Menu.getScreenx()/2, 0, 30, "GAME OVER");
+		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "GAME OVER");
 
 	}
 }

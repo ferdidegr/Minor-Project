@@ -35,6 +35,7 @@ public class Menu {
 	private static double height_width_ratio = 1/8f;			// Height/Width 
 	static int currentlevel = 0;
 	private static boolean closerequested = false;
+	public static Text bebas;
 	/**
 	 * ************************************
 	 * Main loop
@@ -51,10 +52,10 @@ public class Menu {
 		}
 		
 		Display.create();
-		Display.setResizable(true);
-		new Utils.Text();
+		Display.setResizable(true);		
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
+		bebas = new Text("BEBAS.TTF");
 		Sound.init();
 		new Textures();
 		initButtons();
@@ -329,7 +330,7 @@ public class Menu {
 	public static void initGL(){
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		glViewport(0, 0, Display.getWidth(), Display.getHeight());
+		
 		// Now we set up our viewpoint.
 		initview();
 
@@ -340,6 +341,7 @@ public class Menu {
 	 * ************************************
 	 */
 	public static  void initview(){
+		glViewport(0, 0, Display.getWidth(), Display.getHeight());
 		glMatrixMode(GL_PROJECTION);					// We'll use orthogonal projection.
 		glLoadIdentity();									// REset the current matrix.
 		glOrtho(0, Display.getWidth(), top, bottom, 1, -1);

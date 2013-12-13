@@ -10,19 +10,19 @@ import org.newdawn.slick.opengl.TextureImpl;
 import org.newdawn.slick.util.ResourceLoader;
 
 public class Text{
-	private static Font awtFont;
-	private static TrueTypeFont myfont;
-	private static float baseFontSize = 55;
+	private Font awtFont;
+	private TrueTypeFont myfont;
+	private float baseFontSize = 55;
 	
-	public Text(){
-		initFont();
+	public Text(String fontpath){
+		initFont(fontpath);
 	}
 	
-	public static void draw(float x , float y , float FontSize, String text){
+	public void draw(float x , float y , float FontSize, String text){
 		draw(x, y, FontSize, text, Color.white);
 	}
 	
-	public static void draw(float x , float y , float FontSize, String text, Color color){
+	public void draw(float x , float y , float FontSize, String text, Color color){
 		float derivedFont = FontSize/baseFontSize;
 		glPushAttrib(GL_ENABLE_BIT);
 		glEnable(GL_BLEND);
@@ -36,17 +36,17 @@ public class Text{
 		glPopAttrib();
 	}
 	
-	public static double getWidth(float FontSize, String text){
+	public double getWidth(float FontSize, String text){
 		return (myfont.getWidth(text)*FontSize/baseFontSize);
 	}
 	
-	public static double getHeight(float FontSize){
+	public double getHeight(float FontSize){
 		return (myfont.getHeight()*FontSize/baseFontSize);
 	}
 	
-	public static void initFont(){
+	public void initFont(String fontpath){
 		try {			
-			InputStream inputStream	= ResourceLoader.getResourceAsStream("BEBAS.TTF");
+			InputStream inputStream	= ResourceLoader.getResourceAsStream(fontpath);
 
 			awtFont = Font.createFont(Font.TRUETYPE_FONT, inputStream);		
 			awtFont = awtFont.deriveFont(baseFontSize); // set font size

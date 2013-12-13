@@ -30,7 +30,7 @@ public class Succes extends ButtonList {
 		lijst.add(new MenuButton(x, 2*y, Textures.start, Textures.startover,1, "Restart"));
 		lijst.add(new MenuButton(x, 4*y, Textures.start, Textures.startover,2, "Start new game"));
 		lijst.add(new MenuButton(x, 6*y, Textures.start, Textures.startover,3, "Main Menu"));
-		ipf = new InputField(12, 15, x, 8*y);
+//		ipf = new InputField(12, 15, x, 8*y);
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -70,7 +70,7 @@ public class Succes extends ButtonList {
 	
 	public void display(){
 		super.display();		
-		Text.draw(Menu.getScreenx()/2, 0, 30, "SUCCES!");
+		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "SUCCES!");
 		ipf.display();
 	}
 	

@@ -39,7 +39,7 @@ public class PSettings extends ButtonList {
 	
 	public void display(){
 		super.display();
-		Text.draw(Menu.getScreenx()/2, 0, 30, "IN GAME SETTINGS");
+		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "IN GAME SETTINGS");
 
 	}
 }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import org.lwjgl.opengl.Display;
 
 
+
 import Utils.Text;
 import Game.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -71,7 +72,7 @@ public class MainMenu extends ButtonList {
 	
 	public void display(){
 		super.display();
-		Text.draw(Display.getWidth()*2f/5, 0, 30, "WELKOM BIJ TRAPPER");
+		Menu.bebas.draw(Display.getWidth()*2f/5, 0, 30, "WELKOM BIJ TRAPPER");
 	}
 	
 }

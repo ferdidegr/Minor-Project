@@ -80,7 +80,7 @@ public class MenuButton {
 		glDisable(GL_BLEND);
 		
 //		content.draw(x +width/2, y-height/2, 1);
-		Text.draw(x, y, (float) (0.7*height), name);
+		Menu.bebas.draw(x, y, (float) (0.7*height), name);
 
 	}
 	
