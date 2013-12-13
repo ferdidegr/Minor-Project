@@ -148,6 +148,17 @@ public void initMaze() throws ClassNotFoundException, IOException{
 									 0, 0 ,									// horizontal and vertical angle
 									 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height			
 			}
+			// Parsing the end point
+			else if(maze[j][i]==12){
+				EndObelisk eo = new EndObelisk(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
+									 0,													// y-position
+									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0);				// z- position
+				objlijst.add(eo);
+				visibleObjects.add(eo);
+				objectindex[j][i]=objlijst.size()-1;
+				// TODO remove
+				System.out.println(objlijst.size()-1);
+			}
 			// Parsing the spikes
 			else if(maze[j][i]==13){				
 				Spikes s = new Spikes(i*SQUARE_SIZE, 0, j*SQUARE_SIZE);
