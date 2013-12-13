@@ -221,6 +221,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		// Enable Z-buffering
 		glEnable(GL_DEPTH_TEST);
 		
+		// Enable normalize of normals
+		glEnable(GL_NORMALIZE);
 		
 		// Set and enable the lighting.
 		
