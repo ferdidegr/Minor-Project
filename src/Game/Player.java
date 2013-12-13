@@ -217,7 +217,7 @@ public class Player extends GameObject {
 					
 			if (control.getRun() && runcounter > 0){
 				run = 2;
-				runcounter -= deltaTime;
+				if(control.forward||control.back||control.left||control.right){runcounter -= deltaTime;}
 				if(runcounter<0)runcounter-=1000;
 			} else{
 				run =1;
