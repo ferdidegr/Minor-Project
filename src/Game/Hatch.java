@@ -51,7 +51,7 @@ public class Hatch extends levelObject{
 	}
 	@Override
 	public boolean isCollision(double x, double y, double z) {
-		if(hatchstatus==HatchState.CLOSED){ return y<0 && y> -1;}
+		if(hatchstatus==HatchState.CLOSED){ return y<0 && y> -1 && x>locationX && x<locationX+Mazerunner.SQUARE_SIZE && z>locationZ && z<locationZ+Mazerunner.SQUARE_SIZE;}
 		return false;
 	}
 
