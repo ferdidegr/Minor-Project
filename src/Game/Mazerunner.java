@@ -23,21 +23,21 @@ public class Mazerunner {
 	/*
 	 * Local Variables
 	 */
-	private int screenWidth = 1280, screenHeight = 720;		// Deprecated
+	private int screenWidth = 1280, screenHeight = 720;				// Deprecated
 	protected static Player player;									// The player object.
-	private UserInput input;								// The user input object that controls the player.
-	public static int[][] maze; 								// The maze.
+	private UserInput input;										// The user input object that controls the player.
+	public static int[][] maze; 									// The maze.
 	
 	
-	private long previousTime; // Used to calculate elapsed time.
-	private Wall wall;										// Wall Class, used to put one wall in for test TODO remove
+	private long previousTime;										// Used to calculate elapsed time.
+	private Wall wall;												// Wall Class, used to put one wall in for test TODO remove
 	
-	private FloatBuffer lightPosition;		
+	private FloatBuffer lightPosition;								// Where the sun is located		
 
 	protected ArrayList<Pickup> pickuplijst;						// A list of pickup items
-	protected ArrayList<Hatch> hatch;					// A list of objects that will be displayed on screen. (immediate mode)
+	protected ArrayList<Hatch> hatch;								// A list of objects that will be displayed on screen. (immediate mode)
 	private ArrayList<VisibleObject> visibleObjects;				// A list of objects that will be displayed on screen. (DLlist mode)
-	protected static ArrayList<Monster> monsterlijst;	// Lijst met alle monsters
+	protected static ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
 	protected static ArrayList<Monster> deathlist;
 	protected static ArrayList<levelObject> objlijst;				// List of all collidable objects
 	protected static int[][] objectindex;							// reference to the arraylist entry
@@ -46,11 +46,12 @@ public class Mazerunner {
 	protected static StatusBars status = new StatusBars();
 	
 	protected static boolean isdood;
-	private MiniMap minimap;								// The minimap object.
+	private MiniMap minimap;										// The minimap object.
 	private String level;
 	private int objectDisplayList = glGenLists(1);
 	
-	private FloatBuffer projectionWorld, projectionHUD;			// Buffer for the projection matrices
+	private FloatBuffer projectionWorld, projectionHUD;				// Buffer for the projection matrices
+	
 	/*
 	 *  *************************************************
 	 *  * 					Main Loop					*
