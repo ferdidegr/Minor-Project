@@ -115,7 +115,7 @@ public class MenuButton {
 		mousex = x;
 		mousey = y;
 	}
-	public void recenter(){
+	public void reinit(){
 		if(centered){x=(Display.getWidth()-width)/2;}
 	}
 	public int getID(){ return ID;}

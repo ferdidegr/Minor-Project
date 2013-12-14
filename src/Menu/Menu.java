@@ -73,7 +73,7 @@ public class Menu {
 		bottom = top  - screeny;		
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());	
 		for(ButtonList butl:bl){
-			butl.recenter();
+			butl.reinit();
 		}
 	}
 	

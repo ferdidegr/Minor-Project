@@ -62,9 +62,9 @@ public abstract class ButtonList {
 	 * If a button is called with center, then after a resize of the window this should still be the case.
 	 * This method fixes it
 	 */
-	public void recenter(){
+	public void reinit(){
 		for(MenuButton mb:lijst){
-			mb.recenter();
+			mb.reinit();
 		}
 	}
 }
