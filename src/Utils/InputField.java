@@ -155,6 +155,7 @@ public class InputField {
 			if(Mouse.getEventButton()==0){
 				mousex = Mouse.getX();
 				mousey = Mouse.getY();
+				while(Keyboard.next()){}
 			}
 		}
 	}
