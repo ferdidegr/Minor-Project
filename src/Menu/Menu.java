@@ -36,6 +36,7 @@ public class Menu {
 	static int currentlevel = 0;
 	private static boolean closerequested = false;
 	public static Text bebas;
+	private static ArrayList<ButtonList> bl = new ArrayList<ButtonList>();
 	/**
 	 * ************************************
 	 * Main loop
@@ -69,8 +70,11 @@ public class Menu {
 	public static void reshape(){
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
-		bottom = top  - screeny;
+		bottom = top  - screeny;		
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());	
+		for(ButtonList butl:bl){
+			butl.recenter();
+		}
 	}
 	
 	public static void run() {
@@ -89,10 +93,7 @@ public class Menu {
 					
 					// If the window is resized, might not be implemented
 					if(Display.getWidth()!=screenx || Display.getHeight()!=screeny){
-						reshape();	
-						if(game!=null){
-							game.reshape();
-						}
+						reshape();							
 					}
 					
 					mousepoll();
@@ -207,24 +208,28 @@ public class Menu {
 		
 		// MainMenu
 		main.init(buttonwidth, buttonheight);
+		bl.add(main);
 		
 		// Settings
 		sets.init(buttonwidth, buttonheight);
+		bl.add(sets);
 		
 		// Game Over
 		over.init(buttonwidth, buttonheight);
+		bl.add(over);
 		
 		// Pauze
 		pauze.init(buttonwidth, buttonheight);
+		bl.add(pauze);
 		
 		// Pauze ingame settings
 		pset.init(buttonwidth, buttonheight);
+		bl.add(pset);
 		
 		// Mazechooser
 		mazemenu.init(buttonwidth, buttonheight);
+		bl.add(mazemenu);
 		
-		// Succes
-		succes.init(buttonwidth, buttonheight);
 	}
 	/**
 	 * ************************************

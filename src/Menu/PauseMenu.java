@@ -19,9 +19,9 @@ public class PauseMenu extends ButtonList{
 	 */
 	public void init(int x, int y){
 		
-		lijst.add(new MenuButton(x,2* y, Textures.start, Textures.startover,1, "Resume game"));
-		lijst.add(new MenuButton(x, 4* y, Textures.start, Textures.startover,2, "Settings"));
-		lijst.add(new MenuButton(x, 6* y, Textures.start, Textures.startover,3, "Main Menu"));
+		lijst.add(new MenuButton(2* y, Textures.start, Textures.startover,1, "Resume game"));
+		lijst.add(new MenuButton(4* y, Textures.start, Textures.startover,2, "Settings"));
+		lijst.add(new MenuButton(6* y, Textures.start, Textures.startover,3, "Main Menu"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -53,4 +53,6 @@ public class PauseMenu extends ButtonList{
 		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "PAUSE");
 		Sound.pause();
 	}
+	
+
 }

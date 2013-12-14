@@ -33,6 +33,8 @@ public class MenuButton {
 	public static int mousex, mousey;
 	private TrueTypeFont myfont;	
 	private String name;
+	private boolean centered = false;
+	
 	/**
 	 * Constructor
 	 * @param x
@@ -40,17 +42,21 @@ public class MenuButton {
 	 * @param normal
 	 * @param Mouseover
 	 */
+
 	public MenuButton (int x , int y , Texture normal, Texture Mouseover, int ID, String name){
 		this.x = x;
 		this.y = y;
 		this.normal = normal;
 		this.mouseover = Mouseover;
 		this.ID = ID;
-		this.name = name;
-		
-		//TODO: Volgens mij kan dit beter ergens anders gebeuren, bedenken waar!
-		
+		this.name = name;		
 	}
+	
+	public MenuButton(int y, Texture normal, Texture Mouseover, int ID, String name){
+		this((Display.getWidth()-width)/2,y,normal,Mouseover,ID,name);
+		centered = true;
+	}
+
 	/**
 	 * draw the buttons
 	 */
@@ -66,15 +72,13 @@ public class MenuButton {
 		
 		glColor4f(1.0f, 1.0f, 1.0f,1.0f);
 		glBegin(GL_QUADS);
-		glTexCoord2d(0, 1);
-		glVertex2i(this.x, this.y);
-		glTexCoord2d(0, 0);
-		glVertex2i(this.x, this.y+height);
-		glTexCoord2d(1, 0);
-		glVertex2i(this.x+width, this.y+height);
-		glTexCoord2d(1, 1);
-		glVertex2i(this.x+width, this.y);
+		
+		glTexCoord2d(0, 1);		glVertex2i(this.x, this.y);
+		glTexCoord2d(0, 0);		glVertex2i(this.x, this.y+height);
+		glTexCoord2d(1, 0);		glVertex2i(this.x+width, this.y+height);
+		glTexCoord2d(1, 1);		glVertex2i(this.x+width, this.y);
 		glEnd();
+		
 		
 		glDisable(GL_TEXTURE_2D);
 		glDisable(GL_BLEND);
@@ -111,6 +115,8 @@ public class MenuButton {
 		mousex = x;
 		mousey = y;
 	}
-	
+	public void recenter(){
+		if(centered){x=(Display.getWidth()-width)/2;}
+	}
 	public int getID(){ return ID;}
 }

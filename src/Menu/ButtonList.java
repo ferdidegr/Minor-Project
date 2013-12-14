@@ -34,11 +34,11 @@ public abstract class ButtonList {
 	 */
 	public abstract void init(int x, int y);
 	
-	/** Wanneer de muis op een button in de lijst staat geeft deze methode 
-	 *  de ID van die button.
+	/** 
+	 * Returns on which button is clicked, when no button is clicked the method returns -1 
 	 * 
-	 * @param bottom
-	 * 			De onderkant van het scherm, nodig voor definite van coordinaten.
+	 * @param top y-coordinate of the top of the screen. Needed for scrolling
+	 * 			
 	 * @return
 	 */
 	public int checkButtons(int top) {
@@ -50,13 +50,21 @@ public abstract class ButtonList {
 		return buttonID;
 	}
 	
-	/** roept de draw methode van alle buttons uit de lijst
-	 * 
+	/** 
+	 * Draw all the buttons in the list
 	 */
 	public void display(){
 		for (MenuButton knop: lijst){
 			knop.draw();
 		}
 	}
-
+	/**
+	 * If a button is called with center, then after a resize of the window this should still be the case.
+	 * This method fixes it
+	 */
+	public void recenter(){
+		for(MenuButton mb:lijst){
+			mb.recenter();
+		}
+	}
 }

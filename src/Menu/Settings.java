@@ -24,11 +24,11 @@ public class Settings extends ButtonList {
 	 */
 	public void init(int x, int y){
 
-		lijst.add(new MenuButton(x, 4*y, Textures.start, Textures.startover,1, "Main Menu"));
-		lijst.add(new MenuButton(x, 6*y, Textures.start, Textures.startover,2, "Difficulty Easy"));
-		lijst.add(new MenuButton(x, 8*y, Textures.start, Textures.startover,3, "Difficulty Medium"));
-		lijst.add(new MenuButton(x, 10*y, Textures.start, Textures.startover,4, "Difficulty Hard"));
-		lijst.add(new MenuButton(x, 12*y, Textures.start, Textures.startover,5, "Difficulty Insane"));
+		lijst.add(new MenuButton(4*y, Textures.start, Textures.startover,1, "Main Menu"));
+		lijst.add(new MenuButton(6*y, Textures.start, Textures.startover,2, "Difficulty Easy"));
+		lijst.add(new MenuButton(8*y, Textures.start, Textures.startover,3, "Difficulty Medium"));
+		lijst.add(new MenuButton(10*y, Textures.start, Textures.startover,4, "Difficulty Hard"));
+		lijst.add(new MenuButton(12*y, Textures.start, Textures.startover,5, "Difficulty Insane"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.

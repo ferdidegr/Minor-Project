@@ -39,10 +39,11 @@ public class MazechooserMenu extends ButtonList{
 		}
 		int counter = 0;
 		for(String name:MazeList){
-			lijst.add(new MenuButton(x, (counter)*height , Textures.start, Textures.startover,counter, name.split(".maze")[0]));
+			lijst.add(new MenuButton((counter)*height , Textures.start, Textures.startover,counter, name.split(".maze")[0]));
 			counter++;
 		}
-		
+		// Back to menu button added
+		lijst .add(new MenuButton((counter+1)*height , Textures.start, Textures.startover,counter, "BACK TO MENU"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -64,16 +65,15 @@ public class MazechooserMenu extends ButtonList{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			glPopMatrix();			
-		}else{
+			glPopMatrix();		
+			System.out.println(score);
+			if(score>=-200){		
+				ScoreScreen.displayScoreatGO(score);		
+			}
+		}else if(buttonID==MazeList.size()){
 			Menu.setState(GameState.MAIN);
 		}
-		System.out.println(score);
-		if(score>=-200){
-		
-			ScoreScreen.displayScoreatGO(score);
-		
-		}
+
 	}
 	
 	public void display(){

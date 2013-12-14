@@ -28,9 +28,9 @@ public class MainMenu extends ButtonList {
 	 */
 	public void init(int x, int y){
 		
-		lijst.add(new MenuButton(x, 2* y, Textures.start, Textures.startover,1, "Start game"));
-		lijst.add(new MenuButton(x, 4* y, Textures.start, Textures.startover,2, "Settings"));
-		lijst.add(new MenuButton(x, 6* y, Textures.start, Textures.startover,3, "Exit"));
+		lijst.add(new MenuButton(2* y, Textures.start, Textures.startover,1, "Start game"));
+		lijst.add(new MenuButton(4* y, Textures.start, Textures.startover,2, "Settings"));
+		lijst.add(new MenuButton(6* y, Textures.start, Textures.startover,3, "Exit"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.

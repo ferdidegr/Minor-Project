@@ -303,7 +303,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 * Display function, draw all visible objects
 	 */
 	public void display(){
-
+				if(Display.wasResized())reshape();
 				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 				
 				glLoadIdentity();
