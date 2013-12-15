@@ -11,17 +11,20 @@ import static org.lwjgl.opengl.GL11.glOrtho;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
+import Utils.InputField;
+
 public class ScoreScreen {
 	public static void displayScoreatGO(int score){
 		boolean loop = true;
 		initview();
+		InputField ipf = new InputField(8, 30, 10, 10, Menu.bebas);
 		while(loop){
 			glClear(GL_COLOR_BUFFER_BIT);
 			
 			if(score>=0){
 				float width = (float) Menu.bebas.getWidth(50, "Success!");
 				float height = (float) Menu.bebas.getHeight(50);
-				
+				ipf.poll();
 				Menu.bebas.draw((Display.getWidth()-width)/2f,(Display.getHeight()-height)/2f, 50, "Success!");
 			}
 			else if (score== -200){
@@ -41,7 +44,7 @@ public class ScoreScreen {
 			Display.sync(60);
 			
 		}
-		
+		System.out.println(ipf.getString());
 	}
 	
 	public static void initview(){

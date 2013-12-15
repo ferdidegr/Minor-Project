@@ -17,22 +17,28 @@ public class inputTest {
 	public void start() throws LWJGLException{
 		Display.setDisplayMode(new DisplayMode(1280, 1024));
 		Display.create();
+		Display.setFullscreen(true);
 		initGL();
 		Text font = new Text("BEBAS.TTF");
-		ipf = new InputField(12, 30, Display.getWidth()/4, Display.getHeight()/2,font);
-		ipf2 = new InputField(12, 30, Display.getWidth()/4, 10,font);
+		ipf = new InputField(12, 30, Display.getWidth()/4, Display.getHeight()/2,font,1f);
+		ipf2 = new InputField(12, 30, 0, 0,font);
 		ipf.setX((int) ((Display.getWidth()-ipf.getWidth())/2));
 		ipf.setY((int) ((Display.getHeight()-ipf.getHeight())/2));
 		
 		while(!Display.isCloseRequested()){
 			glClear(GL_COLOR_BUFFER_BIT);
 			glRectd(0, 0, 50, 50);
+			glBegin(GL_LINES);
+			glVertex2d(0, 0);
+			glVertex2d(0, 50);
+			glEnd();
+			
 			ipf.poll();
 			ipf2.poll();
 						
-			while(Keyboard.next()){
-				if(Keyboard.getEventKey()==Keyboard.KEY_F1)System.out.println(ipf.getString());
-			}
+//			while(Keyboard.next()){
+//				if(Keyboard.getEventKey()==Keyboard.KEY_F1)System.out.println(ipf.getString());
+//			}
 			
 			Display.update();Display.sync(60);
 		}
