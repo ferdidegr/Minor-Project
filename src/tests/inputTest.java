@@ -20,10 +20,11 @@ public class inputTest {
 		Display.setFullscreen(true);
 		initGL();
 		Text font = new Text("BEBAS.TTF");
-		ipf = new InputField(12, 30, Display.getWidth()/4, Display.getHeight()/2,font,1f);
+		ipf = new InputField(12, 60, Display.getWidth()/4, Display.getHeight()/2,font,1f);
 		ipf2 = new InputField(12, 30, 0, 0,font);
-		ipf.setX((int) ((Display.getWidth()-ipf.getWidth())/2));
-		ipf.setY((int) ((Display.getHeight()-ipf.getHeight())/2));
+		ipf.centerX();
+		ipf.setY((int) (Display.getHeight()*2f/3));
+//		ipf2.centerScreen();
 		
 		while(!Display.isCloseRequested()){
 			glClear(GL_COLOR_BUFFER_BIT);
@@ -35,10 +36,6 @@ public class inputTest {
 			
 			ipf.poll();
 			ipf2.poll();
-						
-//			while(Keyboard.next()){
-//				if(Keyboard.getEventKey()==Keyboard.KEY_F1)System.out.println(ipf.getString());
-//			}
 			
 			Display.update();Display.sync(60);
 		}

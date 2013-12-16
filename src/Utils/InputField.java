@@ -175,6 +175,31 @@ public class InputField {
 		return x>= this.x && x<= (this.x+width) && y>= this.y && y<=(this.y+height);
 	}
 	/**
+	 * ********************************************************************************
+	 * Set the inputfield to the center of the screen
+	 * ********************************************************************************
+	 */
+	public void centerScreen(){
+		centerY();
+		centerX();
+	}
+	/**
+	 * ********************************************************************************
+	 * Center the inputfield in y - direction
+	 * ********************************************************************************
+	 */
+	public void centerY(){
+		y = (int) ((Display.getHeight()-height)/2);
+	}
+	/**
+	 * ********************************************************************************
+	 * Center the inputfield in X - direction
+	 * ********************************************************************************
+	 */
+	public void centerX(){
+		x = (int) ((Display.getWidth()-width)/2);
+	}
+	/**
 	 * ****************************************
 	 * draws a flickering cursor
 	 * ****************************************

@@ -59,6 +59,7 @@ public class Mazerunner {
 	 */
 	
 public int start(String levelname) throws Exception{
+	Menu.ingame = true;
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
 	new Models();
@@ -106,6 +107,7 @@ public int start(String levelname) throws Exception{
 		
 	}
 	cleanup();
+	Menu.ingame = false;
 	System.out.println(Menu.getState().toString());
 	if(Menu.getState().equals(GameState.GAME) || isdood){
 		Menu.setState(GameState.GAMEOVER);
@@ -115,6 +117,7 @@ public int start(String levelname) throws Exception{
 		Menu.setState(GameState.MAIN);
 		return -400;
 	}	
+	
 	return status.getScore();
 }
 

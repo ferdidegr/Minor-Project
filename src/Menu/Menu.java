@@ -36,6 +36,7 @@ public class Menu {
 	static int currentlevel = 0;
 	private static boolean closerequested = false;
 	public static Text bebas;
+	public static boolean ingame = false;
 	private static ArrayList<ButtonList> bl = new ArrayList<ButtonList>();
 	/**
 	 * ************************************
@@ -238,10 +239,11 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void display(){
-					
-			if(!gamestate.equals(GameState.GAME)){	
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		
+			if(!ingame){					
 				drawBackground();
+			}else{
+				drawGameAsBackground();
 			}
 
 		switch(gamestate){
@@ -259,12 +261,10 @@ public class Menu {
 			break;
 			
 		case PAUSE:		
-			drawGameAsBackground();					
 			pauze.display();
 			break;
 			
 		case PSETTINGS:
-			drawGameAsBackground();
 			pset.display();
 			break;
 		
