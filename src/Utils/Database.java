@@ -1,35 +1,88 @@
 package Utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 
 public class Database {
-	static Connection conn;
-	static Statement stat;
-
-	public static void connect() {
+	Connection conn;
+	Statement stat;
+	/**
+	 * Connect to a database file
+	 * @param databasepath the path to the database file
+	 */
+	public Database (String databasepath) {
+		// If file does not exist, create new db file
+		boolean newcreatedfile = false;
+		try{ new FileInputStream(new File(databasepath));		
+		}catch(FileNotFoundException e){
+			File temp = new File(databasepath);			
+			try {				
+				temp.createNewFile();	
+				newcreatedfile=true;
+				System.err.println("No such database found, database will be recreated!");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:db/scores.db");
+			conn = DriverManager.getConnection("jdbc:sqlite:"+databasepath);
 			stat = conn.createStatement();
+			if(newcreatedfile){reset();}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	public static void reset() {
+	/**
+	 * Reset scores
+	 */
+	public void reset() {
 		update("DROP TABLE IF EXISTS highscores;");
-		update("CREATE TABLE highscores (level STRING, name STRING, score INT)");
+		createTable("highscores", "level STRING", "name STRING","score INT");
 	}
-	
-	public static void update(String sql){
+	/**
+	 * insert an update query (INSERT, DELETE, UPDATE)
+	 * @param sql
+	 */
+	public void update(String sql){
 		try {
 			stat.executeUpdate(sql);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	public static ResultSet query(String query){
+	/**
+	 * Create a table
+	 * @param TableName		name of the table
+	 * @param PrimaryKey	primary key of the table
+	 * @param attributes	a list of strings with their type e.g. STRING or INT
+	 */
+	public void createTable(String TableName, String PrimaryKey, String... attributes){
+		String query = "CREATE TABLE "+TableName+" ("+PrimaryKey+" PRIMARY KEY";
+		for(int i = 0 ; i < attributes.length; i++){
+			query+= ", "+attributes[i];
+		}
+		query += ")";
+		update(query);
+	}
+	/**
+	 * Drop a table
+	 * @param TableName
+	 */
+	public void dropTable(String TableName){
+		update("DROP TABLE "+TableName+";");
+	}
+	/**
+	 * Query the database, it must be a READ since it must return a result
+	 * @param query
+	 * @return
+	 */
+	public ResultSet query(String query){
 		try {
 			return stat.executeQuery(query);
 		} catch (SQLException e) {
@@ -37,13 +90,28 @@ public class Database {
 		}
 		return null;
 	}
-	
+	public void destroy() throws SQLException{
+		conn.close();
+		stat.close();
+	}
+	/**
+	 * MAin not needed
+	 * @param args
+	 */
 	public static void main(String[] args){
+		Database score = new Database("db/sc.db");
 		try {
-			connect();
+			String test = "blablabla";
+			
 //			reset();
-//			update("INSERT INTO highscores (level, name, score) values ('level 1', 'Ferdi', 10000);");
-			ResultSet rs = query("SELECT * FROM highscores;");
+			
+			score.update("INSERT INTO highscores (level, name, score) values ('"+test+"', 'Ferdi', 10000);");
+	
+
+//				stat.executeUpdate("DELETE FROM highscores WHERE level='blablabla'");
+//				dropTable("scores");
+//				createTable("student", "id", "name","address");
+			ResultSet rs = score.query("SELECT * FROM highscores;");
 			
 			while (rs.next()){
 				String lvl = rs.getString("level");
@@ -55,8 +123,7 @@ public class Database {
 				System.out.println();
 			}
 			rs.close();
-			stat.close();
-			conn.close();
+			score.destroy();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

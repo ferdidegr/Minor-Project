@@ -13,8 +13,7 @@ import Utils.Sound;
 import Utils.Text;
 
 public class MazechooserMenu extends ButtonList{
-	static ArrayList<String> MazeList = new ArrayList<String>();
-	
+		
 	public MazechooserMenu() {
 		super();		
 	}
@@ -29,16 +28,9 @@ public class MazechooserMenu extends ButtonList{
 		 * Check the level dir for maze files
 		 */
 		int height = MenuButton.height;
-		String currentdir = System.getProperty("user.dir");		
-		String[] files = new File(currentdir+"\\levels").list();
 		
-		for(String name:files){
-			if(name.toLowerCase().endsWith(".maze")){
-				MazeList.add(name);
-			}
-		}
 		int counter = 0;
-		for(String name:MazeList){
+		for(String name:Menu.levelList){
 			lijst.add(new MenuButton((counter)*height , Textures.start, Textures.startover,counter, name.split(".maze")[0]));
 			counter++;
 		}
@@ -52,14 +44,14 @@ public class MazechooserMenu extends ButtonList{
 	 */
 	public static void actionButtons(int buttonID){
 		int score = 0;
-		if(buttonID >=0 && buttonID<MazeList.size()){			
+		if(buttonID >=0 && buttonID<Menu.levelList.size()){			
 			Menu.setState(GameState.GAME);
 			Menu.currentlevel = buttonID;
 			Sound.playMusic("background_game");
 			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				score= Menu.game.start(MazeList.get(buttonID));
+				score= Menu.game.start(Menu.levelList.get(buttonID));
 				System.out.println(Display.isCloseRequested());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -70,7 +62,7 @@ public class MazechooserMenu extends ButtonList{
 			if(score>=-200){		
 				ScoreScreen.displayScoreatGO(score);		
 			}
-		}else if(buttonID==MazeList.size()){
+		}else if(buttonID==Menu.levelList.size()){
 			Menu.setState(GameState.MAIN);
 		}
 

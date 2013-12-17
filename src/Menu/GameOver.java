@@ -41,7 +41,7 @@ public class GameOver extends ButtonList {
 			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				score = Menu.game.start(MazechooserMenu.MazeList.get(Menu.currentlevel));
+				score = Menu.game.start(Menu.levelList.get(Menu.currentlevel));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

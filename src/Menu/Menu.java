@@ -2,6 +2,7 @@ package Menu;
 
 import Game.*;
 import Utils.Chooser;
+import Utils.Database;
 import Utils.Sound;
 import Utils.Text;
 
@@ -16,6 +17,13 @@ import org.lwjgl.opengl.DisplayMode;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import static org.lwjgl.opengl.GL11.*;
+
+/**
+ * 
+ * Where everything starts
+ * @author ZL
+ *
+ */
 
 public class Menu {
 	
@@ -38,6 +46,8 @@ public class Menu {
 	public static Text bebas;
 	public static boolean ingame = false;
 	private static ArrayList<ButtonList> bl = new ArrayList<ButtonList>();
+	static Database score ;
+	static ArrayList<String> levelList;
 	/**
 	 * ************************************
 	 * Main loop
@@ -47,7 +57,8 @@ public class Menu {
 	public static void start() throws LWJGLException{
 		gamestate = GameState.MAIN;
 		difficulty = Difficulty.EASY;
-
+		levelList = Utils.Utils.loadLevelList();
+		score =  new Database("db/scores.db");
 		Chooser keuze = new Chooser(true);
 		while(keuze.getDisplay()==null){
 			try {Thread.sleep(500);	} catch (InterruptedException e) {	}

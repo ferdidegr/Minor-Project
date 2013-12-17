@@ -230,6 +230,23 @@ public class InputField {
 			}
 		}
 	}
+	/**
+	 * ****************************************
+	 * Call this method after resizing the screen
+	 * Or if you decide to change the fontsize
+	 * @param fontSize
+	 * ****************************************
+	 */
+	public void resize(int fontSize){
+		setFontsize(fontSize);
+		// Worst case scenario for the length (width) of the string, For drawing the box
+			String tempstring = "";
+			for(int i = 0 ; i < Stringlength; i++){
+				tempstring += 'W';
+			}
+			width = (float) font.getWidth(fontSize, tempstring);
+			height = (float) font.getHeight(fontSize);
+	}
 	/*
 	 * ****************************************
 	 * Getters and setters
