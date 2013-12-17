@@ -15,11 +15,12 @@ public class MiniMap {
 	public MiniMap(int[][] maze) {
 		this.maze = maze;
 		this.visited = new int[maze.length][maze[0].length];
-		for (int i = 0; i < visited.length; i++) {
-			for (int j = 0; j < visited[0].length; j++) {
-				visited[i][j] = 0;
-			}
-		}
+//		this.visited = new int[maze.length][maze[0].length];
+//		for (int i = 0; i < visited.length; i++) {
+//			for (int j = 0; j < visited[0].length; j++) {
+//				visited[i][j] = 0;
+//			}
+//		}
 	}
 
 	public void draw(Player player, ArrayList<Monster> monsterlijst, int SQUARE_SIZE) {
