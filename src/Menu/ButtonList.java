@@ -34,6 +34,7 @@ public abstract class ButtonList {
 	 */
 	public abstract void init(int x, int y);
 	
+	
 	/** 
 	 * Returns on which button is clicked, when no button is clicked the method returns -1 
 	 * 

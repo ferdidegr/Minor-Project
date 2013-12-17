@@ -23,12 +23,9 @@ public class Settings extends ButtonList {
 	 * @param y
 	 */
 	public void init(int x, int y){
+		lijst.add(new MenuButton(2*y, Textures.start, Textures.startover,1, "Difficulty"));
+		lijst.add(new MenuButton(4*y, Textures.start, Textures.startover,2, "Main Menu"));
 
-		lijst.add(new MenuButton(4*y, Textures.start, Textures.startover,1, "Main Menu"));
-		lijst.add(new MenuButton(6*y, Textures.start, Textures.startover,2, "Difficulty Easy"));
-		lijst.add(new MenuButton(8*y, Textures.start, Textures.startover,3, "Difficulty Medium"));
-		lijst.add(new MenuButton(10*y, Textures.start, Textures.startover,4, "Difficulty Hard"));
-		lijst.add(new MenuButton(12*y, Textures.start, Textures.startover,5, "Difficulty Insane"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -38,21 +35,16 @@ public class Settings extends ButtonList {
 	public static void actionButtons(int ButtonID){
 		switch(ButtonID){
 		case 1:
+			Menu.setState(GameState.DIFFICULTY);
+		
+			break;
+		
+		case 2:
 			Menu.setState(GameState.MAIN);
+
 			break;
 			
-		case 2:
-			Menu.setDifficulty(Difficulty.EASY);
-			break;
-		case 3:
-			Menu.setDifficulty(Difficulty.MEDIUM);
-			break;
-		case 4:
-			Menu.setDifficulty(Difficulty.HARD);
-			break;
-		case 5:
-			Menu.setDifficulty(Difficulty.INSANE);
-			break;
+
 			
 			default: break;
 		}
@@ -60,7 +52,6 @@ public class Settings extends ButtonList {
 	
 	public void display(){
 		super.display();
-		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "SETTINGS");
-		Menu.bebas.draw(Menu.getScreenx()/2, 40, 30, "CURRENT DIFFICULTY: " + Menu.getDifficulty());
+		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "SETTINGS");		
 	}
 }

@@ -35,8 +35,8 @@ public class Menu {
 	private static GameOver over = new GameOver();
 	private static PauseMenu pauze = new PauseMenu();
 	private static PSettings pset = new PSettings();
-	private static Succes succes = new Succes();
 	private static MazechooserMenu mazemenu= new MazechooserMenu();
+	private static DiffMenu diffmenu = new DiffMenu();
 	private static int top, bottom, scrollspeed;
 	private static int screenx;
 	private static int screeny;
@@ -74,6 +74,11 @@ public class Menu {
 		initButtons();
 		run();
 		
+	}
+	
+	public static void resetScroll(){
+		top=Display.getHeight();
+		bottom=top-screeny;
 	}
 	
 	/**
@@ -194,12 +199,12 @@ public class Menu {
 		case SELECTLVL:
 			ID = mazemenu.checkButtons(top);
 			MazechooserMenu.actionButtons(ID);
-			break;
+			break;		
 			
-		case SUCCES:
-			ID = succes.checkButtons(top);
-			Succes.actionButtons(ID);
-			break;
+		case DIFFICULTY:
+			ID = diffmenu.checkButtons(top);
+			DiffMenu.actionButtons(ID);
+			break;	
 			
 		default: break;
 			
@@ -242,6 +247,10 @@ public class Menu {
 		mazemenu.init(buttonwidth, buttonheight);
 		bl.add(mazemenu);
 		
+		// Difficulty
+		diffmenu.init(buttonwidth, buttonheight);
+		bl.add(diffmenu);
+		
 	}
 	/**
 	 * ************************************
@@ -282,9 +291,8 @@ public class Menu {
 		case SELECTLVL:
 			mazemenu.display();
 			break;
-		
-		case SUCCES:
-			succes.display();
+		case DIFFICULTY:
+			diffmenu.display();
 			break;
 			
 		default: break;
@@ -368,7 +376,7 @@ public class Menu {
 	 * Start the menu
 	 * @param args
 	 * ************************************
-	 */
+	 */	
 	public static void main(String[] args){
 		try {
 			Menu.start();
@@ -386,7 +394,7 @@ public class Menu {
 	 * ************************************
 	 */
 	public static GameState getState() {return gamestate;}
-	public static void setState(GameState state) {gamestate = state;}
+	public static void setState(GameState state) {gamestate = state;Menu.resetScroll();}
 	
 	public static Difficulty getDifficulty() {return difficulty;}
 	public static void setDifficulty(Difficulty dif) {difficulty = dif;}

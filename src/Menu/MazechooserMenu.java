@@ -64,6 +64,7 @@ public class MazechooserMenu extends ButtonList{
 			}
 		}else if(buttonID==Menu.levelList.size()){
 			Menu.setState(GameState.MAIN);
+
 		}
 
 	}
