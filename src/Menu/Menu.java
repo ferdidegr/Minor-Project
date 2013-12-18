@@ -37,6 +37,7 @@ public class Menu {
 	private static PSettings pset = new PSettings();
 	private static MazechooserMenu mazemenu= new MazechooserMenu();
 	private static DiffMenu diffmenu = new DiffMenu();
+	protected static Highscores HSMenu = new Highscores();
 	private static int top, bottom, scrollspeed;
 	private static int screenx;
 	private static int screeny;
@@ -205,6 +206,11 @@ public class Menu {
 			ID = diffmenu.checkButtons(top);
 			diffmenu.actionButtons(ID);
 			break;	
+		
+		case HIGHSCORE:
+			ID = HSMenu.checkButtons(top);
+			HSMenu.actionButtons(ID);
+			break;
 			
 		default: break;
 			
@@ -251,6 +257,10 @@ public class Menu {
 		diffmenu.init(buttonwidth, buttonheight);
 		bl.add(diffmenu);
 		
+		// HighScores
+		HSMenu.init(buttonwidth, buttonheight);
+		bl.add(HSMenu);
+		
 	}
 	/**
 	 * ************************************
@@ -293,6 +303,10 @@ public class Menu {
 			break;
 		case DIFFICULTY:
 			diffmenu.display();
+			break;
+			
+		case HIGHSCORE:
+			HSMenu.display();
 			break;
 			
 		default: break;
