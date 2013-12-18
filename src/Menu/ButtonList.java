@@ -33,7 +33,7 @@ public abstract class ButtonList {
 	 * @param leftallignment
 	 */
 	public abstract void init(int x, int y);
-	
+	public abstract void actionButtons(int ID);
 	
 	/** 
 	 * Returns on which button is clicked, when no button is clicked the method returns -1 

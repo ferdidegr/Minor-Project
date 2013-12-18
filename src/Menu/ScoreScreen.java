@@ -93,6 +93,7 @@ public class ScoreScreen {
 		if(ishighscore)
 		Menu.score.update("UPDATE highscores SET name = '"+ipf.getString()+"' , score = "+score+" WHERE level='"+levelname+"'");
 		System.out.println(ipf.getString());
+		Menu.HSMenu.reset();
 	}
 	
 	/**

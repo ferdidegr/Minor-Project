@@ -26,7 +26,7 @@ public class PSettings extends ButtonList {
 	 * 
 	 * @param buttonID
 	 */
-	public static void actionButtons(int buttonID){
+	public void actionButtons(int buttonID){
 		switch(buttonID){
 		
 		case 1:

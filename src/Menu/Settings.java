@@ -32,7 +32,7 @@ public class Settings extends ButtonList {
 	 * 
 	 * @param buttonID
 	 */
-	public static void actionButtons(int ButtonID){
+	public void actionButtons(int ButtonID){
 		switch(ButtonID){
 		case 1:
 			Menu.setState(GameState.DIFFICULTY);

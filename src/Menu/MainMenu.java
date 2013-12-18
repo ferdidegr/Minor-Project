@@ -30,14 +30,15 @@ public class MainMenu extends ButtonList {
 		
 		lijst.add(new MenuButton(2* y, Textures.start, Textures.startover,1, "Start game"));
 		lijst.add(new MenuButton(4* y, Textures.start, Textures.startover,2, "Settings"));
-		lijst.add(new MenuButton(6* y, Textures.start, Textures.startover,3, "Exit"));
+		lijst.add(new MenuButton(6 *y , Textures.start, Textures.startover, 3,"Highscores"));
+		lijst.add(new MenuButton(8* y, Textures.start, Textures.startover,4, "Exit"));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
 	 * 
 	 * @param buttonID
 	 */
-	public static void actionButtons(int buttonID){
+	public void actionButtons(int buttonID){
 		switch(buttonID){
 		
 		case 1:
@@ -48,6 +49,9 @@ public class MainMenu extends ButtonList {
 			Menu.setState(GameState.SETTINGS);
 			break;
 		case 3:
+			Menu.setState(GameState.HIGHSCORE);
+			break;
+		case 4:
 			Menu.setState(GameState.EXIT);
 			break;
 			

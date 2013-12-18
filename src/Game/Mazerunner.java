@@ -43,6 +43,7 @@ public class Mazerunner {
 	protected static int[][] objectindex;							// reference to the arraylist entry
 	protected static int SQUARE_SIZE=1;								// Size of a unit block
 	protected static int timer = 0;
+	protected int numpickups;										// Amount of pickups that have already been dropped
 	protected static StatusBars status = new StatusBars();
 	
 	protected static boolean isdood;
@@ -506,6 +507,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				mon.update(deltaTime);				
 			}
 			
+			if (timer>numpickups*10*1000){
+				numpickups++;
+				pickuplijst.add(new Pickup(false));
+			}			
 			
 		}
 		
