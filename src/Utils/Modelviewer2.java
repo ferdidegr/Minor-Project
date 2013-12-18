@@ -41,7 +41,7 @@ public class Modelviewer2 {
 		String file = "scorpion_000001.obj";
 		DecimalFormat df = new DecimalFormat("000000");
 		
-		while (i <= 40) {
+		while (i <= 20) {
 			try {
 				int drawlist = Model.loadModel("res/Models/Scorpion/",file).generateDList();
 				list.add(drawlist);

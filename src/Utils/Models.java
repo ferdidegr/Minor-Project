@@ -11,17 +11,14 @@ import java.util.List;
 public class Models {
 	public static int skybox;
 	public static List<Integer> monster = new ArrayList<Integer>();
-	private static int i=1;
-	private static String file = "scorpion_000001.obj";
 	private static DecimalFormat df = new DecimalFormat("000000");
 	
 	static{
-		while (i <= 40) {
+		for (int i=1; i <=20; i++) {
 			try {
+				String file = "scorpion_" + df.format(i) + ".obj";
 				int drawlist = Model.loadModel("res/Models/Scorpion/",file).generateDList();
 				monster.add(drawlist);
-				i++;
-				file = "scorpion_" + df.format(i) + ".obj";
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
