@@ -173,37 +173,37 @@ public class Menu {
 		
 		case SETTINGS:
 			ID = sets.checkButtons(top);
-			Settings.actionButtons(ID);
+			sets.actionButtons(ID);
 			break;
 			
 		case MAIN:
 			ID = main.checkButtons(top);
-			MainMenu.actionButtons(ID);
+			main.actionButtons(ID);
 			break;
 			
 		case GAMEOVER:
 			ID = over.checkButtons(top);
-			GameOver.actionButtons(ID);
+			over.actionButtons(ID);
 			break;
 			
 		case PAUSE:
 			ID = pauze.checkButtons(top);
-			PauseMenu.actionButtons(ID);
+			pauze.actionButtons(ID);
 			break;
 			
 		case PSETTINGS:
 			ID = pset.checkButtons(top);
-			PSettings.actionButtons(ID);
+			pset.actionButtons(ID);
 			break;
 		
 		case SELECTLVL:
 			ID = mazemenu.checkButtons(top);
-			MazechooserMenu.actionButtons(ID);
+			mazemenu.actionButtons(ID);
 			break;		
 			
 		case DIFFICULTY:
 			ID = diffmenu.checkButtons(top);
-			DiffMenu.actionButtons(ID);
+			diffmenu.actionButtons(ID);
 			break;	
 			
 		default: break;

@@ -42,7 +42,7 @@ public class MazechooserMenu extends ButtonList{
 	 * 
 	 * @param buttonID
 	 */
-	public static void actionButtons(int buttonID){
+	public void actionButtons(int buttonID){
 		int score = 0;
 		if(buttonID >=0 && buttonID<Menu.levelList.size()){			
 			Menu.setState(GameState.GAME);
