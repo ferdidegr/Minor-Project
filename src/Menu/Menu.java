@@ -315,15 +315,12 @@ public class Menu {
 		
 		glEnable(GL_TEXTURE_2D);
 		Textures.menubackground.bind();
+		double smallnumber = 0;
 		glBegin(GL_QUADS);
-		glTexCoord2d(0, 1);
-		glVertex2i(0, 1);
-		glTexCoord2d(0, 0);
-		glVertex2i(0, Display.getHeight());
-		glTexCoord2d(1, 0);
-		glVertex2i(Display.getWidth(), Display.getHeight());
-		glTexCoord2d(1, 1);
-		glVertex2i(Display.getWidth(), 0);
+		glTexCoord2d(0+smallnumber, 1-smallnumber);		glVertex2i(0, 0);
+		glTexCoord2d(0+smallnumber, 0+smallnumber);		glVertex2i(0, Display.getHeight());
+		glTexCoord2d(1-smallnumber, 0+smallnumber);		glVertex2i(Display.getWidth(), Display.getHeight());
+		glTexCoord2d(1-smallnumber, 1-smallnumber);		glVertex2i(Display.getWidth(), 0);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);
 		
@@ -394,7 +391,7 @@ public class Menu {
 	 * ************************************
 	 */
 	public static GameState getState() {return gamestate;}
-	public static void setState(GameState state) {gamestate = state;Menu.resetScroll();}
+	public static void setState(GameState state) {gamestate = state;resetScroll();}
 	
 	public static Difficulty getDifficulty() {return difficulty;}
 	public static void setDifficulty(Difficulty dif) {difficulty = dif;}

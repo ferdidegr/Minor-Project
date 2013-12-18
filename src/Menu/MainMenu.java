@@ -41,20 +41,6 @@ public class MainMenu extends ButtonList {
 		switch(buttonID){
 		
 		case 1:
-//			Menu.setState(GameState.GAME);
-//			if (Mazerunner.getSound()==true){
-//			Sound.playMusic("background_game");
-//			}
-//			Menu.game = new Mazerunner();
-//			glPushMatrix();
-//			try {
-//				Menu.game.start();
-//			} catch (ClassNotFoundException | IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//			glPopMatrix();
-//			buttonID=0;
 			Menu.setState(GameState.SELECTLVL);
 			break;
 			
