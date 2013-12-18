@@ -38,7 +38,7 @@ public class Menu {
 	private static MazechooserMenu mazemenu= new MazechooserMenu();
 	private static DiffMenu diffmenu = new DiffMenu();
 	protected static Highscores HSMenu = new Highscores();
-	private static int top, bottom, scrollspeed;
+	protected static int top, bottom, scrollspeed;
 	private static int screenx;
 	private static int screeny;
 	private static double height_width_ratio = 1/8f;			// Height/Width 

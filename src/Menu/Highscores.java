@@ -3,6 +3,7 @@ package Menu;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.opengl.Display;
@@ -46,13 +47,21 @@ int FontSize, Fontheight;
 		lijst.get(0).setY(Fontheight*(levelname.size()+1));
 	}
 	
-	public void display(){
+	public void display(){	
+		
 		super.display();
+
+		
+		for(int i = 1 ; i < levelname.size();i++){Menu.bebas.draw(Display.getWidth()*0.1f, i*Fontheight, FontSize, levelname.get(i));}
+		for(int i = 1 ; i < playername.size();i++){Menu.bebas.draw(Display.getWidth()*2/5, i*Fontheight, FontSize, playername.get(i));}
+		for(int i = 1 ; i < levelname.size();i++){Menu.bebas.draw(Display.getWidth()*4/5, i*Fontheight, FontSize, score.get(i));}
+		
 		glColor3f(0, 0, 0);
-		glRectd(0, 0, Display.getWidth(),Fontheight);
-		for(int i = 0 ; i < levelname.size();i++){Menu.bebas.draw(Display.getWidth()*0.1f, i*Fontheight, FontSize, levelname.get(i));}
-		for(int i = 0 ; i < playername.size();i++){Menu.bebas.draw(Display.getWidth()*2/5, i*Fontheight, FontSize, playername.get(i));}
-		for(int i = 0 ; i < levelname.size();i++){Menu.bebas.draw(Display.getWidth()*4/5, i*Fontheight, FontSize, score.get(i));}
+		glRectd(0, Menu.bottom, Display.getWidth(),Menu.bottom+Fontheight);
+		Menu.bebas.draw(Display.getWidth()*0.1f, Menu.bottom, FontSize, levelname.get(0));
+		Menu.bebas.draw(Display.getWidth()*2/5, Menu.bottom, FontSize, playername.get(0));
+		Menu.bebas.draw(Display.getWidth()*4/5, Menu.bottom, FontSize, score.get(0));
+		
 	}
 
 	@Override
