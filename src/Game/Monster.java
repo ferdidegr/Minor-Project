@@ -29,6 +29,7 @@ public class Monster extends levelObject {
 	private Health health;
 	private int immunitycounter;
 	private int flickercounter;
+	private int j = 0;
 
 	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
 		super(x, y, z);
@@ -438,9 +439,11 @@ public class Monster extends levelObject {
 			if (!isStuck() && !wait)
 				rotateV();
 
-			glCallList(Models.monster);
+			int buffer = Models.monster.get(j % 40);
+			glCallList(buffer);
 
 			glPopMatrix();
+			j++;
 		}}
 	}
 

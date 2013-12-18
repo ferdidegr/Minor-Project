@@ -37,17 +37,14 @@ public class Modelviewer2 {
 		Display.setVSyncEnabled(true);
 		Display.create();
 		
-		Model m = null;
 		int i=1;
 		String file = "scorpion_000001.obj";
 		DecimalFormat df = new DecimalFormat("000000");
 		
 		while (i <= 40) {
 			try {
-				m = Model.loadModel("res/Models/Scorpion/",file);		// Specify model .obj file
-				int drawlist1 = m.generateDList();
-				list.add(drawlist1);
-				m = null;												// Drop the memory used for the model
+				int drawlist = Model.loadModel("res/Models/Scorpion/",file).generateDList();
+				list.add(drawlist);
 				i++;
 				file = "scorpion_" + df.format(i) + ".obj";
 			} catch (FileNotFoundException e) {

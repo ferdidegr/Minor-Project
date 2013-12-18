@@ -4,16 +4,29 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Models {
-	public static int monster, skybox;
+	public static int skybox;
+	public static List<Integer> monster = new ArrayList<Integer>();
+	private static int i=1;
+	private static String file = "scorpion_000001.obj";
+	private static DecimalFormat df = new DecimalFormat("000000");
+	
 	static{
-		try {
-			monster = Model.loadModel("res/Models/", "scorpion.obj").generateDList();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		while (i <= 40) {
+			try {
+				int drawlist = Model.loadModel("res/Models/Scorpion/",file).generateDList();
+				monster.add(drawlist);
+				i++;
+				file = "scorpion_" + df.format(i) + ".obj";
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		/*
