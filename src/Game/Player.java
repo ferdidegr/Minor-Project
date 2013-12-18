@@ -269,7 +269,7 @@ public class Player extends GameObject {
 				|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz-pw)){
 					colX=true;
 					locationX+=tempobj.getmaxDistX(locationX+pw*signX);
-					collsionreaction(tempobj);
+					collisionreaction(tempobj);
 					break;
 				}
 
@@ -284,7 +284,7 @@ public class Player extends GameObject {
 				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+velocity.getZ())){
 					colZ=true;
 					locationZ+=tempobj.getmaxDistZ(locationZ+pw*signZ);
-					collsionreaction(tempobj);
+					collisionreaction(tempobj);
 					break;
 				}
 			}
@@ -302,7 +302,7 @@ public class Player extends GameObject {
 				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){					
 					colY=true;
 					locationY+=tempobj.getmaxDistY(locationY-ph);
-					collsionreaction(tempobj);
+					collisionreaction(tempobj);
 				}				
 			}
 			if(!spikejump){control.jump = false;}
@@ -420,7 +420,7 @@ public class Player extends GameObject {
 		spikejump=true;		
 	}
 	
-	public void collsionreaction(levelObject obj){
+	public void collisionreaction(levelObject obj){
 		if(obj instanceof Spikes){spikereaction();}
 		if(obj instanceof EndObelisk){
 			if(Mazerunner.monsterlijst.size()!=0){
