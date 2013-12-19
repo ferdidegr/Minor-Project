@@ -22,20 +22,16 @@ public class EndObelisk extends levelObject{
 			glVertex3d(-0.5, 7, -0.5);
 			
 			glEnd();
-			
 		}
 		glPopMatrix();
-		
 	}
 
-	@Override
+
 	public boolean isCollision(double x, double y, double z) {
 		double width = Mazerunner.SQUARE_SIZE/2f;			
 		return x>(locationX-width) && x<(locationX+width) && z>(locationZ-width) && z<(locationZ+width);
-		
 	}
 
-	@Override
 	public double getmaxDistX(double X) {
 		if(locationX>X)return locationX-Mazerunner.SQUARE_SIZE/2f-X;
 		return locationX+Mazerunner.SQUARE_SIZE/2f-X;
@@ -56,13 +52,10 @@ public class EndObelisk extends levelObject{
 	@Override
 	public void update(int deltaTime) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void change() {
 		// TODO Auto-generated method stub
-		
 	}
-
 }
