@@ -64,7 +64,7 @@ public abstract class ButtonList {
 		
 		double initheight = temp2.getY()-Display.getHeight();
 
-		if(temp2.getY()<Display.getHeight()){
+		if(temp2.getY()+temp2.height<Display.getHeight()){
 			if(Menu.top - temp.getY() < Display.getHeight()- temp.getY()){ Menu.top += 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
 			if(temp2.getY() - Menu.bottom < Display.getHeight() + initheight){ Menu.top -= 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}	
 		}else{
