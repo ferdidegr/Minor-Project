@@ -17,6 +17,7 @@ int FontSize, Fontheight;
 	@Override
 	public void init(int x, int y) {			
 		getHighscores();				
+		lijst.add(new MenuButton(10, null, null, 100, "")); // Dummy
 		lijst.add(new MenuButton(Fontheight*(levelname.size()+1), Textures.start, Textures.startover, 1, "Back"));		
 	}
 	
@@ -24,7 +25,7 @@ int FontSize, Fontheight;
 		levelname.add("Level");
 		playername.add("Name");
 		score.add("Score");
-		String query = "SELECT * FROM highscores;";
+		String query = "SELECT * FROM highscores ORDER BY level;";
 		ResultSet rs = Menu.score.query(query);
 		FontSize = (int) (50 *Display.getHeight()/1024f);
 		Fontheight = (int)( Menu.bebas.getHeight(FontSize));

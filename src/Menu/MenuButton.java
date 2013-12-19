@@ -61,30 +61,31 @@ public class MenuButton {
 	 * draw the buttons
 	 */
 	public void draw(){
-		// Enable transparency
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		// Enable textures
-		glEnable(GL_TEXTURE_2D);
-		// Choose bind depending on mouse event
-		if(!isButton(mousex, mousey)){normal.bind();}
-		if(isButton(mousex, mousey)){mouseover.bind();}
-		
-		glColor4f(1.0f, 1.0f, 1.0f,1.0f);
-		glBegin(GL_QUADS);
-		
-		glTexCoord2d(0, 1);		glVertex2i(this.x, this.y);
-		glTexCoord2d(0, 0);		glVertex2i(this.x, this.y+height);
-		glTexCoord2d(1, 0);		glVertex2i(this.x+width, this.y+height);
-		glTexCoord2d(1, 1);		glVertex2i(this.x+width, this.y);
-		glEnd();
-		
-		
-		glDisable(GL_TEXTURE_2D);
-		glDisable(GL_BLEND);
-		
-//		content.draw(x +width/2, y-height/2, 1);
-		Menu.bebas.draw(x, y, (float) (0.7*height), name);
+		if(normal != null && mouseover != null){
+			// Enable transparency
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			// Enable textures
+			glEnable(GL_TEXTURE_2D);
+			// Choose bind depending on mouse event
+			if(!isButton(mousex, mousey)){normal.bind();}
+			if(isButton(mousex, mousey)){mouseover.bind();}
+			
+			glColor4f(1.0f, 1.0f, 1.0f,1.0f);
+			glBegin(GL_QUADS);
+			
+			glTexCoord2d(0, 1);		glVertex2i(this.x, this.y);
+			glTexCoord2d(0, 0);		glVertex2i(this.x, this.y+height);
+			glTexCoord2d(1, 0);		glVertex2i(this.x+width, this.y+height);
+			glTexCoord2d(1, 1);		glVertex2i(this.x+width, this.y);
+			glEnd();
+			
+			
+			glDisable(GL_TEXTURE_2D);
+			glDisable(GL_BLEND);
+		}			
+
+			Menu.bebas.draw(x, y, (float) (0.7*height), name);
 
 	}
 	

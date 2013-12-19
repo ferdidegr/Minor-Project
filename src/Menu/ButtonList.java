@@ -61,9 +61,17 @@ public abstract class ButtonList {
 		}
 		MenuButton temp = lijst.get(0);
 		MenuButton temp2 = lijst.get(lijst.size()-1);
-		if(Menu.bottom> 0){ Menu.top -= 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}		
-		else if(Menu.top< temp2.getY()){ Menu.top += 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
+		
+		double initheight = temp2.getY()-Display.getHeight();
 
+		if(temp2.getY()<Display.getHeight()){
+			if(Menu.top - temp.getY() < Display.getHeight()- temp.getY()){ Menu.top += 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
+			if(temp2.getY() - Menu.bottom < Display.getHeight() + initheight){ Menu.top -= 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}	
+		}else{
+			if(Menu.top - temp2.getY() > 2*temp2.height){ Menu.top -= 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
+			if(temp.getY() - Menu.bottom > temp.height){ Menu.top += 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
+		}
+		
 	}
 	/**
 	 * If a button is called with center, then after a resize of the window this should still be the case.
