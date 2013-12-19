@@ -9,7 +9,7 @@ import Utils.IO;
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
-			, texsave = null, texload=null, texspike = null, texflaggreen=null, texflagred, scorpion, pit, hatch;
+			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred, scorpion, pit, hatch;
 	
 	static {
 		try {

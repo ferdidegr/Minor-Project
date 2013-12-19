@@ -91,7 +91,6 @@ public class UserInput extends Control
 				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE) {jump = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_F1) {view_coord = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_E) {lookback = true;}
-				if (Keyboard.getEventKey() == Keyboard.KEY_L) {Menu.setState(GameState.SUCCES);}
 		    } else {
 		    	/*
 		    	 * Key Released events

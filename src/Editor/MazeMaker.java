@@ -1,4 +1,5 @@
 package Editor;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,9 +14,8 @@ import org.lwjgl.opengl.Display;
 import Utils.Chooser;
 import Utils.IO;
 import Utils.Sound;
+
 import static org.lwjgl.opengl.GL11.*;
-
-
 
 public class MazeMaker {
 	private int left;								// world coordinate of the left side of the screen
@@ -26,10 +26,10 @@ public class MazeMaker {
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
 	private boolean mousedown = false, ctrldown = false;
 	private MazeMap maze = null;
-	private int ID = -1, leftID=0, rightID=0;								// ID when no button has been pressed
+	private int ID = -1, leftID = 0, rightID = 0;								// ID when no button has been pressed
 	private boolean exit = false;	
 	private float tilesize;
-	private int flaggreenx=-1,flaggreeny=-1,flagredx=-1,flagredy=-1;
+	private int flaggreenx = -1, flaggreeny = -1, flagredx = -1, flagredy = -1;
 	/**
 	 * ***********************************************
 	 * Begin the program
@@ -43,7 +43,7 @@ public class MazeMaker {
 		 * Select resolution
 		 */
 		Chooser keuze = new Chooser(false);
-		while(keuze.getDisplay()==null){
+		while(keuze.getDisplay() == null){
 			Thread.sleep(500);
 		}
 		/*
@@ -59,7 +59,7 @@ public class MazeMaker {
 			left = 0;
 			bottom = 0;
 			menubarwidth = (right-left)/6;
-			tilesize = 0.2f*menubarwidth;
+			tilesize = 0.2f * menubarwidth;
 			MazeMap.setSize(tilesize);
 		/*
 		 * Initialize openGL
@@ -78,11 +78,13 @@ public class MazeMaker {
 		while(!Display.isCloseRequested() && !exit){
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
 			glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+			
 			Mousepoll();
 			keyboardpoll();
-			display();			
-			Display.update();Display.sync(60);
+			display();
 			
+			Display.update();
+			Display.sync(60);
 		}
 		Sound.exit();
 	}
@@ -101,7 +103,7 @@ public class MazeMaker {
 	 * ***********************************************
 	 */
 	public void drawMaze(){
-		if(maze!=null){
+		if(maze != null){
 			maze.draw();
 		}
 	}
@@ -111,24 +113,21 @@ public class MazeMaker {
 	 * ***********************************************
 	 */
 	public void drawMenu(){
-		
 		/*
 		 * Menu bar
 		 */
 		glEnable(GL_TEXTURE_2D);						// Enable Textures
-		Textures.texmenubar.bind();							// Set this texture as active
+		Textures.texmenubar.bind();						// Set this texture as active
 											
 		glBegin(GL_QUADS);								// Begin drawing the rectangle
-		glTexCoord2f(0, 1);
-		glVertex2f(right-menubarwidth, bottom);			// Bottom left vertex
-		glTexCoord2f(1, 1);	
-		glVertex2f(right, bottom);							// Top right vertex
-		glTexCoord2f(1, 0);	
-		glVertex2f(right, top);						// Bottom Right vertex
-		glTexCoord2f(0, 0);
-		glVertex2f(right-menubarwidth, top);			// top Left vertex
-		
-
+			glTexCoord2f(0, 1);
+			glVertex2f(right-menubarwidth, bottom);		// Bottom left vertex
+			glTexCoord2f(1, 1);	
+			glVertex2f(right, bottom);					// Top right vertex
+			glTexCoord2f(1, 0);	
+			glVertex2f(right, top);						// Bottom Right vertex
+			glTexCoord2f(0, 0);
+			glVertex2f(right-menubarwidth, top);		// top Left vertex
 		glEnd();
 		glDisable(GL_TEXTURE_2D);						// Disable textures
 		
@@ -147,7 +146,6 @@ public class MazeMaker {
 	 * ********************************************************
 	 */
 	public void keyboardpoll(){
-				
 		/*
 		 * Key events
 		 */
@@ -156,17 +154,14 @@ public class MazeMaker {
 				/*
 				 * Key Pressed
 				 */
-				if(Keyboard.getEventKey()==Keyboard.KEY_LCONTROL){ctrldown=true;}
+				if(Keyboard.getEventKey() == Keyboard.KEY_LCONTROL){ctrldown = true;}
 			}else{
 				/*
 				 * Key Released events
 				 */
-				if(Keyboard.getEventKey()==Keyboard.KEY_LCONTROL){ctrldown=false;}
-				
+				if(Keyboard.getEventKey() == Keyboard.KEY_LCONTROL){ctrldown = false;}
 			}
 		}
-
-		
 	}
 	/**
 	 * ***********************************************************************

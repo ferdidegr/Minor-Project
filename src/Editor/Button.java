@@ -1,8 +1,8 @@
 package Editor;
+
 import static org.lwjgl.opengl.GL11.*;
 
 import org.newdawn.slick.opengl.Texture;
-
 
 public class Button {
 	private float left, right, top, bottom, x_top_left, y_top_left;
@@ -18,10 +18,10 @@ public class Button {
 	 * 
 	 * right-0.95f*menubarwidth, top-0.1f*buttonsize
 	 */
-	public Button(float x_top_left,float y_top_left,Texture texbutton, int ID){
-		this.left = bar_right - (1- x_top_left)*bar_width;
+	public Button(float x_top_left, float y_top_left, Texture texbutton, int ID){
+		this.left = bar_right - (1 - x_top_left) * bar_width;
 		this.right = this.left + button_size;
-		this.top = bar_top - (y_top_left)*button_size;
+		this.top = bar_top - (y_top_left) * button_size;
 		this.bottom = this.top-button_size;
 		this.ID = ID;
 		this.x_top_left = x_top_left;
@@ -33,27 +33,26 @@ public class Button {
 	 */
 	public void drawButton(){
 		glColor3f(1, 1, 1);
-		
 		glEnable(GL_TEXTURE_2D);
 		texbutton.bind();
+		
 		glBegin(GL_QUADS);
-		glTexCoord2d(0, 1);
-		glVertex2f(left, bottom);
-		glTexCoord2d(1, 1);	
-		glVertex2f(right, bottom);
-		glTexCoord2d(1, 0);
-		glVertex2f(right, top);
-		glTexCoord2d(0, 0);
-		glVertex2f(left, top);
-				
+			glTexCoord2d(0, 1);
+			glVertex2f(left, bottom);
+			glTexCoord2d(1, 1);	
+			glVertex2f(right, bottom);
+			glTexCoord2d(1, 0);
+			glVertex2f(right, top);
+			glTexCoord2d(0, 0);
+			glVertex2f(left, top);
 		glEnd();	
 
 		glDisable(GL_TEXTURE_2D);
 		
-		if(ID==leftID){
+		if(ID == leftID){
 			glColor3f(0.0f, 0.0f, 1.0f);
 			drawlinebox();
-		}else if(ID==rightID){
+		}else if(ID == rightID){
 			glColor3f(0.0f, 1.0f, 0.0f);
 			drawlinebox();
 		}
@@ -65,10 +64,10 @@ public class Button {
 	public void drawlinebox(){
 		glLineWidth(5);		
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(left, bottom);			
-		glVertex2f(right, bottom);
-		glVertex2f(right, top);
-		glVertex2f(left, top);				
+			glVertex2f(left, bottom);			
+			glVertex2f(right, bottom);
+			glVertex2f(right, top);
+			glVertex2f(left, top);				
 		glEnd();
 	}
 	/**
@@ -78,15 +77,15 @@ public class Button {
 	 * @return true if the mouse is on this button
 	 */
 	public boolean isButton(int x , int y){
-		return (x>left && x<right && y<top && y>bottom);
+		return (x > left && x < right && y < top && y > bottom);
 	}
 	/**
 	 * Update the world coordinates of this button
 	 */
 	public void update(){
-		left = bar_right - (1- x_top_left)*bar_width;
+		left = bar_right - (1 - x_top_left) * bar_width;
 		right = left + button_size;
-		top = bar_top - (y_top_left+scroll)*button_size;
+		top = bar_top - (y_top_left + scroll) * button_size;
 		bottom = top-button_size;		
 	}
 	/**
@@ -101,11 +100,11 @@ public class Button {
 		bar_right = inbar_right;
 		bar_top = inbar_top;
 		bar_bottom = inbar_bottom;
-		bar_width = (bar_right- bar_left);
-		button_size = bar_width*0.4f;
+		bar_width = bar_right - bar_left;
+		button_size = bar_width * 0.4f;
 	}
 	/*
-	 * set which button is clicked with which mousebutton
+	 * Set which button is clicked with which mousebutton
 	 */
 	public static void setLeftID(int ID){leftID = ID;}
 	public static void setrightID(int ID){rightID = ID;}
@@ -113,21 +112,21 @@ public class Button {
 	 * Gives a string back giving the positions of the edges
 	 */
 	public String toString(){
-		return (top-bottom)+" "+left+" "+right+" "+bottom+" "+top;
+		return (top-bottom) + " " + left + " " + right + " " + bottom + " " + top;
 	}
 	/*
 	 * when scrolled, move the buttons along
 	 */
-	public static void scrollup(){	scroll-=0.5;}	
-	public static void scrolldown(){scroll+=0.5;}
+	public static void scrollup(){scroll -= 0.5;}	
+	public static void scrolldown(){scroll += 0.5;}
 	/*
 	 * Getters
 	 */
-	public float getLeft(){ return left;}
-	public float getRight(){ return right;}
-	public float getTop(){ return top;}
+	public float getLeft(){return left;}
+	public float getRight(){return right;}
+	public float getTop(){return top;}
 	public float getBottom(){return bottom;}
-	public int getID(){ return this.ID;}
+	public int getID(){return this.ID;}
 	public static float getbarBottom(){return bar_bottom;}
 	public static float getbarTop(){return bar_top;}
 	public static float getbarLeft(){return bar_left;}
