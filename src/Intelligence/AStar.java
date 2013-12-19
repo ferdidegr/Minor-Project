@@ -9,8 +9,7 @@ import Utils.*;
 public class AStar {
 	
 	private PriorityQueue<Node> ActiveList;
-	private ArrayList<Node> Route;
-	private ArrayList<Node> AllNodes;
+	private static ArrayList<Node> AllNodes;
 	private Node CurrentNode;
 	private Node Start;
 	private Node End;
@@ -21,7 +20,6 @@ public class AStar {
 	 */
 	public AStar(){
 		ActiveList = new PriorityQueue<Node>();
-		Route = new ArrayList<Node>();
 		AllNodes = new ArrayList<Node>();
 	}
 	
@@ -29,7 +27,7 @@ public class AStar {
 	 * Maakt van gegeven Maze alle punten die geen muur zijn een Node, en zet deze in AllNodes.
 	 * @param maze
 	 */
-	public void loadMaze(int[][] maze){
+	public static void loadMaze(int[][] maze){
 		System.out.println("Loading maze");
 		for(int j = 0; j < maze.length; j++){
 			for(int i = 0; i<maze[0].length; i++){
@@ -49,6 +47,7 @@ public class AStar {
 	 * @return
 	 */
 	public boolean setRoute(Vector A, Vector B){
+		ActiveList.clear();
 		Double x0 = A.getX();
 		Double y0 = A.getZ();
 		Double x1 = B.getX();
@@ -90,25 +89,20 @@ public class AStar {
 	/**
 	 * Zoekt met explore de maze door en zet de gevonden snelste route in de arraylist Route.
 	 */
-	public void findRoute(){
+	public ArrayList<Node> findRoute(){
+		ArrayList<Node> Route = new ArrayList<Node>();
 		if(explore()){
 			Route.add(End);
 			Node next = End;
-			while(!next.equals(Start)){
+			int count = 0;
+			while(!next.equals(Start) && !(count > maxIterations)){
 				next = next.getParent();
 				Route.add(next);
+				count++;
 			}
 			Collections.reverse(Route);
 		}
-	}
-	
-	/**
-	 * Geeft een print van de gevonden Route
-	 */
-	public void printRoute(){
-		for(Node no: Route){
-			System.out.println(no.toString());
-		}
+		return Route;
 	}
 	
 	/**
@@ -160,6 +154,15 @@ public class AStar {
 		return false;
 	}
 	
-	
+	/**
+	 * Verwijdert een Node van de pathfinding mogelijkheden. Gebruikt afgeronde waardes van x en z uit gegeven vector.
+	 * @param in
+	 */
+	public void removeNode(Vector in){
+		Double x0 = in.getX();
+		Double y0 = in.getZ();
+		Node no = new Node(x0.intValue(), y0.intValue());
+		AllNodes.remove(no);
+	}
 	
 }
