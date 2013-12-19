@@ -31,7 +31,6 @@ public class Mazerunner {
 	
 	
 	private long previousTime;										// Used to calculate elapsed time.
-	private Wall wall;												// Wall Class, used to put one wall in for test TODO remove
 	
 	private FloatBuffer lightPosition;								// Where the sun is located		
 
@@ -204,9 +203,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 
 		}
 	}
-	// Parsing test pickups
-	pickuplijst.add(new Pickup(SQUARE_SIZE*2,SQUARE_SIZE,SQUARE_SIZE*2,0,SQUARE_SIZE/4f));
-	pickuplijst.add(new Pickup(SQUARE_SIZE*18,SQUARE_SIZE,SQUARE_SIZE*18,1,SQUARE_SIZE/4f));
+	
 	
 	status.init( 0, player);
 
@@ -297,15 +294,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			input = new UserInput();
 			player.setControl(input);
 			
-			/*
-			 * adding test objects
-			 */
-			
-			wall = new Wall(10, 10, 0, 5, 2,SQUARE_SIZE);
-
-			objlijst.add(wall);
-
-		
+				
 		
 	}
 	/**
@@ -535,8 +524,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	if(vo instanceof Spikes){ Material.setMtlsteel();}
 		        	vo.display();
 		        }
-			 	Material.setMtlWall();
-		        wall.display();						
+			 						
 				 
 			 glEndList();			 
 				   
