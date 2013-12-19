@@ -1,5 +1,6 @@
 package Game;
 import static org.lwjgl.opengl.GL11.*;
+import Utils.Models;
 
 public class EndObelisk extends levelObject{
 
@@ -9,21 +10,13 @@ public class EndObelisk extends levelObject{
 
 	@Override
 	public void display() {
+		glShadeModel(GL_FLAT);
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);
-		for(int i=0; i<4; i++){
-			glRotated(90, 0, 1, 0);
-			glBegin(GL_QUADS);
-			
-			glNormal3d(-1, 0, 0);
-			glVertex3d(-0.5, 0, -0.5);
-			glVertex3d(-0.5, 0, 0.5);
-			glVertex3d(-0.5, 7, 0.5);
-			glVertex3d(-0.5, 7, -0.5);
-			
-			glEnd();
-		}
+		glScaled(2, 1, 2);
+		glCallList(Models.obelisk);
 		glPopMatrix();
+		glShadeModel(GL_SMOOTH);
 	}
 
 
