@@ -36,6 +36,7 @@ public class Monster extends levelObject {
 	private Vector target;
 	private ArrayList<Node> Route;
 	private AStar pathfinding;
+	private boolean isplaying;
 	
 
 	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
@@ -46,6 +47,7 @@ public class Monster extends levelObject {
 		wait = false;
 		this.health = new Health(30, false);
 		pathfinding = new AStar();
+		isplaying=false;
 	}
 
 	public double getHeight() {
@@ -559,4 +561,11 @@ public class Monster extends levelObject {
 		}
 	}
 
+	public boolean isPlaying(){
+		return isplaying;
+	}
+	
+	public void setPlaying(boolean isplaying){
+		this.isplaying = isplaying;
+	}
 }

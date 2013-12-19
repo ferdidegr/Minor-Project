@@ -60,10 +60,9 @@ public abstract class ButtonList {
 			knop.draw();
 		}
 		MenuButton temp = lijst.get(0);
-		
-		if(Menu.bottom> 0){ Menu.top -= 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
 		MenuButton temp2 = lijst.get(lijst.size()-1);
-		if(Menu.top< temp2.getY()+2*temp.height){ Menu.top += 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
+		if(Menu.bottom> 0){ Menu.top -= 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}		
+		else if(Menu.top< temp2.getY()){ Menu.top += 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
 
 	}
 	/**
