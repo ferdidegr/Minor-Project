@@ -62,7 +62,8 @@ public class MainMenu extends ButtonList {
 	
 	public void display(){
 		super.display();
-		Menu.bebas.draw(Display.getWidth()*2f/5, 0, 30, "WELKOM BIJ TRAPPER");
+		double textwidth = Menu.bebas.getWidth(30, "WELKOM BIJ TRAPPER");
+		Menu.bebas.draw((float) ((Display.getWidth()-textwidth)/2), 0, 30, "WELKOM BIJ TRAPPER");
 	}
 	
 }

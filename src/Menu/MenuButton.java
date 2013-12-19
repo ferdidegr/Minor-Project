@@ -84,8 +84,10 @@ public class MenuButton {
 			glDisable(GL_TEXTURE_2D);
 			glDisable(GL_BLEND);
 		}			
-
-			Menu.bebas.draw(x, y, (float) (0.7*height), name);
+			double textwidth = Menu.bebas.getWidth((float) (0.7*height), name);
+			if(!isButton(mousex, mousey)){Menu.bebas.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name);}
+			if(isButton(mousex, mousey)){Menu.bebas.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name,Color.black);}
+			
 
 	}
 	

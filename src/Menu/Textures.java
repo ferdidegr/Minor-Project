@@ -11,9 +11,9 @@ public class Textures {
 		
 		static{
 			try {
-				start = IO.loadtexture("res/wall.jpg",false);
-				startover = IO.loadtexture("res/transparent.png",false);
-				menubackground = IO.loadtexture("res/Wooden_floor_original.jpg",false);
+				start = IO.loadtexture("res/button_normal.png",false);
+				startover = IO.loadtexture("res/button_over.png",false);
+				menubackground = IO.loadtexture("res/background.png",false);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
