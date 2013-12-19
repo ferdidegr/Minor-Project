@@ -45,7 +45,7 @@ int FontSize, Fontheight;
 		playername.clear();
 		score.clear();
 		getHighscores();
-		lijst.get(0).setY(Fontheight*(levelname.size()+1));
+		lijst.get(1).setY(Fontheight*(levelname.size()+1));
 	}
 	
 	public void display(){	

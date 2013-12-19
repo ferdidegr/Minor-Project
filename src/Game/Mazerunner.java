@@ -516,15 +516,22 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			 */			
 			TextureImpl.bindNone();
 			glNewList(objectDisplayList, GL_COMPILE);
-			 
-			
+			 // Draw Walls			
 			 for(VisibleObject vo:visibleObjects){
-		        	if(vo instanceof Wall){	Material.setMtlWall();}
-		        	if(vo instanceof Floor){ Material.setMtlGround();}	
-		        	if(vo instanceof Spikes){ Material.setMtlsteel();}
-		        	vo.display();
-		        }
-			 						
+		      if(vo instanceof Wall){	Material.setMtlWall();vo.display();}		        	
+		     }
+			 // Draw Floor
+			 for(VisibleObject vo:visibleObjects){
+				 if(vo instanceof Floor){ Material.setMtlGround();vo.display();}		        	
+		     }
+			 // Draw Spikes
+			 for(VisibleObject vo:visibleObjects){
+				 if(vo instanceof Spikes){ Material.setMtlsteel();vo.display();}	        	
+		     }
+			 // Draw Obelisk
+	         for(VisibleObject vo:visibleObjects){
+	        	 if(vo instanceof EndObelisk){vo.display();}
+	         }		 						
 				 
 			 glEndList();			 
 				   

@@ -38,10 +38,11 @@ public class MiniMap {
 
 		for (int z = locZ - size; z < locZ + size; z++) {
 			for (int x = locX - size; x < locX + size; x++) {
-				if (x >= 0 && z >= 0 && x < mapHeight && z < mapWidth) {
+				if (x >= 0 && z >= 0 && x < mapWidth && z < mapHeight) {
 					if (Math.abs(z - locZ) < 5 && Math.abs(x - locX) < 5) {
 						visited[z][x] = 1;
 					}
+
 					if (maze[z][x] >= 1 && maze[z][x] <= 10 && visited[z][x] == 1) {
 						for (int k = 0; k < maze[z][x]; k++) {
 							drawBlock();

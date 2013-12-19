@@ -82,6 +82,7 @@ public class StatusBars {
 	public void addScore(int sc){
 		System.out.println("add score");
 		score += sc;
+		score = Math.max(0, score);
 	}
 	
 	public int getScore() {return score;}

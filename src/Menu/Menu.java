@@ -227,7 +227,7 @@ public class Menu {
 	 */
 	public static void initButtons(){
 		
-		int buttonwidth = Display.getWidth()/3;		
+		int buttonwidth = Display.getWidth()/3*768/Display.getHeight();		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
 		MenuButton.setDimensions(buttonwidth, buttonheight);
 		
