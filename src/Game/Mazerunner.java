@@ -68,7 +68,7 @@ public int start(String levelname) throws Exception{
 	timer = 0 ;
 	isdood=false;					// needs a better way to implement this
 	// TODO remove
-	Display.setResizable(true);
+	Display.setResizable(false);
 										
 	initObj();
 	initGL();
