@@ -64,7 +64,7 @@ public class Modelviewer2 {
 			glRotatef(horangle, 0, 1, 0);
 			glRotatef(verangle, 1, 0, 0);
 						
-			int buffer = list.get(j % 40);
+			int buffer = list.get(j % 20);
 			glCallList(buffer);
 						
 			glPushAttrib(GL_ENABLE_BIT);

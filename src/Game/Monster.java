@@ -439,6 +439,7 @@ public class Monster extends levelObject {
 			if (!isStuck() && !wait)
 				rotateV();
 
+			// Drawing the next model of the monster (for animation)
 			int buffer = Models.monster.get(monsterframe % 20);
 			glCallList(buffer);
 
