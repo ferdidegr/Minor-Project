@@ -4,7 +4,9 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
+import Intelligence.*;
 import Utils.Graphics;
 import Utils.Models;
 import Utils.Vector;
@@ -30,6 +32,11 @@ public class Monster extends levelObject {
 	private int immunitycounter;
 	private int flickercounter;
 	private int monsterframe = 0;
+	private double distanceToTarget;
+	private Vector target;
+	private ArrayList<Node> Route;
+	private AStar pathfinding;
+	
 
 	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
 		super(x, y, z);
@@ -38,6 +45,7 @@ public class Monster extends levelObject {
 		this.SQUARE_SIZE = SQUARE_SIZE;
 		wait = false;
 		this.health = new Health(30, false);
+		pathfinding = new AStar();
 	}
 
 	public double getHeight() {
@@ -96,6 +104,11 @@ public class Monster extends levelObject {
 			// Check the count, to know whether the monster has been stuck for a
 			// while, or can see the player
 			checkSituation();
+			//if(findPath() && !Route.isEmpty()){
+			//	followRoute();
+			//} else {
+			//	randomWalk();
+			//}
 
 			if (followplayer) {
 				dirToPlayer();
@@ -115,6 +128,36 @@ public class Monster extends levelObject {
 
 		}
 
+	}
+	
+	/**
+	 * Lets the monster go to a given location in a straight path.
+	 * @param loc
+	 */
+	public void goTo(Vector loc){
+		Vector vec = new Vector(locationX, locationY, locationZ);
+		vec.scale(-1);
+		Vector dir = loc.clone();
+		dir.add(vec);
+		distanceToTarget = dir.length2D();
+		dir.normalize2D();
+	}
+	
+	public boolean findPath(){
+		if(pathfinding.setRoute(new Vector(locationX, 0, locationZ), playerloc)){
+			Route = pathfinding.findRoute();
+			System.out.println("Route gevonden");
+			System.out.println(Route);
+			return true;
+		}
+		return false;
+	}
+	
+	public void followRoute(){
+		Node firstpoint = Route.get(0);
+		Vector target = new Vector(firstpoint.getX(), locationY, firstpoint.getY());
+		System.out.println("goTo bereikt");
+		goTo(target);
 	}
 
 	/**

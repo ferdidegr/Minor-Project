@@ -66,10 +66,10 @@ public class Menu {
 		}
 		
 		Display.create();
-		Display.setResizable(true);		
+		Display.setResizable(false);		
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
-		bebas = new Text("BEBAS.TTF");
+		bebas = new Text("BEBAS.TTF");	
 		Sound.init();
 		new Textures();
 		initButtons();

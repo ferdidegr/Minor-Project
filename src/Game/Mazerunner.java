@@ -14,6 +14,7 @@ import static org.lwjgl.util.glu.GLU.gluPerspective;
 
 import org.newdawn.slick.opengl.TextureImpl;
 
+import Intelligence.AStar;
 import Menu.GameState;
 import Menu.Menu;
 import Utils.*;
@@ -73,6 +74,9 @@ public int start(String levelname) throws Exception{
 	initObj();
 	initGL();
 	initDisp();
+	
+	// Pathfinding initialiseren
+	AStar.loadMaze(maze);
 	
 	
 	previousTime = Calendar.getInstance().getTimeInMillis();
