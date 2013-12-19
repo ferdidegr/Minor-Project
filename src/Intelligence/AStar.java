@@ -9,7 +9,7 @@ import Utils.*;
 public class AStar {
 	
 	private PriorityQueue<Node> ActiveList;
-	private static ArrayList<Node> AllNodes;
+	private static ArrayList<Node> AllNodes = new ArrayList<Node>();;
 	private Node CurrentNode;
 	private Node Start;
 	private Node End;
@@ -19,15 +19,14 @@ public class AStar {
 	 * Nodig om te initialiseren
 	 */
 	public AStar(){
-		ActiveList = new PriorityQueue<Node>();
-		AllNodes = new ArrayList<Node>();
+		ActiveList = new PriorityQueue<Node>();		
 	}
 	
 	/**
 	 * Maakt van gegeven Maze alle punten die geen muur zijn een Node, en zet deze in AllNodes.
 	 * @param maze
 	 */
-	public static void loadMaze(int[][] maze){
+	public static void loadMaze(int[][] maze){		
 		System.out.println("Loading maze");
 		for(int j = 0; j < maze.length; j++){
 			for(int i = 0; i<maze[0].length; i++){
