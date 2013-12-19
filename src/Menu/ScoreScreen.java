@@ -59,7 +59,7 @@ public class ScoreScreen {
 				float width = (float) Menu.bebas.getWidth(fontSize, "Success!");
 				float height = (float) Menu.bebas.getHeight(fontSize);
 				ipf.poll();
-				if(highscore<score){ishighscore = true;}
+				if(highscore<score || score==0){ishighscore = true;}
 				Menu.bebas.draw((Display.getWidth()-width)/2f,(Display.getHeight()-height)/2f, fontSize, "Success!");
 			}
 			// When you ended up in complete failure

@@ -116,7 +116,9 @@ public class Menu {
 					
 					mousepoll();
 					// Discard all keyboard events
-					while(Keyboard.next()){}
+					while(Keyboard.next() && ingame){ 
+						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE)gamestate=GameState.GAME;
+					}
 					display();					
 					Display.update();
 					Display.sync(60);
@@ -274,6 +276,7 @@ public class Menu {
 				drawBackground();
 			}else{
 				drawGameAsBackground();
+
 			}
 
 		switch(gamestate){
@@ -356,6 +359,10 @@ public class Menu {
 		glDisable(GL_LIGHTING);
 		glDisable(GL_TEXTURE_2D);
 		glClear(GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_BLEND);
+		glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
+		glRectd(0, Menu.bottom, Display.getWidth(), Display.getHeight()+Menu.bottom);		
+		glDisable(GL_BLEND);
 	}
 	/**
 	 * ************************************

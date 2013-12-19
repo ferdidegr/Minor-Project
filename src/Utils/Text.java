@@ -12,7 +12,7 @@ import org.newdawn.slick.util.ResourceLoader;
 public class Text{
 	private Font awtFont;
 	private TrueTypeFont myfont;
-	private float baseFontSize = 55;
+	private float baseFontSize = 54;
 	
 	public Text(String fontpath){
 		initFont(fontpath);
