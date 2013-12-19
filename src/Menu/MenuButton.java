@@ -119,6 +119,8 @@ public class MenuButton {
 		if(centered){x=(Display.getWidth()-width)/2;}
 	}
 	
+	public int getY(){ return y;}
+	
 	public void setX(int X){
 		this.x = X;
 	}

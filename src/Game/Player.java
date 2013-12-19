@@ -435,8 +435,7 @@ public class Player extends GameObject {
 		double horanglerad = Math.toRadians(getHorAngle()+90);
 		double veranglerad = Math.toRadians(getVerAngle());
 		
-		Vector playerlookat = new Vector(Math.cos(horanglerad), Math.sin(veranglerad), -Math.sin(horanglerad));
-		playerlookat.normalize();
+		Vector playerlookat = new Vector(Math.cos(horanglerad), Math.sin(veranglerad), -Math.sin(horanglerad)).normalize();		
 		
 		return playerlookat;
 	}

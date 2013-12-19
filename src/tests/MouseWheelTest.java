@@ -1,4 +1,4 @@
-package Editor;
+package tests;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Mouse;
