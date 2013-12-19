@@ -22,9 +22,11 @@ public class Vector {
 		return new Vector(xnew, ynew, znew);
 	}
 	
-	public void rotate(double deg){
+	public Vector rotate(double deg){
 		x = x *Math.cos(deg) - z * Math.cos(deg);
 		z = x *Math.sin(deg) + z * Math.cos(deg);
+		
+		return this;
 	}
 	
 	public double angle2D(Vector vec){
@@ -59,10 +61,11 @@ public class Vector {
 	 * Vector addition
 	 * @param vec another Vector object
 	 */
-	public void add(Vector vec){
+	public Vector add(Vector vec){
 		this.x+=vec.x;
 		this.y+=vec.y;
 		this.z+=vec.z;
+		return this;
 	}
 	/**
 	 * Vector addition with splitted cartesian components
@@ -70,10 +73,12 @@ public class Vector {
 	 * @param y
 	 * @param z
 	 */
-	public void add(double x, double y ,double z){
+	public Vector add(double x, double y ,double z){
 		this.x+=x;
 		this.y+=y;
 		this.z+=z;
+		
+		return this;
 	}
 	/**
 	 * Scale each component independently
@@ -81,10 +86,12 @@ public class Vector {
 	 * @param factor2
 	 * @param factor3
 	 */
-	public void scale(double factor1, double factor2, double factor3){
+	public Vector scale(double factor1, double factor2, double factor3){
 		this.x*=factor1;
 		this.y*=factor2;
 		this.z*=factor3;
+		
+		return this;
 	}
 	
 	/**
@@ -93,19 +100,23 @@ public class Vector {
 	 * @param factor2
 	 * @param factor3
 	 */
-	public void scale(Vector vec){
+	public Vector scale(Vector vec){
 		this.x*=vec.getX();
 		this.y*=vec.getY();
 		this.z*=vec.getZ();
+		
+		return this;
 	}
 	/**
 	 * Scale all components with the same factor
 	 * @param factor
 	 */
-	public void scale(double factor){
+	public Vector scale(double factor){
 		this.x*=factor;
 		this.y*=factor;
 		this.z*=factor;
+		
+		return this;
 	}
 	
 	public double length(){
@@ -116,32 +127,40 @@ public class Vector {
 		return Math.sqrt(x*x+z*z);
 	}
 	
-	public void normalize2D(){
+	public Vector normalize2D(){
 		
 		double length = length2D();
 		if(length!=0){
 		x /= length;
 		z /= length;
 		}
+		
+		return this;
 	}
 	
-	public void normalize(){
+	public Vector normalize(){
 		double length = length();
 		x /= length;
 		y /= length;
 		z /= length;
+		
+		return this;
 	}
 	
-	public void normalizePerdir(){
+	public Vector normalizePerdir(){
 		x = Math.signum(x)*x/x;
 		y = Math.signum(y)*y/y;
 		z = Math.signum(z)*z/z;
+		
+		return this;
 	}
 	
-	public void step(){
+	public Vector step(){
 		x = (x>0? 1:0);
 		y = (y>0? 1:0);
 		z = (z>0? 1:0);
+		
+		return this;
 	}
 	public Vector clone(){
 		return new Vector(x, y, z);
@@ -154,10 +173,12 @@ public class Vector {
 	/**
 	 * reset the vector to a zero vector
 	 */
-	public void setZero(){
+	public Vector setZero(){
 		this.x=0;
 		this.y=0;
 		this.z=0;
+		
+		return this;
 	}
 	/**
 	 * Describes the vector with its components
@@ -168,9 +189,9 @@ public class Vector {
 	/*
 	 * Getters and setters
 	 */
-	public void setX(double x){this.x = x;}
-	public void setY(double y){this.y = y;}
-	public void setZ(double z){this.z = z;}
+	public Vector setX(double x){this.x = x;return this;}
+	public Vector setY(double y){this.y = y;return this;}
+	public Vector setZ(double z){this.z = z;return this;}
 	public double getX(){return this.x;}
 	public double getY(){return this.y;}
 	public double getZ(){return this.z;}
