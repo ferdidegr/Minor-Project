@@ -331,6 +331,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	if(mo.isDead){
 		        		deathlist.add(mo);
 		        	}
+		        	double frustrum = player.lookat().scale((input.lookback? -1:1),1,(input.lookback? -1:1)).dotprod(mo.getLocation().add(player.getLocation().scale(-1)).normalize());
+		        	if(frustrum>0.5)
 		        	mo.display();		        	
 		        }
 		        

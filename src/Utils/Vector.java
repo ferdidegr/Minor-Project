@@ -166,6 +166,24 @@ public class Vector {
 		return new Vector(x, y, z);
 	}
 	
+	public boolean equals(Object v2){
+		if(v2 instanceof Vector){
+			Vector other = (Vector) v2;
+			return this.x == other.x && this.y == other.y && this.z==other.z;
+		}
+		return false;
+	}
+	
+	public Vector crossprod(Vector v2){
+		return new Vector(	(this.y*v2.z-this.z*v2.y), 
+						   -(this.x*v2.z - this.z*v2.x), 
+							(this.x*v2.y - this.y*v2.x));
+	}
+	/**
+	 * Dot product
+	 * @param v2
+	 * @return
+	 */
 	public double dotprod(Vector v2){
 		return this.x*v2.x+this.y*v2.y+this.z*v2.z;
 	}

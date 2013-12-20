@@ -1,5 +1,5 @@
 package Game;
-
+import Utils.Vector;
 /**
  * GameObject is the superclass for all the objects in the game that need a location.
  * <p>
@@ -78,4 +78,7 @@ public class GameObject{
 		return locationZ;
 	}
 	
+	public Vector getLocation(){
+		return new Vector(locationX, locationY, locationZ);
+	}
 }
