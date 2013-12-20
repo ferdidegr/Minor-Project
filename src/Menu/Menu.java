@@ -7,6 +7,7 @@ import Utils.Sound;
 import Utils.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
@@ -30,14 +31,7 @@ public class Menu {
 	private static GameState gamestate;
 	public static Difficulty difficulty;
 	public static Mazerunner game;
-	private static MainMenu main = new MainMenu();
-	private static Settings sets = new Settings();
-	private static GameOver over = new GameOver();
-	private static PauseMenu pauze = new PauseMenu();
-	private static PSettings pset = new PSettings();
-	private static MazechooserMenu mazemenu= new MazechooserMenu();
-	private static DiffMenu diffmenu = new DiffMenu();
-	protected static Highscores HSMenu = new Highscores();
+	protected static HashMap<GameState, ButtonList> menus = new HashMap<>();	
 	protected static int top, bottom, scrollspeed;
 	private static int screenx;
 	private static int screeny;
@@ -172,51 +166,9 @@ public class Menu {
 	 */
 	public static void ButtonActions(){
 		int ID = -1;
-		switch(gamestate){
+		ID = menus.get(gamestate).checkButtons(top);		
+		menus.get(gamestate).actionButtons(ID);	
 		
-		case SETTINGS:
-			ID = sets.checkButtons(top);
-			sets.actionButtons(ID);
-			break;
-			
-		case MAIN:
-			ID = main.checkButtons(top);
-			main.actionButtons(ID);
-			break;
-			
-		case GAMEOVER:
-			ID = over.checkButtons(top);
-			over.actionButtons(ID);
-			break;
-			
-		case PAUSE:
-			ID = pauze.checkButtons(top);
-			pauze.actionButtons(ID);
-			break;
-			
-		case PSETTINGS:
-			ID = pset.checkButtons(top);
-			pset.actionButtons(ID);
-			break;
-		
-		case SELECTLVL:
-			ID = mazemenu.checkButtons(top);
-			mazemenu.actionButtons(ID);
-			break;		
-			
-		case DIFFICULTY:
-			ID = diffmenu.checkButtons(top);
-			diffmenu.actionButtons(ID);
-			break;	
-		
-		case HIGHSCORE:
-			ID = HSMenu.checkButtons(top);
-			HSMenu.actionButtons(ID);
-			break;
-			
-		default: break;
-			
-		}
 	}
 	
 	/**
@@ -231,38 +183,18 @@ public class Menu {
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
 		MenuButton.setDimensions(buttonwidth, buttonheight);
 		
-		// MainMenu
-		main.init(buttonwidth, buttonheight);
-		bl.add(main);
+		menus.put(GameState.MAIN, new MainMenu());
+		menus.put(GameState.SETTINGS, new Settings());
+		menus.put(GameState.GAMEOVER, new GameOver());
+		menus.put(GameState.PAUSE, new PauseMenu());
+		menus.put(GameState.PSETTINGS, new PSettings());
+		menus.put(GameState.SELECTLVL, new MazechooserMenu());
+		menus.put(GameState.DIFFICULTY, new DiffMenu());
+		menus.put(GameState.HIGHSCORE, new Highscores());
 		
-		// Settings
-		sets.init(buttonwidth, buttonheight);
-		bl.add(sets);
-		
-		// Game Over
-		over.init(buttonwidth, buttonheight);
-		bl.add(over);
-		
-		// Pauze
-		pauze.init(buttonwidth, buttonheight);
-		bl.add(pauze);
-		
-		// Pauze ingame settings
-		pset.init(buttonwidth, buttonheight);
-		bl.add(pset);
-		
-		// Mazechooser
-		mazemenu.init(buttonwidth, buttonheight);
-		bl.add(mazemenu);
-		
-		// Difficulty
-		diffmenu.init(buttonwidth, buttonheight);
-		bl.add(diffmenu);
-		
-		// HighScores
-		HSMenu.init(buttonwidth, buttonheight);
-		bl.add(HSMenu);
-		
+		for(ButtonList menu: menus.values()){
+			menu.init(buttonwidth, buttonheight);
+		}
 	}
 	/**
 	 * ************************************
@@ -279,42 +211,10 @@ public class Menu {
 
 			}
 
-		switch(gamestate){
-			
-		case MAIN:
-			main.display();
-			break;
-			
-		case SETTINGS:
-			sets.display();
-			break;
-			
-		case GAMEOVER:
-			over.display();
-			break;
-			
-		case PAUSE:		
-			pauze.display();
-			break;
-			
-		case PSETTINGS:
-			pset.display();
-			break;
-		
-		case SELECTLVL:
-			mazemenu.display();
-			break;
-		case DIFFICULTY:
-			diffmenu.display();
-			break;
-			
-		case HIGHSCORE:
-			HSMenu.display();
-			break;
-			
-		default: break;
-		}
-			
+			ButtonList BL = menus.get(gamestate);
+			if(BL != null){
+				BL.display();
+			}
 	}
 	/**
 	 * ************************************
