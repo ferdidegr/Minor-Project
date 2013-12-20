@@ -12,10 +12,8 @@ import java.util.HashMap;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-import org.lwjgl.openal.AL;
+
 import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.newdawn.slick.opengl.TextureImpl;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -40,7 +38,6 @@ public class Menu {
 	private static boolean closerequested = false;
 	public static Text bebas;
 	public static boolean ingame = false;
-	private static ArrayList<ButtonList> bl = new ArrayList<ButtonList>();
 	static Database score ;
 	static ArrayList<String> levelList;
 	/**
@@ -84,8 +81,8 @@ public class Menu {
 		screeny = Display.getHeight();
 		bottom = top  - screeny;		
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());	
-		for(ButtonList butl:bl){
-			butl.reinit();
+		for(ButtonList bl: menus.values()){
+			bl.reinit();
 		}
 	}
 	
