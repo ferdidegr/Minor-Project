@@ -67,6 +67,11 @@ public class Vector {
 		this.z+=vec.z;
 		return this;
 	}
+	public Vector minus(Vector vec){
+		this.add(vec.scale(-1));
+		
+		return this;
+	}
 	/**
 	 * Vector addition with splitted cartesian components
 	 * @param x	

@@ -137,6 +137,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	deathlist = new ArrayList<Monster>();
 	hatch = new ArrayList<Hatch>();
 	pickuplijst = new ArrayList<Pickup>();
+	Pickup.initPickup(maze);
 	Intelligence.init();
 	
 	minimap = new MiniMap(maze);		//load the minimap
@@ -268,7 +269,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	/**
 	 * Cleanup after shut down
 	 */
-	public void cleanup(){
+	public void cleanup(){	
 		TextureImpl.unbind();
 		glDisable(GL_LIGHTING);
 		glDisable(GL_CULL_FACE);

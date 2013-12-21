@@ -12,8 +12,8 @@ public class Pickup extends levelObject {
 	float size=1/4f;
 	float origsize;
 	boolean on = false;
-	static int[][] maze = Mazerunner.maze;
-	static int [][] alpu = new int[maze.length][maze[0].length];
+	static int[][] maze;
+	static int [][] alpu;
 	
 	
 	public Pickup(double x, double y, double z, int type, float size) {
@@ -72,7 +72,10 @@ public class Pickup extends levelObject {
 		case 3: {Mazerunner.status.addScore(-50);break;}
 		}
 	}
-	
+	public static void initPickup(int[][] mazein){
+		maze = mazein;
+		alpu = new int[maze.length][maze[0].length];
+	}
 	/**
 	 * get X grid location
 	 * @param SQUARE_SIZE

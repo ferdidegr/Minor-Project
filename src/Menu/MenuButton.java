@@ -29,6 +29,7 @@ import Utils.Text;
 public class MenuButton {
 	private int x, y, ID;
 	Texture normal = null, mouseover = null;
+	Color normalT = Color.white, mouseoverT = Color.black;
 	public static int width, height;
 	public static int mousex, mousey;
 	private TrueTypeFont myfont;	
@@ -85,8 +86,8 @@ public class MenuButton {
 			glDisable(GL_BLEND);
 		}			
 			double textwidth = Menu.bebas.getWidth((float) (0.7*height), name);
-			if(!isButton(mousex, mousey)){Menu.bebas.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name);}
-			if(isButton(mousex, mousey)){Menu.bebas.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name,Color.black);}
+			if(!isButton(mousex, mousey)){Menu.bebas.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name, normalT);}
+			if(isButton(mousex, mousey)){Menu.bebas.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name,mouseoverT);}
 			
 
 	}
@@ -108,6 +109,18 @@ public class MenuButton {
 	public static void setDimensions(int inwidth, int inheight){
 		width = inwidth;
 		height = inheight;
+	}
+	public void setNormalTextColor(Color color){
+		this.normalT = color;
+	}
+	
+	public void setMouseoverTextColor(Color color){
+		this.mouseoverT = color;
+	}
+	
+	public void setTextColor(Color color){
+		setNormalTextColor(color);
+		setMouseoverTextColor(color);
 	}
 	/**
 	 * report mouse location to all buttons

@@ -1,5 +1,7 @@
 package Menu;
 
+import org.newdawn.slick.Color;
+
 public class DiffMenu extends ButtonList{
 
 	@Override
@@ -41,8 +43,28 @@ public class DiffMenu extends ButtonList{
 	
 	public void display(){
 		super.display();
-		String output = "CURRENT DIFFICULTY: " + Menu.getDifficulty();
-		double stringwidth = Menu.bebas.getWidth(30, output);
-		Menu.bebas.draw((int)(Menu.getScreenx()-stringwidth)/2, 0, 30, output );
+		selectedColor();
+	}
+	
+	public void selectedColor(){
+		for(MenuButton mb: lijst){
+			mb.setNormalTextColor(Color.white);
+			mb.setMouseoverTextColor(Color.black);
+		}
+		switch (Menu.difficulty) {
+			case EASY:
+				lijst.get(0).setTextColor(Color.green);
+			break;
+			case MEDIUM:
+				lijst.get(1).setTextColor(Color.green);
+			break;
+			case HARD:
+				lijst.get(2).setTextColor(Color.green);
+			break;
+			case INSANE:
+				lijst.get(3).setTextColor(Color.green);
+			break;
+		
+		}
 	}
 }
