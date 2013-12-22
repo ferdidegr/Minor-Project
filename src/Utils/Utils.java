@@ -50,7 +50,7 @@ public class Utils {
 		ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
 		glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
 		
-		File file = new File("screenshots//screenshot-"+getTime.getCurrentTimeStamp("YYYMMDDHHmmss")+".png"); // The file to save to.
+		File file = new File("screenshots//screenshot-"+getTime.getCurrentTimeStamp("YYYMMddHHmmss")+".png"); // The file to save to.
 		if(!file.exists()){file.mkdirs();}
 		String format = "PNG"; // Example: "PNG" or "JPG"
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);

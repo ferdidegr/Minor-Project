@@ -51,8 +51,7 @@ public class MazechooserMenu extends ButtonList{
 			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				score= Menu.game.start(Menu.levelList.get(buttonID));
-				System.out.println(Display.isCloseRequested());
+				score= Menu.game.start(Menu.levelList.get(buttonID));				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

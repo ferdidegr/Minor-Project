@@ -32,8 +32,7 @@ public class Models {
 		 * Obelisk
 		 */
 		try {
-			obelisk = Model.loadModel("res/Models/", "obelisk.obj").generateDList();
-			System.out.println("here");
+			obelisk = Model.loadModel("res/Models/", "obelisk.obj").generateDList();			
 		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
 		}

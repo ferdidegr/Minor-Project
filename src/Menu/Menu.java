@@ -110,12 +110,14 @@ public class Menu {
 					while(Keyboard.next() && ingame){ 
 						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE)gamestate=GameState.GAME;
 					}
+					
 					display();					
 					Display.update();
 					Display.sync(60);
 				}
 		if(Menu.getState() == GameState.EXIT || closerequested){
 			cleanup();
+			System.exit(0);
 		}
 			
 	}

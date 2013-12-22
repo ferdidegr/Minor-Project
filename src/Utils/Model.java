@@ -268,7 +268,6 @@ class Materialm{
 		}else{
 			glDisable(GL_TEXTURE_2D);
 		}
-		System.out.println(name);
 	}
 	/**
 	 * Parse the materials
