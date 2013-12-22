@@ -530,7 +530,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			// Flame, starts the flame when the monsterlist is empty
 			if(monsterlijst.size()==0){
 				pe.update(deltaTime);
-				for(int i = 0 ; i < 25; i++){
+				for(int i = 0 ; i < 20 *deltaTime/16.5; i++){
 					pe.emit();
 				}
 			}

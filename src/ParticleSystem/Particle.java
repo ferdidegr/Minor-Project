@@ -29,12 +29,12 @@ public class Particle {
 	 */
 	public void update(int deltaTime){
 		age += deltaTime;
-		if(age==200 && updated == false){
-			acceleration.add(acceleration.getY()*Math.signum(velocity.getX())*-0.7,0,acceleration.getY()*Math.signum(velocity.getZ())*-0.7);
+		if(age>=200 && updated == false){
+			acceleration.add(acceleration.getY()*Math.signum(velocity.getX())*-0.7*16.5/deltaTime,0,acceleration.getY()*Math.signum(velocity.getZ())*-0.7*16.5/deltaTime);
 			updated = true;
 		}
-		velocity.add(acceleration);		
-		position.add(velocity);		
+		velocity.add(acceleration.clone().scale(deltaTime/16.5));		
+		position.add(velocity.clone().scale(deltaTime/16.5));		
 	}
 	/**
 	 * Draw the particle
