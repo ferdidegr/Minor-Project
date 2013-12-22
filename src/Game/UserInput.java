@@ -109,7 +109,8 @@ public class UserInput extends Control
 				if (Keyboard.getEventKey()== Keyboard.KEY_F2) {debug = !debug;}
 				if (Keyboard.getEventKey()== Keyboard.KEY_M) {minimap = ! minimap;}
 				if (Keyboard.getEventKey()==Keyboard.KEY_Q) {triggered = true;}
-				if(Keyboard.getEventKey()==Keyboard.KEY_H){Mazerunner.player.getHealth().addHealth(100000);}
+				if (Keyboard.getEventKey()==Keyboard.KEY_H){Mazerunner.player.getHealth().addHealth(100000);}
+				if (Keyboard.getEventKey()== Keyboard.KEY_F8){Utils.Utils.makeScreenShot();}
 				
 		    }
 		}
