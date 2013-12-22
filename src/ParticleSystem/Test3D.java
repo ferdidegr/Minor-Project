@@ -10,14 +10,14 @@ import org.lwjgl.opengl.DisplayMode;
 
 import Utils.Vector;
 public class Test3D {
-	private double horangle = 0, verangle = 0, x=0, y=0, z=50;
+	private double horangle = 0, verangle = 0, x=0, y=0, z=80;
 	private long currentTime = 0, previousTime = 0;
 	public void start(){		
 		initDisp();
 		ParticleEmitter pe = new ParticleEmitter(new Vector(0, 0, 0)	// Position
 													,1,0.5,1				// Initial velocity
-													,0,0.07,0			// acceleration
-													,15);				// pointsize
+													,0,0.05,0			// acceleration
+													,15,700);				// pointsize
 		while(!Display.isCloseRequested()){
 			glClear(GL_COLOR_BUFFER_BIT);
 			

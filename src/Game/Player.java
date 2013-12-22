@@ -35,7 +35,7 @@ public class Player extends GameObject {
 	private double speed;
 	private Control control = null;
 	private boolean spikejump= false;
-	
+	protected boolean isDead = false;
 	private double run;
 	protected boolean jump = false;
 	double tempVy =0 ;
@@ -326,6 +326,7 @@ public class Player extends GameObject {
 					Scorpreaction();
 				}
 			}
+			if(locationY<-20 || health.getHealth()<=0){isDead=true;}
 	}
 	/**
 	 * get X grid location

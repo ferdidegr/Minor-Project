@@ -17,6 +17,7 @@ import org.newdawn.slick.opengl.TextureImpl;
 import Intelligence.AStar;
 import Menu.GameState;
 import Menu.Menu;
+import ParticleSystem.ParticleEmitter;
 import Utils.*;
 
 
@@ -24,11 +25,10 @@ public class Mazerunner {
 	/*
 	 * Local Variables
 	 */
-	private int screenWidth = 1280, screenHeight = 720;				// Deprecated
+
 	protected static Player player;									// The player object.
 	private UserInput input;										// The user input object that controls the player.
-	public static int[][] maze; 									// The maze.
-	
+	public static int[][] maze; 									// The maze.	
 	
 	private long previousTime;										// Used to calculate elapsed time.
 	
@@ -42,17 +42,21 @@ public class Mazerunner {
 	protected static ArrayList<levelObject> objlijst;				// List of all collidable objects
 	protected static int[][] objectindex;							// reference to the arraylist entry
 	protected static int SQUARE_SIZE=1;								// Size of a unit block
-	protected static int timer = 0;
+	protected static int timer = 0;									// Keeps track of the time
 	protected int numpickups;										// Amount of pickups that have already been dropped
-	protected static StatusBars status = new StatusBars();
+	protected static StatusBars status = new StatusBars();			// Creates the overlay object/ HUD
 	
-	protected static boolean isdood;
+
 	private MiniMap minimap;										// The minimap object.
-	private String level;
-	private int objectDisplayList = glGenLists(1);
+	
+	private String level;											// The string/path to the level to be loaded/current level
+	
+	private int objectDisplayList = glGenLists(1);					// The world (Walls, floor, spikes, obelisk) as a display list
 	
 	private FloatBuffer projectionWorld, projectionHUD;				// Buffer for the projection matrices
 	
+	private ParticleEmitter pe ; 									// Flame
+									
 	/*
 	 *  *************************************************
 	 *  * 					Main Loop					*
@@ -66,7 +70,7 @@ public int start(String levelname) throws Exception{
 	new Models();
 	level = "levels/"+levelname;
 	timer = 0 ;
-	isdood=false;					// needs a better way to implement this
+						// needs a better way to implement this
 	// TODO remove
 	Display.setResizable(false);
 										
@@ -80,10 +84,10 @@ public int start(String levelname) throws Exception{
 	
 	previousTime = Calendar.getInstance().getTimeInMillis();
 	
-	while(!Display.isCloseRequested() && player.locationY>-20 && player.getHealth().getHealth()>0){
+	while(!Display.isCloseRequested() && !player.isDead){
 		
 		// If the window is resized, might not be implemented
-		if(Display.getWidth()!=screenWidth || Display.getHeight()!=screenHeight) reshape();
+		if(Display.wasResized()) reshape();
 		
 		// Check for Input
 		input.poll();
@@ -113,7 +117,7 @@ public int start(String levelname) throws Exception{
 	cleanup();
 	Menu.ingame = false;
 	System.out.println(Menu.getState().toString());
-	if(Menu.getState().equals(GameState.GAME) || isdood){
+	if(Menu.getState().equals(GameState.GAME) || player.isDead){
 		Menu.setState(GameState.GAMEOVER);
 		return -200;
 	} 
@@ -170,8 +174,12 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				objlijst.add(eo);
 				visibleObjects.add(eo);
 				objectindex[j][i]=objlijst.size()-1;
-				// TODO remove
-				System.out.println(objlijst.size()-1);
+				// Define flame
+				pe = new ParticleEmitter(new Vector(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 8*SQUARE_SIZE, j*SQUARE_SIZE+SQUARE_SIZE/2.0)	// Position
+				,0.015,0.0005,0.015				// Initial velocity
+				,0,0.0008,0			// acceleration
+				,10, 700);				// pointsize
+
 			}
 			// Parsing the spikes
 			else if(maze[j][i]==13){				
@@ -313,8 +321,18 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				glCallList(Models.skybox);
 				
 				glTranslated(-player.locationX, -player.locationY, -player.locationZ);					
-				
-		        
+				/*
+				 * Displays the flame when the monsterlist is empty
+				 */
+				if(monsterlijst.size()==0){
+					glPushMatrix();
+			        glPushAttrib(GL_ENABLE_BIT);
+			        glDisable(GL_CULL_FACE);
+			        glDisable(GL_LIGHTING);		       
+			        pe.display();
+			        glPopAttrib();
+					glPopMatrix();
+				}
 		        // Display all the visible objects of MazeRunner.
 		        if(!input.debug){ 	glCallList(objectDisplayList); }
 		        
@@ -332,8 +350,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	if(mo.isDead){
 		        		deathlist.add(mo);
 		        	}
-		        	double frustrum = player.lookat().scale((input.lookback? -1:1),1,(input.lookback? -1:1)).dotprod(mo.getLocation().add(player.getLocation().scale(-1)).normalize());
-		        	if(frustrum>0.5)
+		        	
+		        	double frustum = player.lookat().scale((input.lookback? -1:1),1,(input.lookback? -1:1))
+		        			.dotprod(mo.getLocation().add(player.getLocation().scale(-1)).normalize());
+		        	
+		        	if(frustum>=0.35)
 		        	mo.display();		        	
 		        }
 		        
@@ -458,8 +479,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 * if the window is reshaped, change accordingly
 	 */
 	public void reshape(){
-		screenWidth = Display.getWidth();
-		screenHeight = Display.getHeight();
 		glViewport(0, 0, Display.getWidth(), Display.getHeight());	
 		initGL();
 	}
@@ -495,7 +514,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			for(Hatch lvlo: hatch){
 				lvlo.update(deltaTime);				
 			}
-			
+		
 			/*
 			 * Monsters
 			 */
@@ -508,6 +527,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				pickuplijst.add(new Pickup(false));
 			}			
 			
+			// Flame, starts the flame when the monsterlist is empty
+			if(monsterlijst.size()==0){
+				pe.update(deltaTime);
+				for(int i = 0 ; i < 25; i++){
+					pe.emit();
+				}
+			}
 		}
 		
 		/**
