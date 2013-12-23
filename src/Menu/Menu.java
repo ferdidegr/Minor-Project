@@ -57,7 +57,8 @@ public class Menu {
 		}
 		
 		Display.create();
-		Display.setResizable(false);		
+		Display.setResizable(false);	
+		Mouse.setGrabbed(true);
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
 		bebas = new Text("BEBAS.TTF");	
@@ -214,6 +215,9 @@ public class Menu {
 			if(BL != null){
 				BL.display();
 			}
+			
+			drawCursor();
+			
 	}
 	/**
 	 * ************************************
@@ -262,6 +266,18 @@ public class Menu {
 		glColor4f(0.0f, 0.0f, 0.0f, 0.5f);
 		glRectd(0, Menu.bottom, Display.getWidth(), Display.getHeight()+Menu.bottom);		
 		glDisable(GL_BLEND);
+	}
+	public static void drawCursor(){
+		glEnable(GL_BLEND);
+		Textures.cursor.bind();
+		glBegin(GL_QUADS);
+		glTexCoord2d(0, 0);		glVertex2d(Mouse.getX(), top - Mouse.getY());
+		glTexCoord2d(0, 1);		glVertex2d(Mouse.getX(), top - Mouse.getY()+32);
+		glTexCoord2d(1, 1);		glVertex2d(Mouse.getX()+32, top - Mouse.getY()+32);		
+		glTexCoord2d(1, 0);		glVertex2d(Mouse.getX()+32, top - Mouse.getY());
+		glEnd();
+		glDisable(GL_BLEND);
+
 	}
 	/**
 	 * ************************************

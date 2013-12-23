@@ -78,8 +78,7 @@ public class UserInput extends Control
 		    	 */
 		        if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 		   
-		        	Menu.setState(GameState.PAUSE);
-		        	Mouse.setGrabbed(false);
+		        	Menu.setState(GameState.PAUSE);		        	
 		        	dX=0;
 		        	dY=0;
 		        	}

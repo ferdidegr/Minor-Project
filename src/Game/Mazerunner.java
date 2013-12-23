@@ -284,7 +284,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_LIGHT0);
 //		glDisable(GL_BLEND);
-		Mouse.setGrabbed(false);		
+	
 	}  
 	/**
 	 * Initialize all objects
@@ -442,7 +442,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			changetoWorld();
 			// Reset deltaTime
 			previousTime = Calendar.getInstance().getTimeInMillis();
-			Mouse.setGrabbed(true);
+
 			input.minimap = buffer;
 		}
 	}
