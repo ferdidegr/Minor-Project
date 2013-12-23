@@ -12,7 +12,6 @@ import java.util.HashMap;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
-
 import org.lwjgl.opengl.Display;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -42,7 +41,7 @@ public class Menu {
 	static ArrayList<String> levelList;
 	/**
 	 * ************************************
-	 * Main loop
+	 * Initialization of the menu
 	 * @throws LWJGLException
 	 * ************************************
 	 */
@@ -68,7 +67,11 @@ public class Menu {
 		run();
 		
 	}
-	
+	/**
+	 * ************************************************************************
+	 * When going to another menu, reset current scroll
+	 * ************************************************************************
+	 */
 	public static void resetScroll(){
 		top=Display.getHeight();
 		bottom=top-screeny;
@@ -86,7 +89,11 @@ public class Menu {
 			bl.reinit();
 		}
 	}
-	
+	/**
+	 * ************************************
+	 * The main loop of the Menu
+	 * ************************************
+	 */
 	public static void run() {
 		bottom = 0;
 		top = Display.getHeight();
@@ -122,6 +129,11 @@ public class Menu {
 		}
 			
 	}
+	/**
+	 * ************************************
+	 * Cleaning up when exit is requested
+	 * ************************************
+	 */
 	private static void cleanup() {
 		Sound.exit();
 		Display.destroy();
@@ -179,7 +191,7 @@ public class Menu {
 	 */
 	public static void initButtons(){
 		
-		int buttonwidth = Display.getWidth()/3*768/Display.getHeight();		
+		int buttonwidth = Display.getWidth()/3;		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
 		MenuButton.setDimensions(buttonwidth, buttonheight);
 		
@@ -216,7 +228,7 @@ public class Menu {
 				BL.display();
 			}
 			
-			drawCursor();
+			drawMousePointer();
 			
 	}
 	/**
@@ -267,16 +279,23 @@ public class Menu {
 		glRectd(0, Menu.bottom, Display.getWidth(), Display.getHeight()+Menu.bottom);		
 		glDisable(GL_BLEND);
 	}
-	public static void drawCursor(){
+	/**
+	 * ************************************
+	 * Draw the mouse pointer
+	 * ************************************
+	 */
+	public static void drawMousePointer(){
+		toFixedScreen();
 		glEnable(GL_BLEND);
 		Textures.cursor.bind();
 		glBegin(GL_QUADS);
-		glTexCoord2d(0, 0);		glVertex2d(Mouse.getX(), top - Mouse.getY());
-		glTexCoord2d(0, 1);		glVertex2d(Mouse.getX(), top - Mouse.getY()+32);
-		glTexCoord2d(1, 1);		glVertex2d(Mouse.getX()+32, top - Mouse.getY()+32);		
-		glTexCoord2d(1, 0);		glVertex2d(Mouse.getX()+32, top - Mouse.getY());
+		glTexCoord2d(0, 0);		glVertex2d(Mouse.getX(), Display.getHeight() - Mouse.getY());
+		glTexCoord2d(0, 1);		glVertex2d(Mouse.getX(), Display.getHeight() - Mouse.getY()+32);
+		glTexCoord2d(1, 1);		glVertex2d(Mouse.getX()+32, Display.getHeight() - Mouse.getY()+32);		
+		glTexCoord2d(1, 0);		glVertex2d(Mouse.getX()+32, Display.getHeight() - Mouse.getY());
 		glEnd();
 		glDisable(GL_BLEND);
+		toDynamicScreen();
 
 	}
 	/**
@@ -303,6 +322,30 @@ public class Menu {
 		glLoadIdentity();									// REset the current matrix.
 		glOrtho(0, Display.getWidth(), top, bottom, 1, -1);
 		glMatrixMode(GL_MODELVIEW);	
+	}
+	/**
+	 * ************************************************************************
+	 * Switch to not scrolling view, always call toDynamicScreen after this.
+	 * ************************************************************************
+	 */
+	public static void toFixedScreen(){
+		glPushMatrix();
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
+		glMatrixMode(GL_MODELVIEW);
+	}
+	/**
+	 * ************************************************************************
+	 * Switch to scrolling view, may only be called after a toFixedScreen
+	 * ************************************************************************
+	 */
+	public static void toDynamicScreen(){
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+		glPopMatrix();
 	}
 	/**
 	 * ************************************

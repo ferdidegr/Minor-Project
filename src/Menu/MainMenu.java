@@ -5,6 +5,10 @@ import org.lwjgl.opengl.Display;
 
 
 
+
+
+
+
 import Utils.Text;
 import Game.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -28,10 +32,10 @@ public class MainMenu extends ButtonList {
 	 */
 	public void init(int x, int y){
 		
-		lijst.add(new MenuButton(2* y, Textures.start, Textures.startover,1, "Start game"));
-		lijst.add(new MenuButton(4* y, Textures.start, Textures.startover,2, "Settings"));
-		lijst.add(new MenuButton(6 *y , Textures.start, Textures.startover, 3,"Highscores"));
-		lijst.add(new MenuButton(8* y, Textures.start, Textures.startover,4, "Exit"));
+		lijst.add(new MenuButton(2* y, Textures.start, Textures.startover,1, "Start game", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(4* y, Textures.start, Textures.startover,2, "Settings", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(6 *y , Textures.start, Textures.startover, 3,"Highscores", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(8* y, Textures.start, Textures.startover,4, "Exit", MenuButton.Alignment.CENTER));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.

@@ -42,7 +42,7 @@ public class ScoreScreen {
 			}
 			rs.close();
 			if(counter1==0){
-				Menu.score.update("INSERT INTO highscores(level, name, score) values('"+levelname+"','aap',0)");
+				Menu.score.update("INSERT INTO highscores(level, name, score) values('"+levelname+"','',0)");
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -53,7 +53,8 @@ public class ScoreScreen {
 		InputField ipf = new InputField(8, fontSize, 10, 10, Menu.bebas);
 		ipf.centerX();
 		while(loop){
-			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_COLOR_BUFFER_BIT);			
+			
 			// When you succeeded in the level
 			if(score>=0){
 				float width = (float) Menu.bebas.getWidth(fontSize, "Success!");
@@ -72,6 +73,8 @@ public class ScoreScreen {
 			while(Keyboard.next()){
 				if(Keyboard.getEventKey()==Keyboard.KEY_RETURN)loop=false;
 			}
+			// Draw the mouse pointer
+			Menu.drawMousePointer();
 			// Catch all presses on the X button, do nothing with it
 			if(Display.isCloseRequested()){}
 			// Update the display

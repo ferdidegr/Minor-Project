@@ -23,8 +23,8 @@ public class GameOver extends ButtonList {
 	 */
 	public void init(int x, int y){
 		
-		lijst.add(new MenuButton(2*y, Textures.start, Textures.startover,1, "Restart"));
-		lijst.add(new MenuButton(4*y, Textures.start, Textures.startover,2, "Main Menu"));
+		lijst.add(new MenuButton(2*y, Textures.start, Textures.startover,1, "Restart", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(4*y, Textures.start, Textures.startover,2, "Main Menu", MenuButton.Alignment.CENTER));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.

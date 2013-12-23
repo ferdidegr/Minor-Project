@@ -17,8 +17,9 @@ int FontSize, Fontheight;
 	@Override
 	public void init(int x, int y) {			
 		getHighscores();				
-		lijst.add(new MenuButton(10, null, null, 100, "")); // Dummy
-		lijst.add(new MenuButton(Fontheight*(levelname.size()+1), Textures.start, Textures.startover, 1, "Back"));		
+		lijst.add(new MenuButton(10, null, null, 100, "", MenuButton.Alignment.CENTER)); // Dummy
+		lijst.add(new MenuButton(Fontheight*(levelname.size()+1), Textures.start, Textures.startover, 1, "Reset score", MenuButton.Alignment.CENTER));	
+		lijst.add(new MenuButton(Fontheight*(levelname.size()+1), Textures.start, Textures.startover, 2, "Back", MenuButton.Alignment.RIGHT));		
 	}
 	
 	private void getHighscores() {
@@ -46,6 +47,7 @@ int FontSize, Fontheight;
 		score.clear();
 		getHighscores();
 		lijst.get(1).setY(Fontheight*(levelname.size()+1));
+		lijst.get(2).setY(Fontheight*(levelname.size()+1));
 	}
 	
 	public void display(){	
@@ -81,6 +83,11 @@ int FontSize, Fontheight;
 	public void actionButtons(int ID) {
 		switch(ID){
 			case 1:
+				String query = "DELETE FROM highscores;";
+				Menu.score.update(query);
+				reset();
+				break;
+			case 2:
 				Menu.setState(GameState.MAIN);
 				break;
 		}

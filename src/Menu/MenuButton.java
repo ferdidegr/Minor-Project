@@ -34,7 +34,7 @@ public class MenuButton {
 	public static int mousex, mousey;
 	private TrueTypeFont myfont;	
 	private String name;
-	private boolean centered = false;
+	private Alignment alignment;
 	
 	/**
 	 * Constructor
@@ -53,9 +53,14 @@ public class MenuButton {
 		this.name = name;		
 	}
 	
-	public MenuButton(int y, Texture normal, Texture Mouseover, int ID, String name){
-		this((Display.getWidth()-width)/2,y,normal,Mouseover,ID,name);
-		centered = true;
+	public MenuButton(int y, Texture normal, Texture Mouseover, int ID, String name, Alignment alignment){
+		this.y = y;
+		this.normal = normal;
+		this.mouseover = Mouseover;
+		this.ID = ID;
+		this.name = name;	
+		this.alignment = alignment;
+		HorAlign();
 	}
 
 	/**
@@ -132,7 +137,21 @@ public class MenuButton {
 		mousey = y;
 	}
 	public void reinit(){
-		if(centered){x=(Display.getWidth()-width)/2;}
+		HorAlign();
+	}
+	
+	private void HorAlign(){
+		switch(alignment){
+		case LEFT:
+			this.x = 0;
+			break;
+		case CENTER:
+			this.x = (Display.getWidth()-width)/2;
+			break;
+		case RIGHT:
+			this.x = Display.getWidth()-width;
+			break;
+		}
 	}
 	
 	public int getY(){ return y;}
@@ -146,4 +165,8 @@ public class MenuButton {
 	}
 	
 	public int getID(){ return ID;}
+	
+	public enum Alignment{
+		LEFT, CENTER, RIGHT;
+	}
 }

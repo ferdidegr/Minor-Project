@@ -23,8 +23,8 @@ public class Settings extends ButtonList {
 	 * @param y
 	 */
 	public void init(int x, int y){
-		lijst.add(new MenuButton(2*y, Textures.start, Textures.startover,1, "Difficulty"));
-		lijst.add(new MenuButton(4*y, Textures.start, Textures.startover,2, "Main Menu"));
+		lijst.add(new MenuButton(2*y, Textures.start, Textures.startover,1, "Difficulty", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(4*y, Textures.start, Textures.startover,2, "Main Menu", MenuButton.Alignment.CENTER));
 
 	}
 	

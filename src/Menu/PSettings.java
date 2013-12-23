@@ -19,7 +19,7 @@ public class PSettings extends ButtonList {
 	 */
 	public void init(int x, int y){
 		
-		lijst.add(new MenuButton(2* y, Textures.start, Textures.startover,1, "Back"));
+		lijst.add(new MenuButton(2* y, Textures.start, Textures.startover,1, "Back", MenuButton.Alignment.CENTER));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
