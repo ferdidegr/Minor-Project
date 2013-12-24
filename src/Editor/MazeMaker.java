@@ -51,7 +51,7 @@ public class MazeMaker {
 			top = Display.getHeight();
 			left = 0;
 			bottom = 0;
-			menubarwidth = (right-left)/6;
+			menubarwidth = (int) (1024f/6f);
 			tilesize = 0.2f * menubarwidth;
 			MazeMap.setSize(tilesize);
 		/*
