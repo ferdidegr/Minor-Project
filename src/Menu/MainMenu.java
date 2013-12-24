@@ -53,7 +53,7 @@ public class MainMenu extends ButtonList {
 			break;
 		case 2:
 			boolean fullscreen = Display.isFullscreen();
-			
+			glPushAttrib(GL_ENABLE_BIT);
 			glPushMatrix();
 			try{
 				Display.setFullscreen(false);
@@ -61,7 +61,11 @@ public class MainMenu extends ButtonList {
 				Display.setFullscreen(fullscreen);
 			}catch(Exception e){}
 			glPopMatrix();
-			
+			glPopAttrib();
+			Menu.levelList = Utils.Utils.loadLevelList();
+			MazechooserMenu temp = (MazechooserMenu) Menu.menus.get(GameState.SELECTLVL);
+			temp.resetlist();
+			temp.init(0, 0);
 			break;
 		case 3:
 			Menu.setState(GameState.SETTINGS);

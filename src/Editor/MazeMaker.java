@@ -43,6 +43,7 @@ public class MazeMaker {
 		 * Create Display and Sound
 		 */
 			Mouse.setGrabbed(false);
+			Mouse.setCursorPosition(Display.getWidth()/2, Display.getHeight()/2);
 			Sound.init();
 		/*
 		 * Initialize screen parameters
@@ -51,7 +52,7 @@ public class MazeMaker {
 			top = Display.getHeight();
 			left = 0;
 			bottom = 0;
-			menubarwidth = (int) (1024f/6f);
+			menubarwidth = (Display.getWidth()<1024? Display.getWidth()/6:(int) (1024f/6f));
 			tilesize = 0.2f * menubarwidth;
 			MazeMap.setSize(tilesize);
 		/*

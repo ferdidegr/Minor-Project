@@ -286,7 +286,9 @@ public class Menu {
 	 */
 	public static void drawMousePointer(){
 		toFixedScreen();
+		glPushAttrib(GL_ENABLE_BIT);
 		glEnable(GL_BLEND);
+		glColor4f(1, 1, 1, 1);
 		Textures.cursor.bind();
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 0);		glVertex2d(Mouse.getX(), Display.getHeight() - Mouse.getY());
@@ -294,7 +296,7 @@ public class Menu {
 		glTexCoord2d(1, 1);		glVertex2d(Mouse.getX()+32, Display.getHeight() - Mouse.getY()+32);		
 		glTexCoord2d(1, 0);		glVertex2d(Mouse.getX()+32, Display.getHeight() - Mouse.getY());
 		glEnd();
-		glDisable(GL_BLEND);
+		glPopAttrib();
 		toDynamicScreen();
 
 	}

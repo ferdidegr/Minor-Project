@@ -71,5 +71,9 @@ public class MazechooserMenu extends ButtonList{
 	public void display(){
 		super.display();
 	}	
+	
+	public void resetlist(){
+		lijst.clear();
+	}
 
 }
