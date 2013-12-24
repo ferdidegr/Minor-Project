@@ -9,7 +9,9 @@ import org.lwjgl.opengl.Display;
 
 
 
+
 import Utils.Text;
+import Editor.MazeMaker;
 import Game.*;
 import static org.lwjgl.opengl.GL11.*;
 
@@ -31,11 +33,12 @@ public class MainMenu extends ButtonList {
 	 * @param y
 	 */
 	public void init(int x, int y){
-		
-		lijst.add(new MenuButton(2* y, Textures.start, Textures.startover,1, "Start game", MenuButton.Alignment.CENTER));
-		lijst.add(new MenuButton(4* y, Textures.start, Textures.startover,2, "Settings", MenuButton.Alignment.CENTER));
-		lijst.add(new MenuButton(6 *y , Textures.start, Textures.startover, 3,"Highscores", MenuButton.Alignment.CENTER));
-		lijst.add(new MenuButton(8* y, Textures.start, Textures.startover,4, "Exit", MenuButton.Alignment.CENTER));
+		int counter = 1;
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Start game", MenuButton.Alignment.CENTER));		counter++;
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Editor", MenuButton.Alignment.CENTER));		counter++;
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Settings", MenuButton.Alignment.CENTER));		counter++;
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover, counter,"Highscores", MenuButton.Alignment.CENTER));	counter++;
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Exit", MenuButton.Alignment.CENTER));			counter++;
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -48,14 +51,25 @@ public class MainMenu extends ButtonList {
 		case 1:
 			Menu.setState(GameState.SELECTLVL);
 			break;
-			
 		case 2:
-			Menu.setState(GameState.SETTINGS);
+			boolean fullscreen = Display.isFullscreen();
+			
+			glPushMatrix();
+			try{
+				Display.setFullscreen(false);
+				new MazeMaker().start();
+				Display.setFullscreen(fullscreen);
+			}catch(Exception e){}
+			glPopMatrix();
+			
 			break;
 		case 3:
-			Menu.setState(GameState.HIGHSCORE);
+			Menu.setState(GameState.SETTINGS);
 			break;
 		case 4:
+			Menu.setState(GameState.HIGHSCORE);
+			break;
+		case 5:
 			Menu.setState(GameState.EXIT);
 			break;
 			

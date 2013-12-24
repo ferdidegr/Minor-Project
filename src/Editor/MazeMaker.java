@@ -14,7 +14,6 @@ import org.lwjgl.opengl.Display;
 import Utils.Chooser;
 import Utils.IO;
 import Utils.Sound;
-
 import static org.lwjgl.opengl.GL11.*;
 
 public class MazeMaker {
@@ -39,17 +38,11 @@ public class MazeMaker {
 	 * ***********************************************
 	 */
 	public void start() throws LWJGLException, InterruptedException, IOException{
-		/*
-		 * Select resolution
-		 */
-		Chooser keuze = new Chooser(false);
-		while(keuze.getDisplay() == null){
-			Thread.sleep(500);
-		}
+
 		/*
 		 * Create Display and Sound
 		 */
-			Display.create();
+			Mouse.setGrabbed(false);
 			Sound.init();
 		/*
 		 * Initialize screen parameters
@@ -87,6 +80,7 @@ public class MazeMaker {
 			Display.sync(60);
 		}
 		Sound.exit();
+		Mouse.setGrabbed(true);
 	}
 	/**
 	 * ***********************************************
@@ -95,7 +89,7 @@ public class MazeMaker {
 	 */
 	public void display(){	
 		drawMaze();		
-		drawMenu();
+		drawMenu();		
 	}
 	/**
 	 * ***********************************************
@@ -353,6 +347,7 @@ public class MazeMaker {
 		glLoadIdentity();									// REset the current matrix.
 		glOrtho(left, right, bottom, top, 1, -1);
 		glMatrixMode(GL_MODELVIEW);	
+
 	}
 	/**
 	 * Check if the flags are set, if not the maze will not be saved  
@@ -423,18 +418,20 @@ public class MazeMaker {
 	 * @param args
 	 */
 	public static void main(String[] args){
-		MazeMaker maker = new MazeMaker();
-		try {
-			maker.start();
-		} catch (LWJGLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		/*
+		 * Select resolution
+		 */
+		try{
+		Chooser keuze = new Chooser(false);
+		
+		while(keuze.getDisplay() == null){
+			Thread.sleep(500);
 		}
+		
+		MazeMaker maker = new MazeMaker();
+		Display.create();
+		maker.start();
+
+		}catch(Exception e){}
 	}
 }
