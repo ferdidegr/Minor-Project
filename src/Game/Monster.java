@@ -198,7 +198,7 @@ public class Monster extends levelObject {
 	public void randomWalk() {
 
 		if (colX | colZ) {
-			dir.rotate(Math.random() * 2 * Math.PI);
+			dir.rotate2D(Math.random() * 0.2 * Math.PI);
 			Count++;
 		} else {
 			Count++;

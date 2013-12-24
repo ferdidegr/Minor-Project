@@ -22,31 +22,20 @@ public class Vector {
 		return new Vector(xnew, ynew, znew);
 	}
 	
-	public Vector rotate(double deg){
-		x = x *Math.cos(deg) - z * Math.cos(deg);
-		z = x *Math.sin(deg) + z * Math.cos(deg);
+	public Vector rotate2D(double rad){
+		double X = x;
+		double Z = z;
+		x = X *Math.cos(rad) + Z * Math.sin(rad);
+		z = -X* Math.sin(rad) + Z * Math.cos(rad);
+
+		if(Math.abs(x)< 1E-15){x=0;}
+		if(Math.abs(z)< 1E-15){z=0;}
+		if(1-Math.abs(x)< 1E-15){x=Math.signum(x);}
+		if(1-Math.abs(z)< 1E-15){z=Math.signum(z);}
 		
 		return this;
-	}
+	}	
 	
-	public double angle2D(Vector vec){
-		vec.normalize2D();
-		normalize2D();
-		return vec.getX()*x + vec.getZ() * z;
-	}
-	
-	/**
-	 *  Gives the difference between Vector and a given Vector as a Vector. 
-	 *  The direction is from the current Vector location to the given Vector location.
-	 * @param vec
-	 * @return
-	 */
-	public Vector difference(Vector vec){
-		Vector minusa = this.clone();
-		minusa.scale(-1);
-		vec.add(minusa);
-		return vec;
-	}
 	
 	/**
 	 * Gives the distance between current vector and given vector as a double.
@@ -54,7 +43,9 @@ public class Vector {
 	 * @return
 	 */
 	public double distance(Vector vec){
-		return difference(vec).length();
+		Vector minusa = this.clone();
+		
+		return vec.minus(minusa).length();
 	}
 	
 	/**
@@ -62,9 +53,7 @@ public class Vector {
 	 * @param vec another Vector object
 	 */
 	public Vector add(Vector vec){
-		this.x+=vec.x;
-		this.y+=vec.y;
-		this.z+=vec.z;
+		add(vec.x, vec.y, vec.z);
 		return this;
 	}
 	public Vector minus(Vector vec){
@@ -106,9 +95,7 @@ public class Vector {
 	 * @param factor3
 	 */
 	public Vector scale(Vector vec){
-		this.x*=vec.getX();
-		this.y*=vec.getY();
-		this.z*=vec.getZ();
+		scale(vec.x, vec.y, vec.z);
 		
 		return this;
 	}
