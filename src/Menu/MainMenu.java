@@ -35,9 +35,9 @@ public class MainMenu extends ButtonList {
 	public void init(int x, int y){
 		int counter = 1;
 		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Start game", MenuButton.Alignment.CENTER));		counter++;
-		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Editor", MenuButton.Alignment.CENTER));		counter++;
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Editor", MenuButton.Alignment.CENTER));			counter++;
 		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Settings", MenuButton.Alignment.CENTER));		counter++;
-		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover, counter,"Highscores", MenuButton.Alignment.CENTER));	counter++;
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover, counter,"Highscores", MenuButton.Alignment.CENTER));		counter++;
 		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Exit", MenuButton.Alignment.CENTER));			counter++;
 	}
 	

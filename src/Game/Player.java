@@ -197,8 +197,8 @@ public class Player extends GameObject {
 		{
 			control.update();
 					
-			horAngle = control.getdX()*speed + horAngle;
-			verAngle = control.getdY()*speed + verAngle;
+			horAngle = control.getdX()*Menu.mousesensitivity*speed + horAngle;
+			verAngle = control.getdY()*Menu.mousesensitivity*speed + verAngle;
 			
 			if(verAngle>89) verAngle=89;
 			if(verAngle<-89) verAngle=-89;

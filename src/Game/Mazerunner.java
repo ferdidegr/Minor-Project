@@ -56,6 +56,7 @@ public class Mazerunner {
 	private FloatBuffer projectionWorld, projectionHUD;				// Buffer for the projection matrices
 	
 	private ParticleEmitter pe ; 									// Flame
+	
 									
 	/*
 	 *  *************************************************
@@ -65,11 +66,13 @@ public class Mazerunner {
 	
 public int start(String levelname) throws Exception{
 	Menu.ingame = true;
+	Sound.playMusic("background_game");
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
 	new Models();
 	level = "levels/"+levelname;
 	timer = 0 ;
+
 						// needs a better way to implement this
 	// TODO remove
 	Display.setResizable(false);
@@ -284,6 +287,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_LIGHT0);
 //		glDisable(GL_BLEND);
+		Sound.playMusic("background_menu");
 	
 	}  
 	/**

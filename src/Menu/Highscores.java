@@ -28,7 +28,7 @@ int FontSize, Fontheight;
 		score.add("Score");
 		String query = "SELECT * FROM highscores ORDER BY level;";
 		ResultSet rs = Menu.score.query(query);
-		FontSize = (int) (50 *Display.getHeight()/1024f);
+		FontSize = (int) (30 *Display.getHeight()/768f);
 		Fontheight = (int)( Menu.bebas.getHeight(FontSize));
 		try {
 			while(rs.next()){

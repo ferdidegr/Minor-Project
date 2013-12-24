@@ -44,7 +44,7 @@ public class MazeMaker {
 		 */
 			Mouse.setGrabbed(false);
 			Mouse.setCursorPosition(Display.getWidth()/2, Display.getHeight()/2);
-			Sound.init();
+			
 		/*
 		 * Initialize screen parameters
 		 */
@@ -80,7 +80,7 @@ public class MazeMaker {
 			Display.update();
 			Display.sync(60);
 		}
-		Sound.exit();
+		
 		Mouse.setGrabbed(true);
 	}
 	/**

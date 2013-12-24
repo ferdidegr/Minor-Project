@@ -18,8 +18,11 @@ public class PSettings extends ButtonList {
 	 * @param y
 	 */
 	public void init(int x, int y){
+		int counter = 1;
 		
-		lijst.add(new MenuButton(2* y, Textures.start, Textures.startover,1, "Back", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Sensitivity", MenuButton.Alignment.CENTER));		counter++;
+
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover, counter,"Back", MenuButton.Alignment.CENTER));			counter++;
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.
@@ -28,8 +31,10 @@ public class PSettings extends ButtonList {
 	 */
 	public void actionButtons(int buttonID){
 		switch(buttonID){
-		
 		case 1:
+			Menu.setState(GameState.MOUSE);
+			break;
+		case 2:
 			Menu.setState(GameState.PAUSE);
 			break;
 			

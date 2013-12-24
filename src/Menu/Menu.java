@@ -25,6 +25,7 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class Menu {
 	
+	
 	private static GameState gamestate;
 	public static Difficulty difficulty;
 	public static Mazerunner game;
@@ -39,6 +40,7 @@ public class Menu {
 	public static boolean ingame = false;
 	static Database score ;
 	static ArrayList<String> levelList;
+	public static int mousesensitivity = 3;
 	/**
 	 * ************************************
 	 * Initialization of the menu
@@ -56,7 +58,8 @@ public class Menu {
 		}
 		
 		Display.create();
-		Display.setResizable(false);	
+		Display.setResizable(false);
+		if(Display.isFullscreen()){Display.setVSyncEnabled(true);}
 		Mouse.setGrabbed(true);
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
@@ -116,7 +119,7 @@ public class Menu {
 					mousepoll();
 					// Discard all keyboard events
 					while(Keyboard.next() && ingame){ 
-						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE)gamestate=GameState.GAME;
+						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE){gamestate=GameState.GAME;Sound.resume();}
 					}
 					
 					display();					
@@ -191,7 +194,7 @@ public class Menu {
 	 */
 	public static void initButtons(){
 		
-		int buttonwidth = Display.getWidth()/3;		
+		int buttonwidth = (int) (Display.getWidth()<1024? Display.getWidth()/3: 1024f/3);		
 		int buttonheight = (int) (buttonwidth*height_width_ratio);
 		MenuButton.setDimensions(buttonwidth, buttonheight);
 		
@@ -203,6 +206,7 @@ public class Menu {
 		menus.put(GameState.SELECTLVL, new MazechooserMenu());
 		menus.put(GameState.DIFFICULTY, new DiffMenu());
 		menus.put(GameState.HIGHSCORE, new Highscores());
+		menus.put(GameState.MOUSE, new MouseSensitivity());
 		
 		for(ButtonList menu: menus.values()){
 			menu.init(buttonwidth, buttonheight);

@@ -46,8 +46,7 @@ public class MazechooserMenu extends ButtonList{
 		int score = 0;
 		if(buttonID >=0 && buttonID<Menu.levelList.size()){			
 			Menu.setState(GameState.GAME);
-			Menu.currentlevel = buttonID;
-			Sound.playMusic("background_game");
+			Menu.currentlevel = buttonID;			
 			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
