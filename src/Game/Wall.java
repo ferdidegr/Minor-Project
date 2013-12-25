@@ -104,16 +104,15 @@ public class Wall extends levelObject{
 	 * Check if you collide with the wall	
 	 */
 	public boolean isCollision(double x, double y, double z){
-		return x>left && x<right && z<front && z>back && y>=bottom && y<top;	
+		return x>left && x<right && z<front && z>back  && y<top;	
 	}
 	
 	public double[][] getVert(){ return boxvertices;}
 	public double[][] getnorm(){ return normals;}
 	@Override
 	public double getmaxDistY(double Y) {
-		if(top<Y) return (top-Y);
-		if(bottom>Y)return bottom-Y;
-		return 0;
+
+		return top-Y;
 	}
 	@Override
 	public void update(int deltaTime) {
