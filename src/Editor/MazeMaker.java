@@ -222,63 +222,14 @@ public class MazeMaker {
 		}
 		// Check menu bar buttons Not object buttons
 		switch(ID){
-		    case 101:{exit = true; break;}
-			case 99:{
-				if (maze==null){
-					Sys.alert("Warning", "No maze loaded!");
-				}
-				else{
-				if (checkFlags(maze.getMaze())){
-				IO.savechooser(maze);}
-				else{
-					Sys.alert("Warning", "Start and/or ending flag not placed!");
-				}
-				ID=-1;
-				break;}}
-			case 98:{
-				int[][] tempmaze = null;
-				try {tempmaze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if(tempmaze==null){ID= -1;break;}
-				maze = new MazeMap(tempmaze[0].length, tempmaze.length);
-				maze.setMaze(tempmaze);		
-				resetView();
-				ID=-1;break;
-				}
-			case 100:{
-				int mwidth = 0;
-				int mheight = 0;
-				boolean lcont = true;
-				while(mwidth==0 && lcont){
-					try{
-											
-						String temp = JOptionPane.showInputDialog("Enter the width as an integer:", "20");
-						
-						mwidth = Integer.parseInt(temp);
-						
-					}catch(Exception e){	
-						{System.out.println("hier!");lcont=false; break;}
-					}
-				}
-				while(mheight==0 && lcont){
-					try{
-						String temp = JOptionPane.showInputDialog("Enter the height as an integer:", "20");
-						mheight = Integer.parseInt(temp);
-						
-					}catch(Exception e){	
-						break;
-					}
-				}
-				if(mwidth>0 && mheight>0)
-				maze = new MazeMap(mwidth, mheight);
-				resetView();
-				ID=-1;
-				break;
-			}
+		    
+			case 99: {saveMaze(); 	break;}
+			case 98:{loadMaze();	break;}
+			case 100: {newMaze();	break;}
+			case 101: {resizeMaze(); break;}
+			case 110:{exit = true; 	 break;}
 		}
-		
+		ID = -1;
 	}
 	
 	public void resetView(){
@@ -331,7 +282,8 @@ public class MazeMaker {
 		buttonlist.add(new Button(LEFT, 10.5f,Textures.texload, 98));		// 98 load button 
 		buttonlist.add(new Button(RIGHT, 10.5f,Textures.texsave, 99));		// 99 save button
 		buttonlist.add(new Button(LEFT, 11.6f,Textures.texnewmaze, 100));	// 100 New maze
-		buttonlist.add(new Button(RIGHT, 11.6f,Textures.texempty,101)); 	// 101 Exit button
+		buttonlist.add(new Button(RIGHT, 11.6f, Textures.texresize, 101));	// Resize button
+		buttonlist.add(new Button(LEFT, 12.7f,Textures.texquit,110)); 	// 110 Exit button
 
 	}
 	/**
@@ -348,12 +300,17 @@ public class MazeMaker {
 		glLoadIdentity();									// REset the current matrix.
 		glOrtho(left, right, bottom, top, 1, -1);
 		glMatrixMode(GL_MODELVIEW);	
+		
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glEnable(GL_BLEND);
 
 	}
 	/**
+	 * ****************************************************************************************
 	 * Check if the flags are set, if not the maze will not be saved  
 	 * @param maze
 	 * @return
+	 * ****************************************************************************************
 	 */
 	public boolean checkFlags(int[][] maze){
 		boolean red_exists=false, green_exists=false;
@@ -370,10 +327,12 @@ public class MazeMaker {
 		return (red_exists && green_exists);
 	}
 	/**
+	 * ************************************************************************************************************************************
 	 * execute selected button, 
 	 * @param Nummer the int identifying the button pressed for left mouse button or right mouse button
 	 * @param x
 	 * @param y
+	 * ************************************************************************************************************************************
 	 */
 	public void executeselectedbut(int Nummer, int x, int y){
 		// If you are on the left side of the screen (Maze side)
@@ -413,10 +372,103 @@ public class MazeMaker {
 			}
 		}
 	}
-	
 	/**
+	 * ********************************************
+	 * Make a new maze
+	 * ********************************************
+	 */
+	public void newMaze(){
+		
+		int mwidth = 0;
+		int mheight = 0;
+		boolean lcont = true;
+		while(mwidth==0 && lcont){
+			try{
+									
+				String temp = JOptionPane.showInputDialog("Enter the width as an integer:", "20");
+				
+				mwidth = Integer.parseInt(temp);
+				
+			}catch(Exception e){	
+				{System.out.println("hier!");lcont=false; break;}
+			}
+		}
+		while(mheight==0 && lcont){
+			try{
+				String temp = JOptionPane.showInputDialog("Enter the height as an integer:", "20");
+				mheight = Integer.parseInt(temp);
+				
+			}catch(Exception e){	
+				break;
+			}
+		}
+		if(mwidth>0 && mheight>0)
+		maze = new MazeMap(mwidth, mheight);
+		resetView();
+		
+	}
+	/**
+	 * Resize the maze, keep the data from the top left corner
+	 */
+	public void resizeMaze(){
+		if(maze!=null){
+			int[][] tempmaze = maze.getMaze();
+			newMaze();
+			int newWidth = (int) (Math.min(tempmaze[0].length, maze.getMaze()[0].length));
+			int newHeight = (int) (Math.min(tempmaze.length, maze.getMaze().length));
+			
+			for(int j = 0 ; j < newHeight; j++){
+				for(int i = 0 ; i < newWidth; i++){
+					maze.getMaze()[j][i] = tempmaze[j][i];
+				}
+			}
+		}else{
+			Sys.alert("No existing maze available", "You do not have a maze open, please open or make a maze first");
+		}
+	}
+	/**
+	 * ********************************************
+	 * Save the maze
+	 * @throws IOException
+	 * ********************************************
+	 */
+	public void saveMaze() throws IOException{
+		
+			if (maze==null){
+				Sys.alert("Warning", "No maze loaded!");
+			}
+			else{
+				if (checkFlags(maze.getMaze())){
+				IO.savechooser(maze);}
+				else{
+					Sys.alert("Warning", "Start and/or ending flag not placed!");
+				}			
+			}
+	
+	}
+	/**
+	 * ********************************************
+	 * Load in a maze file
+	 * ********************************************
+	 */
+	public void loadMaze(){
+		int[][] tempmaze = null;
+		try {tempmaze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(tempmaze!=null){
+			maze = new MazeMap(tempmaze[0].length, tempmaze.length);
+			maze.setMaze(tempmaze);		
+			resetView();
+		}
+
+	}
+	/**
+	 * ********************************************
 	 * Main program starts here
 	 * @param args
+	 * ********************************************
 	 */
 	public static void main(String[] args){
 		/*

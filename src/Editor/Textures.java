@@ -9,7 +9,7 @@ import Utils.IO;
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
-			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred, scorpion, pit, hatch;
+			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred, scorpion, pit, hatch, texresize , texquit;
 	
 	static {
 		try {
@@ -31,6 +31,8 @@ public class Textures {
 			scorpion = IO.loadtexture("res/Textures/Editor/scorpion.jpg",false);
 			pit = IO.loadtexture("res/Textures/Editor/pitt.jpg",false);
 			hatch = IO.loadtexture("res/Textures/Editor/hatch.jpg",false);
+			texresize = IO.loadtexture("res/Textures/Editor/resize.jpg", false);
+			texquit = IO.loadtexture("res/Textures/Editor/quit.png"	, false	);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
