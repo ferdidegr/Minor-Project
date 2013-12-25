@@ -21,11 +21,11 @@ public class Sound {
 	public static void init() {
 		if(on){
 			try {
-				background_menu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/background_menu.ogg"));
-				background_game = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/background_x.ogg"));
+				background_menu = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/Sound/background_menu.ogg"));
+				background_game = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/Sound/background_x.ogg"));
 				
-				hurt = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/sound/hurt.ogg"));
-				button = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/sound/button-3.wav"));
+				hurt = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/Sound/hurt.ogg"));
+				button = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/Sound/button-3.wav"));
 				// jump = AudioLoader.getAudio("WAV",
 				// ResourceLoader.getResourceAsStream("res/sound/jump.wav"));
 				
