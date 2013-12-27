@@ -329,22 +329,7 @@ public class Player extends GameObject {
 			}
 			if(locationY<-20 || health.getHealth()<=0){isDead=true;}
 	}
-	/**
-	 * get X grid location
-	 * @param SQUARE_SIZE
-	 * @return
-	 */
-	public int getGridX(int SQUARE_SIZE){
-		return (int) Math.floor(locationX/SQUARE_SIZE);
-	}
-	/**
-	 * get Z grid location
-	 * @param SQUARE_SIZE
-	 * @return
-	 */
-	public int getGridZ(int SQUARE_SIZE){
-		return (int) Math.floor(locationZ/SQUARE_SIZE);
-	}
+
 	/**
 	 * Update Velocity
 	 * @param deltaTime

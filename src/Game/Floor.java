@@ -1,6 +1,8 @@
 package Game;
 
 import static org.lwjgl.opengl.GL11.*;
+import Utils.Graphics;
+import Utils.Material;
 
 /**
  * A floor for the game
@@ -62,7 +64,7 @@ public class Floor extends levelObject{
 	 */
 	@Override
 	public void display() {
-
+		
 		glBegin(GL_QUADS);
 		glNormal3d(0, 1, 0);
 		glTexCoord2d(0, 1);		glVertex3d(this.locationX, this.locationY,this.locationZ);
@@ -70,8 +72,22 @@ public class Floor extends levelObject{
 		glTexCoord2d(1, 0);		glVertex3d(this.locationX+width, this.locationY,this.locationZ+height);
 		glTexCoord2d(1, 1);		glVertex3d(this.locationX+width, this.locationY,this.locationZ);
 		glEnd();
-
 		
+		int ss = Mazerunner.SQUARE_SIZE;
+		int[][] maze = Mazerunner.maze;
+		glPushMatrix();
+		glTranslated(locationX, -1, locationZ);
+		
+		int X = getGridX((int) ss);
+		int Z = getGridZ((int) ss);
+		boolean left  = (X==0? false: maze[Z][X-1]==0);
+		boolean fore  = (Z==0? false: maze[Z-1][X]==0);
+		boolean right  = (X==maze[0].length-1? false: maze[Z][X+1]==0);
+		boolean back  = (Z== maze.length-1? false: maze[Z+1][X]==0);
+		
+		Material.setMtlHole();
+		Graphics.groundThickner(left, fore, right, back);	
+		glPopMatrix();
 	}
 	/**
 	 * Checks if there is a collision with the infinitely thin floor

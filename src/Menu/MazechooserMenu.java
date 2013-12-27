@@ -30,8 +30,8 @@ public class MazechooserMenu extends ButtonList{
 		int height = MenuButton.height;
 		
 		int counter = 0;
-		for(String name:Menu.levelList){
-			lijst.add(new MenuButton((counter)*height , Textures.start, Textures.startover,counter, name.split(".maze")[0], MenuButton.Alignment.CENTER));
+		for(String name:Menu.levelList){			
+			lijst.add(new MenuButton((counter)*height , Textures.start, Textures.startover,counter, name.split("\\.maze")[0], MenuButton.Alignment.CENTER));
 			counter++;
 		}
 		// Back to menu button added
@@ -43,23 +43,20 @@ public class MazechooserMenu extends ButtonList{
 	 * @param buttonID
 	 */
 	public void actionButtons(int buttonID){
-		int score = 0;
+	
 		if(buttonID >=0 && buttonID<Menu.levelList.size()){			
 			Menu.setState(GameState.GAME);
 			Menu.currentlevel = buttonID;			
 			Menu.game = new Mazerunner();
 			glPushMatrix();
 			try {
-				score= Menu.game.start(Menu.levelList.get(buttonID));				
+				Menu.game.start(Menu.levelList.get(buttonID));				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			glPopMatrix();		
-			System.out.println(score);
-			if(score>=-200){		
-				ScoreScreen.displayScoreatGO(score);		
-			}
+			glPopMatrix();
+	
 		}else if(buttonID==Menu.levelList.size()){
 			Menu.setState(GameState.MAIN);
 

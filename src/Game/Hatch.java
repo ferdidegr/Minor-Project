@@ -17,7 +17,7 @@ public class Hatch extends levelObject{
 		glNormal3d(0, 1, 0);
 		
 		glPushMatrix();
-		glTranslated(locationX, locationY, locationZ);
+		glTranslated(locationX+0.001, locationY, locationZ);
 		glRotatef(-rotangle, 0, 0, 1);
 		
 		glBegin(GL_QUADS);
@@ -30,7 +30,7 @@ public class Hatch extends levelObject{
 		glPopMatrix();
 		
 		glPushMatrix();
-		glTranslated(locationX+Mazerunner.SQUARE_SIZE, locationY, locationZ);
+		glTranslated(locationX+Mazerunner.SQUARE_SIZE-0.001, locationY, locationZ);
 		glRotatef(rotangle, 0, 0, 1);
 		
 		glBegin(GL_QUADS);

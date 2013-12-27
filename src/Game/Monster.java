@@ -111,7 +111,8 @@ public class Monster extends levelObject {
 			//} else {
 			//	randomWalk();
 			//}
-
+			
+			
 			if (followplayer) {
 				dirToPlayer();
 			} else {
@@ -371,10 +372,6 @@ public class Monster extends levelObject {
 			}
 		}
 
-		// Add addition extra block
-		tempindex.add(Mazerunner.objlijst.size() - 2);
-		// Add floor
-		tempindex.add(Mazerunner.objlijst.size() - 1);
 		double maxX = 100;
 		// collision X
 		for (int i = 0; i < tempindex.size(); i++) {
@@ -398,10 +395,11 @@ public class Monster extends levelObject {
 		}
 
 		if (colX) {
-			locationX += maxX;
+			locationX += maxX;			
 		} else {
 			updateX();
 		}
+		locationX = Math.ceil(locationX *1000)/1000;
 		px = locationX;
 
 		// collsion Z with wall
@@ -432,6 +430,7 @@ public class Monster extends levelObject {
 		} else {
 			updateZ();
 		}
+		locationZ = Math.ceil(locationZ *1000)/1000;
 		pz = getLocationZ();
 
 		// CollisionY
@@ -486,6 +485,7 @@ public class Monster extends levelObject {
 
 			// Drawing the next model of the monster (for animation)
 			int buffer = Models.monster.get(monsterframe % 20);
+			glScaled(0.7, 0.7, 0.7);
 			glCallList(buffer);
 
 			glPopMatrix();

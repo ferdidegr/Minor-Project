@@ -19,7 +19,7 @@ import Menu.GameState;
 import Menu.Menu;
 import ParticleSystem.ParticleEmitter;
 import Utils.*;
-
+import Menu.ScoreScreen;
 
 public class Mazerunner {
 	/*
@@ -64,7 +64,7 @@ public class Mazerunner {
 	 *  *************************************************
 	 */
 	
-public int start(String levelname) throws Exception{
+public void start(String levelname) throws Exception{
 	Menu.ingame = true;
 	Sound.playMusic("background_game");
 	new Game.Textures();			// Initialize textures
@@ -121,15 +121,20 @@ public int start(String levelname) throws Exception{
 	Menu.ingame = false;
 	System.out.println(Menu.getState().toString());
 	if(Menu.getState().equals(GameState.GAME) || player.isDead){
+		System.out.println("hier");
 		Menu.setState(GameState.GAMEOVER);
-		return -200;
+		changetoHUD();
+		ScoreScreen.initview();
+		ScoreScreen.displayScoreatGO(-200);
 	} 
 	else if(Menu.getState()==GameState.TOMAIN){
 		Menu.setState(GameState.MAIN);
-		return -400;
-	}	
-	
-	return status.getScore();
+	}else{
+		changetoHUD();
+		ScoreScreen.initview();
+		ScoreScreen.displayScoreatGO(status.getScore());
+	}
+
 }
 
 /*

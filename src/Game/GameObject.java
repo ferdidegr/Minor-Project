@@ -81,4 +81,21 @@ public class GameObject{
 	public Vector getLocation(){
 		return new Vector(locationX, locationY, locationZ);
 	}
+	
+	/**
+	 * get X grid location
+	 * @param SQUARE_SIZE
+	 * @return
+	 */
+	public int getGridX(int SQUARE_SIZE){
+		return (int) Math.floor(locationX/SQUARE_SIZE);
+	}
+	/**
+	 * get Z grid location
+	 * @param SQUARE_SIZE
+	 * @return
+	 */
+	public int getGridZ(int SQUARE_SIZE){
+		return (int) Math.floor(locationZ/SQUARE_SIZE);
+	}
 }

@@ -15,13 +15,13 @@ public class Test {
 		ParticleEmitter pe = new ParticleEmitter(new Vector(Display.getWidth()/2f, Display.getHeight()/2f, 0),
 													7,7,0,
 													0,0.7,0,
-													10);
+													10,300);
 		Particle.setAttractor(new Vector(Display.getWidth()/2f, 0, 0));
 		while(!Display.isCloseRequested()){
 			glClear(GL_COLOR_BUFFER_BIT);
 			
 			pe.display();
-			pe.update();
+			pe.update(17);
 			
 			for(int i = 0 ; i < 200; i++){
 				pe.emit();
@@ -31,7 +31,7 @@ public class Test {
 			if(Keyboard.isKeyDown(Keyboard.KEY_RIGHT)){	pe.setlocation(pe.getLocation().add(10,0,0));}
 			if(Keyboard.isKeyDown(Keyboard.KEY_UP)){	pe.setlocation(pe.getLocation().add(0,10,0));}
 			if(Keyboard.isKeyDown(Keyboard.KEY_DOWN)){	pe.setlocation(pe.getLocation().add(0,-10,0));}
-			if(Keyboard.isKeyDown(Keyboard.KEY_F12)){ Utils.Utils.makeScreenShot("screenshots//flame1.png");}
+			if(Keyboard.isKeyDown(Keyboard.KEY_F12)){ Utils.Utils.makeScreenShot();}
 			
 			Display.update();
 			Display.sync(60);

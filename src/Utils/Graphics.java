@@ -72,6 +72,78 @@ public class Graphics {
 	        glEnd();
 	}
 	
+	public static void HoleFiller(boolean left, boolean fore, boolean right, boolean back, boolean down){
+	      glBegin(GL_QUADS);
+	      if(!back){
+	        glNormal3d(0, 0, -1);
+	        glTexCoord2d(0, 0);		glVertex3d(0.5, 1, 0.5);	 	        
+	        glTexCoord2d(0, 1);		glVertex3d(0.5, 0, 0.5);	
+	        glTexCoord2d(1, 1);		glVertex3d(-0.5, 0, 0.5);	      	     
+	        glTexCoord2d(1, 0);		glVertex3d(-0.5, 1, 0.5);		     
+	      }
+	      if(!right){
+	        glNormal3d(-1, 0, 0);
+	        glTexCoord2d(0, 0);		glVertex3d(0.5, 1, -0.5);	      	     
+	        glTexCoord2d(0, 1);		glVertex3d(0.5, 0, -0.5);	
+	        glTexCoord2d(1, 1);		glVertex3d(0.5, 0, 0.5);	      	     
+	        glTexCoord2d(1, 0);		glVertex3d(0.5, 1, 0.5);	
+	      }
+	      if(!fore){
+	        glNormal3d(0, 0, 1);
+	        glTexCoord2d(0, 0);		glVertex3d(-0.5, 1, -0.5);	      	     
+	        glTexCoord2d(0, 1);		glVertex3d(-0.5, 0, -0.5);
+	        glTexCoord2d(1, 1);		glVertex3d(0.5, 0, -0.5);	      	     
+	        glTexCoord2d(1, 0);		glVertex3d(0.5, 1, -0.5);		        
+	      }
+	      if(!left){
+	    	glNormal3d(1, 0, 0);
+	    	glTexCoord2d(0, 0);		glVertex3d(-0.5, 1, 0.5);	      	     
+	    	glTexCoord2d(0, 1);		glVertex3d(-0.5, 0, 0.5);
+	    	glTexCoord2d(1, 1);		glVertex3d(-0.5, 0, -0.5);	 	        
+	        glTexCoord2d(1, 0);		glVertex3d(-0.5, 1, -0.5);		        
+	      }
+	        	        
+	      	glNormal3d(0, 1, 0);
+	      	glTexCoord2d(0, 0);		glVertex3d(-0.5, 0, 0.5);	 
+	      	glTexCoord2d(0, 1);		glVertex3d(0.5, 0, 0.5);
+	      	glTexCoord2d(1, 1);		glVertex3d(0.5, 0, -0.5);
+	      	glTexCoord2d(1, 0);		glVertex3d(-0.5, 0, -0.5);	        
+	       glEnd();
+	}
+	
+	public static void groundThickner(boolean left, boolean fore, boolean right, boolean back){
+	      glBegin(GL_QUADS);
+	      if(!back){
+	        glNormal3d(0, 0, 1);
+	        glTexCoord2d(0, 0);		glVertex3d(0, 1, 1);	 	        
+	        glTexCoord2d(0, 1);		glVertex3d(0, 0, 1);	
+	        glTexCoord2d(1, 1);		glVertex3d(1, 0, 1);	      	     
+	        glTexCoord2d(1, 0);		glVertex3d(1, 1, 1);		     
+	      }
+	      if(!right){
+	        glNormal3d(1, 0, 0);
+	        glTexCoord2d(0, 0);		glVertex3d(1, 1, 1);	      	     
+	        glTexCoord2d(0, 1);		glVertex3d(1, 0, 1);	
+	        glTexCoord2d(1, 1);		glVertex3d(1, 0, 0);	      	     
+	        glTexCoord2d(1, 0);		glVertex3d(1, 1, 0);	
+	      }
+	      if(!fore){
+	        glNormal3d(0, 0, -1);
+	        glTexCoord2d(0, 0);		glVertex3d(1, 1, 0);	      	     
+	        glTexCoord2d(0, 1);		glVertex3d(1, 0, 0);
+	        glTexCoord2d(1, 1);		glVertex3d(0, 0, 0);	      	     
+	        glTexCoord2d(1, 0);		glVertex3d(0, 1, 0);		        
+	      }
+	      if(!left){
+	    	glNormal3d(-1, 0, 0);
+	    	glTexCoord2d(0, 0);		glVertex3d(0, 1, 0);	      	     
+	    	glTexCoord2d(0, 1);		glVertex3d(0, 0, 0);
+	    	glTexCoord2d(1, 1);		glVertex3d(0, 0, 1);	 	        
+	        glTexCoord2d(1, 0);		glVertex3d(0, 1, 1);	       
+	      }
+	      glEnd();
+	}
+	
 	public static void renderSpike(float baseradius, float height){
 		
 		cylinder.setNormals(GLU.GLU_OUTSIDE);		

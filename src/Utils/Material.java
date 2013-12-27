@@ -51,6 +51,13 @@ public class Material {
 		glMaterial(GL_FRONT, GL_SPECULAR, Graphics.red);
 		glMaterialf(GL_FRONT, GL_SHININESS, 2f);
 	}
+	
+	public static void setMtlHole(){
+		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.grey);
+		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.grey);
+		glMaterial(GL_FRONT, GL_SPECULAR, none);
+		Textures.ground.bind();
+	}
 }
 
 

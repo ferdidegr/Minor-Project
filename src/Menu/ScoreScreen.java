@@ -25,11 +25,13 @@ import Utils.InputField;
  */
 
 public class ScoreScreen {
+	private static int fontSize;
+	
 	public static void displayScoreatGO(int score){
 		boolean loop = true;
 		boolean ishighscore = false;
 		int highscore = 0;
-		String levelname = Menu.levelList.get(Menu.currentlevel).split(".maze")[0];
+		String levelname = Menu.levelList.get(Menu.currentlevel).split("\\.maze")[0];
 		initview();
 		try {
 			String query = "SELECT score FROM highscores WHERE level='"+levelname+"';";
@@ -49,14 +51,14 @@ public class ScoreScreen {
 			e.printStackTrace();
 		}
 		
-		int fontSize = (int) (50* Display.getWidth()/1024f);
+		fontSize = (int) (50* Display.getWidth()/1024f);
 		InputField ipf = new InputField(8, fontSize, 10, 10, Menu.bebas);
 		ipf.centerX();
 		while(loop){
 			glClear(GL_COLOR_BUFFER_BIT);			
 			
 			// When you succeeded in the level
-			if(score>=0){
+			if(score>=0){		
 				float width = (float) Menu.bebas.getWidth(fontSize, "Success!");
 				float height = (float) Menu.bebas.getHeight(fontSize);
 				ipf.poll();
@@ -64,11 +66,7 @@ public class ScoreScreen {
 				Menu.bebas.draw((Display.getWidth()-width)/2f,(Display.getHeight()-height)/2f, fontSize, "Success!");
 			}
 			// When you ended up in complete failure
-			else if (score== -200){
-				float width = (float) Menu.bebas.getWidth(fontSize, "Failure!");
-				float height = (float) Menu.bebas.getHeight(fontSize);
-				Menu.bebas.draw((Display.getWidth()-width)/2f,(Display.getHeight()-height)/2f, fontSize, "Failure!");
-			}
+			else if (score== -200){showFailure();}
 			// End the loop when the ENTER key s pressed
 			while(Keyboard.next()){
 				if(Keyboard.getEventKey()==Keyboard.KEY_RETURN)loop=false;
@@ -98,6 +96,13 @@ public class ScoreScreen {
 		System.out.println(ipf.getString());
 		Highscores HS = (Highscores)Menu.menus.get(GameState.HIGHSCORE);
 		HS.reset();
+	}	
+
+	
+	private static void showFailure(){
+		float width = (float) Menu.bebas.getWidth(fontSize, "Failure!");
+		float height = (float) Menu.bebas.getHeight(fontSize);
+		Menu.bebas.draw((Display.getWidth()-width)/2f,(Display.getHeight()-height)/2f, fontSize, "Failure!");
 	}
 	
 	/**

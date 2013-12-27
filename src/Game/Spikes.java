@@ -1,6 +1,7 @@
 package Game;
 import static org.lwjgl.opengl.GL11.*;
 import Utils.Graphics;
+import Utils.Material;
 
 public class Spikes extends levelObject{
 private static int spike =0;
@@ -16,9 +17,18 @@ private static int spike =0;
 
 	@Override
 	public void display() {
+		double ss = Mazerunner.SQUARE_SIZE;
+		int[][] maze = Mazerunner.maze;
 		glPushMatrix();
-		glTranslated(locationX+Mazerunner.SQUARE_SIZE/2f, locationY-Mazerunner.SQUARE_SIZE, locationZ+Mazerunner.SQUARE_SIZE/2f);		
+		glTranslated(locationX+ss/2f, locationY-ss, locationZ+ss/2f);		
 		glCallList(spike);
+
+		glBegin(GL_QUADS);
+		glVertex3d(-0.5, 0, -0.5);
+		glVertex3d(-0.5, 0, 0.5);
+		glVertex3d(0.5, 0, 0.5);
+		glVertex3d(0.5, 0, -0.5);
+		glEnd();
 		
 		glPopMatrix();
 		
