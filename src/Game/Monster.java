@@ -20,7 +20,7 @@ public class Monster extends levelObject {
 	protected Vector velocity = new Vector(0, 0, 0);
 	public static Vector playerloc = new Vector(0, 0, 0);
 	private Vector toPlayer;
-	private Vector dir = new Vector(0, 0, 0);
+	private Vector dir = new Vector(0, 0, -1);
 	private boolean colX, colZ, colY;
 	protected double distanceToPlayer;
 	private boolean followplayer = true;
@@ -96,11 +96,6 @@ public class Monster extends levelObject {
 		// Will be removed from the game next iteration
 		if (locationY < -5) {
 			isDead = true;
-			Count = 0;
-
-			Intelligence.addAvoid(playerloc.clone());
-			System.out.println("Monster is dood");
-			Mazerunner.status.addScore(100);
 		} else {
 
 			// Check the count, to know whether the monster has been stuck for a
@@ -118,7 +113,7 @@ public class Monster extends levelObject {
 			} else {
 				randomWalk();
 			}
-
+			
 			avoidWalls();
 
 			dir.normalize2D();
@@ -130,7 +125,12 @@ public class Monster extends levelObject {
 			collision();
 
 		}
-
+		if(isDead){
+			Count = 0;
+			Intelligence.addAvoid(playerloc.clone());
+			System.out.println("Monster is dood");
+			Mazerunner.status.addScore(100);
+		}
 	}
 	
 	/**
@@ -199,7 +199,7 @@ public class Monster extends levelObject {
 	public void randomWalk() {
 
 		if (colX | colZ) {
-			dir.rotate2D(Math.random() * 0.2 * Math.PI);
+			dir.rotate2D((float)(Math.random() * 2 * Math.PI));
 			Count++;
 		} else {
 			Count++;
@@ -399,7 +399,7 @@ public class Monster extends levelObject {
 		} else {
 			updateX();
 		}
-		locationX = Math.ceil(locationX *1000)/1000;
+		locationX = Math.round(locationX*1E10)/1E10d;
 		px = locationX;
 
 		// collsion Z with wall
@@ -430,7 +430,7 @@ public class Monster extends levelObject {
 		} else {
 			updateZ();
 		}
-		locationZ = Math.ceil(locationZ *1000)/1000;
+		locationZ = Math.round(locationZ*1E10)/1E10d;
 		pz = getLocationZ();
 
 		// CollisionY
