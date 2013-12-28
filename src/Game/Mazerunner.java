@@ -57,6 +57,7 @@ public class Mazerunner {
 	
 	private ParticleEmitter pe ; 									// Flame
 	
+	public static boolean pausemonster = true;						// Debug option TODO:remove trigger by F3
 									
 	/*
 	 *  *************************************************
@@ -199,7 +200,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			// Parsing the scorpions
 			else if(maze[j][i]==14){
 				monsterlijst.add(new Monster(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-									 SQUARE_SIZE*0.7 ,							// y-position
+									 SQUARE_SIZE*0.7/2.0 ,							// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 			// z position
 									 SQUARE_SIZE*0.7, SQUARE_SIZE*0.7, SQUARE_SIZE)); // Width, height, squae size
 			}
@@ -527,8 +528,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			/*
 			 * Monsters
 			 */
-			for(Monster mon: monsterlijst){
-				mon.update(deltaTime);				
+			if(!pausemonster){
+				for(Monster mon: monsterlijst){
+					mon.update(deltaTime);				
+				}
 			}
 			
 			if (timer>numpickups*10*1000){

@@ -335,11 +335,11 @@ public class Monster extends levelObject {
 		 */
 		// Reassign attribute names to make the equations shorter
 
-		double px = getLocationX(); // Player X Location
-		double py = locationY; // Player Y location
-		double pz = getLocationZ(); // Player Z location
-		double ph = getHeight(); // Player Height
-		double pw = getWidth() / 2f; // Player Width
+		double px = getLocationX(); // Monster X Location
+		double py = locationY; // Monster Y location
+		double pz = getLocationZ(); // Monster Z location
+		double ph = getHeight() /2f; // Monster Height
+		double pw = getWidth() / 2f; // Monster Width
 		int Xin = getGridX(Mazerunner.SQUARE_SIZE);
 		int Zin = getGridZ(Mazerunner.SQUARE_SIZE);
 		colX = false;
@@ -436,12 +436,17 @@ public class Monster extends levelObject {
 		// CollisionY
 		for (int i = 0; i < tempindex.size(); i++) {
 			levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));
-			if (tempobj.isCollision(px + pw, py + velocity.getY() - ph, pz + pw) || tempobj.isCollision(px - pw, py + velocity.getY() - ph, pz + pw) || tempobj.isCollision(px - pw, py + velocity.getY() - ph, pz - pw) || tempobj.isCollision(px + pw, py + velocity.getY() - ph, pz - pw)) {
+			if (tempobj.isCollision(px + pw, py + velocity.getY() - ph, pz + pw) 
+			||  tempobj.isCollision(px - pw, py + velocity.getY() - ph, pz + pw) 
+			||  tempobj.isCollision(px - pw, py + velocity.getY() - ph, pz - pw) 
+			||  tempobj.isCollision(px + pw, py + velocity.getY() - ph, pz - pw)) {
 				colY = true;
-				locationY += tempobj.getmaxDistY(locationY - ph / 2f);
+				locationY += tempobj.getmaxDistY(locationY - ph);
 				collisionreaction(tempobj);
 			}
 		}
+		// TODO remove
+		System.out.println(py+" "	+ ph);
 		if (colY) {
 		} else {
 			updateY();
@@ -503,7 +508,7 @@ public class Monster extends levelObject {
 	@Override
 	public boolean isCollision(double x, double y, double z) {
 
-		return x >= (locationX - width / 2f) && x <= (locationX + width / 2f) && z >= (locationZ - width / 2f) && z <= (locationZ + width / 2f) && y >= 0 && y < height;
+		return x >= (locationX - width / 2f) && x <= (locationX + width / 2f) && z >= (locationZ - width / 2f) && z <= (locationZ + width / 2f) && y >= locationY-height/2f && y < locationY + height/2f;
 	}
 
 	@Override
