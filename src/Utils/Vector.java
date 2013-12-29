@@ -23,15 +23,13 @@ public class Vector {
 	}
 	
 	public Vector rotate2D(double rad){
-		double X = x;
-		double Z = z;
-		x = X *Math.cos(rad) + Z * Math.sin(rad);
-		z = -X* Math.sin(rad) + Z * Math.cos(rad);
-
-		if(Math.abs(x)< 1E-15){x=0;}
-		if(Math.abs(z)< 1E-15){z=0;}
-		if(1-Math.abs(x)< 1E-15){x=Math.signum(x);}
-		if(1-Math.abs(z)< 1E-15){z=Math.signum(z);}
+		float X = (float) x;
+		float Z = (float) z;
+		x = (float)(X *Math.cos(rad) + Z * Math.sin(rad));
+		z = (float)(-X* Math.sin(rad) + Z * Math.cos(rad));
+		
+		x = Math.round(x*1E10)/1E10d;
+		z = Math.round(z*1E10)/1E10d;
 		
 		return this;
 	}	

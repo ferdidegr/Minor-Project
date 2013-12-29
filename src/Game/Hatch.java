@@ -17,7 +17,7 @@ public class Hatch extends levelObject{
 		glNormal3d(0, 1, 0);
 		
 		glPushMatrix();
-		glTranslated(locationX+0.001, locationY, locationZ);
+		glTranslated(locationX, locationY, locationZ);
 		glRotatef(-rotangle, 0, 0, 1);
 		
 		glBegin(GL_QUADS);
@@ -30,7 +30,7 @@ public class Hatch extends levelObject{
 		glPopMatrix();
 		
 		glPushMatrix();
-		glTranslated(locationX+Mazerunner.SQUARE_SIZE-0.001, locationY, locationZ);
+		glTranslated(locationX+Mazerunner.SQUARE_SIZE, locationY, locationZ);
 		glRotatef(rotangle, 0, 0, 1);
 		
 		glBegin(GL_QUADS);
@@ -77,7 +77,7 @@ public class Hatch extends levelObject{
 	@Override
 	public void update(int deltaTime) {
 		
-		if(rotangle >90) {rotangle =90;rotspeed*=0;hatchstatus = HatchState.OPEN;}
+		if(rotangle >85) {rotangle =85;rotspeed*=0;hatchstatus = HatchState.OPEN;}
 		if(rotangle <0) {rotangle =0;rotspeed*=0;hatchstatus = HatchState.CLOSED;}
 		if(hatchstatus == HatchState.OPENING){rotspeed=0.1f;}
 		if(hatchstatus == HatchState.CLOSING){rotspeed= -0.1f;}

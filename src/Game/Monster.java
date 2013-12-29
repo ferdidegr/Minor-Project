@@ -445,8 +445,7 @@ public class Monster extends levelObject {
 				collisionreaction(tempobj);
 			}
 		}
-		// TODO remove
-		System.out.println(py+" "	+ ph);
+
 		if (colY) {
 		} else {
 			updateY();
