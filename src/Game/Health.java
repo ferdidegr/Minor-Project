@@ -54,4 +54,8 @@ public class Health {
 	public int getmaxHealth(){
 		return maxHealth;
 	}
+	
+	public double getHealthfraction(){
+		return (double) health/maxHealth;
+	}
 }

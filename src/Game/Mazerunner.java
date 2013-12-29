@@ -43,6 +43,8 @@ public class Mazerunner {
 	protected static int[][] objectindex;							// reference to the arraylist entry
 	protected static int SQUARE_SIZE=1;								// Size of a unit block
 	protected static int timer = 0;									// Keeps track of the time
+	private static int MAXTIME;
+	protected static int scorpcount;
 	protected int numpickups;										// Amount of pickups that have already been dropped
 	protected static StatusBars status = new StatusBars();			// Creates the overlay object/ HUD
 	
@@ -72,7 +74,7 @@ public void start(String levelname) throws Exception{
 	new Graphics();					// Initialize graphics
 	new Models();
 	level = "levels/"+levelname;
-	timer = 0 ;
+	
 
 						// needs a better way to implement this
 	// TODO remove
@@ -84,6 +86,8 @@ public void start(String levelname) throws Exception{
 	
 	// Pathfinding initialiseren
 	AStar.loadMaze(maze);
+	
+	initTimer();
 	
 	
 	previousTime = Calendar.getInstance().getTimeInMillis();
@@ -126,14 +130,14 @@ public void start(String levelname) throws Exception{
 		Menu.setState(GameState.GAMEOVER);
 		changetoHUD();
 		ScoreScreen.initview();
-		ScoreScreen.displayScoreatGO(-200);
+		ScoreScreen.displayScoreatGO(-200, 0, 0);
 	} 
 	else if(Menu.getState()==GameState.TOMAIN){
 		Menu.setState(GameState.MAIN);
 	}else{
 		changetoHUD();
 		ScoreScreen.initview();
-		ScoreScreen.displayScoreatGO(status.getScore());
+		ScoreScreen.displayScoreatGO(status.getScore(), Math.max(0, MAXTIME-timer), player.getHealth().getHealthfraction());
 	}
 
 }
@@ -309,6 +313,12 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			objlijst = new ArrayList<levelObject>();
 		 // Initialize Maze ( Loading in and setting the objects in the maze )
 			initMaze();	     			
+			scorpcount = 0;
+			for(int j = 0 ; j<maze.length; j++){
+				for( int i = 0 ; i < maze[0].length; i++){
+					if(maze[j][i]==14) scorpcount++;
+				}
+			}
 			
 			input = new UserInput();
 			player.setControl(input);
@@ -405,7 +415,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glPushAttrib(GL_ENABLE_BIT);
 		changetoHUD();		
 		
-		status.draw();		
+		status.draw(Math.max(0, MAXTIME - timer));		
 
 		minimap.draw(player,monsterlijst,SQUARE_SIZE);
 
@@ -576,6 +586,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				 
 			 glEndList();			 
 				   
+		}
+		
+		public void initTimer(){
+			MAXTIME = 10*1000 * scorpcount + maze[0].length*maze.length*200;
 		}
 		
 		public Player getPlayer(){return player;}

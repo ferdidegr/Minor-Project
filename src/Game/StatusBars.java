@@ -27,7 +27,7 @@ public class StatusBars {
 	/**
 	 * Draw the health bar and all other overlay
 	 */
-	public void draw(){
+	public void draw(int timeleft){
 		
 		double barwidth = 150* Display.getWidth()/1024f;		// Bar width in pixels
 		int borderwidth = 2;									// Border width in pixels
@@ -43,8 +43,8 @@ public class StatusBars {
 		double width = Menu.bebas.getWidth(fontSize, "WWWWWWWWWWWWWWWWWWWWWWW");
 		double healthtextwidth = Menu.bebas.getWidth(fontSize, plhealth+"/100");
 		double runtextwidth = Menu.bebas.getWidth(fontSize, (int)(Math.max(runperc*100,0))+"%");
-		int second = Mazerunner.timer/1000 % 60;
-		int minute = Mazerunner.timer/1000 / 60;
+		int second = timeleft/1000 % 60;
+		int minute = timeleft/1000 / 60;
 		
 		
 		glPushMatrix();
@@ -56,7 +56,7 @@ public class StatusBars {
 		Menu.bebas.draw((float) (dwidth*0.8+barwidth-runtextwidth), (float)(3*height), fontSize, (int)(Math.max(runperc*100,0))+"%");
 		Menu.bebas.draw((float)(dwidth - width), (float)(4*height), fontSize, "Fatigue:");
 		Menu.bebas.draw((float)(dwidth - width), (float)(5*height), fontSize, "Score:  " + score);
-		Menu.bebas.draw((float)(dwidth - width), (float)(6*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size());
+		Menu.bebas.draw((float)(dwidth - width), (float)(6*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size()+"/"+Mazerunner.scorpcount);
 		
 		/*
 		 * Draw the health bar
