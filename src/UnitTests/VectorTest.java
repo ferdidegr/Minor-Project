@@ -119,11 +119,28 @@ public class VectorTest {
 		
 		assertEquals(v1, v2);
 	}
+
 	
 	@Test
 	public void EqualsTestfalse(){
 		Vector v1 = new Vector(1, 0, 0);
 		Vector v2 = new Vector(0, 1, 1);		
+	
+		assertNotEquals(v1, v2);
+	}
+	
+	@Test
+	public void EqualsTestfalse2(){
+		Vector v1 = new Vector(1, 1, 0);
+		Vector v2 = new Vector(1, 0, 1);		
+	
+		assertNotEquals(v1, v2);
+	}
+	
+	@Test
+	public void EqualsTestfalse3(){
+		Vector v1 = new Vector(1, 0, 0);
+		Vector v2 = new Vector(1, 0, 1);		
 	
 		assertNotEquals(v1, v2);
 	}

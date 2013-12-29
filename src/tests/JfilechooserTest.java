@@ -1,4 +1,4 @@
-package Editor;
+package tests;
 
 import java.io.File;
 
