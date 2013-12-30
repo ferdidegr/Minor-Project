@@ -65,9 +65,10 @@ public class ScoreScreen {
 		/*
 		 * If it is a success then display score computations
 		 */		
-		score = computescore(healthfraction, timeLeft, score);
-
-		if(highscore<score || score==0){ishighscore = true;}
+		if(score!=-200){
+			score = computescore(healthfraction, timeLeft, score);
+			if(highscore<score || score==0){ishighscore = true;}
+		}	
 		
 		/*
 		 * If highscore then allow for input of your name

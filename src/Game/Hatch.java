@@ -84,8 +84,9 @@ public class Hatch extends levelObject{
 		rotangle =rotangle%360 + rotspeed * deltaTime;
 	}
 	
+	private enum HatchState{
+		OPEN, OPENING, CLOSING, CLOSED;
+	}
+	
 }
 
-enum HatchState{
-	OPEN, OPENING, CLOSING, CLOSED;
-}

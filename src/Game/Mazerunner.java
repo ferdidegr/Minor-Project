@@ -35,7 +35,7 @@ public class Mazerunner {
 	private FloatBuffer lightPosition;								// Where the sun is located		
 
 	protected ArrayList<Pickup> pickuplijst;						// A list of pickup items
-	protected ArrayList<Hatch> hatch;								// A list of objects that will be displayed on screen. (immediate mode)
+	protected ArrayList<levelObject> moveable;								// A list of objects that will be displayed on screen. (immediate mode)
 	private ArrayList<VisibleObject> visibleObjects;				// A list of objects that will be displayed on screen. (DLlist mode)
 	protected static ArrayList<Monster> monsterlijst;				// Lijst met alle monsters
 	protected static ArrayList<Monster> deathlist;
@@ -152,7 +152,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	objectindex = new int[maze.length][maze[0].length];
 	monsterlijst = new ArrayList<Monster>();
 	deathlist = new ArrayList<Monster>();
-	hatch = new ArrayList<Hatch>();
+	moveable = new ArrayList<levelObject>();
 	pickuplijst = new ArrayList<Pickup>();
 	Pickup.initPickup(maze);
 	Intelligence.init();
@@ -211,12 +211,19 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			// parsing the hatch
 			else if(maze[j][i]==16){
 				Hatch h = new Hatch(i*SQUARE_SIZE, 0, j*SQUARE_SIZE);
-				hatch.add(h);
+				moveable.add(h);
 				objlijst.add(h);
 				objectindex[j][i]=objlijst.size()-1;
 			}
+			// Parsing movable wall
+			else if(maze[j][i]==17){
+				MoveableWall mw = new MoveableWall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0);
+				moveable.add(mw);
+				objlijst.add(mw);
+				objectindex[j][i]=objlijst.size()-1;
+			}
 			// Parsing the floor
-			if((maze[j][i]>10|| maze[j][i]==0) && maze[j][i]!=15 && maze[j][i]!=16 && maze[j][i]!=13 && maze[j][i]!=12){
+			if((maze[j][i]==11|| maze[j][i]==0 || maze[j][i]==14)){
 			levelObject lvlo = new Floor(i*SQUARE_SIZE, 0, j*SQUARE_SIZE, SQUARE_SIZE, SQUARE_SIZE, 1);
 			visibleObjects.add(lvlo);
 			objlijst.add(lvlo);
@@ -340,7 +347,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				// Draw sky box, the skybox is always in the origin, so no need to translate
 				glCallList(Models.skybox);
 				
-				glTranslated(-player.locationX, -player.locationY, -player.locationZ);					
+				glTranslated(-player.locationX, -player.locationY, -player.locationZ);	
+				
+		        //update light positions
+		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
+		        
 				/*
 				 * Displays the flame when the monsterlist is empty
 				 */
@@ -357,12 +368,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        if(!input.debug){ 	glCallList(objectDisplayList); }
 		        
 		        // Display all movable visible objects (immediate mode)
-		        for(VisibleObject vo:hatch){
+		        for(VisibleObject vo:moveable){
 		        	vo.display();
-		        }
-		        
-		        //update light positions
-		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
+		        }		        
+
 		        
 		        // Monsters		
 		        
@@ -531,7 +540,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			/*
 			 * Movable objects
 			 */
-			for(Hatch lvlo: hatch){
+			for(levelObject lvlo: moveable){
 				lvlo.update(deltaTime);				
 			}
 		

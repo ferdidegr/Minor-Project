@@ -278,6 +278,7 @@ public class MazeMaker {
 		buttonlist.add(new Button(RIGHT, 6.7f,Textures.scorpion, 14));		// 14
 		buttonlist.add(new Button(LEFT, 7.8f,Textures.pit, 15));			// 15
 		buttonlist.add(new Button(RIGHT, 7.8f,Textures.hatch, 16));			// 15
+		buttonlist.add(new Button(LEFT, 8.9f,Textures.movwall, 17));			// 15
 
 		buttonlist.add(new Button(LEFT, 10.5f,Textures.texload, 98));		// 98 load button 
 		buttonlist.add(new Button(RIGHT, 10.5f,Textures.texsave, 99));		// 99 save button
@@ -369,6 +370,7 @@ public class MazeMaker {
 			case 14:{maze.setObject(14, x, y);break;}
 			case 15:{maze.setObject(15, x, y);break;}
 			case 16:{maze.setObject(16, x, y);break;}
+			case 17:{maze.setObject(17, x, y);break;}
 			}
 		}
 	}

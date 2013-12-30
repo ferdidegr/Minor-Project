@@ -78,6 +78,7 @@ public class MazeMap implements Serializable{
 				if (maze[j][i]==14){Textures.scorpion.bind();}
 				if (maze[j][i]==15){Textures.pit.bind();}
 				if (maze[j][i]==16){Textures.hatch.bind();}
+				if (maze[j][i]==17){Textures.movwall.bind();}
 				glBegin(GL_QUADS);				
 				glTexCoord2d(0, 1);
 				glVertex2f(0+i*size, height*size-(j+1)*size);

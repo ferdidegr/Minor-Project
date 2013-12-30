@@ -209,7 +209,6 @@ public class Player extends GameObject {
 				y_begin = locationY;
 			}
 			if(jump){
-
 				
 				velocity.add(0, deltaTime*tempVy, 0);
 				tempVy-=0.002*deltaTime/14f;
@@ -257,11 +256,7 @@ public class Player extends GameObject {
 					}
 				}
 			}
-			
-	
-			//Add extra block
-			tempindex.add(Mazerunner.objlijst.size()-1);
-			
+		
 
 			//collision X	
 			for(int i = 0; i< tempindex.size();i++){
@@ -415,7 +410,7 @@ public class Player extends GameObject {
 			}else{
 				Menu.setState(GameState.GAMEOVER);
 			}
-		}
+		}		
 	}
 	
 	public Vector lookat(){
