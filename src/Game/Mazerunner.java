@@ -74,7 +74,7 @@ public void start(String levelname) throws Exception{
 	new Graphics();					// Initialize graphics
 	new Models();
 	level = "levels/"+levelname;
-	
+	timer = 0;
 
 						// needs a better way to implement this
 	// TODO remove
