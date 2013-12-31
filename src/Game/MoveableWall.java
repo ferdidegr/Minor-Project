@@ -44,9 +44,10 @@ public class MoveableWall extends levelObject{
 
 	@Override
 	public double getmaxDistX(double X) {
-		if(locationX>X)return locationX-Mazerunner.SQUARE_SIZE/2f-X;
-		return locationX+Mazerunner.SQUARE_SIZE/2f-X;
-		
+		double ss  = Mazerunner.SQUARE_SIZE;
+		if(locationX-ss/2>X)return locationX-Mazerunner.SQUARE_SIZE/2f-X;
+		else if(locationX+ss/2<X)return locationX+Mazerunner.SQUARE_SIZE/2f-X;
+		return 0;
 	}
 
 	@Override
@@ -56,8 +57,11 @@ public class MoveableWall extends levelObject{
 
 	@Override
 	public double getmaxDistZ(double Z) {
-		if(locationZ>Z)return locationZ-Mazerunner.SQUARE_SIZE/2f-Z;
-		return locationZ+Mazerunner.SQUARE_SIZE/2f-Z;
+		double ss  = Mazerunner.SQUARE_SIZE;
+		
+		if(locationZ-ss/2>Z)return locationZ-Mazerunner.SQUARE_SIZE/2f-Z;
+		else if(locationZ+ss/2<Z)return locationZ+Mazerunner.SQUARE_SIZE/2f-Z;
+		return 0;
 	}
 
 	@Override
@@ -72,6 +76,11 @@ public class MoveableWall extends levelObject{
 	public void change() {
 		if(wallstate == wallState.DOWN){wallstate = wallState.ASCENDING;}
 		if(wallstate == wallState.UP){wallstate = wallState.DESCENDING;}
+	}
+	
+	public boolean isPriority(){
+		if(wallstate == wallState.ASCENDING) return true;		
+		return false;
 	}
 	
 	private enum wallState{

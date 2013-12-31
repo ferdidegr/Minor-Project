@@ -24,12 +24,12 @@ public class ScoreScreen {
 	private static int fontSize;
 	
 	
-	public static void displayScoreatGO(int score, int timeLeft, double healthfraction){
+	public static void displayScoreatGO(int score, int timeLeft, double health){
 		boolean loop = true;
 		boolean ishighscore = false;
 		int highscore = 0;
 		// TODO Remove
-		System.out.println(score+" "+timeLeft+" "+healthfraction);
+		System.out.println(score+" "+timeLeft+" "+health);
 		
 		String levelname = Menu.levelList.get(Menu.currentlevel).split("\\.maze")[0];
 		initview();
@@ -66,7 +66,7 @@ public class ScoreScreen {
 		 * If it is a success then display score computations
 		 */		
 		if(score!=-200){
-			score = computescore(healthfraction, timeLeft, score);
+			score = computescore(health, timeLeft, score);
 			if(highscore<score || score==0){ishighscore = true;}
 		}	
 		
@@ -152,9 +152,9 @@ public class ScoreScreen {
 	 * @param score
 	 * @return
 	 */
-	private static int computescore(double healthfraction, int timeLeft, int score) {
+	private static int computescore(double health, int timeLeft, int score) {
 		Timer tempt = new Timer();
-		int healthbonus = (int) (300 * healthfraction);
+		int healthbonus = (int) (3 * health);
 		int timebonus 	= (int) (timeLeft/100f);
 		int diffmodifier = 1;
 		// Difficulty

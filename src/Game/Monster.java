@@ -434,16 +434,28 @@ public class Monster extends levelObject {
 		pz = getLocationZ();
 
 		// CollisionY
+		boolean islift = false;
 		for (int i = 0; i < tempindex.size(); i++) {
 			levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));
 			if (tempobj.isCollision(px + pw, py + velocity.getY() - ph, pz + pw) 
 			||  tempobj.isCollision(px - pw, py + velocity.getY() - ph, pz + pw) 
 			||  tempobj.isCollision(px - pw, py + velocity.getY() - ph, pz - pw) 
 			||  tempobj.isCollision(px + pw, py + velocity.getY() - ph, pz - pw)) {
-				colY = true;
-				locationY += tempobj.getmaxDistY(locationY - ph);
-				collisionreaction(tempobj);
-			}
+				colY=true;
+				if(!islift){
+					locationY+=tempobj.getmaxDistY(locationY-ph);
+					collisionreaction(tempobj);
+				}else{
+					if(tempobj instanceof MoveableWall){
+						MoveableWall tempmw = (MoveableWall) tempobj;
+						if(tempmw.isPriority()){
+							locationY+=tempobj.getmaxDistY(locationY-ph);
+							collisionreaction(tempobj);
+						}
+					}
+				}
+				if(tempobj instanceof MoveableWall)islift=true;
+			}	
 		}
 
 		if (colY) {

@@ -259,37 +259,42 @@ public class Player extends GameObject {
 		
 
 			//collision X	
-			for(int i = 0; i< tempindex.size();i++){
-				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));				
-				if(tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz+pw)
-				|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz-pw)){
-					colX=true;
-					locationX+=tempobj.getmaxDistX(locationX+pw*signX);
-					collisionreaction(tempobj);
-					break;
-				}
-
-			}			
-			if(colX){}else{updateX();}
-			px = locationX;
-			// collsion Z						
-			for(int i = 0; i< tempindex.size();i++){			
-			
-				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
-				if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+velocity.getZ())
-				|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+velocity.getZ())){
-					colZ=true;
-					locationZ+=tempobj.getmaxDistZ(locationZ+pw*signZ);
-					collisionreaction(tempobj);
-					break;
+			if(Math.round(velocity.getX()*1E15)/1E15 !=0){
+				for(int i = 0; i< tempindex.size();i++){
+					levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));				
+					if(tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz+pw)
+					|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz-pw)){
+						colX=true;
+						locationX+=tempobj.getmaxDistX(locationX+pw*signX);
+						collisionreaction(tempobj);
+						break;
+					}
 				}
 			}
-			if(colZ){}else{	updateZ();}
-			pz= getLocationZ();
+			
+			
+			if(colX){}else{updateX();}
+			px = locationX;
+			
+			// collsion Z	
+			if(Math.round(velocity.getZ()*1E15)/1E15!= 0){
+				for(int i = 0; i< tempindex.size();i++){		
+					levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
+					if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+velocity.getZ())
+					|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+velocity.getZ())){
+						colZ=true;
+						locationZ+=tempobj.getmaxDistZ(locationZ+pw*signZ);
+						collisionreaction(tempobj);
+						break;
+					}
+				}
+				if(colZ){}else{	updateZ();}
+				pz= getLocationZ();
+			}
 			
 			// CollisionY
 			spikejump=false;
-			
+			boolean islift = false;
 			for(int i = 0; i< tempindex.size();i++){
 				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
 				if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
@@ -297,8 +302,19 @@ public class Player extends GameObject {
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
 				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){					
 					colY=true;
-					locationY+=tempobj.getmaxDistY(locationY-ph);
-					collisionreaction(tempobj);
+					if(!islift){
+						locationY+=tempobj.getmaxDistY(locationY-ph);
+						collisionreaction(tempobj);
+					}else{
+						if(tempobj instanceof MoveableWall){
+							MoveableWall tempmw = (MoveableWall) tempobj;
+							if(tempmw.isPriority()){
+								locationY+=tempobj.getmaxDistY(locationY-ph);
+								collisionreaction(tempobj);
+							}
+						}
+					}
+					if(tempobj instanceof MoveableWall)islift=true;
 				}				
 			}
 			if(!spikejump){control.jump = false;}

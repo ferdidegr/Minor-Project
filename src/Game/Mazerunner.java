@@ -137,7 +137,7 @@ public void start(String levelname) throws Exception{
 	}else{
 		changetoHUD();
 		ScoreScreen.initview();
-		ScoreScreen.displayScoreatGO(status.getScore(), Math.max(0, MAXTIME-timer), player.getHealth().getHealthfraction());
+		ScoreScreen.displayScoreatGO(status.getScore(), Math.max(0, MAXTIME-timer), player.getHealth().getHealth());
 	}
 
 }
@@ -536,14 +536,14 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			//Update any movement since last frame.
 			Monster.setPlayerloc(new Vector(player.locationX, player.locationY, player.locationZ));	
 				
-			player.update(deltaTime);						// Updating velocity vector
+			
 			/*
 			 * Movable objects
 			 */
 			for(levelObject lvlo: moveable){
 				lvlo.update(deltaTime);				
 			}
-		
+			player.update(deltaTime);						// Updating velocity vector
 			/*
 			 * Monsters
 			 */
