@@ -295,6 +295,17 @@ public class Player extends GameObject {
 			// CollisionY
 			spikejump=false;
 			boolean islift = false;
+			boolean ascending = false;
+			
+			for(int i = 0; i< tempindex.size();i++){
+				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));
+				if(tempobj instanceof MoveableWall){
+					MoveableWall tempmw = (MoveableWall) tempobj;
+					ascending = tempmw.isPriority();
+					if(ascending) break;
+				}
+			}
+			
 			for(int i = 0; i< tempindex.size();i++){
 				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
 				if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
@@ -311,10 +322,17 @@ public class Player extends GameObject {
 							if(tempmw.isPriority()){
 								locationY+=tempobj.getmaxDistY(locationY-ph);
 								collisionreaction(tempobj);
-							}
+							}	
 						}
 					}
-					if(tempobj instanceof MoveableWall)islift=true;
+					if(tempobj instanceof Wall && !ascending){
+						locationY+=tempobj.getmaxDistY(locationY-ph);
+						collisionreaction(tempobj);
+						break;
+					}
+					if(tempobj instanceof MoveableWall){
+						islift=true;						
+					}
 				}				
 			}
 			if(!spikejump){control.jump = false;}
