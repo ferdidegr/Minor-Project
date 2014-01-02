@@ -174,6 +174,7 @@ public class MazeMaker {
 	public void Mousepoll() throws IOException{
 		int x = Mouse.getX()+left;					// Transform to world coordinates
 		int y = Mouse.getY()+bottom;				// Transform to world coordinates
+		
 		int wheeldx = Mouse.getDWheel();			// difference in wheel location compared to previous call
 		if(wheeldx>0 && !ctrldown){Button.scrolldown();}			// if you scroll up, move menu buttons
 		if(wheeldx<0 && !ctrldown){Button.scrollup();}			// if you scroll down, move menu buttons
@@ -224,7 +225,7 @@ public class MazeMaker {
 		switch(ID){
 		    
 			case 99: {saveMaze(); 	break;}
-			case 98:{loadMaze();	break;}
+			case 98:{loadMaze();	System.out.println(flaggreenx+" "+flaggreeny);break;}
 			case 100: {newMaze();	break;}
 			case 101: {resizeMaze(); break;}
 			case 110:{exit = true; 	 break;}
@@ -350,16 +351,17 @@ public class MazeMaker {
 			case 7:{maze.setObject(7, x, y);break;}	// Wall
 			
 			case 13:{maze.setObject(13, x, y);break;}	// Spikes
-			case 11:{if (flaggreenx>0 && flaggreeny>0 && flaggreeny<(maze.getHeight()*MazeMap.getSize())&& 
-					flaggreenx<(maze.getWidth()*MazeMap.getSize())&& 
-					maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
+			case 11:{if (flaggreenx>=0 && flaggreeny>=0 
+					&& flaggreeny<(maze.getHeight()*MazeMap.getSize())
+					&& flaggreenx<(maze.getWidth()*MazeMap.getSize())
+					&& maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
 						maze.setObject(0, flaggreenx, flaggreeny);
 					}
 					flaggreenx=x;
 					flaggreeny=y;
 					maze.setObject(11, x, y);
 					break;} 						// Flag green
-			case 12:{if (flagredx>0 && flagredy>0 && flagredy<(maze.getHeight()*MazeMap.getSize())&& 
+			case 12:{if (flagredx>=0 && flagredy>=0 && flagredy<(maze.getHeight()*MazeMap.getSize())&& 
 					flagredx<(maze.getWidth()*MazeMap.getSize())&&  maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
 						maze.setObject(0, flagredx, flagredy);
 					}
@@ -424,6 +426,7 @@ public class MazeMaker {
 					maze.getMaze()[j][i] = tempmaze[j][i];
 				}
 			}
+			reinitflags();
 		}else{
 			Sys.alert("No existing maze available", "You do not have a maze open, please open or make a maze first");
 		}
@@ -462,9 +465,29 @@ public class MazeMaker {
 		if(tempmaze!=null){
 			maze = new MazeMap(tempmaze[0].length, tempmaze.length);
 			maze.setMaze(tempmaze);		
+			reinitflags();			
+			
 			resetView();
 		}
 
+	}
+	
+	public void reinitflags(){
+		int[][] tempmaze2 = maze.getMaze();
+		flaggreenx=-1; flaggreeny=-1; flagredx= -1; flagredy =-1;
+		for(int j = 0 ; j < tempmaze2.length; j++){
+			for(int i = 0 ; i < tempmaze2[0].length; i++){
+				if(tempmaze2[j][i] == 11){
+					flaggreenx = (int) (i*MazeMap.getSize()); 
+					flaggreeny = (int) ((tempmaze2.length-j)*MazeMap.getSize());
+										
+				}
+				if(tempmaze2[j][i] == 12){
+					flagredx = (int) (i*MazeMap.getSize()); 
+					flagredy = (int) ((tempmaze2.length-j)*MazeMap.getSize());
+				}
+			}
+		}
 	}
 	/**
 	 * ********************************************
@@ -487,6 +510,6 @@ public class MazeMaker {
 		Display.create();
 		maker.start();
 
-		}catch(Exception e){}
+		}catch(Exception e){e.printStackTrace();}
 	}
 }
