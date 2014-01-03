@@ -250,16 +250,16 @@ public class Player extends GameObject {
 			for(int i = -1 ; i<=1;i++){
 				for(int j = -1; j<=1; j++){
 					if((Xin+i)>=0 && (Xin+i)<Mazerunner.maze[0].length && (Zin+j)>=0 && (Zin+j)<Mazerunner.maze.length){
-//						if(Mazerunner.objectindex[Zin+j][Xin+i]>=0){							// < zero means there is nothing so no index
+
 							tempindex.add(Mazerunner.objectindex[Zin+j][Xin+i]);							
-//						}
+
 					}
 				}
 			}
 		
 
 			//collision X	
-			if(Math.round(velocity.getX()*1E15)/1E15 !=0){
+
 				for(int i = 0; i< tempindex.size();i++){
 					levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));				
 					if(tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz+pw)
@@ -270,14 +270,13 @@ public class Player extends GameObject {
 						break;
 					}
 				}
-			}
 			
 			
 			if(colX){}else{updateX();}
 			px = locationX;
 			
 			// collsion Z	
-			if(Math.round(velocity.getZ()*1E15)/1E15!= 0){
+
 				for(int i = 0; i< tempindex.size();i++){		
 					levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
 					if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+velocity.getZ())
@@ -290,22 +289,12 @@ public class Player extends GameObject {
 				}
 				if(colZ){}else{	updateZ();}
 				pz= getLocationZ();
-			}
+
 			
 			// CollisionY
 			spikejump=false;
-			boolean islift = false;
-			boolean ascending = false;
-			
-			for(int i = 0; i< tempindex.size();i++){
-				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));
-				if(tempobj instanceof MoveableWall){
-					MoveableWall tempmw = (MoveableWall) tempobj;
-					ascending = tempmw.isPriority();
-					if(ascending) break;
-				}
-			}
-			
+			levelObject templvlo = null;
+			double maxY = -100;
 			for(int i = 0; i< tempindex.size();i++){
 				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
 				if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
@@ -313,32 +302,18 @@ public class Player extends GameObject {
 				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
 				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){					
 					colY=true;
-					if(!islift){
-						locationY+=tempobj.getmaxDistY(locationY-ph);
-						collisionreaction(tempobj);
-					}else{
-						if(tempobj instanceof MoveableWall){
-							MoveableWall tempmw = (MoveableWall) tempobj;
-							if(tempmw.isPriority()){
-								locationY+=tempobj.getmaxDistY(locationY-ph);
-								collisionreaction(tempobj);
-							}	
-						}
+					if(maxY < tempobj.getmaxDistY(locationY-ph)){
+						templvlo = tempobj;
+						maxY = tempobj.getmaxDistY(locationY-ph);
 					}
-					if(tempobj instanceof Wall && !ascending){
-						locationY+=tempobj.getmaxDistY(locationY-ph);
-						collisionreaction(tempobj);
-						break;
-					}
-					if(tempobj instanceof MoveableWall){
-						islift=true;						
-					}
+						
 				}				
 			}
+			
 			if(!spikejump){control.jump = false;}
-			if(colY){jump=false;}else{updateY();}
+			if(colY){locationY += maxY; collisionreaction(templvlo);jump = false;}else{updateY();}
 			py = getLocationY();
-		
+			
 			// Check trigger
 			if(control.triggered){
 				for(int i = 0; i< tempindex.size();i++){
@@ -357,6 +332,7 @@ public class Player extends GameObject {
 				}
 			}
 			if(locationY<-20 || health.getHealth()<=0){isDead=true;}
+
 	}
 
 	/**
@@ -387,6 +363,8 @@ public class Player extends GameObject {
 		}
 		// Gravity
 		velocity.add(0, -deltaTime*0.005, 0);
+		
+
 
 	}
 	
