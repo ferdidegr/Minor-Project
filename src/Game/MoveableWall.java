@@ -52,7 +52,7 @@ public class MoveableWall extends levelObject{
 
 	@Override
 	public double getmaxDistY(double Y) {
-		return (bottom+height)-Y;
+		return (bottom+height)-Y;		
 	}
 
 	@Override
@@ -66,8 +66,8 @@ public class MoveableWall extends levelObject{
 
 	@Override
 	public void update(int deltaTime) {
-		if(wallstate == wallState.ASCENDING){bottom += 0.05;}
-		if(wallstate == wallState.DESCENDING){bottom -= 0.05;}
+		if(wallstate == wallState.ASCENDING){bottom += deltaTime*0.004;}
+		if(wallstate == wallState.DESCENDING){bottom -= deltaTime*0.004;}
 		if(bottom > 0){bottom=0; wallstate = wallState.UP;}
 		if(bottom < -height){bottom = - height; wallstate = wallState.DOWN;}			
 	}
