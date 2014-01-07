@@ -13,7 +13,6 @@ public class EndObelisk extends levelObject{
 		glShadeModel(GL_FLAT);
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);
-		glScaled(2, 2, 2);
 		glCallList(Models.obelisk);
 		glPopMatrix();
 		glShadeModel(GL_SMOOTH);
