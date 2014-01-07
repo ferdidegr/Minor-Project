@@ -1,5 +1,6 @@
 package Game;
 import static org.lwjgl.opengl.GL11.*;
+import Utils.Material;
 
 public class MoveableWall extends levelObject{
 	
@@ -15,22 +16,25 @@ public class MoveableWall extends levelObject{
 	public void display() {
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);
+		
+		Material.setMtlMWall();
+		
 		for(int i = 0 ; i<4; i++){
 			glRotated(90*i, 0, 1, 0);
 			glNormal3d(0, 1, 1);
 			glBegin(GL_QUADS);
-				glVertex3d(-0.5, bottom, +0.5);	
-				glVertex3d(0.5, bottom, +0.5);	
-				glVertex3d(0.5, bottom+height, +0.5);	
-				glVertex3d(-0.5, bottom+height, +0.5);	
+			glTexCoord2d(0, height);		glVertex3d(-0.5, bottom, +0.5);	
+			glTexCoord2d(1, height);		glVertex3d(0.5, bottom, +0.5);	
+			glTexCoord2d(1, 0);		glVertex3d(0.5, bottom+height, +0.5);	
+			glTexCoord2d(0, 0);		glVertex3d(-0.5, bottom+height, +0.5);	
 			glEnd();
 		}
 		glNormal3d(0, 1, 0);
 		glBegin(GL_QUADS);
-			glVertex3d(-0.5, bottom+height, -0.5);
-			glVertex3d(-0.5, bottom+height, 0.5);
-			glVertex3d(0.5, bottom+height, 0.5);
-			glVertex3d(0.5, bottom+height, -0.5);
+		glTexCoord2d(0, 0);	glVertex3d(-0.5, bottom+height, -0.5);
+		glTexCoord2d(0, 1);	glVertex3d(-0.5, bottom+height, 0.5);
+		glTexCoord2d(1, 1);	glVertex3d(0.5, bottom+height, 0.5);
+		glTexCoord2d(1, 0);	glVertex3d(0.5, bottom+height, -0.5);
 		glEnd();
 		glPopMatrix();
 	}

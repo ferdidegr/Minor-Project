@@ -8,13 +8,14 @@ import Utils.IO;
 
 public class Textures {
 		public static Texture ingamewall, startover, ground
-				, front, back, left,right,top, bottom;
+				, front, back, left,right,top, bottom, movewall;
 		
 		static{
 			try {				
 				ingamewall = IO.loadtexture("res/ingamewall.jpg",false);
 				startover = IO.loadtexture("res/transparent.png",false);
 				ground = IO.loadtexture("res/ground1.jpg",false);
+				movewall  = IO.loadtexture("res/sandwall.png", false);
 				
 				// Skybox
 				front = IO.loadtexture("res/Skybox/Sahara/north.png",true);

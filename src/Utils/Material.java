@@ -3,13 +3,22 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 
+import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import Game.Textures;
 
 public class Material {
 	static FloatBuffer none = Utils.createFloatBuffer(0f,0f,0f,0f);
-
+	
+	public static void setMtlMWall(){
+		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);
+		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
+		glMaterial(GL_FRONT, GL_SPECULAR, none);
+		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+		Textures.movewall.bind();		
+	}
 	
 	public static void setMtlWall(){
 
