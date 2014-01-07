@@ -75,8 +75,7 @@ public class ScoreScreen {
 		 */
 		loop = true;
 		
-		if(ishighscore){
-			ipf.requestFocus();
+		if(ishighscore){			
 			
 			// Defining prompt text
 			int fontsize = (int) (50 *Display.getWidth()/1024f);
