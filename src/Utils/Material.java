@@ -61,6 +61,13 @@ public class Material {
 		glMaterialf(GL_FRONT, GL_SHININESS, 2f);
 	}
 	
+	public static void setMtlHatch(){
+		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);
+		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
+		glMaterial(GL_FRONT, GL_SPECULAR, none);
+		Textures.hatch.bind();	
+	}
+	
 	public static void setMtlHole(){
 		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.grey);
 		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.grey);

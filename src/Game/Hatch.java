@@ -1,5 +1,6 @@
 package Game;
 import static org.lwjgl.opengl.GL11.*;
+import Utils.Material;
 
 
 public class Hatch extends levelObject{
@@ -19,12 +20,12 @@ public class Hatch extends levelObject{
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);
 		glRotatef(-rotangle, 0, 0, 1);
-		
+		Material.setMtlHatch();
 		glBegin(GL_QUADS);
-		glVertex3d(0, 0, 0);
-		glVertex3d(0, 0, Mazerunner.SQUARE_SIZE);
-		glVertex3d(Mazerunner.SQUARE_SIZE/2.0, 0, Mazerunner.SQUARE_SIZE);
-		glVertex3d(Mazerunner.SQUARE_SIZE/2.0, 0, 0);
+		glTexCoord2d(0, 0);			glVertex3d(0, 0, 0);
+		glTexCoord2d(0, 1);			glVertex3d(0, 0, Mazerunner.SQUARE_SIZE);
+		glTexCoord2d(0.5, 1);		glVertex3d(Mazerunner.SQUARE_SIZE/2.0, 0, Mazerunner.SQUARE_SIZE);
+		glTexCoord2d(0.5, 0);		glVertex3d(Mazerunner.SQUARE_SIZE/2.0, 0, 0);
 		glEnd();		
 		
 		glPopMatrix();
@@ -34,10 +35,10 @@ public class Hatch extends levelObject{
 		glRotatef(rotangle, 0, 0, 1);
 		
 		glBegin(GL_QUADS);
-		glVertex3d(0, 0, 0);
-		glVertex3d(-Mazerunner.SQUARE_SIZE/2.0, 0, 0);
-		glVertex3d(-Mazerunner.SQUARE_SIZE/2.0, 0, Mazerunner.SQUARE_SIZE);
-		glVertex3d(0, 0, Mazerunner.SQUARE_SIZE);
+		glTexCoord2d(1, 0);			glVertex3d(0, 0, 0);
+		glTexCoord2d(0.5, 0);			glVertex3d(-Mazerunner.SQUARE_SIZE/2.0, 0, 0);
+		glTexCoord2d(0.5, 1);			glVertex3d(-Mazerunner.SQUARE_SIZE/2.0, 0, Mazerunner.SQUARE_SIZE);
+		glTexCoord2d(1, 1);			glVertex3d(0, 0, Mazerunner.SQUARE_SIZE);
 		
 		
 		glEnd();		
