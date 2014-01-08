@@ -55,7 +55,7 @@ public class IO {
 	 * @throws IOException
 	 */
 	public static int[][] loadchooser() throws ClassNotFoundException, IOException{
-		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir"));		
+		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir")+"/levels");		
 		jfc.setMultiSelectionEnabled(false);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
 		jfc.addChoosableFileFilter(filter);
@@ -75,7 +75,7 @@ public class IO {
 	 * @throws IOException
 	 */
 	public static void savechooser(MazeMap maze) throws IOException{
-		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir"));
+		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir")+"/levels");
 		jfc.setMultiSelectionEnabled(false);
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
 		jfc.addChoosableFileFilter(filter);

@@ -10,6 +10,7 @@ import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
 import Utils.Chooser;
 import Utils.IO;
@@ -88,9 +89,9 @@ public class MazeMaker {
 	 * Draw all drawable items on the screen
 	 * ***********************************************
 	 */
-	public void display(){	
-		drawMaze();		
-		drawMenu();		
+	public void display(){			
+		drawMaze();			
+		drawMenu();
 	}
 	/**
 	 * ***********************************************
@@ -98,6 +99,7 @@ public class MazeMaker {
 	 * ***********************************************
 	 */
 	public void drawMaze(){
+		
 		if(maze != null){
 			maze.draw();
 		}
@@ -113,17 +115,15 @@ public class MazeMaker {
 		 */
 		glEnable(GL_TEXTURE_2D);						// Enable Textures
 		Textures.texmenubar.bind();						// Set this texture as active
-											
+		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);			
 		glBegin(GL_QUADS);								// Begin drawing the rectangle
-			glTexCoord2f(0, 1);
-			glVertex2f(right-menubarwidth, bottom);		// Bottom left vertex
-			glTexCoord2f(1, 1);	
-			glVertex2f(right, bottom);					// Top right vertex
-			glTexCoord2f(1, 0);	
-			glVertex2f(right, top);						// Bottom Right vertex
-			glTexCoord2f(0, 0);
-			glVertex2f(right-menubarwidth, top);		// top Left vertex
-		glEnd();
+			glTexCoord2f(0, 5);			glVertex2f(right-menubarwidth, bottom);		// Bottom left vertex
+			glTexCoord2f(1, 5);			glVertex2f(right, bottom);					// Top right vertex
+			glTexCoord2f(1, 0);			glVertex2f(right, top);						// Bottom Right vertex
+			glTexCoord2f(0, 0); 		glVertex2f(right-menubarwidth, top);		// top Left vertex
+		glEnd();		
+		
 		glDisable(GL_TEXTURE_2D);						// Disable textures
 		
 		/*

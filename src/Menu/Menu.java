@@ -3,9 +3,12 @@ package Menu;
 import Game.*;
 import Utils.Chooser;
 import Utils.Database;
+import Utils.IO;
 import Utils.Sound;
 import Utils.Text;
+import Utils.Timer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,25 +51,36 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void start() throws LWJGLException{
-		gamestate = GameState.MAIN;
-		difficulty = Difficulty.EASY;
-		levelList = Utils.Utils.loadLevelList();
-		score =  new Database("db/scores.db");
+		
 		Chooser keuze = new Chooser(true);
+		
 		while(keuze.getDisplay()==null){
 			try {Thread.sleep(500);	} catch (InterruptedException e) {	}
 		}
 		
+		Timer timer = new Timer().start();
 		Display.create();
 		Display.setResizable(false);
+
+		loadingscreen();
+
+		
 		if(Display.isFullscreen()){Display.setVSyncEnabled(true);}
 		Mouse.setGrabbed(true);
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
+		
+		gamestate = GameState.MAIN;
+		difficulty = Difficulty.EASY;
+		levelList = Utils.Utils.loadLevelList();
+		score =  new Database("db/scores.db");
 		bebas = new Text("BEBAS.TTF");	
 		Sound.init();
 		new Textures();
 		initButtons();
+		
+		while(timer.getTime()<5000){}
+		
 		run();
 		
 	}
@@ -310,8 +324,9 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void initGL(){
+		glClearColor(0f, 0.0f, 0.0f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);	
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
 		
 		// Now we set up our viewpoint.
 		initview();
@@ -353,6 +368,26 @@ public class Menu {
 		glMatrixMode(GL_MODELVIEW);
 		glPopMatrix();
 	}
+	
+	public static void loadingscreen(){
+		glEnable(GL_TEXTURE_2D);
+		try {
+			IO.loadtexture("res/loadingscreen.png", false).bind();
+		} catch (IOException e) {}
+		
+		double smallnumber = 0;
+		glBegin(GL_QUADS);
+			glTexCoord2d(0+smallnumber, 0+smallnumber);		glVertex2d(-1, 1);
+			glTexCoord2d(0+smallnumber, 1-smallnumber);		glVertex2d(-1, -1);
+			glTexCoord2d(1-smallnumber, 1-smallnumber);		glVertex2d(1 , -1);
+			glTexCoord2d(1-smallnumber, 0+smallnumber);		glVertex2d(1, 1);
+		glEnd();
+		glDisable(GL_TEXTURE_2D);	
+
+		Display.update();
+		
+	}
+	
 	/**
 	 * ************************************
 	 * Start the menu
