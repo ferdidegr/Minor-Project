@@ -9,12 +9,12 @@ import Utils.IO;
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
-			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred, scorpion, pit, hatch, texresize , texquit, movwall;
+			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred, scorpion, pit, hatch, texresize , texquit, movwall, mazebg;
 	
 	static {
 		try {
 			texempty = IO.loadtexture("res/Textures/Editor/empty.jpg",false);
-			texmenubar = IO.loadtexture("res/Textures/Editor/Wooden_floor_original.jpg",false);
+			texmenubar = IO.loadtexture("res/sandwall.png",false);
 			texnewmaze = IO.loadtexture("res/Textures/Editor/newmaze.jpg",false);
 			texwall1 = IO.loadtexture("res/Textures/Editor/wall1.jpg",false);
 			texwall2 = IO.loadtexture("res/Textures/Editor/wall2.jpg",false);
@@ -34,6 +34,7 @@ public class Textures {
 			texresize = IO.loadtexture("res/Textures/Editor/resize.jpg", false);
 			texquit = IO.loadtexture("res/Textures/Editor/quit.png"	, false	);
 			movwall = IO.loadtexture("res/Textures/Editor/movwall.jpg", false);
+			mazebg = IO.loadtexture("res/obeliskachtergrond.png", false);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
