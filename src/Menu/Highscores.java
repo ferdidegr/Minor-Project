@@ -29,7 +29,7 @@ int FontSize, Fontheight;
 		String query = "SELECT * FROM highscores ORDER BY level;";
 		ResultSet rs = Menu.score.query(query);
 		FontSize = (int) (30 *Display.getHeight()/768f);
-		Fontheight = (int)( Menu.bebas.getHeight(FontSize));
+		Fontheight = (int)( Menu.mainfont.getHeight(FontSize));
 		try {
 			while(rs.next()){
 				levelname.add(rs.getString("level"));
@@ -61,9 +61,9 @@ int FontSize, Fontheight;
 		super.display();
 
 		
-		for(int i = 1 ; i < levelname.size();i++){Menu.bebas.draw(Display.getWidth()*0.1f, i*Fontheight, FontSize, levelname.get(i));}
-		for(int i = 1 ; i < playername.size();i++){Menu.bebas.draw(Display.getWidth()*2/5, i*Fontheight, FontSize, playername.get(i));}
-		for(int i = 1 ; i < levelname.size();i++){Menu.bebas.draw(Display.getWidth()*4/5, i*Fontheight, FontSize, score.get(i));}
+		for(int i = 1 ; i < levelname.size();i++){Menu.mainfont.draw(Display.getWidth()*0.1f, i*Fontheight, FontSize, levelname.get(i));}
+		for(int i = 1 ; i < playername.size();i++){Menu.mainfont.draw(Display.getWidth()*2/5, i*Fontheight, FontSize, playername.get(i));}
+		for(int i = 1 ; i < levelname.size();i++){Menu.mainfont.draw(Display.getWidth()*4/5, i*Fontheight, FontSize, score.get(i));}
 		
 
 		toFixedScreen();		
@@ -71,9 +71,9 @@ int FontSize, Fontheight;
 		glRectd(0, 0, Display.getWidth(),Fontheight);
 		
 		
-		Menu.bebas.draw(Display.getWidth()*0.1f, 0, FontSize, levelname.get(0));
-		Menu.bebas.draw(Display.getWidth()*2/5, 0, FontSize, playername.get(0));
-		Menu.bebas.draw(Display.getWidth()*4/5, 0, FontSize, score.get(0));		
+		Menu.mainfont.draw(Display.getWidth()*0.1f, 0, FontSize, levelname.get(0));
+		Menu.mainfont.draw(Display.getWidth()*2/5, 0, FontSize, playername.get(0));
+		Menu.mainfont.draw(Display.getWidth()*4/5, 0, FontSize, score.get(0));		
 		toDynamicScreen();
 		
 		glDisable(GL_BLEND);

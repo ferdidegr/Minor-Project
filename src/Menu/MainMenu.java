@@ -38,6 +38,7 @@ public class MainMenu extends ButtonList {
 		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Editor", MenuButton.Alignment.CENTER));			counter++;
 		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Settings", MenuButton.Alignment.CENTER));		counter++;
 		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover, counter,"Highscores", MenuButton.Alignment.CENTER));		counter++;
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover, counter,"Help", MenuButton.Alignment.CENTER));			counter++;
 		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Exit", MenuButton.Alignment.CENTER));			counter++;
 	}
 	
@@ -74,6 +75,9 @@ public class MainMenu extends ButtonList {
 			Menu.setState(GameState.HIGHSCORE);
 			break;
 		case 5:
+			Menu.setState(GameState.HELP);
+			break;
+		case 6:
 			Menu.setState(GameState.EXIT);
 			break;
 			
@@ -84,8 +88,8 @@ public class MainMenu extends ButtonList {
 	
 	public void display(){
 		super.display();
-		double textwidth = Menu.bebas.getWidth(30, "WELKOM BIJ TRAPPER");
-		Menu.bebas.draw((float) ((Display.getWidth()-textwidth)/2), 0, 30, "WELKOM BIJ TRAPPER");
+		double textwidth = Menu.mainfont.getWidth(30, "WELKOM BIJ TRAPPER");
+		Menu.mainfont.draw((float) ((Display.getWidth()-textwidth)/2), 0, 30, "WELKOM BIJ TRAPPER");
 	}
 	
 }

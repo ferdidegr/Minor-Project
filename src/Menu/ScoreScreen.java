@@ -36,7 +36,7 @@ public class ScoreScreen {
 		highscore = readDatabase(levelname);
 		
 		fontSize = (int) (50* Display.getWidth()/1024f);
-		InputField ipf = new InputField(8, fontSize, 10, 10, Menu.bebas);
+		InputField ipf = new InputField(8, fontSize, 10, 10, Menu.mainfont);
 		ipf.centerX();
 		ipf.setY(Display.getHeight()*2/3);
 		Timer t1 = new Timer().start();
@@ -80,15 +80,15 @@ public class ScoreScreen {
 			// Defining prompt text
 			int fontsize = (int) (50 *Display.getWidth()/1024f);
 			String prompt = "ENTER NAME:";
-			double width = Menu.bebas.getWidth(fontsize, prompt);
-			double height = Menu.bebas.getHeight(fontsize);
+			double width = Menu.mainfont.getWidth(fontsize, prompt);
+			double height = Menu.mainfont.getHeight(fontsize);
 			
 			// Defining highscore text
 			int fonts1 = (int) (100 * Display.getHeight()/768f);
 			String hstext = "NEW HIGHSCORE!";
-			double hwidth = Menu.bebas.getWidth(fonts1, hstext);
-			double hheight = Menu.bebas.getHeight(fonts1);
-			double hsint = Menu.bebas.getWidth(fonts1/4f, ""+score);
+			double hwidth = Menu.mainfont.getWidth(fonts1, hstext);
+			double hheight = Menu.mainfont.getHeight(fonts1);
+			double hsint = Menu.mainfont.getWidth(fonts1/4f, ""+score);
 			
 			while(loop){
 				glClear(GL_COLOR_BUFFER_BIT);			
@@ -101,9 +101,9 @@ public class ScoreScreen {
 					if(Keyboard.getEventKey()==Keyboard.KEY_RETURN && ipf.getString().length()>0)loop=false;
 				}
 				
-				Menu.bebas.draw((float) ((Display.getWidth()-hwidth)/2), (float) (Display.getHeight()/4), fonts1, hstext, Color.red);
-				Menu.bebas.draw((float) ((Display.getWidth()-hsint)/2), (float) (Display.getHeight()/4+hheight), (int) (fonts1/3f), ""+score);
-				Menu.bebas.draw((float) ((Display.getWidth()-width)/2), (float) (ipf.getY()-1.5*height), fontsize, prompt);
+				Menu.mainfont.draw((float) ((Display.getWidth()-hwidth)/2), (float) (Display.getHeight()/4), fonts1, hstext, Color.red);
+				Menu.mainfont.draw((float) ((Display.getWidth()-hsint)/2), (float) (Display.getHeight()/4+hheight), (int) (fonts1/3f), ""+score);
+				Menu.mainfont.draw((float) ((Display.getWidth()-width)/2), (float) (ipf.getY()-1.5*height), fontsize, prompt);
 				// Draw the mouse pointer
 				Menu.drawMousePointer();
 				// Catch all presses on the X button, do nothing with it
@@ -123,16 +123,16 @@ public class ScoreScreen {
 			int fonts1 = (int) (100 * Display.getHeight()/768f);
 			int fonts2 = (int) (50* Display.getHeight()/768f);
 			String yourscore = "Your score: "+score;			
-			double yswidth = Menu.bebas.getWidth(fonts2, yourscore);	
-			double height = Menu.bebas.getHeight(fonts1);
+			double yswidth = Menu.mainfont.getWidth(fonts2, yourscore);	
+			double height = Menu.mainfont.getHeight(fonts1);
 			String Highscore = "HIGHSCORE: "+highscore;			
-			double hswidth = Menu.bebas.getWidth(fonts1, Highscore);
+			double hswidth = Menu.mainfont.getWidth(fonts1, Highscore);
 			
 			while(t1.getTime()<4000){
 				glClear(GL_COLOR_BUFFER_BIT);				
 				
-				Menu.bebas.draw((float) ((Display.getWidth()-hswidth)/2), (float) Display.getHeight()/3, fonts1, Highscore,Color.red);
-				Menu.bebas.draw((float) ((Display.getWidth()-yswidth)/2), (float) (height+Display.getHeight()/3), fonts2, yourscore);
+				Menu.mainfont.draw((float) ((Display.getWidth()-hswidth)/2), (float) Display.getHeight()/3, fonts1, Highscore,Color.red);
+				Menu.mainfont.draw((float) ((Display.getWidth()-yswidth)/2), (float) (height+Display.getHeight()/3), fonts2, yourscore);
 				
 				
 				Display.update();
@@ -166,28 +166,28 @@ public class ScoreScreen {
 		
 		
 		int fontsize = (int) (50 * Display.getHeight()/768f);
-		double healthwidth = Menu.bebas.getWidth(fontsize, healthbonus+"");
-		double timewidth = Menu.bebas.getWidth(fontsize, timebonus+"");
-		double height = Menu.bebas.getHeight(fontsize);
-		double lvlscorewidth = Menu.bebas.getWidth(fontsize, score+"");
-		double intermscorew =  Menu.bebas.getWidth(fontsize, (score+healthbonus+timebonus)+"");
-		double diffwidth =  Menu.bebas.getWidth(fontsize, "X"+diffmodifier);
+		double healthwidth = Menu.mainfont.getWidth(fontsize, healthbonus+"");
+		double timewidth = Menu.mainfont.getWidth(fontsize, timebonus+"");
+		double height = Menu.mainfont.getHeight(fontsize);
+		double lvlscorewidth = Menu.mainfont.getWidth(fontsize, score+"");
+		double intermscorew =  Menu.mainfont.getWidth(fontsize, (score+healthbonus+timebonus)+"");
+		double diffwidth =  Menu.mainfont.getWidth(fontsize, "X"+diffmodifier);
 		int score2 = (int) (score + healthbonus + timebonus)*diffmodifier;
-		double finalscorew = Menu.bebas.getWidth(fontsize, score2+"");
+		double finalscorew = Menu.mainfont.getWidth(fontsize, score2+"");
 		
 		tempt.start();
 		while(tempt.getTime() < 8000){
 			glClear(GL_COLOR_BUFFER_BIT);
-			Menu.bebas.draw(Display.getWidth()*(1/6f), (float) height/2, fontsize, "level score:");
-			Menu.bebas.draw((float) (Display.getWidth()*5/6-lvlscorewidth), (float) height/2, fontsize, score+"");
+			Menu.mainfont.draw(Display.getWidth()*(1/6f), (float) height/2, fontsize, "level score:");
+			Menu.mainfont.draw((float) (Display.getWidth()*5/6-lvlscorewidth), (float) height/2, fontsize, score+"");
 			
 			if(tempt.getTime()>1000){
-				Menu.bebas.draw(Display.getWidth()*(1/6f), (float) height*2, fontsize, "health bonus:");
-				Menu.bebas.draw((float) (Display.getWidth()*5/6-healthwidth), (float) height*2, fontsize, healthbonus+"");
+				Menu.mainfont.draw(Display.getWidth()*(1/6f), (float) height*2, fontsize, "health bonus:");
+				Menu.mainfont.draw((float) (Display.getWidth()*5/6-healthwidth), (float) height*2, fontsize, healthbonus+"");
 			}
 			if(tempt.getTime()>2000){
-				Menu.bebas.draw(Display.getWidth()*(1/6f), (float) height * 3.5f, fontsize, "time bonus:");	
-				Menu.bebas.draw((float) (Display.getWidth()*5/6-timewidth), (float) height *3.5f, fontsize, timebonus+"");
+				Menu.mainfont.draw(Display.getWidth()*(1/6f), (float) height * 3.5f, fontsize, "time bonus:");	
+				Menu.mainfont.draw((float) (Display.getWidth()*5/6-timewidth), (float) height *3.5f, fontsize, timebonus+"");
 			}
 			if(tempt.getTime()>3000){
 				glLineWidth(2);
@@ -196,11 +196,11 @@ public class ScoreScreen {
 				glVertex2d(Display.getWidth()*(5/6f), (float) height *3.5f+height);
 				glEnd();
 			
-				Menu.bebas.draw((float) (Display.getWidth()*5/6-intermscorew), (float) height *5f, fontsize, (score+healthbonus+timebonus)+"");
+				Menu.mainfont.draw((float) (Display.getWidth()*5/6-intermscorew), (float) height *5f, fontsize, (score+healthbonus+timebonus)+"");
 			}
 			if(tempt.getTime()>4000){
-				Menu.bebas.draw(Display.getWidth()*(1/6f), (float) height * 6.5f, fontsize, "difficulty:");	
-				Menu.bebas.draw((float) (Display.getWidth()*5/6-diffwidth), (float) height *6.5f, fontsize, "X"+diffmodifier);
+				Menu.mainfont.draw(Display.getWidth()*(1/6f), (float) height * 6.5f, fontsize, "difficulty:");	
+				Menu.mainfont.draw((float) (Display.getWidth()*5/6-diffwidth), (float) height *6.5f, fontsize, "X"+diffmodifier);
 			}			
 			
 			if(tempt.getTime()>5000){
@@ -210,7 +210,7 @@ public class ScoreScreen {
 				glVertex2d(Display.getWidth()*(5/6f), (float) height *6.5f+height);
 				glEnd();
 			
-				Menu.bebas.draw((float) (Display.getWidth()*5/6-finalscorew), (float) height *8f, fontsize, score2+"");
+				Menu.mainfont.draw((float) (Display.getWidth()*5/6-finalscorew), (float) height *8f, fontsize, score2+"");
 			}
 			
 			Display.update();
@@ -253,17 +253,17 @@ public class ScoreScreen {
 	 * 	Print the text Failure on the screen
 	 */
 	private static void showFailure(){
-		float width = (float) Menu.bebas.getWidth(fontSize, "Failure!");
-		float height = (float) Menu.bebas.getHeight(fontSize);
-		Menu.bebas.draw((Display.getWidth()-width)/2f,(Display.getHeight()-height)/2f, fontSize, "Failure!");
+		float width = (float) Menu.mainfont.getWidth(fontSize, "Failure!");
+		float height = (float) Menu.mainfont.getHeight(fontSize);
+		Menu.mainfont.draw((Display.getWidth()-width)/2f,(Display.getHeight()-height)/2f, fontSize, "Failure!");
 	}
 	/**
 	 * Print the text success on the screen
 	 */
 	private static void showSuccess(){
-		float width = (float) Menu.bebas.getWidth(fontSize, "Success!");
-		float height = (float) Menu.bebas.getHeight(fontSize);
-		Menu.bebas.draw((Display.getWidth()-width)/2f,(Display.getHeight()-height)/2f, fontSize, "Success!");
+		float width = (float) Menu.mainfont.getWidth(fontSize, "Success!");
+		float height = (float) Menu.mainfont.getHeight(fontSize);
+		Menu.mainfont.draw((Display.getWidth()-width)/2f,(Display.getHeight()-height)/2f, fontSize, "Success!");
 	}
 	/**
 	 * Initialize openGL for a 2D view

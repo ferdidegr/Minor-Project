@@ -44,7 +44,7 @@ public class PSettings extends ButtonList {
 	
 	public void display(){
 		super.display();
-		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "IN GAME SETTINGS");
+		Menu.mainfont.draw(Menu.getScreenx()/2, 0, 30, "IN GAME SETTINGS");
 
 	}
 }

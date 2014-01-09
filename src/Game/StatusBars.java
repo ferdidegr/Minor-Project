@@ -39,10 +39,10 @@ public class StatusBars {
 		double runwidth = Math.max((barwidth - 2* borderwidth)*runperc,0);
 		
 		float fontSize = 15 * Display.getWidth() / 1024f;
-		double height = Menu.bebas.getHeight(fontSize);
-		double width = Menu.bebas.getWidth(fontSize, "WWWWWWWWWWWWWWWWWWWWWWW");
-		double healthtextwidth = Menu.bebas.getWidth(fontSize, plhealth+"/100");
-		double runtextwidth = Menu.bebas.getWidth(fontSize, (int)(Math.max(runperc*100,0))+"%");
+		double height = Menu.mainfont.getHeight(fontSize);
+		double width = Menu.mainfont.getWidth(fontSize, "WWWWWWWWWWWWWWWWWWWWWWW");
+		double healthtextwidth = Menu.mainfont.getWidth(fontSize, plhealth+"/100");
+		double runtextwidth = Menu.mainfont.getWidth(fontSize, (int)(Math.max(runperc*100,0))+"%");
 		int second = timeleft/1000 % 60;
 		int minute = timeleft/1000 / 60;
 		
@@ -50,13 +50,13 @@ public class StatusBars {
 		glPushMatrix();
 		glLoadIdentity();
 		
-		Menu.bebas.draw((float)(dwidth - Menu.bebas.getWidth(fontSize, "10:00"))/2, (float)(height), fontSize, "Time:  " + minute + ":" + df.format(second));
-		Menu.bebas.draw((float) (dwidth*0.8+barwidth-healthtextwidth), (float)(height), fontSize, plhealth +"/"+ player.getHealth().getmaxHealth());
-		Menu.bebas.draw((float)(dwidth - width), (float)(2*height), fontSize, "Health:");
-		Menu.bebas.draw((float) (dwidth*0.8+barwidth-runtextwidth), (float)(3*height), fontSize, (int)(Math.max(runperc*100,0))+"%");
-		Menu.bebas.draw((float)(dwidth - width), (float)(4*height), fontSize, "Fatigue:");
-		Menu.bebas.draw((float)(dwidth - width), (float)(5*height), fontSize, "Score:  " + score);
-		Menu.bebas.draw((float)(dwidth - width), (float)(6*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size()+"/"+Mazerunner.scorpcount);
+		Menu.mainfont.draw((float)(dwidth - Menu.mainfont.getWidth(fontSize, "10:00"))/2, (float)(height), fontSize, "Time:  " + minute + ":" + df.format(second));
+		Menu.mainfont.draw((float) (dwidth*0.8+barwidth-healthtextwidth), (float)(height), fontSize, plhealth +"/"+ player.getHealth().getmaxHealth());
+		Menu.mainfont.draw((float)(dwidth - width), (float)(2*height), fontSize, "Health:");
+		Menu.mainfont.draw((float) (dwidth*0.8+barwidth-runtextwidth), (float)(3*height), fontSize, (int)(Math.max(runperc*100,0))+"%");
+		Menu.mainfont.draw((float)(dwidth - width), (float)(4*height), fontSize, "Fatigue:");
+		Menu.mainfont.draw((float)(dwidth - width), (float)(5*height), fontSize, "Score:  " + score);
+		Menu.mainfont.draw((float)(dwidth - width), (float)(6*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size()+"/"+Mazerunner.scorpcount);
 		
 		/*
 		 * Draw the health bar

@@ -57,6 +57,6 @@ public class Settings extends ButtonList {
 	
 	public void display(){
 		super.display();
-		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "SETTINGS");		
+		Menu.mainfont.draw(Menu.getScreenx()/2, 0, 30, "SETTINGS");		
 	}
 }

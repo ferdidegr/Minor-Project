@@ -90,9 +90,9 @@ public class MenuButton {
 			glDisable(GL_TEXTURE_2D);
 			glDisable(GL_BLEND);
 		}			
-			double textwidth = Menu.bebas.getWidth((float) (0.7*height), name);
-			if(!isButton(mousex, mousey)){Menu.bebas.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name, normalT);}
-			if(isButton(mousex, mousey)){Menu.bebas.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name,mouseoverT);}
+			double textwidth = Menu.mainfont.getWidth((float) (0.7*height), name);
+			if(!isButton(mousex, mousey)){Menu.mainfont.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name, normalT);}
+			if(isButton(mousex, mousey)){Menu.mainfont.draw((float) (x+ (width-textwidth)/2), y, (float) (0.7*height), name,mouseoverT);}
 			
 
 	}

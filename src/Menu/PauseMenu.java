@@ -54,7 +54,7 @@ public class PauseMenu extends ButtonList{
 	public void display(){		
 
 		super.display();
-		Menu.bebas.draw(Menu.getScreenx()/2, 0, 30, "PAUSE");
+		Menu.mainfont.draw(Menu.getScreenx()/2, 0, 30, "PAUSE");
 		Sound.pause();
 	}
 	

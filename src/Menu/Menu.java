@@ -39,7 +39,7 @@ public class Menu {
 	private static double height_width_ratio = 1/8f;			// Height/Width 
 	static int currentlevel = 0;
 	private static boolean closerequested = false;
-	public static Text bebas;
+	public static Text mainfont;
 	public static boolean ingame = false;
 	static Database score ;
 	static ArrayList<String> levelList;
@@ -74,12 +74,12 @@ public class Menu {
 		difficulty = Difficulty.EASY;
 		levelList = Utils.Utils.loadLevelList();
 		score =  new Database("db/scores.db");
-		bebas = new Text("BEBAS.TTF");	
+		mainfont = new Text("BEBAS.TTF");	
 		Sound.init();
 		new Textures();
 		initButtons();
 		
-		while(timer.getTime()<5000){}
+//		while(timer.getTime()<5000){}
 		
 		run();
 		
@@ -162,10 +162,11 @@ public class Menu {
 	 * ************************************
 	 */
 	public static void mousepoll(){
-		
 		int wheeldx = Mouse.getDWheel();
-		if(wheeldx>0){top-=scrollspeed;bottom-=scrollspeed;initview();}
-		if(wheeldx<0){top+=scrollspeed;bottom+=scrollspeed;initview();}
+		if(!gamestate.equals(GameState.HELP)){
+			if(wheeldx>0){top-=scrollspeed;bottom-=scrollspeed;initview();}
+			if(wheeldx<0){top+=scrollspeed;bottom+=scrollspeed;initview();}
+		}
 		MenuButton.setMouse(Mouse.getX(), top - Mouse.getY());
 	
 		while(Mouse.next()){
@@ -221,6 +222,7 @@ public class Menu {
 		menus.put(GameState.DIFFICULTY, new DiffMenu());
 		menus.put(GameState.HIGHSCORE, new Highscores());
 		menus.put(GameState.MOUSE, new MouseSensitivity());
+		menus.put(GameState.HELP, new HelpMenu());
 		
 		for(ButtonList menu: menus.values()){
 			menu.init(buttonwidth, buttonheight);
