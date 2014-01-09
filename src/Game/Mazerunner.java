@@ -14,6 +14,7 @@ import static org.lwjgl.util.glu.GLU.gluPerspective;
 
 import org.newdawn.slick.opengl.TextureImpl;
 
+import Game.Skitter;
 import Intelligence.AStar;
 import Menu.GameState;
 import Menu.Menu;
@@ -60,6 +61,8 @@ public class Mazerunner {
 	private ParticleEmitter pe ; 									// Flame
 	
 	public static boolean pausemonster = true;						// Debug option TODO:remove trigger by F3
+	
+	private Skitter skitter;										// Skitter scorpion sound
 									
 	/*
 	 *  *************************************************
@@ -158,7 +161,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	Intelligence.init();
 	
 	minimap = new MiniMap(maze);		//load the minimap
-	
+	int ID=1;
 		
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
@@ -206,7 +209,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				monsterlijst.add(new Monster(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
 									 SQUARE_SIZE*0.7/2.0 ,							// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 			// z position
-									 SQUARE_SIZE*0.7, SQUARE_SIZE*0.7, SQUARE_SIZE)); // Width, height, squae size
+									 SQUARE_SIZE*0.7, SQUARE_SIZE*0.7, SQUARE_SIZE,ID)); // Width, height, squae size
+				ID++;
 			}
 			// parsing the hatch
 			else if(maze[j][i]==16){
@@ -233,7 +237,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		}
 	}
 	
-	
+	skitter=new Skitter();
+	skitter.execute(monsterlijst);
 	status.init( 0, player);
 
 }
@@ -305,6 +310,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glDisable(GL_LIGHT0);
 //		glDisable(GL_BLEND);
 		Sound.playMusic("background_menu");
+		skitter.cleanup();
 	
 	}  
 	/**
@@ -391,6 +397,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	monsterlijst.remove(mo);	        	
 		        }
 		        deathlist.clear();
+		        
+		        // Monster sound
+		        skitter.updatemonsters(monsterlijst);
+		        skitter.play(monsterlijst, player);
 		        
 		        // Pickups
 		        ArrayList<Pickup> rmpu = new ArrayList<Pickup>();
