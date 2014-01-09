@@ -15,7 +15,6 @@ public class AStar {
 	private Node Start;
 	private Node End;
 	private int maxIterations = 100;
-	
 	/**
 	 * Nodig om te initialiseren
 	 */
@@ -79,7 +78,7 @@ public class AStar {
 		int count = 0;
 		while(!(count > maxIterations) && CurrentNode != null){
 			Visited.add(CurrentNode.clone());
-			System.out.println("Explore bekijkt: " + CurrentNode);
+			//System.out.println("Explore bekijkt: " + CurrentNode);
 			succession();
 			if(CurrentNode.equals(End)){
 				End = CurrentNode.clone();
@@ -113,9 +112,9 @@ public class AStar {
 			}
 			Collections.reverse(Route);
 		}
-		System.out.println("Gevonden Route: ");
+		//System.out.println("Gevonden Route: ");
 		for(Node no: Route){
-			System.out.println(no);
+			//System.out.println(no);
 		}
 		return Route;
 	}
