@@ -16,8 +16,8 @@ public class Node implements Comparable<Node> {
 	public Node(int x, int y){
 		this.x=x;
 		this.y=y;
-		this.G = Integer.MAX_VALUE;
-		this.H = Double.MAX_VALUE;
+		this.G = 500;
+		this.H = 500;
 	}
 	
 	/**
@@ -99,7 +99,9 @@ public class Node implements Comparable<Node> {
 	 * @return
 	 */
 	public double distance(Node other){
-		return Math.sqrt(x * other.x + y * other.y);
+		double dx = x-other.x;
+		double dy = y-other.y;
+		return Math.sqrt(dy*dy + dx*dx);
 	}
 	
 	/**
@@ -107,22 +109,36 @@ public class Node implements Comparable<Node> {
 	 */
 	@Override
 	public int compareTo(Node no) {
-	    Double sum = no.getF();
-	    return sum.compareTo(getF());
+	    Double otherF = (getF()-no.getF())*1000;
+	    return otherF.intValue() ;
 	}
 	
 	/**
 	 * ToString methode, geeft "x, y"
 	 */
 	public String toString() {
-	    return x + ", " + y;
+		String res = toStringSimple();
+		res += " G= " + getG();
+		res += " H= " + getH();
+		res += " F= " + getF();
+		if(parent == null){
+			return res + " No Parent";
+		}
+	    return res + " Parent: " + parent.toStringSimple();
+	}
+	
+	/**
+	 * ToString methode, geeft "x, y"
+	 */
+	public String toStringSimple() {
+	    return "[" + x + ", " + y + "]";
 	}
 	
 	 // GETTERS
 	public int getX(){		return x;	}
 	public int getY(){		return y;	}
 	public int getG(){		return G;	}
-	public double getF(){		return G + H;	}
+	public double getF(){		return G + H*10;	}
 	public double getH(){		return H;	}
 	public Node getParent(){		return parent;	}
 

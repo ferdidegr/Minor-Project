@@ -8,18 +8,20 @@ import Utils.*;
 
 public class AStar {
 	
-	private PriorityQueue<Node> ActiveList;
-	private static ArrayList<Node> AllNodes = new ArrayList<Node>();;
+	private ArrayList<Node> ActiveList;
+	public static ArrayList<Node> AllNodes = new ArrayList<Node>();
+	public ArrayList<Node> Visited;
 	private Node CurrentNode;
 	private Node Start;
 	private Node End;
-	private int maxIterations = 50;
+	private int maxIterations = 100;
 	
 	/**
 	 * Nodig om te initialiseren
 	 */
 	public AStar(){
-		ActiveList = new PriorityQueue<Node>();		
+		ActiveList = new ArrayList<Node>();
+		Visited = new ArrayList<Node>();
 	}
 	
 	/**
@@ -27,7 +29,7 @@ public class AStar {
 	 * @param maze
 	 */
 	public static void loadMaze(int[][] maze){		
-		System.out.println("Loading maze");
+		AllNodes.clear();
 		for(int j = 0; j < maze.length; j++){
 			for(int i = 0; i<maze[0].length; i++){
 				if(maze[j][i] < 1 | maze[j][i] > 11){
@@ -46,16 +48,14 @@ public class AStar {
 	 * @return
 	 */
 	public boolean setRoute(Vector A, Vector B){
-		ActiveList.clear();
 		Double x0 = A.getX();
-		Double y0 = A.getZ();
+		Double z0 = A.getZ();
 		Double x1 = B.getX();
-		Double y1 = B.getZ();
-		Node st = new Node(x0.intValue(), y0.intValue());
-		Node en = new Node(x1.intValue(), y1.intValue());
+		Double z1 = B.getZ();
+		Node st = new Node(x0.intValue(), z0.intValue());
+		Node en = new Node(x1.intValue(), z1.intValue());
 		
 		if(!setStart(st) | !setEnd(en)){
-			System.out.println("failed");
 			return false;
 		}
 		
@@ -72,15 +72,23 @@ public class AStar {
 	 * @return
 	 */
 	public boolean explore(){
-		CurrentNode = Start;
+		Visited.clear();
+		ActiveList.clear();
+		CurrentNode = Start.clone();
+		CurrentNode.setG(0);
 		int count = 0;
-		while(!CurrentNode.equals(End) && !(count > maxIterations)){
+		while(!(count > maxIterations) && CurrentNode != null){
+			Visited.add(CurrentNode.clone());
+			System.out.println("Explore bekijkt: " + CurrentNode);
 			succession();
-			CurrentNode = ActiveList.poll();
+			if(CurrentNode.equals(End)){
+				End = CurrentNode.clone();
+				return true;
+			}
+			Collections.sort(ActiveList);
+			CurrentNode = ActiveList.get(0).clone();
+			ActiveList.remove(0);
 			count++;
-		}
-		if(CurrentNode.equals(End)){
-			return true;
 		}
 		return false;
 	}
@@ -92,14 +100,22 @@ public class AStar {
 		ArrayList<Node> Route = new ArrayList<Node>();
 		if(explore()){
 			Route.add(End);
-			Node next = End;
+			Node next = End.clone();
 			int count = 0;
-			while(!next.equals(Start) && !(count > maxIterations)){
+			while(!next.equals(Start) && (count < maxIterations)){
 				next = next.getParent();
+				if(Route.contains(next)){
+				}
 				Route.add(next);
 				count++;
 			}
+			if(next.equals(Start)){
+			}
 			Collections.reverse(Route);
+		}
+		System.out.println("Gevonden Route: ");
+		for(Node no: Route){
+			System.out.println(no);
 		}
 		return Route;
 	}
@@ -108,18 +124,21 @@ public class AStar {
 	 * Zet van de currentNode alle nodes die ernaast liggen en zich in AllNodes bevinden in de ActiveList
 	 */
 	public void succession(){
+		CurrentNode.setH(CurrentNode.distance(End));
 		Node[] succ = CurrentNode.getSuccessors();
 		for(int i = 0; i < 4; i++){
 			int ind = AllNodes.indexOf(succ[i]);
 			if(ind > -1){
-				Node add = AllNodes.get(ind);
-				add.setH(add.distance(End));
-				if(add.getG() > (CurrentNode.getG() +1)){
-					add.setParent(CurrentNode);
-					add.findG();
+				Node next = AllNodes.get(ind).clone();
+				next.setH(next.distance(End));
+				if(next.getG() > (CurrentNode.getG() +1)){
+					next.setParent(CurrentNode.clone());
+					next.findG();
+				}if(!Visited.contains(next) && !ActiveList.contains(next)){
+					ActiveList.add(next);
 				}
-				ActiveList.add(AllNodes.get(ind));
 			}
+			
 		}
 	}
 	

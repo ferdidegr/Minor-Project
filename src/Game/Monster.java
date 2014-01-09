@@ -25,6 +25,7 @@ public class Monster extends levelObject {
 	protected double distanceToPlayer;
 	private boolean followplayer = true;
 	private int Count = 0;
+	private int RouteCount = 0;
 	public boolean isDead = false;
 	private boolean PlayerinSight = true;
 	private boolean wait;
@@ -38,8 +39,9 @@ public class Monster extends levelObject {
 	private AStar pathfinding;
 	private boolean isplaying;
 	private double eps = 1E-5;
+	private int ID;
 
-	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE) {
+	public Monster(double x, double y, double z, double width, double height, int SQUARE_SIZE, int ID) {
 		super(x, y, z);
 		this.width = width;
 		this.height = height;
@@ -48,6 +50,8 @@ public class Monster extends levelObject {
 		this.health = new Health(30, false);
 		pathfinding = new AStar();
 		isplaying=false;
+		Route = new ArrayList<Node>();
+		this.ID=ID;
 	}
 
 	public double getHeight() {
@@ -100,26 +104,26 @@ public class Monster extends levelObject {
 
 			// Check the count, to know whether the monster has been stuck for a
 			// while, or can see the player
-			checkSituation();
-			//if(findPath() && !Route.isEmpty()){
-			//	followRoute();
-			//} else {
-			//	randomWalk();
-			//}
-			
-			
-			if (followplayer) {
-				dirToPlayer();
-			} else {
-//				randomWalk();
+			//checkSituation();
+			RouteCount++;
+			if(RouteCount>10 && findPath()){
+				RouteCount = 0;
 			}
+			checkRoute();
+		
+			
+			
+			//if (followplayer) {
+			//	dirToPlayer();
+			//} else {
+//				randomWalk();
+			//}
 			
 			avoidWalls();			
 
 			avoidPlayer();
 			
 			dir.normalize2D();
-
 			updateV(deltaTime);			
 			
 			collision();
@@ -128,9 +132,19 @@ public class Monster extends levelObject {
 		if(isDead){
 			Count = 0;
 			Intelligence.addAvoid(playerloc.clone());
-			System.out.println("Monster is dood");
 			Mazerunner.status.addScore(100);
 		}
+	}
+	
+	/**
+	 * Checkt of de Route daadwerkelijk punten bevat en volgt de route. Zo niet, randomwalk.
+	 */
+	public void checkRoute(){
+	if(Route.size()>0) {
+		followRoute();
+	} else {
+		randomWalk();
+	}
 	}
 	
 	/**
@@ -140,27 +154,43 @@ public class Monster extends levelObject {
 	public void goTo(Vector loc){
 		Vector vec = new Vector(locationX, locationY, locationZ);
 		vec.scale(-1);
-		Vector dir = loc.clone();
+		dir = loc.clone();
 		dir.add(vec);
 		distanceToTarget = dir.length2D();
 		dir.normalize2D();
 	}
 	
+	/**
+	 * Kijkt of het eind en beginpunt geset kunnen worden. Zo ja, zoekt een pad. Zo nee, geeft false.
+	 * @return
+	 */
 	public boolean findPath(){
 		if(pathfinding.setRoute(new Vector(locationX, 0, locationZ), playerloc)){
 			Route = pathfinding.findRoute();
-			System.out.println("Route gevonden");
-			System.out.println(Route);
 			return true;
 		}
 		return false;
 	}
 	
 	public void followRoute(){
-		Node firstpoint = Route.get(0);
-		Vector target = new Vector(firstpoint.getX(), locationY, firstpoint.getY());
-		System.out.println("goTo bereikt");
-		goTo(target);
+		//TODO: Opschonen
+		if(Route.size()>1){
+			Node firstpoint = Route.get(1);
+			Double locX = locationX;
+			Double locZ = locationZ;
+			Node ownloc = new Node(locX.intValue(), locZ.intValue());
+			if(ownloc.distance(firstpoint)<2){
+				Route.remove(0);
+				followRoute();
+			} else {
+				Vector target = new Vector(firstpoint.getX(), locationY, firstpoint.getY());
+				goTo(target);
+			}
+		} else if(Route.size() == 1){
+			Node firstpoint = Route.get(0);
+			Vector target = new Vector(firstpoint.getX(), locationY, firstpoint.getY());
+			goTo(target);
+		}
 	}
 
 	/**
@@ -186,7 +216,6 @@ public class Monster extends levelObject {
 	public void avoidPlayer() {
 		wait = false;
 		if (Intelligence.inAvoidArea(playerloc.clone())) {
-			System.out.println("Weg hier!");
 			dir.scale(-1);
 			wait = true;
 		}
@@ -578,5 +607,9 @@ public class Monster extends levelObject {
 	
 	public void setPlaying(boolean isplaying){
 		this.isplaying = isplaying;
+	}
+	
+	public int getID(){
+		return ID;
 	}
 }
