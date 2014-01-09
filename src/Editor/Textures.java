@@ -34,7 +34,7 @@ public class Textures {
 			texresize = IO.loadtexture("res/Textures/Editor/resize.jpg", false);
 			texquit = IO.loadtexture("res/Textures/Editor/quit.png"	, false	);
 			movwall = IO.loadtexture("res/Textures/Editor/movwall.jpg", false);
-			mazebg = IO.loadtexture("res/obeliskachtergrond.png", false);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
