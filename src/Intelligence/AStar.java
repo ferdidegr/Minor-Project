@@ -32,7 +32,7 @@ public class AStar {
 		for(int j = 0; j < maze.length; j++){
 			for(int i = 0; i<maze[0].length; i++){
 				if((maze[j][i] < 1 | maze[j][i] > 10) && maze[j][i]!=12 && maze[j][i]!=15){
-					Node no = new Node(j,i);
+					Node no = new Node(i,j);
 					AllNodes.add(no);
 				}
 			}
@@ -78,7 +78,6 @@ public class AStar {
 		int count = 0;
 		while(!(count > maxIterations) && CurrentNode != null){
 			Visited.add(CurrentNode.clone());
-			//System.out.println("Explore bekijkt: " + CurrentNode);
 			succession();
 			if(CurrentNode.equals(End)){
 				End = CurrentNode.clone();
@@ -112,9 +111,7 @@ public class AStar {
 			}
 			Collections.reverse(Route);
 		}
-		//System.out.println("Gevonden Route: ");
 		for(Node no: Route){
-			//System.out.println(no);
 		}
 		return Route;
 	}
