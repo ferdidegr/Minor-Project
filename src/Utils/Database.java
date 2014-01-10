@@ -14,29 +14,22 @@ public class Database {
 	 * @param databasepath the path to the database file
 	 */
 	public Database (String databasepath) {
-		// If file does not exist, create new db file
-		boolean newcreatedfile = false;
-		try{ new FileInputStream(new File(databasepath));		
-		}catch(FileNotFoundException e){
-			File temp = new File(databasepath);			
-			try {				
-				temp.createNewFile();	
-				newcreatedfile=true;
-				System.err.println("No such database found, database will be recreated!");
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-		}
 		
 		try {
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:"+databasepath);
 			stat = conn.createStatement();
-			if(newcreatedfile){reset();}
+			setup();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Setup
+	 */
+	public void setup(){
+		createTable("highscores", "level STRING", "name STRING","score INT");
 	}
 	/**
 	 * Reset scores
@@ -63,7 +56,7 @@ public class Database {
 	 * @param attributes	a list of strings with their type e.g. STRING or INT
 	 */
 	public void createTable(String TableName, String PrimaryKey, String... attributes){
-		String query = "CREATE TABLE "+TableName+" ("+PrimaryKey+" PRIMARY KEY";
+		String query = "CREATE TABLE IF NOT EXISTS "+TableName+" ("+PrimaryKey+" PRIMARY KEY";
 		for(int i = 0 ; i < attributes.length; i++){
 			query+= ", "+attributes[i];
 		}
