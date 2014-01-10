@@ -31,7 +31,7 @@ public class AStar {
 		AllNodes.clear();
 		for(int j = 0; j < maze.length; j++){
 			for(int i = 0; i<maze[0].length; i++){
-				if(maze[j][i] < 1 | maze[j][i] > 11){
+				if((maze[j][i] < 1 | maze[j][i] > 10) && maze[j][i]!=12 && maze[j][i]!=15){
 					Node no = new Node(j,i);
 					AllNodes.add(no);
 				}

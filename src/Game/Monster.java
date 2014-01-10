@@ -140,11 +140,11 @@ public class Monster extends levelObject {
 	 * Checkt of de Route daadwerkelijk punten bevat en volgt de route. Zo niet, randomwalk.
 	 */
 	public void checkRoute(){
-	if(Route.size()>0) {
-		followRoute();
-	} else {
-		randomWalk();
-	}
+		if(Route.size()>0) {
+			followRoute();
+		} else {
+			dirToPlayer();
+		}
 	}
 	
 	/**
