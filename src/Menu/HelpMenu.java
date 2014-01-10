@@ -5,7 +5,8 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.Display;
 
 public class HelpMenu extends ButtonList{
-
+	private int helpID = 0;
+	private int numMenus = 3;
 	@Override
 	public void init(int x, int y) {
 		int buttonyloc = (int) (Display.getHeight()-1.5*MenuButton.height);
@@ -21,8 +22,13 @@ public class HelpMenu extends ButtonList{
 			case 1:
 				Menu.setState(GameState.MAIN);
 			break;
+			case 2:
+				helpID = Math.min(numMenus-1, ++helpID);
+			break;
+			case 3:
+				helpID = Math.max(0, --helpID);
+			break;
 		}
-		
 	}
 	
 	public void display(){
@@ -31,7 +37,10 @@ public class HelpMenu extends ButtonList{
 		glRectd(0, 0, Display.getWidth(),Display.getHeight());
 		
 		glColor3f(1,1,1);
-		Textures.help1.bind();
+		
+		if(helpID==0)	Textures.help2.bind();
+		if(helpID==1)	Textures.help3.bind();
+		if(helpID==2)	Textures.help1.bind();
 		glEnable(GL_TEXTURE_2D);
 		glBegin(GL_QUADS);
 			glTexCoord2d(0, 0); 	glVertex2d(0, 0);

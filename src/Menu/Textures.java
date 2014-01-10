@@ -7,7 +7,7 @@ import org.newdawn.slick.opengl.Texture;
 import Utils.IO;
 
 public class Textures {
-		public static Texture start = null, startover = null, menubackground, cursor, help1;
+		public static Texture start = null, startover = null, menubackground, cursor, help1, help2, help3;
 		
 		static{
 			try {
@@ -16,6 +16,8 @@ public class Textures {
 				menubackground = IO.loadtexture("res/background.png",false);
 				cursor = IO.loadtexture("res/cursor.png", false);
 				help1 = IO.loadtexture("res/Help/1.png", false);
+				help2 = IO.loadtexture("res/Help/2.png", false);
+				help3 = IO.loadtexture("res/Help/3.png", false);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
