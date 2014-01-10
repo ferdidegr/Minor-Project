@@ -5,12 +5,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.ByteBuffer;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
@@ -105,4 +108,14 @@ public class IO {
 
 	}
 	
+	public static ByteBuffer loadIcon(String path) {
+        
+        try(InputStream inputStream = new FileInputStream(path)) {
+            PNGDecoder decoder = new PNGDecoder(inputStream);
+            ByteBuffer bytebuf = ByteBuffer.allocateDirect(decoder.getWidth()*decoder.getHeight()*4);
+            decoder.decode(bytebuf, decoder.getWidth()*4, PNGDecoder.RGBA);            
+            bytebuf.flip();
+            return bytebuf;
+        }catch(IOException e){return null;}
+    }
 }

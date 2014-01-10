@@ -9,6 +9,7 @@ import Utils.Text;
 import Utils.Timer;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -58,8 +59,14 @@ public class Menu {
 			try {Thread.sleep(500);	} catch (InterruptedException e) {	}
 		}
 		
+		Display.setIcon(new ByteBuffer[]{Utils.IO.loadIcon("res/icon/Icon16.png"),
+				Utils.IO.loadIcon("res/icon/Icon32.png"),
+				Utils.IO.loadIcon("res/icon/Icon64.png"),
+				Utils.IO.loadIcon("res/icon/Icon128.png") });
+		
 		Timer timer = new Timer().start();
 		Display.create();
+		
 		Display.setResizable(false);
 
 		loadingscreen();
