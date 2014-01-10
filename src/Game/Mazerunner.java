@@ -374,6 +374,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        if(!input.debug){ 	glCallList(objectDisplayList); }
 		        
 		        // Display all movable visible objects (immediate mode)
+		        TextureImpl.bindNone();
 		        for(VisibleObject vo:moveable){
 		        	vo.display();
 		        }		        

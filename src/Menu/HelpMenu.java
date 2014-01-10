@@ -6,7 +6,7 @@ import org.lwjgl.opengl.Display;
 
 public class HelpMenu extends ButtonList{
 	private int helpID = 0;
-	private int numMenus = 3;
+	private int numMenus = 7;
 	@Override
 	public void init(int x, int y) {
 		int buttonyloc = (int) (Display.getHeight()-1.5*MenuButton.height);
@@ -40,7 +40,11 @@ public class HelpMenu extends ButtonList{
 		
 		if(helpID==0)	Textures.help2.bind();
 		if(helpID==1)	Textures.help3.bind();
-		if(helpID==2)	Textures.help1.bind();
+		if(helpID==2)	Textures.help4.bind();
+		if(helpID==3)	Textures.help5.bind();
+		if(helpID==4)	Textures.help6.bind();
+		if(helpID==5)	Textures.help7.bind();
+		if(helpID==6)	Textures.help1.bind();
 		glEnable(GL_TEXTURE_2D);
 		glBegin(GL_QUADS);
 			glTexCoord2d(0, 0); 	glVertex2d(0, 0);
