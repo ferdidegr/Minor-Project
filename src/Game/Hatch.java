@@ -1,6 +1,8 @@
 package Game;
 import static org.lwjgl.opengl.GL11.*;
+import Intelligence.AStar;
 import Utils.Material;
+import Utils.Vector;
 
 
 public class Hatch extends levelObject{
@@ -11,6 +13,9 @@ public class Hatch extends levelObject{
 		super(x, y, z);
 		hatchstatus=(Math.random()>0.5?HatchState.CLOSED:HatchState.OPEN);
 		rotangle = (hatchstatus==HatchState.OPEN?90:0);
+		if(hatchstatus.equals(HatchState.OPEN)){
+			AStar.removeNode(new Vector(locationX, locationY, locationZ));
+		}
 	}
 	
 	@Override
@@ -47,8 +52,14 @@ public class Hatch extends levelObject{
 		
 	}
 	public void change(){
-		if(hatchstatus==HatchState.CLOSED)hatchstatus = HatchState.OPENING;
-		if(hatchstatus==HatchState.OPEN)hatchstatus = HatchState.CLOSING;
+		if(hatchstatus==HatchState.CLOSED){
+			hatchstatus = HatchState.OPENING;
+			AStar.removeNode(new Vector(locationX, locationY, locationZ));
+		}
+		if(hatchstatus==HatchState.OPEN){
+			hatchstatus = HatchState.CLOSING;
+			AStar.addNode(new Vector(locationX, locationY, locationZ));
+		}
 	}
 	@Override
 	public boolean isCollision(double x, double y, double z) {

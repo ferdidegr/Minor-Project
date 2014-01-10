@@ -4,16 +4,13 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 import Intelligence.*;
-import Utils.Graphics;
 import Utils.Models;
 import Utils.Vector;
 
 public class Monster extends levelObject {
 
-	private int SQUARE_SIZE;
 	private double width;
 	private double height;
 	private double speed = 0.005;
@@ -23,18 +20,13 @@ public class Monster extends levelObject {
 	private Vector dir = new Vector(0, 0, -1);
 	private boolean colX, colZ, colY;
 	protected double distanceToPlayer;
-	private boolean followplayer = true;
-	private int Count = 0;
 	private int RouteCount = 0;
 	public boolean isDead = false;
 	private boolean PlayerinSight = true;
-	private boolean wait;
 	private Health health;
 	private int immunitycounter;
 	private int flickercounter;
 	private int monsterframe = 0;
-	private double distanceToTarget;
-	private Vector target;
 	private ArrayList<Node> Route;
 	private AStar pathfinding;
 	private boolean isplaying;
@@ -45,8 +37,6 @@ public class Monster extends levelObject {
 		super(x, y, z);
 		this.width = width;
 		this.height = height;
-		this.SQUARE_SIZE = SQUARE_SIZE;
-		wait = false;
 		this.health = new Health(30, false);
 		pathfinding = new AStar();
 		isplaying=false;
@@ -102,26 +92,16 @@ public class Monster extends levelObject {
 			isDead = true;
 		} else {
 
-			// Check the count, to know whether the monster has been stuck for a
-			// while, or can see the player
-			//checkSituation();
 			RouteCount++;
 			if(RouteCount>10 && findPath()){
 				RouteCount = 0;
 			}
 			checkRoute();
-		
+			System.out.println(dir);
 			
+			avoidWalls();
 			
-			//if (followplayer) {
-			//	dirToPlayer();
-			//} else {
-//				randomWalk();
-			//}
-			
-			avoidWalls();			
-
-			avoidPlayer();
+			System.out.println("After avoidwalls: " + dir);
 			
 			dir.normalize2D();
 			updateV(deltaTime);			
@@ -130,8 +110,6 @@ public class Monster extends levelObject {
 
 		}
 		if(isDead){
-			Count = 0;
-			Intelligence.addAvoid(playerloc.clone());
 			Mazerunner.status.addScore(100);
 		}
 	}
@@ -140,7 +118,7 @@ public class Monster extends levelObject {
 	 * Checkt of de Route daadwerkelijk punten bevat en volgt de route. Zo niet, randomwalk.
 	 */
 	public void checkRoute(){
-		if(Route.size()>0) {
+		if(Route.size()>0 && !(Route.size()<2)) {
 			followRoute();
 		} else {
 			dirToPlayer();
@@ -156,7 +134,6 @@ public class Monster extends levelObject {
 		vec.scale(-1);
 		dir = loc.clone();
 		dir.add(vec);
-		distanceToTarget = dir.length2D();
 		dir.normalize2D();
 	}
 	
@@ -173,13 +150,16 @@ public class Monster extends levelObject {
 	}
 	
 	public void followRoute(){
+		
 		//TODO: Opschonen
 		if(Route.size()>1){
-			Node firstpoint = Route.get(1);
+			System.out.println("location: " + locationX+ ", " +  locationZ);
+			System.out.println("target: " + Route.get(0));
+			Node firstpoint = Route.get(0);
 			Double locX = locationX;
 			Double locZ = locationZ;
 			Node ownloc = new Node(locX.intValue(), locZ.intValue());
-			if(ownloc.distance(firstpoint)<2){
+			if(ownloc.distance(firstpoint)<=1){
 				Route.remove(0);
 				followRoute();
 			} else {
@@ -191,63 +171,6 @@ public class Monster extends levelObject {
 			Vector target = new Vector(firstpoint.getX(), locationY, firstpoint.getY());
 			goTo(target);
 		}
-	}
-
-	/**
-	 * Controleert de count en past deze aan. Wanneer er collision is: count
-	 * verhogen. Wanneer count groter dan een threshold value is, wordt
-	 * geswitcht van followplayer (wel/niet) modus.
-	 * 
-	 */
-	public void checkSituation() {
-		if (colX | colZ) {
-			Count++;
-		}
-		if (Count > 200 | playerSight()) {
-			followplayer = !followplayer;
-			Count = 0;
-		}
-	}
-
-	/**
-	 * Wanneer het monster in een gebied staat dat vermeden dient te worden,
-	 * draait hij om.
-	 */
-	public void avoidPlayer() {
-		wait = false;
-		if (Intelligence.inAvoidArea(playerloc.clone())) {
-			dir.scale(-1);
-			wait = true;
-		}
-	}
-
-	/**
-	 * Voert een random walk uit. Wanneer er sprake is van collision wordt de
-	 * richting veranderd, anders loopt monster door.
-	 */
-	public void randomWalk() {
-
-		if (colX | colZ) {
-			dir.rotate2D((float)(Math.random() * 2 * Math.PI));
-			Count++;
-		} else {
-			Count++;
-		}
-	}
-
-	/**
-	 * Controleert of het monster vast zit. (wordt nu niet gebruikt, in plaats
-	 * daarvan checkcount)
-	 * 
-	 * @return
-	 */
-	public boolean isStuck() {
-		if (colX | colZ) {
-			Count++;
-		} else {
-			Count = 0;
-		}
-		return Count > 200;
 	}
 
 	/**
@@ -277,12 +200,14 @@ public class Monster extends levelObject {
 	 * van de player.
 	 */
 	public void avoidWalls() {
-		toPlayer();
+		//toPlayer();
 		if (colX) {
-			dir.add(0.0, 0.0, Math.signum(toPlayer.getZ()));
+			//dir.add(0.0, 0.0, Math.signum(dir.getZ()));
+			dir.scale(0.0, 1.0, 1.0);
 		}
 		if (colZ) {
-			dir.add(Math.signum(toPlayer.getX()), 0.0, 0.0);
+			//dir.add(Math.signum(dir.getX()), 0.0, 0.0);
+			dir.scale(1.0, 1.0, 0.0);
 		}
 
 	}
@@ -494,8 +419,7 @@ public class Monster extends levelObject {
 
 		velocity.scale(0.0);
 		// Movement to dir vector
-		if (!wait)
-			velocity.add(dir.getX() * speed * deltaTime * 0.5, -0.005 * deltaTime, dir.getZ() * speed * deltaTime * 0.5);
+		velocity.add(dir.getX() * speed * deltaTime * 0.5, -0.005 * deltaTime, dir.getZ() * speed * deltaTime * 0.5);
 	}
 
 	public void updateX() {
@@ -520,8 +444,7 @@ public class Monster extends levelObject {
 			glPushMatrix();
 
 			glTranslated(locationX, locationY, locationZ);
-			if (!isStuck() && !wait)
-				rotateV();
+			rotateV();
 
 			// Drawing the next model of the monster (for animation)
 			int buffer = Models.monster.get(monsterframe % 20);

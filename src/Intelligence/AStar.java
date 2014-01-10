@@ -172,11 +172,23 @@ public class AStar {
 	 * Verwijdert een Node van de pathfinding mogelijkheden. Gebruikt afgeronde waardes van x en z uit gegeven vector.
 	 * @param in
 	 */
-	public void removeNode(Vector in){
+	public static void removeNode(Vector in){
 		Double x0 = in.getX();
 		Double y0 = in.getZ();
 		Node no = new Node(x0.intValue(), y0.intValue());
 		AllNodes.remove(no);
 	}
+	
+	/**
+	 * Voegt een Node toe
+	 * @param in
+	 */
+	public static void addNode(Vector in){
+		Double x0 = in.getX();
+		Double y0 = in.getZ();
+		Node no = new Node(x0.intValue(), y0.intValue());
+		AllNodes.add(no);
+	}
+	
 	
 }
