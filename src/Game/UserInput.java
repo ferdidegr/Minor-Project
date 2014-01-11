@@ -64,8 +64,8 @@ public class UserInput extends Control
 			dX = -5*Mouse.getDX();
 			dY=5*Mouse.getDY();
 		}
-		if(Mouse.isButtonDown(0)){
-			Mouse.setGrabbed(true);
+		if(Mouse.isButtonDown(0) ){
+			
 		}
 		
 		/*
@@ -90,6 +90,15 @@ public class UserInput extends Control
 				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE) {jump = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_F1) {view_coord = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_E) {lookback = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_F) { detonate = true;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_C) { 
+					if(Mazerunner.player.onGround() && Mazerunner.c4Count>0){
+						Mazerunner.c4.add(new C4(Mazerunner.player.locationX, 					
+							Mazerunner.player.locationY-Mazerunner.player.getHeight(), 
+							Mazerunner.player.locationZ));
+						Mazerunner.c4Count--;
+					}
+				}
 		    } else {
 		    	/*
 		    	 * Key Released events
@@ -110,7 +119,7 @@ public class UserInput extends Control
 				if (Keyboard.getEventKey()==Keyboard.KEY_Q) {triggered = true;}
 				if (Keyboard.getEventKey()==Keyboard.KEY_H){Mazerunner.player.getHealth().addHealth(100000);}
 				if (Keyboard.getEventKey()== Keyboard.KEY_F8){Utils.Utils.makeScreenShot();}
-				if (Keyboard.getEventKey()==Keyboard.KEY_F3){Mazerunner.pausemonster = !Mazerunner.pausemonster;}
+				if (Keyboard.getEventKey()==Keyboard.KEY_F3){Mazerunner.pausemonster = !Mazerunner.pausemonster;}				
 		    }
 		}
 	}

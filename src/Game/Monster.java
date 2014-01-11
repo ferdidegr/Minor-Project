@@ -107,7 +107,7 @@ public class Monster extends levelObject {
 			updateV(deltaTime);			
 			
 			collision();
-
+			
 		}
 		if(isDead){
 			Mazerunner.status.addScore(100);
@@ -535,4 +535,6 @@ public class Monster extends levelObject {
 	public int getID(){
 		return ID;
 	}
+	
+	public void addHealth(int num){this.health.addHealth(num); if(health.getHealth()<=0)isDead=true; }
 }

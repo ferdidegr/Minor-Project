@@ -58,10 +58,14 @@ public class Mazerunner {
 	
 	private FloatBuffer projectionWorld, projectionHUD;				// Buffer for the projection matrices
 	
-	public static boolean pausemonster = true;						// Debug option TODO:remove trigger by F3
+	public static boolean pausemonster = false;						// Debug option TODO:remove trigger by F3
 	
 	private Skitter skitter;										// Skitter scorpion sound
 	private EndObelisk eo;
+	public static ArrayList<C4> c4;
+	public static int c4Count = 0; 
+	protected String levelname;
+
 									
 	/*
 	 *  *************************************************
@@ -70,15 +74,16 @@ public class Mazerunner {
 	 */
 	
 public void start(String levelname) throws Exception{
-	Menu.ingame = true;
+	Menu.ingame = true;	
 	Sound.playMusic("background_game");
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
 	new Models();
+	this.levelname = levelname;
 	level = "levels/"+levelname;
 	timer = 0;
-
-						// needs a better way to implement this
+	c4 = new ArrayList<C4>();
+						
 	// TODO remove
 	Display.setResizable(false);
 										
@@ -90,7 +95,7 @@ public void start(String levelname) throws Exception{
 	AStar.loadMaze(maze);
 	
 	initTimer();
-	
+	c4Count = 2;
 	
 	previousTime = Calendar.getInstance().getTimeInMillis();
 	
@@ -105,7 +110,7 @@ public void start(String levelname) throws Exception{
 		// Check if pause menu is requested				
 		checkPause();
 		// If the option to main menu is selectd in the pause menu
-		if(Menu.getState()==GameState.TOMAIN)break;
+		if(Menu.getState()==GameState.TOMAIN)break;		
 		Menu.setState(GameState.GAME);
 		
 		// Update all objects in the maze
@@ -124,7 +129,7 @@ public void start(String levelname) throws Exception{
 		Display.sync(60);
 		
 	}
-	cleanup();
+	cleanup();	
 	Menu.ingame = false;
 	System.out.println(Menu.getState().toString());
 	if(Menu.getState().equals(GameState.GAME) || player.isDead){
@@ -400,6 +405,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        }
 		        
 		        eo.display();
+
+		        for(C4 explosive:c4){
+		        	explosive.display();
+		        }
 		        
 		        // HUD  and glare
 		        glPushMatrix();
@@ -550,8 +559,27 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			if (timer>numpickups*10*1000){
 				numpickups++;
 				pickuplijst.add(new Pickup(false));
-			}					
+			}
+			if(input.detonate){
+				for(C4 explosives:c4){
+					explosives.change();
+				}
+				
+				input.detonate=false;
+			}
 			eo.update(deltaTime);
+			
+			ArrayList<C4> exploded = new ArrayList<C4>();
+			for(C4 explosives:c4){
+				explosives.update(deltaTime);
+				if(explosives.exploded()){
+					exploded.add(explosives);
+				}
+			}
+			
+			for(C4 explosives: exploded){
+				c4.remove(explosives);
+			}
 		}
 		
 		/**

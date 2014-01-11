@@ -29,7 +29,7 @@ public class Pickup extends levelObject {
 		this.locationX=0;
 		this.locationZ=0;
 		this.locationY=0;
-		this.type=random.nextInt(4);
+		this.type=random.nextInt(5);
 		while(maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]>0 
 				&& maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]<10 
 				|| alpu[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==1
@@ -73,6 +73,7 @@ public class Pickup extends levelObject {
 		case 1: {Mazerunner.player.getHealth().addHealth(-30);break;}
 		case 2: {Mazerunner.status.addScore(50);break;}
 		case 3: {Mazerunner.status.addScore(-50);break;}
+		case 4: {Mazerunner.c4Count++;}
 		}
 	}
 	public static void initPickup(int[][] mazein){

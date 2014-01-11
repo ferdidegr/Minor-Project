@@ -57,6 +57,7 @@ public class StatusBars {
 		Menu.mainfont.draw((float)(dwidth - width), (float)(4*height), fontSize, "Fatigue:");
 		Menu.mainfont.draw((float)(dwidth - width), (float)(5*height), fontSize, "Score:  " + score);
 		Menu.mainfont.draw((float)(dwidth - width), (float)(6*height), fontSize, "Monsters:  " + Mazerunner.monsterlijst.size()+"/"+Mazerunner.scorpcount);
+		Menu.mainfont.draw((float)(dwidth - width), (float)(7*height), fontSize, "C4:  " + Mazerunner.c4Count);
 		
 		/*
 		 * Draw the health bar

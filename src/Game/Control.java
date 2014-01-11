@@ -35,6 +35,7 @@ public abstract class Control
 	protected int dY = 0;
 	protected boolean lookback = false;
 	protected boolean pause = false;
+	protected boolean detonate = false;
 	
 	/**
 	 * @return Returns true if forward motion is desired.

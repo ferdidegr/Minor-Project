@@ -184,8 +184,7 @@ public class Player extends GameObject {
 	 * @param deltaTime The time in milliseconds since the last update.
 	 */
 	public void update(int deltaTime)
-	{	
-		
+	{			
 		
 		// Update immunity counter when you are hit, only when you are hit
 		if(immunitycounter>0)immunitycounter+=deltaTime;
@@ -436,4 +435,9 @@ public class Player extends GameObject {
 	
 	public Health getHealth(){return health;}
 	public int getRunMod(){return runcounter;}
+	public boolean onGround(){
+		
+		return !jump;
+	}
+
 }
