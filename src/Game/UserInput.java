@@ -92,7 +92,8 @@ public class UserInput extends Control
 				if (Keyboard.getEventKey() == Keyboard.KEY_E) {lookback = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_F) { detonate = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_C) { 
-					if(Mazerunner.player.onGround() && Mazerunner.c4Count>0){
+					
+					if(Mazerunner.c4Count>0){					
 						Mazerunner.c4.add(new C4(Mazerunner.player.locationX, 					
 							Mazerunner.player.locationY-Mazerunner.player.getHeight(), 
 							Mazerunner.player.locationZ));
