@@ -11,7 +11,7 @@ public class EndObelisk extends levelObject{
 	public EndObelisk(double x, double y, double z) {
 		super(x, y, z);	
 		// Define flame
-		pe = new ParticleEmitter(new Vector(x, 8.25*Mazerunner.SQUARE_SIZE, z)	// Position
+		pe = new ParticleEmitter(new Vector(0, 8.25*Mazerunner.SQUARE_SIZE, 0)	// Position
 		,0.015,0.0005,0.015				// Initial velocity
 		,0,0.00075,0			// acceleration
 		,10, 700);				// pointsize
@@ -23,10 +23,7 @@ public class EndObelisk extends levelObject{
 		glShadeModel(GL_FLAT);
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);		
-		glCallList(Models.obelisk);		
-		glPopMatrix();
-		glShadeModel(GL_SMOOTH);
-		
+		glCallList(Models.obelisk);	
 		/*
 		 * Displays the flame when the monsterlist is empty
 		 */
@@ -39,6 +36,10 @@ public class EndObelisk extends levelObject{
 	        glPopAttrib();
 			glPopMatrix();
 		}
+		glPopMatrix();
+		glShadeModel(GL_SMOOTH);
+		
+
 	}
 
 
