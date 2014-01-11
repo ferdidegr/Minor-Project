@@ -370,21 +370,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        // Monsters		
 		        
 		        for(Monster mo: monsterlijst){	
-		        	if(mo.isDead){
-		        		deathlist.add(mo);
-		        	}
 		        	
 		        	double frustum = player.lookat().scale((input.lookback? -1:1),1,(input.lookback? -1:1))
 		        			.dotprod(mo.getLocation().add(player.getLocation().scale(-1)).normalize());
 		        	
 		        	if(frustum>=0.35)
 		        	mo.display();		        	
-		        }
-		        
-		        for(Monster mo: deathlist){	
-		        	monsterlijst.remove(mo);	        	
-		        }
-		        deathlist.clear();
+		        }		       
 		        
 		        // Monster sound
 		        skitter.updatemonsters(monsterlijst);
@@ -552,14 +544,26 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			 */
 			if(!pausemonster){
 				for(Monster mon: monsterlijst){
-					mon.update(deltaTime);				
+					mon.update(deltaTime);	
+		        	if(mon.isDead){deathlist.add(mon);	}
 				}
 			}
 			
+			for(Monster mo: deathlist){	
+		        	monsterlijst.remove(mo);	        	
+		    }
+		        deathlist.clear();
+			
+			/*
+			 * Pickups
+			 */
 			if (timer>numpickups*10*1000){
 				numpickups++;
 				pickuplijst.add(new Pickup(false));
 			}
+			/*
+			 * C4
+			 */
 			if(input.detonate){
 				for(C4 explosives:c4){
 					explosives.change();
@@ -567,7 +571,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				
 				input.detonate=false;
 			}
-			eo.update(deltaTime);
 			
 			ArrayList<C4> exploded = new ArrayList<C4>();
 			for(C4 explosives:c4){
@@ -580,6 +583,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			for(C4 explosives: exploded){
 				c4.remove(explosives);
 			}
+			/*
+			 * End obelisk
+			 */
+			eo.update(deltaTime);
 		}
 		
 		/**
