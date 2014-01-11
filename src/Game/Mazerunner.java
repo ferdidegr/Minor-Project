@@ -58,11 +58,10 @@ public class Mazerunner {
 	
 	private FloatBuffer projectionWorld, projectionHUD;				// Buffer for the projection matrices
 	
-	private ParticleEmitter pe ; 									// Flame
-	
 	public static boolean pausemonster = true;						// Debug option TODO:remove trigger by F3
 	
 	private Skitter skitter;										// Skitter scorpion sound
+	private EndObelisk eo;
 									
 	/*
 	 *  *************************************************
@@ -184,17 +183,12 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			}
 			// Parsing the end point
 			else if(maze[j][i]==12){
-				EndObelisk eo = new EndObelisk(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
+				eo = new EndObelisk(i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
 									 0,													// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0);				// z- position
 				objlijst.add(eo);
-				visibleObjects.add(eo);
+//				visibleObjects.add(eo);
 				objectindex[j][i]=objlijst.size()-1;
-				// Define flame
-				pe = new ParticleEmitter(new Vector(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 8*SQUARE_SIZE, j*SQUARE_SIZE+SQUARE_SIZE/2.0)	// Position
-				,0.015,0.0005,0.015				// Initial velocity
-				,0,0.0008,0			// acceleration
-				,10, 700);				// pointsize
 
 			}
 			// Parsing the spikes
@@ -356,20 +350,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				glTranslated(-player.locationX, -player.locationY, -player.locationZ);	
 				
 		        //update light positions
-		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);	
-		        
-				/*
-				 * Displays the flame when the monsterlist is empty
-				 */
-				if(monsterlijst.size()==0){
-					glPushMatrix();
-			        glPushAttrib(GL_ENABLE_BIT);
-			        glDisable(GL_CULL_FACE);
-			        glDisable(GL_LIGHTING);		       
-			        pe.display();
-			        glPopAttrib();
-					glPopMatrix();
-				}
+		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);			        
+				
 		        // Display all the visible objects of MazeRunner.
 		        if(!input.debug){ 	glCallList(objectDisplayList); }
 		        
@@ -417,6 +399,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	}
 		        }
 		        
+		        eo.display();
 		        
 		        // HUD  and glare
 		        glPushMatrix();
@@ -567,15 +550,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			if (timer>numpickups*10*1000){
 				numpickups++;
 				pickuplijst.add(new Pickup(false));
-			}			
-			
-			// Flame, starts the flame when the monsterlist is empty
-			if(monsterlijst.size()==0){
-				pe.update(deltaTime);
-				for(int i = 0 ; i < 20 *deltaTime/16.5; i++){
-					pe.emit();
-				}
-			}
+			}					
+			eo.update(deltaTime);
 		}
 		
 		/**
