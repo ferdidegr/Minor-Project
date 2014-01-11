@@ -31,13 +31,16 @@ public abstract class ButtonList {
 	 * Every button needs to have some left x and top y
 	 * @param x
 	 * @param y
-	 * @param leftallignment
 	 */
 	public abstract void init(int x, int y);
+	/**
+	 * Performs the action of the selected button
+	 * @param ID
+	 */
 	public abstract void actionButtons(int ID);
 	
 	/** 
-	 * Returns on which button is clicked, when no button is clicked the method returns -1 
+	 * Returns which button is clicked, when no button is clicked the method returns -1 
 	 * 
 	 * @param top y-coordinate of the top of the screen. Needed for scrolling
 	 * 			
@@ -62,12 +65,17 @@ public abstract class ButtonList {
 		MenuButton temp = lijst.get(0);
 		MenuButton temp2 = lijst.get(lijst.size()-1);
 		
+		/*
+		 *  Make the menu scroll
+		 */
 		double initheight = temp2.getY()-Display.getHeight();
-
+		// case when the buttonlist is shorter than the screen height
 		if(temp2.getY()+temp2.height<Display.getHeight()){
 			if(Menu.top - temp.getY() < Display.getHeight()- temp.getY()){ Menu.top += 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
 			if(temp2.getY() - Menu.bottom < Display.getHeight() + initheight){ Menu.top -= 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}	
-		}else{
+		}
+		// case when the buttonlist is longer than the screenheight
+		else{
 			if(Menu.top - temp2.getY() > 2*temp2.height){ Menu.top -= 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
 			if(temp.getY() - Menu.bottom > temp.height){ Menu.top += 0.2*Menu.scrollspeed; Menu.bottom=Menu.top-Display.getHeight();}
 		}

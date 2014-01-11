@@ -247,7 +247,6 @@ public class Menu {
 				drawBackground();
 			}else{
 				drawGameAsBackground();
-
 			}
 
 			ButtonList BL = menus.get(gamestate);

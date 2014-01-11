@@ -39,13 +39,20 @@ public class MazeMap implements Serializable{
 	 */
 	public void setHeight(int height){
 		this.height = height;
-	}
-	
-	
+	}	
+	/**
+	 * Determine which x-index in maze[][]
+	 * @param x X-location of the mouse
+	 * @return X grid index of the tile
+	 */
 	public int getMazeX(float x){
 		return (int)Math.floor(x/size);
 	}
-	
+	/**
+	 * Determine which y-index in maze[][]
+	 * @param y Ylocation of the mouse
+	 * @return Y-index of the tile
+	 */
 	public int getMazeY(float y){
 		return (int)Math.floor((height*size-y)/size);
 	}
@@ -56,12 +63,15 @@ public class MazeMap implements Serializable{
 	 * 11 - Begin point
 	 * 12 - End point
 	 * 13 - Spikes
+	 * 14 - Scorpion
+	 * 15 - Hole in the ground
+	 * 16 - Hatch
+	 * 17 - moving walls
 	 */
 	public void draw(){
 		
 		glEnable(GL_TEXTURE_2D);
-		//glBindTexture(GL_TEXTURE_2D, texempty.getTextureID());
-		
+
 		for(int j = maze.length-1;j>=0;j--){
 			for(int i = 0; i<maze[0].length;i++){
 				if (maze[j][i]==0){Textures.texempty.bind();}
@@ -79,37 +89,48 @@ public class MazeMap implements Serializable{
 				if (maze[j][i]==15){Textures.pit.bind();}
 				if (maze[j][i]==16){Textures.hatch.bind();}
 				if (maze[j][i]==17){Textures.movwall.bind();}
+				
 				glBegin(GL_QUADS);				
-				glTexCoord2d(0, 1);
-				glVertex2f(0+i*size, height*size-(j+1)*size);
-				glTexCoord2d(1, 1);
-				glVertex2f(0+i*size+size, height*size-(j+1)*size);
-				glTexCoord2d(1, 0);
-				glVertex2f(0+i*size+size, height*size-(j+1)*size+size);
-				glTexCoord2d(0, 0);
-				glVertex2f(0+i*size, height*size-(j+1)*size+size);
+					glTexCoord2d(0, 1);				glVertex2f(0+i*size, height*size-(j+1)*size);
+					glTexCoord2d(1, 1);				glVertex2f(0+i*size+size, height*size-(j+1)*size);
+					glTexCoord2d(1, 0);				glVertex2f(0+i*size+size, height*size-(j+1)*size+size);
+					glTexCoord2d(0, 0);				glVertex2f(0+i*size, height*size-(j+1)*size+size);
 				glEnd();
 			}
 		}
 		
 		glDisable(GL_TEXTURE_2D);
 	}
-	
+	/**
+	 * Puts an object in the maze[][]
+	 * @param ID ID of the object
+	 * @param x Mouse x location
+	 * @param y Mouse y location
+	 */
 	public void setObject(int ID, float x , float y){
 		int xloc = getMazeX(x);
 		int yloc = getMazeY(y);
 		if(xloc>=0 && xloc<width && yloc >= 0 && yloc<height)
 			maze[yloc][xloc] = ID;
 	}
-	
+	/**
+	 * Attaches a new maze int[][]
+	 * @param maze
+	 */
 	public void setMaze(int[][] maze){
 		this.maze = maze;
 	}
-	
+	/**
+	 * Size of the maze tiles
+	 * @param insize
+	 */
 	public static void setSize(float insize){
 		size = insize;
 	}
-	
+	/**
+	 * Get the size of the tiles
+	 * @return
+	 */
 	public static float getSize(){
 		return size;
 	}

@@ -3,7 +3,13 @@ package Editor;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.newdawn.slick.opengl.Texture;
-
+/**
+ * Button class for the maze editor
+ * The Buttons move up and down instead of the view moving up and down
+ * 
+ * @author ZL
+ *
+ */
 public class Button {
 	private float left, right, top, bottom, x_top_left, y_top_left;
 	private static float bar_left, bar_right, bar_top, bar_bottom, button_size, bar_width, scroll=0;
@@ -37,18 +43,15 @@ public class Button {
 		texbutton.bind();
 		
 		glBegin(GL_QUADS);
-			glTexCoord2d(0, 1);
-			glVertex2f(left, bottom);
-			glTexCoord2d(1, 1);	
-			glVertex2f(right, bottom);
-			glTexCoord2d(1, 0);
-			glVertex2f(right, top);
-			glTexCoord2d(0, 0);
-			glVertex2f(left, top);
+			glTexCoord2d(0, 1);			glVertex2f(left, bottom);
+			glTexCoord2d(1, 1);			glVertex2f(right, bottom);
+			glTexCoord2d(1, 0);			glVertex2f(right, top);
+			glTexCoord2d(0, 0);			glVertex2f(left, top);
 		glEnd();	
 
 		glDisable(GL_TEXTURE_2D);
 		
+		// Draw selection border around the button
 		if(ID == leftID){
 			glColor3f(0.0f, 0.0f, 1.0f);
 			drawlinebox();
@@ -56,7 +59,7 @@ public class Button {
 			glColor3f(0.0f, 1.0f, 0.0f);
 			drawlinebox();
 		}
-		glColor3f(1.0f, 1.0f, 1.0f);
+
 	}
 	/**
 	 * draw box around a selected button

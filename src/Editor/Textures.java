@@ -5,7 +5,12 @@ import java.io.IOException;
 import org.newdawn.slick.opengl.Texture;
 
 import Utils.IO;
-
+/**
+ * By creating the static block, all resources will be available once it is loaded in the begin
+ * 
+ * @author ZL
+ *
+ */
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
