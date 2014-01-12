@@ -4,24 +4,46 @@ import Intelligence.AStar;
 import Utils.Material;
 import Utils.Vector;
 
+/**
+ * Level element which you can open and close on command.
+ * When opened, opening or closing. 
+ * All objects with vertical collision detection will fall through.
+ * 
+ * @author ZL
+ *
+ */
 
 public class Hatch extends levelObject{
 	private float rotangle = 0;
 	private float rotspeed = 0f;
 	private HatchState hatchstatus;
+	/**
+	 * Places the hatch on the given location.
+	 * It is randomly determined if the begin state is opened or closed.
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
 	public Hatch(double x, double y, double z) {
 		super(x, y, z);
+		// Randomly determine of the hatch is open or closed
 		hatchstatus=(Math.random()>0.5?HatchState.CLOSED:HatchState.OPEN);
+		// Set rotation angle to the chosen state
 		rotangle = (hatchstatus==HatchState.OPEN?90:0);
-		if(hatchstatus.equals(HatchState.OPEN)){
+		// Pathfinding
+		if(!hatchstatus.equals(HatchState.CLOSED)){
 			AStar.removeNode(new Vector(locationX, locationY, locationZ));
 		}
 	}
-	
+	/**
+	 * Draw the hatch
+	 */
 	@Override
 	public void display() {
 		glNormal3d(0, 1, 0);
-		
+		/*
+		 * Left side
+		 */
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);
 		glRotatef(-rotangle, 0, 0, 1);
@@ -34,7 +56,9 @@ public class Hatch extends levelObject{
 		glEnd();		
 		
 		glPopMatrix();
-		
+		/*
+		 * Right side
+		 */
 		glPushMatrix();
 		glTranslated(locationX+Mazerunner.SQUARE_SIZE, locationY, locationZ);
 		glRotatef(rotangle, 0, 0, 1);
@@ -51,6 +75,9 @@ public class Hatch extends levelObject{
 		glPopMatrix();
 		
 	}
+	/**
+	 * Open or close the hatch on command
+	 */
 	public void change(){
 		if(hatchstatus==HatchState.CLOSED){
 			hatchstatus = HatchState.OPENING;
@@ -61,6 +88,10 @@ public class Hatch extends levelObject{
 			AStar.addNode(new Vector(locationX, locationY, locationZ));
 		}
 	}
+	/**
+	 * Checks if there is collision, there is only collision when the hatch is closed.
+	 * Which means that you wont fall through it only when it is closed.
+	 */
 	@Override
 	public boolean isCollision(double x, double y, double z) {
 		if(hatchstatus==HatchState.CLOSED){ 
@@ -68,24 +99,30 @@ public class Hatch extends levelObject{
 		}
 		return false;
 	}
-
+	/**
+	 * Not needed
+	 */
 	@Override
 	public double getmaxDistX(double X) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	/**
+	 * Distance to the hatch
+	 */
 	@Override
 	public double getmaxDistY(double Y) {
 		return locationY-Y;
 	}
-
+	/**
+	 * Not needed
+	 */
 	@Override
 	public double getmaxDistZ(double Z) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	/**
+	 * Display opening and closing animation
+	 */
 	@Override
 	public void update(int deltaTime) {
 		
@@ -95,7 +132,11 @@ public class Hatch extends levelObject{
 		if(hatchstatus == HatchState.CLOSING){rotspeed= -0.1f;}
 		rotangle =rotangle%360 + rotspeed * deltaTime;
 	}
-	
+	/**
+	 * Enum class for the states
+	 * @author ZL
+	 *
+	 */
 	private enum HatchState{
 		OPEN, OPENING, CLOSING, CLOSED;
 	}

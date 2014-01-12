@@ -64,7 +64,7 @@ public class Floor extends levelObject{
 	 */
 	@Override
 	public void display() {
-		
+		// Top face of the ground
 		glBegin(GL_QUADS);
 		glNormal3d(0, 1, 0);
 		glTexCoord2d(0, 1);		glVertex3d(this.locationX, this.locationY,this.locationZ);
@@ -72,7 +72,9 @@ public class Floor extends levelObject{
 		glTexCoord2d(1, 0);		glVertex3d(this.locationX+width, this.locationY,this.locationZ+height);
 		glTexCoord2d(1, 1);		glVertex3d(this.locationX+width, this.locationY,this.locationZ);
 		glEnd();
-		
+		/*
+		 * Mainly to thicken the floor. Put side faces only when there i no floor next to it.
+		 */
 		int ss = Mazerunner.SQUARE_SIZE;
 		int[][] maze = Mazerunner.maze;
 		glPushMatrix();
@@ -90,7 +92,8 @@ public class Floor extends levelObject{
 		glPopMatrix();
 	}
 	/**
-	 * Checks if there is a collision with the infinitely thin floor
+	 * Checks if there is a collision with the floor, the floor goes to minus infinity.
+	 * this to ensure not falling through the ground at very low fps
 	 */
 	@Override
 	public boolean isCollision(double x, double y, double z) {
@@ -115,11 +118,16 @@ public class Floor extends levelObject{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	/**
+	 * Not needed here
+	 */
 	@Override
 	public void update(int deltaTime) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
+	/**
+	 * Not needed here
+	 */
 	@Override
 	public void change() {
 		// TODO Auto-generated method stub

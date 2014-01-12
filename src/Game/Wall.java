@@ -7,7 +7,12 @@ import org.lwjgl.opengl.GL11;
 import Utils.Graphics;
 import Utils.Material;
 import Utils.Utils;
-
+/**
+ * Walls of the game. They can be different in height
+ * 
+ * @author ZL
+ *
+ */
 public class Wall extends levelObject{
 	/**
 	 * 		 7 +--------+ 6
@@ -37,7 +42,15 @@ public class Wall extends levelObject{
 										 {-1,0,0},
 										 {0,1,0}};
 
-	
+	/**
+	 * Initialize wall
+	 * @param x X-location of the midpoint
+	 * @param y Y-location, does not matter is not used, is always 0
+	 * @param z Z-location of the midpoint
+	 * @param size size of a side
+	 * @param height height of the wall (1-7)
+	 * @param SQUARE_SIZE
+	 */
 	public Wall(double x, double y, double z,double size, double height, int SQUARE_SIZE){
 		super(x, y, z);
 		this.left = x-size/2;
@@ -49,15 +62,19 @@ public class Wall extends levelObject{
 		this.height= height;
 		setSZ(SQUARE_SIZE);
 		this.boxvertices = new double[][]{
-							{left, bottom, front},
-							{right, bottom, front},
-							{right, bottom, back},
-							{left, bottom, back},
-							{left, top, front},
-							{right, top, front},
-							{right, top, back},
-							{left, top, back}};	
+							{left, bottom, front},	//0
+							{right, bottom, front},	//1
+							{right, bottom, back},	//2
+							{left, bottom, back},	//3
+							{left, top, front},		//4
+							{right, top, front},	//5
+							{right, top, back},		//6
+							{left, top, back}};		//7
 	}
+	/**
+	 * Sets the square size used in the game
+	 * @param SQUARE_SIZE
+	 */
 	public void setSZ(int SQUARE_SIZE){
 		this.SQUARE_SIZE= SQUARE_SIZE;
 	}
@@ -82,7 +99,10 @@ public class Wall extends levelObject{
 			Utils.glVertvec(boxvertices[boxfaces[i][3]]);
 		}
 		glEnd();
-
+		
+		/*
+		 * Floor thickener
+		 */
 		int ss = Mazerunner.SQUARE_SIZE;
 		int[][] maze = Mazerunner.maze;
 		glPushMatrix();
@@ -126,6 +146,7 @@ public class Wall extends levelObject{
 	
 	public double[][] getVert(){ return boxvertices;}
 	public double[][] getnorm(){ return normals;}
+	
 	@Override
 	public double getmaxDistY(double Y) {
 
