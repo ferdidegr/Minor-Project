@@ -44,6 +44,9 @@ public class MoveableWall extends levelObject{
 		glCallList(Wallmodel);
 		glPopMatrix();
 	}
+	/**
+	 * Draw the movable wall
+	 */
 	public void drawwall(){
 		Material.setMtlMWall();
 		/*
@@ -53,8 +56,8 @@ public class MoveableWall extends levelObject{
 			glRotated(90*i, 0, 1, 0);
 			glNormal3d(0, 1, 1);
 			glBegin(GL_QUADS);
-			glTexCoord2d(0, height);		glVertex3d(-0.5, bottom, +0.5);	
-			glTexCoord2d(1, height);		glVertex3d(0.5, bottom, +0.5);	
+			glTexCoord2d(0, height);		glVertex3d(-0.5, bottom-1, +0.5);	
+			glTexCoord2d(1, height);		glVertex3d(0.5, bottom-1, +0.5);	
 			glTexCoord2d(1, 0);		glVertex3d(0.5, bottom+height, +0.5);	
 			glTexCoord2d(0, 0);		glVertex3d(-0.5, bottom+height, +0.5);	
 			glEnd();

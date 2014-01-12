@@ -72,7 +72,7 @@ public class Menu {
 		loadingscreen();
 
 		
-		if(Display.isFullscreen()){Display.setVSyncEnabled(true);}
+		Display.setVSyncEnabled(true);
 		Mouse.setGrabbed(true);
 		screenx = Display.getWidth();
 		screeny = Display.getHeight();
