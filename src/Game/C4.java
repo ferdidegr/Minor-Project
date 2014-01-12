@@ -16,8 +16,12 @@ import Utils.Vector;
  *
  */
 public class C4 extends levelObject{
+	// drawList
+	private static int C4model = 0;
 	// Is the C4 detonated
 	private boolean activated = false;
+	// Scale the package down
+	private static double scale = 0.25;
 	// Height of the c4 package
 	private static float height = 0.3f;
 	// Particle system for the explosion
@@ -37,11 +41,17 @@ public class C4 extends levelObject{
 	 */
 	public C4(double x, double y, double z) {
 		super(x, y, z);
-		this.Xmin = x-0.125;
-		this.Zmin = z-0.125;
-		this.Xmax = x+0.125;
-		this.Zmax = z+0.125;
-		// TODO Auto-generated constructor stub
+		this.Xmin = x-0.5*scale;
+		this.Zmin = z-0.5*scale;
+		this.Xmax = x+0.5*scale;
+		this.Zmax = z+0.5*scale;
+		// Create drawlist when not already made
+		if(C4model == 0){
+			C4model = glGenLists(1);
+			glNewList(C4model, GL_COMPILE);
+			drawpackage();
+			glEndList();
+		}
 	}
 	/**
 	 * draws the C4 package or the explosion
@@ -54,30 +64,7 @@ public class C4 extends levelObject{
 		if(!activated){
 			glPushMatrix();
 			glTranslated(locationX, locationY, locationZ);
-			glScaled(0.25, 0.25, 0.25);
-			
-			double Iwidth = Textures.c4.getWidth();
-			double Iheight= Textures.c4.getHeight();
-			
-			Material.setMtlC4();
-			// Top of the package
-			glBegin(GL_QUADS);
-			glTexCoord2d(0, 0);					glVertex3d(-0.5, height, -0.5);
-			glTexCoord2d(0, Iheight);			glVertex3d(-0.5, height, 0.5);
-			glTexCoord2d(Iwidth, Iheight);		glVertex3d(0.5, height, 0.5);
-			glTexCoord2d(Iwidth, 0);			glVertex3d(0.5, height, -0.5);
-			glEnd();
-			// sides of the package
-			for(int i = 0 ; i<4; i++){
-				glRotated(90*i, 0, 1, 0);
-				glNormal3d(0, 1, 1);
-				glBegin(GL_QUADS);
-				glTexCoord2d(0, height);		glVertex3d(-0.5, 0, +0.5);	
-				glTexCoord2d(1, height);		glVertex3d(0.5, 0, +0.5);	
-				glTexCoord2d(1, 0);				glVertex3d(0.5, 0+height, +0.5);	
-				glTexCoord2d(0, 0);				glVertex3d(-0.5, 0+height, +0.5);	
-				glEnd();
-			}
+			glCallList(C4model);
 			glPopMatrix();
 		}
 		/*
@@ -101,11 +88,39 @@ public class C4 extends levelObject{
 		
 	}
 	/**
+	 * Draws the C4 package
+	 */
+	public void drawpackage(){
+		glScaled(scale, scale, scale);
+		
+		double Iwidth = Textures.c4.getWidth();
+		double Iheight= Textures.c4.getHeight();
+		double smallnumber = 0.01;
+		Material.setMtlC4();
+		// Top of the package
+		glBegin(GL_QUADS);
+		glTexCoord2d(0+smallnumber, 0+smallnumber);					glVertex3d(-0.5, height, -0.5);
+		glTexCoord2d(0+smallnumber, Iheight-smallnumber);			glVertex3d(-0.5, height, 0.5);
+		glTexCoord2d(Iwidth-smallnumber, Iheight-smallnumber);		glVertex3d(0.5, height, 0.5);
+		glTexCoord2d(Iwidth-smallnumber, 0+smallnumber);			glVertex3d(0.5, height, -0.5);
+		glEnd();
+		// sides of the package
+		for(int i = 0 ; i<4; i++){
+			glRotated(90*i, 0, 1, 0);
+			glNormal3d(0, 1, 1);
+			glBegin(GL_QUADS);
+			glTexCoord2d(0+smallnumber, height-smallnumber);		glVertex3d(-0.5, 0, +0.5);	
+			glTexCoord2d(1-smallnumber, height-smallnumber);		glVertex3d(0.5, 0, +0.5);	
+			glTexCoord2d(1-smallnumber, 0+smallnumber);				glVertex3d(0.5, 0+height, +0.5);	
+			glTexCoord2d(0+smallnumber, 0+smallnumber);				glVertex3d(-0.5, 0+height, +0.5);	
+			glEnd();
+		}
+	}
+	/**
 	 * No collision possible with the package, you just walk over it
 	 */
 	@Override
 	public boolean isCollision(double x, double y, double z) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	/**
@@ -113,7 +128,6 @@ public class C4 extends levelObject{
 	 */
 	@Override
 	public double getmaxDistX(double X) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	/**
@@ -121,7 +135,6 @@ public class C4 extends levelObject{
 	 */
 	@Override
 	public double getmaxDistY(double Y) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	/**
@@ -129,7 +142,6 @@ public class C4 extends levelObject{
 	 */
 	@Override
 	public double getmaxDistZ(double Z) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	/**

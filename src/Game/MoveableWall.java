@@ -9,9 +9,13 @@ import Utils.Material;
  *
  */
 public class MoveableWall extends levelObject{
-	
+	// Height of the wall
 	private double bottom, height=3;
+	// Initial wall state
 	private wallState wallstate = wallState.UP;
+	// Draw list 
+	private static int Wallmodel = 0;
+	
 	/**
 	 * set Location of the wall
 	 * @param x locationX
@@ -22,6 +26,13 @@ public class MoveableWall extends levelObject{
 		super(x, y, z);
 		// set the wall to up position
 		this.bottom = y;
+		
+		if(Wallmodel == 0){
+			Wallmodel = glGenLists(1);
+			glNewList(Wallmodel, GL_COMPILE);
+			drawwall();
+			glEndList();
+		}
 	}
 	/**
 	 * show the wall in its current state
@@ -29,8 +40,11 @@ public class MoveableWall extends levelObject{
 	@Override
 	public void display() {
 		glPushMatrix();
-		glTranslated(locationX, locationY, locationZ);
-		
+		glTranslated(locationX, bottom, locationZ);
+		glCallList(Wallmodel);
+		glPopMatrix();
+	}
+	public void drawwall(){
 		Material.setMtlMWall();
 		/*
 		 * Sides
@@ -55,9 +69,7 @@ public class MoveableWall extends levelObject{
 		glTexCoord2d(1, 1);	glVertex3d(0.5, bottom+height, 0.5);
 		glTexCoord2d(1, 0);	glVertex3d(0.5, bottom+height, -0.5);
 		glEnd();
-		glPopMatrix();
 	}
-
 	/**
 	 * Checks collision of the other object with this
 	 */
