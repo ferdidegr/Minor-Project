@@ -444,7 +444,7 @@ public class Monster extends levelObject {
 			glPushMatrix();
 
 			glTranslated(locationX, locationY, locationZ);
-			rotateV();
+			if(dir.getZ()!=0 && dir.getX()!=0)rotateV();
 
 			// Drawing the next model of the monster (for animation)
 			int buffer = Models.monster.get(monsterframe % 20);

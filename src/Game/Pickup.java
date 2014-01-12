@@ -14,7 +14,7 @@ public class Pickup extends levelObject {
 	boolean on = false;
 	static int[][] maze;
 	static int [][] alpu;
-	
+	static Random random = new Random();
 	
 	public Pickup(double x, double y, double z, int type, float size) {
 		super(x, y, z);
@@ -24,11 +24,9 @@ public class Pickup extends levelObject {
 	}
 	
 	public Pickup(boolean drop){
-		super(0,0,0);
-		Random random = new Random();
-		this.locationX=0;
-		this.locationZ=0;
-		this.locationY=0;
+		super(random.nextInt(maze.length)*Mazerunner.SQUARE_SIZE,
+				0,random.nextInt(maze[0].length)*Mazerunner.SQUARE_SIZE);
+		
 		this.type=random.nextInt(5);
 		while(maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]>0 
 				&& maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]<10 
