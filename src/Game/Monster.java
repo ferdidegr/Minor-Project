@@ -203,11 +203,11 @@ public class Monster extends levelObject {
 		//toPlayer();
 		if (colX) {
 			//dir.add(0.0, 0.0, Math.signum(dir.getZ()));
-			dir.scale(0.0, 1.0, 1.0);
+			dir.scale(0.2, 1.0, 1.0);
 		}
 		if (colZ) {
 			//dir.add(Math.signum(dir.getX()), 0.0, 0.0);
-			dir.scale(1.0, 1.0, 0.0);
+			dir.scale(1.0, 1.0, 0.2);
 		}
 
 	}
