@@ -74,6 +74,13 @@ public class Material {
 		glMaterial(GL_FRONT, GL_SPECULAR, none);
 		Textures.ground.bind();
 	}
+	
+	public static void setMtlC4(){
+		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.grey);
+		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.grey);
+		glMaterial(GL_FRONT, GL_SPECULAR, none);
+		Textures.c4.bind();
+	}
 }
 
 
