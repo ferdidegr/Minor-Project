@@ -74,6 +74,7 @@ public class Mazerunner {
 	 */
 	
 public void start(String levelname) throws Exception{
+	loadingscreen();
 	Menu.ingame = true;	
 	Sound.playMusic("background_game");
 	new Game.Textures();			// Initialize textures
@@ -498,7 +499,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glEnable(GL_LIGHTING);
 		glEnable(GL_TEXTURE_2D);
 	}
-	
+	public void loadingscreen(){
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glOrtho(1, 1, 1, 1, 1, -1);
+		glMatrixMode(GL_MODELVIEW);
+		Menu.loadingscreen();	
+	}
 	/**
 	 * if the window is reshaped, change accordingly
 	 */

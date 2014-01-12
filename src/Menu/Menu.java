@@ -17,6 +17,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+import org.newdawn.slick.opengl.Texture;
 
 import static org.lwjgl.opengl.GL11.*;
 
@@ -45,6 +46,8 @@ public class Menu {
 	static Database score ;
 	static ArrayList<String> levelList;
 	public static int mousesensitivity = 3;
+	public static Texture loadingscreen = null;
+	
 	/**
 	 * ************************************
 	 * Initialization of the menu
@@ -378,17 +381,25 @@ public class Menu {
 	}
 	
 	public static void loadingscreen(){
+		glClear(GL_COLOR_BUFFER_BIT);
 		glEnable(GL_TEXTURE_2D);
-		try {
-			IO.loadtexture("res/loadingscreen.png", false).bind();
-		} catch (IOException e) {}
+		
+		if(loadingscreen == null){
+			try {
+				loadingscreen = IO.loadtexture("res/loadingscreen.png", false);
+			} catch (IOException e) {}
+		}
+		
+		double tempw = loadingscreen.getWidth();
+		double temph = loadingscreen.getHeight();
+		loadingscreen.bind();
 		
 		double smallnumber = 0;
 		glBegin(GL_QUADS);
-			glTexCoord2d(0+smallnumber, 0+smallnumber);		glVertex2d(-1, 1);
-			glTexCoord2d(0+smallnumber, 1-smallnumber);		glVertex2d(-1, -1);
-			glTexCoord2d(1-smallnumber, 1-smallnumber);		glVertex2d(1 , -1);
-			glTexCoord2d(1-smallnumber, 0+smallnumber);		glVertex2d(1, 1);
+			glTexCoord2d(0+smallnumber, 0+smallnumber);				glVertex2d(-1, 1);
+			glTexCoord2d(0+smallnumber, temph-smallnumber);			glVertex2d(-1, -1);
+			glTexCoord2d(tempw-smallnumber, temph-smallnumber);		glVertex2d(1 , -1);
+			glTexCoord2d(tempw-smallnumber, 0+smallnumber);			glVertex2d(1, 1);
 		glEnd();
 		glDisable(GL_TEXTURE_2D);	
 
