@@ -163,12 +163,12 @@ public class Monster extends levelObject {
 				Route.remove(0);
 				followRoute();
 			} else {
-				Vector target = new Vector(firstpoint.getX(), locationY, firstpoint.getY());
+				Vector target = new Vector(firstpoint.getX()+0.5, locationY, firstpoint.getY()+0.5);
 				goTo(target);
 			}
 		} else if(Route.size() == 1){
 			Node firstpoint = Route.get(0);
-			Vector target = new Vector(firstpoint.getX(), locationY, firstpoint.getY());
+			Vector target = new Vector(firstpoint.getX()+0.5, locationY, firstpoint.getY()+0.5);
 			goTo(target);
 		}
 	}
