@@ -76,16 +76,18 @@ public class AStar {
 		CurrentNode = Start.clone();
 		CurrentNode.setG(0);
 		int count = 0;
-		while(!(count > maxIterations) && !ActiveList.isEmpty()){
+		while(!(count > maxIterations)){
 			Visited.add(CurrentNode.clone());
 			succession();
 			if(CurrentNode.equals(End)){
 				End = CurrentNode.clone();
 				return true;
 			}
-			Collections.sort(ActiveList);
-			CurrentNode = ActiveList.get(0).clone();
-			ActiveList.remove(0);
+			if(ActiveList.size()>0){
+				Collections.sort(ActiveList);
+				CurrentNode = ActiveList.get(0).clone();
+				ActiveList.remove(0);
+			}
 			count++;
 		}
 		return false;
