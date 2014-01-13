@@ -48,16 +48,11 @@ public class Material {
 
 	}
 	
-	public static void setMtlPickup(boolean on){
-		if (on){
-			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.red);
-			glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
-		}
-		else {
-			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.blue);
-			glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.lightgrey);
-		}
-		glMaterial(GL_FRONT, GL_SPECULAR, Graphics.red);
+	public static void setMtlPickup(){
+	
+		glMaterial( GL_FRONT, GL_DIFFUSE, Utils.createFloatBuffer(1.0f,0.0f,0.0f,0.8f));
+		glMaterial(	GL_FRONT, GL_AMBIENT, Utils.createFloatBuffer(0.8f,0.8f,0.8f,0.8f));	
+		glMaterial(GL_FRONT, GL_SPECULAR, none);
 		glMaterialf(GL_FRONT, GL_SHININESS, 2f);
 	}
 	

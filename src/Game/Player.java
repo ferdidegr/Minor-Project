@@ -45,6 +45,7 @@ public class Player extends GameObject {
 	private int immunitycounter = 0;
 	private int runcounter = 1000;
 	protected final int runcountermax = 1000;
+	private double eps = 1E-5;
 	
 	/**
 	 * The Player constructor.
@@ -264,7 +265,7 @@ public class Player extends GameObject {
 					if(tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz+pw)
 					|| tempobj.isCollision(px+velocity.getX()+pw*signX, py-ph, pz-pw)){
 						colX=true;
-						locationX+=tempobj.getmaxDistX(locationX+pw*signX);
+						locationX+=tempobj.getmaxDistX(locationX+pw*signX)- signX* eps;
 						collisionreaction(tempobj);
 						break;
 					}
@@ -281,7 +282,7 @@ public class Player extends GameObject {
 					if(tempobj.isCollision(px+pw, py-ph, pz+pw*signZ+velocity.getZ())
 					|| tempobj.isCollision(px-pw, py-ph, pz+pw*signZ+velocity.getZ())){
 						colZ=true;
-						locationZ+=tempobj.getmaxDistZ(locationZ+pw*signZ);
+						locationZ+=tempobj.getmaxDistZ(locationZ+pw*signZ)- signZ* eps;
 						collisionreaction(tempobj);
 						break;
 					}

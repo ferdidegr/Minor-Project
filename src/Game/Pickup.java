@@ -54,10 +54,11 @@ public class Pickup extends levelObject {
 	public void display() {
 		glPushMatrix();
 		glDisable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
 		glTranslated(locationX, locationY, locationZ);
-		Material.setMtlPickup(on);
-		// Graphics.renderSphere(size/2);
+		Material.setMtlPickup();
 		Graphics.renderCube(size, false, false, false, false);
+		glDisable(GL_BLEND);
 		glEnable(GL_TEXTURE_2D);
 		glPopMatrix();
 	}

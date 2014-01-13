@@ -103,8 +103,9 @@ public class Model {
 		
 		
 		TextureImpl.unbind();
+		
 		glNewList(objectDisplayList, GL_COMPILE);
-
+		glEnable(GL_BLEND);
 		/*
 		 * Draw all faces
 		 */
