@@ -1,6 +1,6 @@
 package Game;
 
-import Utils.Sound;
+
 /**
  * Class to keep track of the health of all living things in the maze.
  * All living things should have a health object.
@@ -53,7 +53,8 @@ public class Health {
 		}
 		if (isPlayer && addition<0){
 			
-			Sound.playEffect("hurt");
+			//Sound.playEffect("hurt");
+			//Hier nog hurt effect implementeren!
 		}
 	}
 	/**

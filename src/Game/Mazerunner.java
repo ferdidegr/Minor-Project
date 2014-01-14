@@ -76,7 +76,10 @@ public class Mazerunner {
 public void start(String levelname) throws Exception{
 	loadingscreen();
 	Menu.ingame = true;	
-	Sound.playMusic("background_game");
+	skitter=Menu.getSkitter();
+	skitter.stopMenu();
+	skitter.playGame();
+	
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
 	new Models();
@@ -166,7 +169,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	Intelligence.init();
 	
 	minimap = new MiniMap(maze);		//load the minimap
-	int ID=1;
+	int ID=2;
 		
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){
@@ -237,8 +240,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		}
 	}
 	
-	skitter=new Skitter();
-	skitter.execute(monsterlijst);
+
+	skitter.bindMonsters(monsterlijst);
 	status.init( 0, player);
 
 }
@@ -303,14 +306,17 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 * Cleanup after shut down
 	 */
 	public void cleanup(){	
+		
 		TextureImpl.unbind();
 		glDisable(GL_LIGHTING);
 		glDisable(GL_CULL_FACE);
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_LIGHT0);
 //		glDisable(GL_BLEND);
-		Sound.playMusic("background_menu");
-		skitter.cleanup();
+		System.out.println("cleanup!");
+//		skitter.stopGame();
+		skitter.playMenu();
+//		skitter.deleteSources();
 	
 	}  
 	/**
@@ -561,6 +567,13 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		    }
 		        deathlist.clear();
 			
+		    /*
+		     * Sound
+		     */    
+		    skitter.updatemonsters(monsterlijst);
+		    skitter.play(monsterlijst, player);
+		        
+		        
 			/*
 			 * Pickups
 			 */

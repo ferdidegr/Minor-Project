@@ -3,7 +3,7 @@ package Menu;
 
 import org.lwjgl.opengl.Display;
 
-import Utils.Sound;
+
 import static org.lwjgl.opengl.GL11.*;
 import Utils.Text;
 import Game.Mazerunner;
@@ -35,7 +35,7 @@ public class PauseMenu extends ButtonList{
 		switch(buttonID){
 		
 		case 1:
-			Sound.resume();
+			
 			Menu.setState(GameState.GAME);			
 			break;
 			
@@ -55,7 +55,7 @@ public class PauseMenu extends ButtonList{
 
 		super.display();
 		Menu.mainfont.draw(Menu.getScreenx()/2, 0, 30, "PAUSE");
-		Sound.pause();
+	
 	}
 	
 

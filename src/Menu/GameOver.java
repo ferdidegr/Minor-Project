@@ -5,7 +5,6 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 
 import java.io.IOException;
 
-import Utils.Sound;
 import Utils.Text;
 import Game.Mazerunner;
 

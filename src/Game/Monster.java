@@ -97,11 +97,11 @@ public class Monster extends levelObject {
 				RouteCount = 0;
 			}
 			checkRoute();
-			System.out.println(dir);
+//			System.out.println(dir);
 			
 			avoidWalls();
 			
-			System.out.println("After avoidwalls: " + dir);
+//			System.out.println("After avoidwalls: " + dir);
 			
 			dir.normalize2D();
 			updateV(deltaTime);			
@@ -153,8 +153,8 @@ public class Monster extends levelObject {
 		
 		//TODO: Opschonen
 		if(Route.size()>1){
-			System.out.println("location: " + locationX+ ", " +  locationZ);
-			System.out.println("target: " + Route.get(0));
+//			System.out.println("location: " + locationX+ ", " +  locationZ);
+//			System.out.println("target: " + Route.get(0));
 			Node firstpoint = Route.get(0);
 			Double locX = locationX;
 			Double locZ = locationZ;
