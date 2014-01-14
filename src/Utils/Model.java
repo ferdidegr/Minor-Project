@@ -160,7 +160,7 @@ public class Model {
         	glVertex3f(v3.x, v3.y, v3.z);
         	glEnd();
         }
-        
+        glDisable(GL_BLEND);
         glEndList();
         
         return objectDisplayList;
