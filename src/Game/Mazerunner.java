@@ -314,7 +314,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glDisable(GL_LIGHT0);
 //		glDisable(GL_BLEND);
 		System.out.println("cleanup!");
-//		skitter.stopGame();
+		skitter.stopGame();
 		skitter.playMenu();
 //		skitter.deleteSources();
 	
