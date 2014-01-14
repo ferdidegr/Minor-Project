@@ -9,7 +9,6 @@ import org.lwjgl.opengl.Display;
 
 import static org.lwjgl.opengl.GL11.*;
 import Game.Mazerunner;
-import Utils.Sound;
 import Utils.Text;
 
 public class MazechooserMenu extends ButtonList{

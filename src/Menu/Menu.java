@@ -4,7 +4,6 @@ import Game.*;
 import Utils.Chooser;
 import Utils.Database;
 import Utils.IO;
-import Utils.Sound;
 import Utils.Text;
 import Utils.Timer;
 
@@ -16,6 +15,7 @@ import java.util.HashMap;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.opengl.Texture;
 
@@ -47,6 +47,7 @@ public class Menu {
 	static ArrayList<String> levelList;
 	public static int mousesensitivity = 3;
 	public static Texture loadingscreen = null;
+	private static Skitter skitter;
 	
 	/**
 	 * ************************************
@@ -70,9 +71,15 @@ public class Menu {
 		Timer timer = new Timer().start();
 		Display.create();
 		
+		
+		
 		Display.setResizable(false);
 
 		loadingscreen();
+		AL.create();
+		skitter=new Skitter();
+		skitter.execute();
+		skitter.playMenu();
 
 		
 		Display.setVSyncEnabled(true);
@@ -85,7 +92,7 @@ public class Menu {
 		levelList = Utils.Utils.loadLevelList();
 		score =  new Database("db/scores.db");
 		mainfont = new Text("BEBAS.TTF");	
-		Sound.init();
+		
 		new Textures();
 		initButtons();
 		
@@ -143,7 +150,7 @@ public class Menu {
 					mousepoll();
 					// Discard all keyboard events
 					while(Keyboard.next() && ingame){ 
-						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE){gamestate=GameState.GAME;Sound.resume();}
+						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE){gamestate=GameState.GAME;}
 					}
 					
 					display();					
@@ -162,7 +169,7 @@ public class Menu {
 	 * ************************************
 	 */
 	private static void cleanup() {
-		Sound.exit();
+		AL.destroy();
 		Display.destroy();
 	}
 
@@ -437,4 +444,9 @@ public class Menu {
 	
 	public static int getScreeny() {return screeny;}
 	public static int getScreenx() {return screenx;}
+	
+	// getter for sound
+	public static Skitter getSkitter(){
+		return skitter;
+	}
 }
