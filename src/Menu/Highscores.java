@@ -7,13 +7,22 @@ import java.util.ArrayList;
 import static org.lwjgl.opengl.GL11.*;
 
 import org.lwjgl.opengl.Display;
-
+/**
+ * Highscores menu. Displays all the scores in the database
+ * 
+ * @author ZL
+ *
+ */
 public class Highscores extends ButtonList{
+	
 ArrayList<String> levelname = new ArrayList<String>();
 ArrayList<String> playername = new ArrayList<String>();
 ArrayList<String> score = new ArrayList<String>();
 int FontSize, Fontheight;
 
+	/**
+	 * Initialize all buttons. Fake button is placed at the top for scroll performance
+	 */
 	@Override
 	public void init(int x, int y) {			
 		getHighscores();				
@@ -21,7 +30,9 @@ int FontSize, Fontheight;
 		lijst.add(new MenuButton(Fontheight*(levelname.size()+1), Textures.start, Textures.startover, 1, "Reset score", MenuButton.Alignment.CENTER));	
 		lijst.add(new MenuButton(Fontheight*(levelname.size()+1), Textures.start, Textures.startover, 2, "Back", MenuButton.Alignment.RIGHT));		
 	}
-	
+	/**
+	 * Read all highscores from the database
+	 */
 	private void getHighscores() {
 		levelname.add("Level");
 		playername.add("Name");
@@ -40,7 +51,9 @@ int FontSize, Fontheight;
 		} catch (SQLException e) {	}	
 		
 	}
-	
+	/**
+	 * When achieved a new highscore, rebuild the list
+	 */
 	public void reset(){
 		levelname.clear();
 		playername.clear();
@@ -49,7 +62,9 @@ int FontSize, Fontheight;
 		lijst.get(1).setY(Fontheight*(levelname.size()+1));
 		lijst.get(2).setY(Fontheight*(levelname.size()+1));
 	}
-	
+	/**
+	 * Display the highscores
+	 */
 	public void display(){	
 		glEnable(GL_BLEND);
 		
@@ -65,12 +80,16 @@ int FontSize, Fontheight;
 		for(int i = 1 ; i < playername.size();i++){Menu.mainfont.draw(Display.getWidth()*2/5, i*Fontheight, FontSize, playername.get(i));}
 		for(int i = 1 ; i < levelname.size();i++){Menu.mainfont.draw(Display.getWidth()*4/5, i*Fontheight, FontSize, score.get(i));}
 		
-
+		/*
+		 * Draw somewhat darkened transparent background
+		 */
 		toFixedScreen();		
 		glColor4f(0, 0, 0,0.8f);
 		glRectd(0, 0, Display.getWidth(),Fontheight);
 		
-		
+		/*
+		 * Draw title bar
+		 */
 		Menu.mainfont.draw(Display.getWidth()*0.1f, 0, FontSize, levelname.get(0));
 		Menu.mainfont.draw(Display.getWidth()*2/5, 0, FontSize, playername.get(0));
 		Menu.mainfont.draw(Display.getWidth()*4/5, 0, FontSize, score.get(0));		
@@ -78,7 +97,9 @@ int FontSize, Fontheight;
 		
 		glDisable(GL_BLEND);
 	}
-
+	/**
+	 * Check pressed buttons
+	 */
 	@Override
 	public void actionButtons(int ID) {
 		switch(ID){
@@ -93,7 +114,9 @@ int FontSize, Fontheight;
 		}
 		
 	}
-	
+	/**
+	 * change matrix mode to non scrolling content. e.g. the top bar
+	 */
 	public void toFixedScreen(){
 		glPushMatrix();
 		glMatrixMode(GL_PROJECTION);
@@ -102,7 +125,9 @@ int FontSize, Fontheight;
 		glOrtho(0, Display.getWidth(), Display.getHeight(), 0, 1, -1);
 		glMatrixMode(GL_MODELVIEW);
 	}
-	
+	/**
+	 * To dynamic matrix mode, the scrollig content
+	 */
 	public void toDynamicScreen(){
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();

@@ -147,7 +147,7 @@ public class Chooser extends JFrame implements ActionListener{
 	 */
 	public DisplayMode getDisplay(){return displaymodus;}
 	public boolean getFullscreen(){ return fullscreen;}
-	/*
+	/**
 	 * ActionListener
 	 */
 	@Override
@@ -178,7 +178,9 @@ public class Chooser extends JFrame implements ActionListener{
 		}
 				
 	}	
-	
+	/**
+	 * Manually using code pressing the exit button
+	 */
 	public void exit() {
         WindowEvent wev = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(wev);

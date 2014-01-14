@@ -7,10 +7,16 @@ import org.lwjgl.opengl.GL11;
 import org.newdawn.slick.opengl.TextureImpl;
 
 import Game.Textures;
-
+/**
+ * Material settings for several game objects
+ * @author ZL
+ *
+ */
 public class Material {
 	static FloatBuffer none = Utils.createFloatBuffer(0f,0f,0f,0f);
-	
+	/**
+	 * Set aterial for the movable wall
+	 */
 	public static void setMtlMWall(){
 		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);
 		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
@@ -20,6 +26,9 @@ public class Material {
 		Textures.movewall.bind();		
 	}
 	
+	/**
+	 * Set material for the wall
+	 */
 	public static void setMtlWall(){
 
 			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);
@@ -28,7 +37,9 @@ public class Material {
 			Textures.ingamewall.bind();				
 
 	}
-	
+	/**
+	 * Set material for the ground
+	 */
 	public static void setMtlGround(){
 
 			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);
@@ -37,7 +48,9 @@ public class Material {
 			Textures.ground.bind();		
 
 	}
-	
+	/**
+	 * Set material for the spikes
+	 */
 	public static void setMtlsteel(){
 
 			glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.grey);
@@ -47,29 +60,28 @@ public class Material {
 			TextureImpl.bindNone();
 
 	}
-	
-	public static void setMtlPickup(){
-	
-		glMaterial( GL_FRONT, GL_DIFFUSE, Utils.createFloatBuffer(1.0f,0.0f,0.0f,0.8f));
-		glMaterial(	GL_FRONT, GL_AMBIENT, Utils.createFloatBuffer(0.8f,0.8f,0.8f,0.8f));	
-		glMaterial(GL_FRONT, GL_SPECULAR, none);
-		glMaterialf(GL_FRONT, GL_SHININESS, 2f);
-	}
-	
+
+	/**
+	 * set material for the hatch
+	 */
 	public static void setMtlHatch(){
 		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);
 		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
 		glMaterial(GL_FRONT, GL_SPECULAR, none);
 		Textures.hatch.bind();	
 	}
-	
+	/**
+	 * set material for the ground thickener
+	 */
 	public static void setMtlHole(){
 		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.grey);
 		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.grey);
 		glMaterial(GL_FRONT, GL_SPECULAR, none);
 		Textures.ground.bind();
 	}
-	
+	/**
+	 * Set material for the C4
+	 */
 	public static void setMtlC4(){
 		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.grey);
 		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.grey);

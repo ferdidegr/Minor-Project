@@ -15,6 +15,7 @@ import Utils.Timer;
 /**\
  * 
  * Static class to display the score after succeeding in the level
+ * It is a standalone, it is not linked to the menu. The menu class does not handle the events
  * 
  * @author ZL
  *
@@ -23,14 +24,20 @@ import Utils.Timer;
 public class ScoreScreen {
 	private static int fontSize;
 	
-	
+	/**
+	 * startpoint, GO stands for GameOver
+	 * @param score the score achieved in game
+	 * @param timeLeft the time left
+	 * @param health the health you have when ending the game
+	 */
 	public static void displayScoreatGO(int score, int timeLeft, double health){
 		boolean loop = true;
 		boolean ishighscore = false;
 		int highscore = 0;
-		// TODO Remove
-		System.out.println(score+" "+timeLeft+" "+health);
 		
+		/*
+		 * Get previous highscore from database
+		 */
 		String levelname = Menu.levelList.get(Menu.currentlevel).split("\\.maze")[0];
 		initview();
 		highscore = readDatabase(levelname);
@@ -61,6 +68,9 @@ public class ScoreScreen {
 			Display.update();
 			Display.sync(60);
 		}
+		/*
+		 * Catch all remaining keyboard events and do nothing with it
+		 */
 		while(Keyboard.next()){Keyboard.getEventKey();};
 		/*
 		 * If it is a success then display score computations
@@ -93,7 +103,7 @@ public class ScoreScreen {
 			while(loop){
 				glClear(GL_COLOR_BUFFER_BIT);			
 				
-				// When you succeeded in the level				
+				// poll for the inputfield				
 					ipf.poll();					
 
 				// End the loop when the ENTER key s pressed
@@ -118,7 +128,11 @@ public class ScoreScreen {
 			
 			Menu.score.update("UPDATE highscores SET name = '"+ipf.getString()+"' , score = "+score+" WHERE level='"+levelname+"'");
 			
-		}else if(score!= -200){
+		}
+		/*
+		 * No highscore and no failure
+		 */
+		else if(score!= -200){
 			t1.start();
 			int fonts1 = (int) (100 * Display.getHeight()/768f);
 			int fonts2 = (int) (50* Display.getHeight()/768f);

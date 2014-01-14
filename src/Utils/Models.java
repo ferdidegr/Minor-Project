@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Models {
-	public static int skybox, obelisk;
+	public static int skybox, obelisk, pickup;
 	public static List<Integer> monster = new ArrayList<Integer>(); // List with the different monster models for animation
 	private static DecimalFormat df = new DecimalFormat("000000"); // Format for loading the right modelfile
 	
@@ -33,6 +33,14 @@ public class Models {
 		 */
 		try {
 			obelisk = Model.loadModel("res/Models/", "obelisk.obj").generateDList();			
+		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
+		}
+		/*
+		 * Pickup
+		 */
+		try {
+			pickup = Model.loadModel("res/Models/", "cube.obj").generateDList();			
 		} catch (FileNotFoundException e) {
 		} catch (IOException e) {
 		}

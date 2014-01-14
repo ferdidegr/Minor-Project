@@ -107,7 +107,11 @@ public class IO {
 		throw new IOException();
 
 	}
-	
+	/**
+	 * load the icon of the Display
+	 * @param path path to the icon file
+	 * @return
+	 */
 	public static ByteBuffer loadIcon(String path) {
         
         try(InputStream inputStream = new FileInputStream(path)) {

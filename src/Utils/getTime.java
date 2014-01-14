@@ -28,13 +28,13 @@ public class getTime {
 		z 	Time zone 				General time zone 	Pacific Standard Time; PST; GMT-08:00
 		Z 	Time zone 				RFC 822 time zone 	-0800
 	 * @param input
-	 * @return
+	 * @return the current time in your desired format as a String
 	 */
 	
-		public static String getCurrentTimeStamp(String input) {
-	    SimpleDateFormat sdfDate = new SimpleDateFormat(input);
-	    Date now = new Date();
-	    String strDate = sdfDate.format(now);
-	    return strDate;
-		}
+	public static String getCurrentTimeStamp(String input) {
+    SimpleDateFormat sdfDate = new SimpleDateFormat(input);
+    Date now = new Date();
+    String strDate = sdfDate.format(now);
+    return strDate;
+	}
 }
