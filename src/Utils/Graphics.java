@@ -7,7 +7,11 @@ import java.nio.FloatBuffer;
 import org.lwjgl.util.glu.Cylinder;
 import org.lwjgl.util.glu.GLU;
 
-
+/**
+ * Some drawing methods
+ * @author ZL
+ *
+ */
 public class Graphics {
 	public static FloatBuffer  black,darkgrey, lightgrey, green, grey, white, blue, red;
 	
@@ -71,46 +75,13 @@ public class Graphics {
 	        glVertex3d(-size, height, -size);	        
 	        glEnd();
 	}
-	
-	public static void HoleFiller(boolean left, boolean fore, boolean right, boolean back, boolean down){
-	      glBegin(GL_QUADS);
-	      if(!back){
-	        glNormal3d(0, 0, -1);
-	        glTexCoord2d(0, 0);		glVertex3d(0.5, 1, 0.5);	 	        
-	        glTexCoord2d(0, 1);		glVertex3d(0.5, 0, 0.5);	
-	        glTexCoord2d(1, 1);		glVertex3d(-0.5, 0, 0.5);	      	     
-	        glTexCoord2d(1, 0);		glVertex3d(-0.5, 1, 0.5);		     
-	      }
-	      if(!right){
-	        glNormal3d(-1, 0, 0);
-	        glTexCoord2d(0, 0);		glVertex3d(0.5, 1, -0.5);	      	     
-	        glTexCoord2d(0, 1);		glVertex3d(0.5, 0, -0.5);	
-	        glTexCoord2d(1, 1);		glVertex3d(0.5, 0, 0.5);	      	     
-	        glTexCoord2d(1, 0);		glVertex3d(0.5, 1, 0.5);	
-	      }
-	      if(!fore){
-	        glNormal3d(0, 0, 1);
-	        glTexCoord2d(0, 0);		glVertex3d(-0.5, 1, -0.5);	      	     
-	        glTexCoord2d(0, 1);		glVertex3d(-0.5, 0, -0.5);
-	        glTexCoord2d(1, 1);		glVertex3d(0.5, 0, -0.5);	      	     
-	        glTexCoord2d(1, 0);		glVertex3d(0.5, 1, -0.5);		        
-	      }
-	      if(!left){
-	    	glNormal3d(1, 0, 0);
-	    	glTexCoord2d(0, 0);		glVertex3d(-0.5, 1, 0.5);	      	     
-	    	glTexCoord2d(0, 1);		glVertex3d(-0.5, 0, 0.5);
-	    	glTexCoord2d(1, 1);		glVertex3d(-0.5, 0, -0.5);	 	        
-	        glTexCoord2d(1, 0);		glVertex3d(-0.5, 1, -0.5);		        
-	      }
-	        	        
-	      	glNormal3d(0, 1, 0);
-	      	glTexCoord2d(0, 0);		glVertex3d(-0.5, 0, 0.5);	 
-	      	glTexCoord2d(0, 1);		glVertex3d(0.5, 0, 0.5);
-	      	glTexCoord2d(1, 1);		glVertex3d(0.5, 0, -0.5);
-	      	glTexCoord2d(1, 0);		glVertex3d(-0.5, 0, -0.5);	        
-	       glEnd();
-	}
-	
+	/**
+	 * Makes the ground have a thicker look
+	 * @param left
+	 * @param fore
+	 * @param right
+	 * @param back
+	 */
 	public static void groundThickner(boolean left, boolean fore, boolean right, boolean back){
 	      glBegin(GL_QUADS);
 	      if(!back){

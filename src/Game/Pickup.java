@@ -6,10 +6,11 @@ import java.util.Random;
 
 import Utils.Graphics;
 import Utils.Material;
+import Utils.Models;
 
 public class Pickup extends levelObject {
 	int type;
-	float size=1/4f;
+	float size=1/2f;
 	float origsize;
 	boolean on = false;
 	static int[][] maze;
@@ -55,9 +56,8 @@ public class Pickup extends levelObject {
 		glPushMatrix();
 		glDisable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
-		glTranslated(locationX, locationY, locationZ);
-		Material.setMtlPickup();
-		Graphics.renderCube(size, false, false, false, false);
+		glTranslated(locationX, locationY, locationZ);		
+		glCallList(Models.pickup);
 		glDisable(GL_BLEND);
 		glEnable(GL_TEXTURE_2D);
 		glPopMatrix();

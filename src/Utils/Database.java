@@ -87,38 +87,4 @@ public class Database {
 		conn.close();
 		stat.close();
 	}
-	/**
-	 * MAin not needed
-	 * @param args
-	 */
-	public static void main(String[] args){
-		Database score = new Database("db/sc.db");
-		try {
-			String test = "blablabla";
-			
-//			reset();
-			
-			score.update("INSERT INTO highscores (level, name, score) values ('"+test+"', 'Ferdi', 10000);");
-	
-
-//				stat.executeUpdate("DELETE FROM highscores WHERE level='blablabla'");
-//				dropTable("scores");
-//				createTable("student", "id", "name","address");
-			ResultSet rs = score.query("SELECT * FROM highscores;");
-			
-			while (rs.next()){
-				String lvl = rs.getString("level");
-				String nm = rs.getString("name");
-				int sc = rs.getInt("score");
-				System.out.println("Level: " + lvl);
-				System.out.println("Name: " + nm);
-				System.out.println("Score: " + sc);
-				System.out.println();
-			}
-			rs.close();
-			score.destroy();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
 }

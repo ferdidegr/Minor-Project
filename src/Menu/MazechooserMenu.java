@@ -62,11 +62,15 @@ public class MazechooserMenu extends ButtonList{
 		}
 
 	}
-	
+	/**
+	 * Display all levels as buttons
+	 */
 	public void display(){
 		super.display();
 	}	
-	
+	/**
+	 * When a new level is made the list should be renewed
+	 */
 	public void resetlist(){
 		lijst.clear();
 	}
