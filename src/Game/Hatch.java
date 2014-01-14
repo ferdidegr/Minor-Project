@@ -1,8 +1,8 @@
 package Game;
 import static org.lwjgl.opengl.GL11.*;
-import Intelligence.AStar;
 import Utils.Material;
-import Utils.Vector;
+import Utils.Timer;
+
 
 /**
  * Level element which you can open and close on command.
@@ -17,6 +17,8 @@ public class Hatch extends levelObject{
 	private float rotangle = 0;
 	private float rotspeed = 0f;
 	private HatchState hatchstatus;
+	private Timer timer = new Timer();
+	private boolean first = true;
 	/**
 	 * Places the hatch on the given location.
 	 * It is randomly determined if the begin state is opened or closed.
@@ -27,13 +29,10 @@ public class Hatch extends levelObject{
 	public Hatch(double x, double y, double z) {
 		super(x, y, z);
 		// Randomly determine of the hatch is open or closed
-		hatchstatus=(Math.random()>0.5?HatchState.CLOSED:HatchState.OPEN);
+		hatchstatus=HatchState.CLOSED;
 		// Set rotation angle to the chosen state
-		rotangle = (hatchstatus==HatchState.OPEN?90:0);
-		// Pathfinding
-		if(!hatchstatus.equals(HatchState.CLOSED)){
-			AStar.removeNode(new Vector(locationX, locationY, locationZ));
-		}
+		rotangle = 0;		
+		timer.start();
 	}
 	/**
 	 * Draw the hatch
@@ -79,13 +78,9 @@ public class Hatch extends levelObject{
 	 * Open or close the hatch on command
 	 */
 	public void change(){
-		if(hatchstatus==HatchState.CLOSED){
+		if(hatchstatus==HatchState.CLOSED && (timer.getTime()>5000 || first)){
 			hatchstatus = HatchState.OPENING;
-			AStar.removeNode(new Vector(locationX, locationY, locationZ));
-		}
-		if(hatchstatus==HatchState.OPEN){
-			hatchstatus = HatchState.CLOSING;
-			AStar.addNode(new Vector(locationX, locationY, locationZ));
+			first = false;
 		}
 	}
 	/**
@@ -127,9 +122,10 @@ public class Hatch extends levelObject{
 	public void update(int deltaTime) {
 		
 		if(rotangle >85) {rotangle =85;rotspeed*=0;hatchstatus = HatchState.OPEN;}
-		if(rotangle <0) {rotangle =0;rotspeed*=0;hatchstatus = HatchState.CLOSED;}
-		if(hatchstatus == HatchState.OPENING){rotspeed=0.1f;}
-		if(hatchstatus == HatchState.CLOSING){rotspeed= -0.1f;}
+		if(rotangle <0) {rotangle =0;rotspeed*=0;hatchstatus = HatchState.CLOSED; timer.start();}
+		if(hatchstatus == HatchState.OPENING){rotspeed=0.2f;}
+		if(hatchstatus == HatchState.CLOSING){rotspeed= -0.2f;}
+		if(hatchstatus == HatchState.OPEN){hatchstatus = HatchState.CLOSING;}
 		rotangle =rotangle%360 + rotspeed * deltaTime;
 	}
 	/**

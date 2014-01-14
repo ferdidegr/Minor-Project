@@ -4,8 +4,6 @@ import static org.lwjgl.opengl.GL11.*;
 
 import java.util.Random;
 
-import Utils.Graphics;
-import Utils.Material;
 import Utils.Models;
 
 public class Pickup extends levelObject {
