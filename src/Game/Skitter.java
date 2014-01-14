@@ -171,7 +171,7 @@ public class Skitter {
 
 	public void bindMonsters(ArrayList<Monster> monsterlijst) {
 		// Bind buffers into audio sources.
-		AL10.alGenSources(source);
+		
 
 		for (Monster mon : monsterlijst) {
 
@@ -244,18 +244,28 @@ public class Skitter {
 	}
 
 	public void playMenu() {
+		source.rewind();
+		System.out.println("play menu");
 		AL10.alSourcePlay(source.get(backgroundmenu));
+		
+
 	}
 
 	public void stopMenu() {
+		source.rewind();
 		AL10.alSourceStop(source.get(backgroundmenu));
 	}
 
 	public void playGame() {
+		source.rewind();
 		AL10.alSourcePlay(source.get(backgroundgame));
+		
+		
 	}
 
 	public void stopGame() {
+		source.rewind();
+		System.out.println("stop game");
 		AL10.alSourceStop(source.get(backgroundgame));
 	}
 
