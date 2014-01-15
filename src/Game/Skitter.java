@@ -34,6 +34,9 @@ public class Skitter {
 	/** Index of hurt sound */
 	public static final int hurt = 2;
 	
+	/** Index of button sound */
+	public static final int button = 3;
+	
 	/** Index of hurt sound */
 	public static final int explosion = 240;
 
@@ -106,6 +109,17 @@ public class Skitter {
 		waveFile = WaveData.create(new BufferedInputStream(fin));
 		AL10.alBufferData(buffer.get(hurt), waveFile.format, waveFile.data, waveFile.samplerate);
 		waveFile.dispose();
+		
+		// Hurt sound
+		try {
+			fin = new java.io.FileInputStream("res/Sound/button-3.wav");
+		} catch (java.io.FileNotFoundException ex) {
+			ex.printStackTrace();
+			return AL10.AL_FALSE;
+		}
+		waveFile = WaveData.create(new BufferedInputStream(fin));
+		AL10.alBufferData(buffer.get(button), waveFile.format, waveFile.data, waveFile.samplerate);
+		waveFile.dispose();
 
 		// Explosion sound
 		try {
@@ -174,6 +188,14 @@ public class Skitter {
 		AL10.alSource(source.get(hurt), AL10.AL_POSITION, (FloatBuffer) sourcePos.position(hurt * 3));
 		AL10.alSource(source.get(hurt), AL10.AL_VELOCITY, (FloatBuffer) sourceVel.position(hurt * 3));
 		AL10.alSourcei(source.get(hurt), AL10.AL_LOOPING, AL10.AL_FALSE);
+		
+		//binding button soundeffect
+		AL10.alSourcei(source.get(button), AL10.AL_BUFFER, buffer.get(button));
+		AL10.alSourcef(source.get(button), AL10.AL_PITCH, 1.0f);
+		AL10.alSourcef(source.get(button), AL10.AL_GAIN, 0.5f);
+		AL10.alSource(source.get(button), AL10.AL_POSITION, (FloatBuffer) sourcePos.position(button * 3));
+		AL10.alSource(source.get(button), AL10.AL_VELOCITY, (FloatBuffer) sourceVel.position(button * 3));
+		AL10.alSourcei(source.get(button), AL10.AL_LOOPING, AL10.AL_FALSE);
 		
 		//binding background music
 		AL10.alSourcei(source.get(backgroundgame), AL10.AL_BUFFER, buffer.get(backgroundgame));
@@ -288,8 +310,11 @@ public class Skitter {
 	}
 	
 	public void playHurt(){
-		System.out.println("skitter-hurt!");
 		AL10.alSourcePlay(source.get(hurt));
+	}
+	
+	public void playButton(){
+		AL10.alSourcePlay(source.get(button));
 	}
 
 	public void play(ArrayList<Monster> monsterlijst, Player player) {
@@ -312,10 +337,11 @@ public class Skitter {
 		int playing = AL10.alGetSourcei(source.get(sourceid), AL10.AL_SOURCE_STATE);
 		while(playing == AL10.AL_PLAYING){
 			sourceid++;
+			if (sourceid>255) break;
 			playing = AL10.alGetSourcei(source.get(sourceid), AL10.AL_SOURCE_STATE);
 		}
 		//dan lege source: positie instellen en binden
-		
+		if (sourceid<=255){
 		// positie
 		sourcePos.position(sourceid * 3);
 		sourcePos.put((float) x);
@@ -332,6 +358,7 @@ public class Skitter {
 		
 		//and play
 		AL10.alSourcePlay(source.get(sourceid));
+		}
 	}
 
 	public void cleanup() {
