@@ -169,7 +169,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	Intelligence.init();
 	
 	minimap = new MiniMap(maze);		//load the minimap
-	int ID=2;
+	int ID=10;
 		
 	for(int j = 0; j < maze.length; j++){
 		for(int i = 0; i<maze[0].length; i++){

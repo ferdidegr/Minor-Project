@@ -1,7 +1,10 @@
 package Game;
 
 import static org.lwjgl.opengl.GL11.*;
+
 import java.util.ArrayList;
+
+import Menu.Menu;
 import ParticleSystem.ParticleEmitter;
 import Utils.Material;
 import Utils.Timer;
@@ -33,6 +36,8 @@ public class C4 extends levelObject{
 	private Timer timer = new Timer();
 	// The corners of the C4 package, for collision detection
 	private double Xmin, Xmax,Zmin,Zmax;
+	// Sound
+	private Skitter skitter;
 	/**
 	 * constructor
 	 * @param x Xlocation of the midpoint
@@ -45,6 +50,7 @@ public class C4 extends levelObject{
 		this.Zmin = z-0.5*scale;
 		this.Xmax = x+0.5*scale;
 		this.Zmax = z+0.5*scale;
+		skitter=Menu.getSkitter();
 		// Create drawlist when not already made
 		if(C4model == 0){
 			C4model = glGenLists(1);
@@ -215,6 +221,9 @@ public class C4 extends levelObject{
 			activated = true;	
 			// Start timer
 			timer.start();
+			
+			//play explosion sound
+			skitter.playExplosion(locationX,locationY,locationZ);
 		}
 	}
 	
