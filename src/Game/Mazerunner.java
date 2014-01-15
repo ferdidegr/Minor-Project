@@ -185,7 +185,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			else if(maze[j][i]==11){
 				// Initialize the player.
 				player = new Player( i * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// x-position
-									 SQUARE_SIZE *2 ,					// y-position
+									 SQUARE_SIZE * 7/2.0 ,					// y-position
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 	// z-position
 									 0, 0 ,									// horizontal and vertical angle
 									 0.25*SQUARE_SIZE,SQUARE_SIZE* 3/2.0);	// player width and player height			

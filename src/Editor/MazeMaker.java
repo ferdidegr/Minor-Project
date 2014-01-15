@@ -112,6 +112,7 @@ public class MazeMaker {
 		/*
 		 * Menu bar
 		 */
+		glColor3f(1, 1, 1);
 		glEnable(GL_TEXTURE_2D);						// Enable Textures
 		Textures.texmenubar.bind();						// Set this texture as active
 		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
