@@ -1,5 +1,7 @@
 package Game;
 
+import Menu.Menu;
+
 
 /**
  * Class to keep track of the health of all living things in the maze.
@@ -12,6 +14,7 @@ public class Health {
 	private int health;				// current health
 	private int maxHealth;			// initial maximum health
 	private boolean isPlayer;		// Is the carrier of this health the player
+	private Skitter skitter;
 	/**
 	 * Constructor: initializes the health
 	 * @param health integer value
@@ -20,6 +23,7 @@ public class Health {
 		setmaxHealth(health);
 		setHealth(health);
 		this.isPlayer=isPlayer;
+		skitter=Menu.getSkitter();
 	}
 	/**
 	 * set the constant int maximum health
@@ -52,9 +56,9 @@ public class Health {
 			setHealth(maxHealth);
 		}
 		if (isPlayer && addition<0){
+			skitter.playHurt();
+			System.out.println("hurt!");
 			
-			//Sound.playEffect("hurt");
-			//Hier nog hurt effect implementeren!
 		}
 	}
 	/**
