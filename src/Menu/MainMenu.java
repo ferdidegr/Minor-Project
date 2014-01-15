@@ -88,8 +88,6 @@ public class MainMenu extends ButtonList {
 	
 	public void display(){
 		super.display();
-		double textwidth = Menu.mainfont.getWidth(30, "WELKOM BIJ TRAPPER");
-		Menu.mainfont.draw((float) ((Display.getWidth()-textwidth)/2), 0, 30, "WELKOM BIJ TRAPPER");
 	}
 	
 }
