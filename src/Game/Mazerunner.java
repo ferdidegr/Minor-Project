@@ -120,8 +120,6 @@ public void start(String levelname) throws Exception{
 		// Update all objects in the maze
 		updateMovement();
 		if(Menu.getState()==GameState.GAMEOVER)break;
-		// Update intelligence
-		Intelligence.update();
 		
 		// Draw objects on screen
 		display();
@@ -166,7 +164,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	moveable = new ArrayList<levelObject>();
 	pickuplijst = new ArrayList<Pickup>();
 	Pickup.initPickup(maze);
-	Intelligence.init();
 	
 	minimap = new MiniMap(maze);		//load the minimap
 	int ID=2;
@@ -415,6 +412,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        if(input.minimap){drawHUD();}
 		        glPopMatrix();
 		        player.draw();
+		        
+		        //Refresh maze every 30 seconds
+		        if(timer%30000<20){
+		        	AStar.loadMaze(maze);
+		        }
 
 	}
 	
