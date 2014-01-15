@@ -112,6 +112,7 @@ public class MazeMaker {
 		/*
 		 * Menu bar
 		 */
+		glColor3f(1, 1, 1);
 		glEnable(GL_TEXTURE_2D);						// Enable Textures
 		Textures.texmenubar.bind();						// Set this texture as active
 		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
@@ -262,30 +263,28 @@ public class MazeMaker {
 		/*
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
-		buttonlist.add(new Button(LEFT, 0.1f,Textures.texempty, 0));		// 0
-		buttonlist.add(new Button(RIGHT, 0.1f,Textures.texwall1, 1));		// 1 
-		buttonlist.add(new Button(LEFT, 1.2f,Textures.texwall2, 2));		// 2 
-		buttonlist.add(new Button(RIGHT, 1.2f,Textures.texwall3, 3));		// 3 
-		buttonlist.add(new Button(LEFT, 2.3f,Textures.texwall4, 4));		// 4 
-		buttonlist.add(new Button(RIGHT, 2.3f,Textures.texwall5, 5));		// 5 
-		buttonlist.add(new Button(LEFT, 3.4f,Textures.texwall6, 6));		// 6 
-		buttonlist.add(new Button(RIGHT, 3.4f,Textures.texwall7, 7));		// 7 
-
+		buttonlist.add(new Button(LEFT, 0.1f,Textures.texload, 98));		// 98 load button 
+		buttonlist.add(new Button(RIGHT, 0.1f,Textures.texsave, 99));		// 99 save button
+		buttonlist.add(new Button(LEFT, 1.2f,Textures.texnewmaze, 100));	// 100 New maze
+		buttonlist.add(new Button(RIGHT, 1.2f,Textures.texresize, 101));	// 101 Resize button
+		buttonlist.add(new Button(LEFT, 2.3f,Textures.texquit, 110)); 		// 110 Exit button
 		
-		buttonlist.add(new Button(LEFT, 5.6f,Textures.texflaggreen,11));	// 11 flaggreen
-		buttonlist.add(new Button(RIGHT, 5.6f,Textures.texflagred,12));		// 12 flagred
-		buttonlist.add(new Button(LEFT, 6.7f,Textures.texspike, 13));		// 13
-		buttonlist.add(new Button(RIGHT, 6.7f,Textures.scorpion, 14));		// 14
-		buttonlist.add(new Button(LEFT, 7.8f,Textures.pit, 15));			// 15
-		buttonlist.add(new Button(RIGHT, 7.8f,Textures.hatch, 16));			// 15
-		buttonlist.add(new Button(LEFT, 8.9f,Textures.movwall, 17));			// 15
-
-		buttonlist.add(new Button(LEFT, 10.5f,Textures.texload, 98));		// 98 load button 
-		buttonlist.add(new Button(RIGHT, 10.5f,Textures.texsave, 99));		// 99 save button
-		buttonlist.add(new Button(LEFT, 11.6f,Textures.texnewmaze, 100));	// 100 New maze
-		buttonlist.add(new Button(RIGHT, 11.6f, Textures.texresize, 101));	// Resize button
-		buttonlist.add(new Button(LEFT, 12.7f,Textures.texquit,110)); 	// 110 Exit button
-
+		buttonlist.add(new Button(LEFT, 4.0f,Textures.texempty, 0));		// 0
+		buttonlist.add(new Button(RIGHT, 4.0f,Textures.texwall1, 1));		// 1 
+		buttonlist.add(new Button(LEFT, 5.1f,Textures.texwall2, 2));		// 2 
+		buttonlist.add(new Button(RIGHT, 5.1f,Textures.texwall3, 3));		// 3 
+		buttonlist.add(new Button(LEFT, 6.2f,Textures.texwall4, 4));		// 4 
+		buttonlist.add(new Button(RIGHT, 6.2f,Textures.texwall5, 5));		// 5 
+		buttonlist.add(new Button(LEFT, 7.3f,Textures.texwall6, 6));		// 6 
+		buttonlist.add(new Button(RIGHT, 7.3f,Textures.texwall7, 7));		// 7 
+		
+		buttonlist.add(new Button(LEFT, 9.0f,Textures.texflaggreen,11));	// 11 flaggreen
+		buttonlist.add(new Button(RIGHT, 9.0f,Textures.texflagred,12));		// 12 flagred
+		buttonlist.add(new Button(LEFT, 10.1f,Textures.texspike, 13));		// 13
+		buttonlist.add(new Button(RIGHT, 10.1f,Textures.scorpion, 14));		// 14
+		buttonlist.add(new Button(LEFT, 11.2f,Textures.pit, 15));			// 15
+		buttonlist.add(new Button(RIGHT, 11.2f,Textures.hatch, 16));		// 15
+		buttonlist.add(new Button(LEFT, 12.3f,Textures.movwall, 17));		// 15
 	}
 	/**
 	 * ********************************************
