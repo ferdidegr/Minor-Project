@@ -69,7 +69,7 @@ public class MazeMap implements Serializable{
 	 * 17 - moving walls
 	 */
 	public void draw(){
-		
+		glColor3f(1, 1, 1);
 		glEnable(GL_TEXTURE_2D);
 
 		for(int j = maze.length-1;j>=0;j--){

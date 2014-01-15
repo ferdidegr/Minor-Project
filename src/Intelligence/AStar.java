@@ -113,8 +113,6 @@ public class AStar {
 			}
 			Collections.reverse(Route);
 		}
-		for(Node no: Route){
-		}
 		return Route;
 	}
 	

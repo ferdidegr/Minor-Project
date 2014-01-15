@@ -84,19 +84,21 @@ public class MiniMap {
 
 		glColor4f(0.2f, 0.2f, 1f, 0.5f);
 		for (Monster monster : monsterlijst) {
-			glColor3f(0.2f, 0.2f, 1f);
-			if (monster.playerSight()) {
-				glColor4f(0.2f, 1.0f, 0.2f, 0.5f);
-			}
+			if(monster.active){
+				glColor3f(0.2f, 0.2f, 1f);
+				if (monster.playerSight()) {
+					glColor4f(0.2f, 1.0f, 0.2f, 0.5f);
+				}
 
-			int relX = locX - monster.getGridX(SQUARE_SIZE);
-			int relZ = locZ - monster.getGridZ(SQUARE_SIZE);
-			if ((Math.abs(relX) < 10) && (Math.abs(relZ) < 10)) {
-				glPushMatrix();
-				glTranslated(size * 10, -size * 10, 0);
-				glTranslated(-relX * size, -relZ * size, 0);
-				drawBlock();
-				glPopMatrix();
+				int relX = locX - monster.getGridX(SQUARE_SIZE);
+				int relZ = locZ - monster.getGridZ(SQUARE_SIZE);
+				if ((Math.abs(relX) < 10) && (Math.abs(relZ) < 10)) {
+					glPushMatrix();
+					glTranslated(size * 10, -size * 10, 0);
+					glTranslated(-relX * size, -relZ * size, 0);
+					drawBlock();
+					glPopMatrix();
+				}
 			}
 
 		}

@@ -22,13 +22,13 @@ public class Monster extends levelObject {
 	protected double distanceToPlayer;
 	private int RouteCount = 0;
 	public boolean isDead = false;
-	private boolean PlayerinSight = true;
 	private Health health;
 	private int immunitycounter;
 	private int flickercounter;
 	private int monsterframe = 0;
 	private ArrayList<Node> Route;
 	private AStar pathfinding;
+	public boolean active = false;
 	private boolean isplaying;
 	private double eps = 1E-5;
 	private int ID;
@@ -90,28 +90,36 @@ public class Monster extends levelObject {
 		// Will be removed from the game next iteration
 		if (locationY < -5) {
 			isDead = true;
-		} else {
-
-			RouteCount++;
-			if(RouteCount>10 && findPath()){
-				RouteCount = 0;
-			}
-			checkRoute();
-//			System.out.println(dir);
-			
-			avoidWalls();
-			
-//			System.out.println("After avoidwalls: " + dir);
-			
-			dir.normalize2D();
-			updateV(deltaTime);			
-			
-			collision();
-			
+		} 
+		if (playerSight()){
+			active = true;
+		}
+		if(active) {
+			walk(deltaTime);
 		}
 		if(isDead){
 			Mazerunner.status.addScore(100);
+			AStar.removeNode(new Vector(locationX, locationY, locationZ));
 		}
+	}
+	
+	/**
+	 * Route wordt gevormd en monster past direction aan
+	 * @param deltaTime
+	 */
+	public void walk(int deltaTime){
+		RouteCount++;
+		if(RouteCount>10 && findPath()){
+			RouteCount = 0;
+		}
+		checkRoute();
+		
+		avoidWalls();
+		
+		dir.normalize2D();
+		updateV(deltaTime);			
+		
+		collision();
 	}
 	
 	/**
@@ -439,7 +447,7 @@ public class Monster extends levelObject {
 		if (flickercounter>0){
 			flickercounter-=1;
 		}
-		if (PlayerinSight || distanceToPlayer < 5) {
+		if (playerSight() || distanceToPlayer < 5) {
 			if (flickercounter%10<5){
 			glPushMatrix();
 
