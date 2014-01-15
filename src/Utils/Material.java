@@ -68,6 +68,7 @@ public class Material {
 		glMaterial( GL_FRONT, GL_DIFFUSE, Graphics.white);
 		glMaterial(	GL_FRONT, GL_AMBIENT, Graphics.darkgrey);
 		glMaterial(GL_FRONT, GL_SPECULAR, none);
+		TextureImpl.bindNone();
 		Textures.hatch.bind();	
 	}
 	/**
