@@ -1,5 +1,6 @@
 package Menu;
 
+import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
 public class DiffMenu extends ButtonList{
@@ -43,6 +44,8 @@ public class DiffMenu extends ButtonList{
 	
 	public void display(){
 		super.display();
+		double width = Menu.mainfont.getWidth(30*Display.getHeight()/768f, "GAME DIFFICULTY");
+		Menu.mainfont.draw((float) ((Display.getWidth()-width)/2), 0, 30*Display.getHeight()/768f, "GAME DIFFICULTY");	
 		selectedColor();
 	}
 	

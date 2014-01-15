@@ -4,6 +4,7 @@ package Menu;
 import org.lwjgl.opengl.Display;
 
 
+
 import static org.lwjgl.opengl.GL11.*;
 import Utils.Text;
 import Game.Mazerunner;
@@ -54,7 +55,8 @@ public class PauseMenu extends ButtonList{
 	public void display(){		
 
 		super.display();
-		Menu.mainfont.draw(Menu.getScreenx()/2, 0, 30, "PAUSE");
+		double width = Menu.mainfont.getWidth(30*Display.getHeight()/768f, "PAUSE");
+		Menu.mainfont.draw(Menu.getScreenx()/2, 0, 30*Display.getHeight()/768f, "PAUSE");
 	
 	}
 	

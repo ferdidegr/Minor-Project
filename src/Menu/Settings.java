@@ -1,5 +1,7 @@
 package Menu;
 
+import org.lwjgl.opengl.Display;
+
 import Utils.Text;
 
 
@@ -25,7 +27,7 @@ public class Settings extends ButtonList {
 	public void init(int x, int y){
 		int counter =1;
 		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Difficulty", MenuButton.Alignment.CENTER));		counter++;
-		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Sensitivity", MenuButton.Alignment.CENTER));	counter++;
+		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Mouse Sensitivity", MenuButton.Alignment.CENTER));	counter++;
 		lijst.add(new MenuButton(2*counter* y, Textures.start, Textures.startover,counter, "Main Menu", MenuButton.Alignment.CENTER));		counter++;
 
 	}
@@ -57,6 +59,7 @@ public class Settings extends ButtonList {
 	
 	public void display(){
 		super.display();
-		Menu.mainfont.draw(Menu.getScreenx()/2, 0, 30, "SETTINGS");		
+		double width = Menu.mainfont.getWidth(30*Display.getHeight()/768f, "SETTINGS");
+		Menu.mainfont.draw((float) ((Display.getWidth()-width)/2), 0, 30*Display.getHeight()/768f, "SETTINGS");		
 	}
 }
