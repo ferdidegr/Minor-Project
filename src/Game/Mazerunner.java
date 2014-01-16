@@ -99,7 +99,7 @@ public void start(String levelname) throws Exception{
 	AStar.loadMaze(maze);
 	
 	initTimer();
-	c4Count = 2;
+	c4Count = 200;
 	
 	previousTime = Calendar.getInstance().getTimeInMillis();
 	
