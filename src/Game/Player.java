@@ -330,7 +330,7 @@ public class Player extends GameObject {
 				}
 			}
 			if(locationY<-20 || health.getHealth()<=0){isDead=true;}
-			System.out.println(locationX+" "+locationY+" "+locationZ);
+//			System.out.println(locationX+" "+locationY+" "+locationZ);
 	}
 
 	/**
