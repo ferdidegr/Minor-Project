@@ -66,8 +66,11 @@ public class AStar {
 		return true;
 	}
 	
-	public void tryEnd(Node en){
-		if(!setEnd(en)){
+	public boolean tryEnd(Node en){
+		int countTries = 0;
+		while(countTries<10){
+			if(setEnd(en))return true;
+			countTries++;
 			Node[] considered = en.getSuccessors();
 			double shortestd = Double.MAX_VALUE;
 			for(Node no: considered){
@@ -77,8 +80,8 @@ public class AStar {
 					en = no;
 				}
 			}
-			tryEnd(en);
 		}
+		return false;
 	}
 	
 	/**
