@@ -152,12 +152,13 @@ public class InputField {
 	                } else if (sb.length() > 0) {
 	                    sb.setLength(sb.length() - 1);
 	                }
+	                if(Keyboard.getEventKey()==Keyboard.KEY_RETURN){isfocused= false;mousex=0;mousey=0;while(Keyboard.next()){}}
 	                
 				}
 				// Key release event, this solves the problem that releasing the ENTER key triggers an event in the main program
 				else{
 					// Check for the enter key
-	                if(Keyboard.getEventKey()==Keyboard.KEY_RETURN){isfocused= false;mousex=0;mousey=0;while(Keyboard.next()){}}
+//	                if(Keyboard.getEventKey()==Keyboard.KEY_RETURN){isfocused= false;mousex=0;mousey=0;while(Keyboard.next()){}}
 				}
 				
 			}		
