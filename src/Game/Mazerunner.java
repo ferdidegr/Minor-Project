@@ -77,8 +77,6 @@ public void start(String levelname) throws Exception{
 	loadingscreen();
 	Menu.ingame = true;	
 	skitter=Menu.getSkitter();
-	skitter.stopMenu();
-	skitter.playGame();
 	
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
@@ -87,6 +85,9 @@ public void start(String levelname) throws Exception{
 	level = "levels/"+levelname;
 	timer = 0;
 	c4 = new ArrayList<C4>();
+	
+	skitter.stopMenu();
+	skitter.playGame();
 						
 	// TODO remove
 	Display.setResizable(false);
