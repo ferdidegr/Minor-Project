@@ -7,10 +7,10 @@ public class DiffMenu extends ButtonList{
 
 	@Override
 	public void init(int x, int y) {
-		lijst.add(new MenuButton(2*y, Textures.start, Textures.startover,1, "Difficulty Easy", MenuButton.Alignment.CENTER));
-		lijst.add(new MenuButton(4*y, Textures.start, Textures.startover,2, "Difficulty Medium", MenuButton.Alignment.CENTER));
-		lijst.add(new MenuButton(6*y, Textures.start, Textures.startover,3, "Difficulty Hard", MenuButton.Alignment.CENTER));
-		lijst.add(new MenuButton(8*y, Textures.start, Textures.startover,4, "Difficulty Insane", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(2*y, Textures.start, Textures.startover,1, "Easy", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(4*y, Textures.start, Textures.startover,2, "Medium", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(6*y, Textures.start, Textures.startover,3, "Hard", MenuButton.Alignment.CENTER));
+		lijst.add(new MenuButton(8*y, Textures.start, Textures.startover,4, "Insane", MenuButton.Alignment.CENTER));
 		lijst.add(new MenuButton(12*y, Textures.start, Textures.startover,5, "Back", MenuButton.Alignment.CENTER));
 		
 	}

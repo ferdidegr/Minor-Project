@@ -642,7 +642,15 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		}
 		
 		public void initTimer(){
-			MAXTIME = 5*1000 * scorpcount + maze[0].length*maze.length*100;
+			int movwallcount = 0;
+			int emptycount = 0;
+			for(int j=0; j< maze.length; j++){
+				for(int i = 0 ; i < maze[0].length; i++){
+					if(maze[j][i]==17){++movwallcount;}
+					if(maze[j][i]==0){++emptycount;}
+				}
+			}
+			MAXTIME = 5*1000 * scorpcount + maze[0].length*maze.length*100 + 1500*movwallcount - 100*emptycount;
 		}
 		
 		public Player getPlayer(){return player;}

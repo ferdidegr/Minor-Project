@@ -167,7 +167,7 @@ public class ScoreScreen {
 	 */
 	private static int computescore(double health, int timeLeft, int score) {
 		Timer tempt = new Timer();
-		int healthbonus = (int) (3 * health);
+		int healthbonus = (int) (2 * health);
 		int timebonus 	= (int) (timeLeft/100f);
 		int diffmodifier = 1;
 		// Difficulty

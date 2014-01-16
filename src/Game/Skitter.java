@@ -184,7 +184,7 @@ public class Skitter {
 		//binding hurt soundeffect
 		AL10.alSourcei(source.get(hurt), AL10.AL_BUFFER, buffer.get(hurt));
 		AL10.alSourcef(source.get(hurt), AL10.AL_PITCH, 1.0f);
-		AL10.alSourcef(source.get(hurt), AL10.AL_GAIN, 0.5f);
+		AL10.alSourcef(source.get(hurt), AL10.AL_GAIN, 0.3f);
 		AL10.alSource(source.get(hurt), AL10.AL_POSITION, (FloatBuffer) sourcePos.position(hurt * 3));
 		AL10.alSource(source.get(hurt), AL10.AL_VELOCITY, (FloatBuffer) sourceVel.position(hurt * 3));
 		AL10.alSourcei(source.get(hurt), AL10.AL_LOOPING, AL10.AL_FALSE);
@@ -192,7 +192,7 @@ public class Skitter {
 		//binding button soundeffect
 		AL10.alSourcei(source.get(button), AL10.AL_BUFFER, buffer.get(button));
 		AL10.alSourcef(source.get(button), AL10.AL_PITCH, 1.0f);
-		AL10.alSourcef(source.get(button), AL10.AL_GAIN, 0.5f);
+		AL10.alSourcef(source.get(button), AL10.AL_GAIN, 0.1f);
 		AL10.alSource(source.get(button), AL10.AL_POSITION, (FloatBuffer) sourcePos.position(button * 3));
 		AL10.alSource(source.get(button), AL10.AL_VELOCITY, (FloatBuffer) sourceVel.position(button * 3));
 		AL10.alSourcei(source.get(button), AL10.AL_LOOPING, AL10.AL_FALSE);
@@ -200,7 +200,7 @@ public class Skitter {
 		//binding background music
 		AL10.alSourcei(source.get(backgroundgame), AL10.AL_BUFFER, buffer.get(backgroundgame));
 		AL10.alSourcef(source.get(backgroundgame), AL10.AL_PITCH, 1.0f);
-		AL10.alSourcef(source.get(backgroundgame), AL10.AL_GAIN, 0.5f);
+		AL10.alSourcef(source.get(backgroundgame), AL10.AL_GAIN, 0.35f);
 		AL10.alSource(source.get(backgroundgame), AL10.AL_POSITION, (FloatBuffer) sourcePos.position(backgroundgame * 3));
 		AL10.alSource(source.get(backgroundgame), AL10.AL_VELOCITY, (FloatBuffer) sourceVel.position(backgroundgame * 3));
 		AL10.alSourcei(source.get(backgroundgame), AL10.AL_LOOPING, AL10.AL_TRUE);
@@ -351,7 +351,7 @@ public class Skitter {
 		//binding explosion soundeffect
 		AL10.alSourcei(source.get(sourceid), AL10.AL_BUFFER, buffer.get(explosion));
 		AL10.alSourcef(source.get(sourceid), AL10.AL_PITCH, 1.0f);
-		AL10.alSourcef(source.get(sourceid), AL10.AL_GAIN, 1.0f);
+		AL10.alSourcef(source.get(sourceid), AL10.AL_GAIN, 2.0f);
 		AL10.alSource(source.get(sourceid), AL10.AL_POSITION, (FloatBuffer) sourcePos.position(sourceid * 3));
 		AL10.alSource(source.get(sourceid), AL10.AL_VELOCITY, (FloatBuffer) sourceVel.position(sourceid * 3));
 		AL10.alSourcei(source.get(sourceid), AL10.AL_LOOPING, AL10.AL_FALSE);
