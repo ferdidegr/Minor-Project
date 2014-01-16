@@ -146,7 +146,7 @@ public class Skitter {
 		try {
 			ogg = decoder.getData(fin);
 			AL10.alBufferData(buffer.get(backgroundgame), ogg.channels > 1 ? AL10.AL_FORMAT_STEREO16 : AL10.AL_FORMAT_MONO16, ogg.data, ogg.rate);
-			System.out.println("Error?: " + (AL10.alGetError() != AL10.AL_NO_ERROR));
+//			System.out.println("Error?: " + (AL10.alGetError() != AL10.AL_NO_ERROR));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,7 +167,7 @@ public class Skitter {
 		try {
 			ogg = decoder.getData(fin);
 			AL10.alBufferData(buffer.get(backgroundmenu), ogg.channels > 1 ? AL10.AL_FORMAT_STEREO16 : AL10.AL_FORMAT_MONO16, ogg.data, ogg.rate);
-			System.out.println("Error?: " + (AL10.alGetError() != AL10.AL_NO_ERROR));
+//			System.out.println("Error?: " + (AL10.alGetError() != AL10.AL_NO_ERROR));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

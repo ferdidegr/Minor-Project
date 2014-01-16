@@ -27,12 +27,13 @@ public class Pickup extends levelObject {
 				0,random.nextInt(maze.length)*Mazerunner.SQUARE_SIZE);
 		
 		this.type=random.nextInt(5);
-		System.out.println(this.getGridZ(Mazerunner.SQUARE_SIZE)+" "+this.getGridX(Mazerunner.SQUARE_SIZE));
-		System.out.println(maze[0].length+" "+maze.length);
+//		System.out.println(this.getGridZ(Mazerunner.SQUARE_SIZE)+" "+this.getGridX(Mazerunner.SQUARE_SIZE));
+//		System.out.println(maze[0].length+" "+maze.length);
 		while(maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]>0 
 				&& maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]<10 
 				|| alpu[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==1
-				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==15){
+				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==15
+				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==17){
 			locationZ=random.nextInt(maze.length)*Mazerunner.SQUARE_SIZE;
 			locationX=random.nextInt(maze[0].length)*Mazerunner.SQUARE_SIZE;
 		}

@@ -418,7 +418,7 @@ public class Player extends GameObject {
 		if(obj instanceof Spikes){spikereaction();}
 		if(obj instanceof EndObelisk){
 			if(Mazerunner.monsterlijst.size()!=0){
-				System.out.println("Niet alle monsters zijn nog dood!");
+//				System.out.println("Niet alle monsters zijn nog dood!");
 			}else{
 				Menu.setState(GameState.GAMEOVER);
 			}

@@ -234,7 +234,7 @@ public class MazeMaker {
 		switch(ID){
 		    
 			case 99: {saveMaze(); 	break;}
-			case 98:{loadMaze();	System.out.println(flaggreenx+" "+flaggreeny);break;}
+			case 98:{loadMaze();	break;}
 			case 100: {newMaze();	break;}
 			case 101: {resizeMaze(); break;}
 			case 110:{exit = true; 	 break;}
@@ -329,7 +329,7 @@ public class MazeMaker {
 					green_exists=true;
 				if (maze[i][j]==12)
 					red_exists=true;
-				System.out.println(i+" "+j+", output: "+maze[i][j]);
+//				System.out.println(i+" "+j+", output: "+maze[i][j]);
 				
 			}
 		}
@@ -346,7 +346,7 @@ public class MazeMaker {
 	public void executeselectedbut(int Nummer, int x, int y){
 		// If you are on the left side of the screen (Maze side)
 		if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
-			System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
+//			System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
 			switch(Nummer){
 			case 0:{maze.setObject(0, x, y);break;} // Empty spot
 			case 1:{maze.setObject(1, x, y);break;}	// Wall
