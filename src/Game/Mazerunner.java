@@ -134,9 +134,9 @@ public void start(String levelname) throws Exception{
 	}
 	cleanup();	
 	Menu.ingame = false;
-	System.out.println(Menu.getState().toString());
+//	System.out.println(Menu.getState().toString());
 	if(Menu.getState().equals(GameState.GAME) || player.isDead){
-		System.out.println("hier");
+//		System.out.println("hier");
 		Menu.setState(GameState.GAMEOVER);
 		changetoHUD();
 		ScoreScreen.initview();
@@ -311,7 +311,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_LIGHT0);
 //		glDisable(GL_BLEND);
-		System.out.println("cleanup!");
 		skitter.stopGame();
 		skitter.playMenu();
 //		skitter.deleteSources();

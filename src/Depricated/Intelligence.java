@@ -1,4 +1,4 @@
-package Game;
+package Depricated;
 
 import java.util.ArrayList;
 

@@ -153,7 +153,7 @@ public class ScoreScreen {
 				Display.sync(60);
 			}
 		}
-		System.out.println(ipf.getString());
+//		System.out.println(ipf.getString());
 		Highscores HS = (Highscores)Menu.menus.get(GameState.HIGHSCORE);
 		HS.reset();
 	}	
@@ -244,7 +244,7 @@ public class ScoreScreen {
 		try {
 			
 			String query = "SELECT score FROM highscores WHERE level='"+levelname+"';";
-			System.out.println(query);
+//			System.out.println(query);
 			ResultSet rs = Menu.score.query(query);
 			int counter1 = 0;
 			while(rs.next()){

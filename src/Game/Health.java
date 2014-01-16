@@ -57,7 +57,6 @@ public class Health {
 		}
 		if (isPlayer && addition<0){
 			skitter.playHurt();
-			System.out.println("hurt!");
 			
 		}
 	}
