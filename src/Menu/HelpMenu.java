@@ -5,9 +5,9 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.Display;
 
 public class HelpMenu extends ButtonList{
-	private int helpID = 0;
-	private int numMenus = 8;
-	private int offset = 75;
+	private int helpID = 1;
+	private int numMenus = 9;
+	private int offset = (int) (75*Display.getWidth()/1024f);
 	@Override
 	public void init(int x, int y) {
 		int buttonyloc = (int) (Display.getHeight()-1.5*MenuButton.height);
@@ -24,10 +24,10 @@ public class HelpMenu extends ButtonList{
 				Menu.setState(GameState.MAIN);
 			break;
 			case 2:
-				helpID = Math.min(numMenus-1, ++helpID);
+				helpID = Math.min(numMenus, ++helpID);
 			break;
 			case 3:
-				helpID = Math.max(0, --helpID);
+				helpID = Math.max(1, --helpID);
 			break;
 		}
 	}
@@ -39,14 +39,15 @@ public class HelpMenu extends ButtonList{
 		
 		glColor3f(1,1,1);
 		
-		if(helpID==0)	Textures.help2.bind();
-		if(helpID==1)	Textures.help3.bind();
-		if(helpID==2)	Textures.help4.bind();
-		if(helpID==3)	Textures.help5.bind();
-		if(helpID==4)	Textures.help6.bind();
-		if(helpID==5)	Textures.help7.bind();
-		if(helpID==6)	Textures.help8.bind();
-		if(helpID==7)	Textures.help1.bind();
+		if(helpID==1)	Textures.help1.bind();
+		if(helpID==2)	Textures.help2.bind();
+		if(helpID==3)	Textures.help3.bind();
+		if(helpID==4)	Textures.help4.bind();
+		if(helpID==5)	Textures.help5.bind();
+		if(helpID==6)	Textures.help6.bind();
+		if(helpID==7)	Textures.help7.bind();
+		if(helpID==8)	Textures.help8.bind();
+		if(helpID==9)	Textures.help9.bind();
 		glEnable(GL_TEXTURE_2D);
 		glBegin(GL_QUADS);
 			glTexCoord2d(0, 0); 	glVertex2d(offset, offset);
