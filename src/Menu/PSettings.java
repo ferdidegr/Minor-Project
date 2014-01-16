@@ -47,7 +47,7 @@ public class PSettings extends ButtonList {
 	public void display(){
 		super.display();
 		double width = Menu.mainfont.getWidth(30*Display.getHeight()/768f, "SETTINGS");
-		Menu.mainfont.draw(Menu.getScreenx()/2, 0, 30*Display.getHeight()/768f, "SETTINGS");
+		Menu.mainfont.draw((float) ((Display.getWidth()-width)/2), 0, 30*Display.getHeight()/768f, "SETTINGS");
 
 	}
 }
