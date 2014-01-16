@@ -2,6 +2,7 @@ package UnitTests;
 
 import static org.junit.Assert.*;
 import Intelligence.Node;
+import Utils.Vector;
 
 import org.junit.After;
 import org.junit.Before;
@@ -56,9 +57,28 @@ public Node n1, n2;
 	}
 	
 	@Test
-	public void equalsTestFalse(){
+	public void equalsTestObject(){
+		Vector vec = new Vector(1, 0, 2);
+		assertFalse(n1.equals(vec));
+	}
+	
+	@Test
+	public void equalsTestFalseZ(){
 		assertFalse(n2.equals(n1));
 	}
+	
+	@Test
+	public void equalsTestFalseX(){
+		Node n3 = new Node(5,2);
+		assertFalse(n1.equals(n3));
+	}
+	
+	@Test
+	public void equalsTestFalseboth(){
+		Node n3 = new Node(4,3);
+		assertFalse(n1.equals(n3));
+	}
+	
 	
 	@Test
 	public void testSuccessors(){
@@ -93,5 +113,37 @@ public Node n1, n2;
 	public void testDistanceFalse(){
 		double res= n1.distance(n2);
 		assertFalse(res == 2);
+	}
+	
+	@Test
+	public void testCompareTo(){
+		n1.setG(0);
+		n2.setG(0);
+		n1.setH(20);
+		n2.setH(20.001);
+		int res = n1.compareTo(n2);
+		assertTrue(res<0);
+	}
+	
+	@Test
+	public void testCompareToFalse(){
+		n1.setG(0);
+		n2.setG(0);
+		n1.setH(21);
+		n2.setH(20);
+		int res = n1.compareTo(n2);
+		assertFalse(res<0);
+	}
+	
+	@Test
+	public void testToString(){
+		String res=n2.toString();
+		assertEquals(res, "[1, 6] G= 500 H= 500.0 F= 5500.0 Parent: [1, 2]");
+	}
+	
+	@Test
+	public void testToStringNoparent(){
+		String res=n1.toString();
+		assertEquals(res, "[1, 2] G= 50 H= 23.0 F= 280.0 No Parent");
 	}
 }

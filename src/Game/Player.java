@@ -186,7 +186,7 @@ public class Player extends GameObject {
 	 */
 	public void update(int deltaTime)
 	{			
-		
+				
 		// Update immunity counter when you are hit, only when you are hit
 		if(immunitycounter>0)immunitycounter+=deltaTime;
 		if(immunitycounter>1000)immunitycounter=0;
@@ -256,7 +256,28 @@ public class Player extends GameObject {
 					}
 				}
 			}
-		
+			// CollisionY
+			spikejump=false;
+			levelObject templvlo = null;
+			double maxY = -100;
+			for(int i = 0; i< tempindex.size();i++){
+				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
+				if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
+				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz+pw)
+				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
+				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){					
+					colY=true;
+					if(maxY < tempobj.getmaxDistY(locationY-ph)){
+						templvlo = tempobj;
+						maxY = tempobj.getmaxDistY(locationY-ph);
+					}
+						
+				}				
+			}
+			
+			if(!spikejump){control.jump = false;}
+			if(colY){locationY += maxY; collisionreaction(templvlo);jump = false;}else{updateY();}
+			py = getLocationY();
 
 			//collision X	
 
@@ -289,30 +310,7 @@ public class Player extends GameObject {
 				}
 				if(colZ){}else{	updateZ();}
 				pz= getLocationZ();
-
-			
-			// CollisionY
-			spikejump=false;
-			levelObject templvlo = null;
-			double maxY = -100;
-			for(int i = 0; i< tempindex.size();i++){
-				levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
-				if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
-				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz+pw)
-				|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
-				|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){					
-					colY=true;
-					if(maxY < tempobj.getmaxDistY(locationY-ph)){
-						templvlo = tempobj;
-						maxY = tempobj.getmaxDistY(locationY-ph);
-					}
-						
-				}				
-			}
-			
-			if(!spikejump){control.jump = false;}
-			if(colY){locationY += maxY; collisionreaction(templvlo);jump = false;}else{updateY();}
-			py = getLocationY();
+		
 			
 			// Check trigger
 			if(control.triggered){
@@ -332,7 +330,7 @@ public class Player extends GameObject {
 				}
 			}
 			if(locationY<-20 || health.getHealth()<=0){isDead=true;}
-
+			System.out.println(locationX+" "+locationY+" "+locationZ);
 	}
 
 	/**

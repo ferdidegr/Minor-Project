@@ -56,7 +56,7 @@ public class PauseMenu extends ButtonList{
 
 		super.display();
 		double width = Menu.mainfont.getWidth(30*Display.getHeight()/768f, "PAUSE");
-		Menu.mainfont.draw(Menu.getScreenx()/2, 0, 30*Display.getHeight()/768f, "PAUSE");
+		Menu.mainfont.draw((float) ((Display.getWidth()-width)/2), 0, 30*Display.getHeight()/768f, "PAUSE");
 	
 	}
 	
