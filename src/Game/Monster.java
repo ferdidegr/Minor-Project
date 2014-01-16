@@ -334,8 +334,30 @@ public class Monster extends levelObject {
 			}
 		}
 
-		double maxX = 100;
+		// CollisionY
+		levelObject templvlo = null;
+		double maxY = -100;
+		for(int i = 0; i< tempindex.size();i++){
+			levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
+			if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
+			|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz+pw)
+			|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
+			|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){					
+				colY=true;
+				if(maxY < tempobj.getmaxDistY(locationY-ph)){
+					templvlo = tempobj;
+					maxY = tempobj.getmaxDistY(locationY-ph);
+				}
+					
+			}				
+		}
+		
+		
+		if(colY){locationY += maxY; collisionreaction(templvlo);}else{updateY();}
+		py = getLocationY();
+		
 		// collision X
+		double maxX = 100;
 		for (int i = 0; i < tempindex.size(); i++) {
 			levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));
 			if (tempobj.isCollision(px + velocity.getX() + pw * signX, py - ph , pz + pw) 
@@ -398,28 +420,6 @@ public class Monster extends levelObject {
 		}
 		locationZ = Math.round(locationZ*1E10)/1E10d;
 		pz = getLocationZ();
-
-		// CollisionY
-		levelObject templvlo = null;
-		double maxY = -100;
-		for(int i = 0; i< tempindex.size();i++){
-			levelObject tempobj = Mazerunner.objlijst.get((tempindex.get(i).intValue()));		
-			if(tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz+pw)
-			|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz+pw)
-			|| tempobj.isCollision(px-pw,  py+velocity.getY()-ph , pz-pw)
-			|| tempobj.isCollision(px+pw,  py+velocity.getY()-ph , pz-pw)){					
-				colY=true;
-				if(maxY < tempobj.getmaxDistY(locationY-ph)){
-					templvlo = tempobj;
-					maxY = tempobj.getmaxDistY(locationY-ph);
-				}
-					
-			}				
-		}
-		
-		
-		if(colY){locationY += maxY; collisionreaction(templvlo);}else{updateY();}
-		py = getLocationY();
 
 	}
 
