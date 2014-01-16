@@ -54,14 +54,31 @@ public class AStar {
 		Node st = new Node(x0.intValue(), z0.intValue());
 		Node en = new Node(x1.intValue(), z1.intValue());
 		
-		if(!setStart(st) | !setEnd(en)){
+		if(!setStart(st)){
 			return false;
 		}
+		
+		tryEnd(en);
 		
 		for(Node no: AllNodes){
 			no.setH(no.distance(End));
 		}
 		return true;
+	}
+	
+	public void tryEnd(Node en){
+		if(!setEnd(en)){
+			Node[] considered = en.getSuccessors();
+			double shortestd = Double.MAX_VALUE;
+			for(Node no: considered){
+				double d = no.distance(Start);
+				if(d<shortestd && AllNodes.contains(no)){
+					shortestd=d;
+					en = no;
+				}
+			}
+			tryEnd(en);
+		}
 	}
 	
 	/**
