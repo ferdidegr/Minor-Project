@@ -100,7 +100,7 @@ public void start(String levelname) throws Exception{
 	AStar.loadMaze(maze);
 	
 	initTimer();
-	c4Count = 200;
+	c4Count = 2;
 	
 	previousTime = Calendar.getInstance().getTimeInMillis();
 	
@@ -642,7 +642,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		}
 		
 		public void initTimer(){
-			MAXTIME = 10*1000 * scorpcount + maze[0].length*maze.length*200;
+			MAXTIME = 5*1000 * scorpcount + maze[0].length*maze.length*100;
 		}
 		
 		public Player getPlayer(){return player;}
