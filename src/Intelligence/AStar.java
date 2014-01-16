@@ -58,7 +58,7 @@ public class AStar {
 			return false;
 		}
 		
-		tryEnd(en);
+		if(!tryEnd(en))return false;
 		
 		for(Node no: AllNodes){
 			no.setH(no.distance(End));
