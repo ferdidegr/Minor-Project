@@ -316,6 +316,15 @@ public class Skitter {
 	public void playButton(){
 		AL10.alSourcePlay(source.get(button));
 	}
+	
+	public void stopScorps(){
+		for (int i=4;i<240;i++){
+			int playing = AL10.alGetSourcei(source.get(i), AL10.AL_SOURCE_STATE);
+			if (playing==AL10.AL_PLAYING){
+				AL10.alSourceStop(source.get(i));
+			}
+		}
+	}
 
 	public void play(ArrayList<Monster> monsterlijst, Player player) {
 		listenerPos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { (float) player.getLocationX(), (float) player.getLocationY(), (float) player.getLocationZ() }).rewind();
