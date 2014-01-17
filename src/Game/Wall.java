@@ -30,11 +30,11 @@ public class Wall extends levelObject{
 	private boolean wleft, wright, wfront, wback;
 	private double height;
 	private int SQUARE_SIZE;
-	private int[][] boxfaces= {{0,1,5,4},
-								  {1,2,6,5},
-								  {2,3,7,6},
-								  {3,0,4,7},
-								  {4,5,6,7}};
+	private int[][] boxfaces= {{0,1,5,4},		// front (near you, positive z axis)
+								  {1,2,6,5},	// right
+								  {2,3,7,6},	// back
+								  {3,0,4,7},	// left
+								  {4,5,6,7}};	// top
 	private double[][] normals = new double[][]
 										{{0,0,1},
 										 {1,0,0},
@@ -82,34 +82,50 @@ public class Wall extends levelObject{
 	 * Draw the wall
 	 */
 	public void display(){
+		/*
+		 * contact culling, removes all faces which has contact with a wall with an equal or bigger height
+		 */		
+		int ss = Mazerunner.SQUARE_SIZE;
+		int[][] maze = Mazerunner.maze;
+		int X = getGridX((int) ss);
+		int Z = getGridZ((int) ss);
+		boolean[] contact = new boolean[5];
+		contact[0] = (Z== maze.length-1? false: (maze[Z+1][X]> height && maze[Z+1][X]<10));
+		contact[1] = (X==maze[0].length-1? false: (maze[Z][X+1]> height && maze[Z][X+1] <10));
+		contact[2] = (Z==0? false: (maze[Z-1][X]> height && maze[Z-1][X] <10));
+		contact[3] = (X==0? false: (maze[Z][X-1]> height && maze[Z][X-1] <10));
+		contact[4] = false;
+		
+		/*
+		 * Wall
+		 */
 		double width = (right-left)/SQUARE_SIZE;
 		double depth = (front-back)/SQUARE_SIZE;
 		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
 		glTexParameterf(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 		glBegin(GL_QUADS);
 		for(int i = 0; i < boxfaces.length; i++){
-			Utils.glNormalvec(normals[i]);
-			glTexCoord2d(0, (i==boxfaces.length-1?depth:height/SQUARE_SIZE));
-			Utils.glVertvec(boxvertices[boxfaces[i][0]]);
-			glTexCoord2d(width, (i==boxfaces.length-1?depth:height/SQUARE_SIZE));
-			Utils.glVertvec(boxvertices[boxfaces[i][1]]);
-			glTexCoord2d(width, 0);
-			Utils.glVertvec(boxvertices[boxfaces[i][2]]);
-			glTexCoord2d(0, 0);
-			Utils.glVertvec(boxvertices[boxfaces[i][3]]);
+			if(!contact[i]){
+				Utils.glNormalvec(normals[i]);
+				glTexCoord2d(0, (i==boxfaces.length-1?depth:height/SQUARE_SIZE));
+				Utils.glVertvec(boxvertices[boxfaces[i][0]]);
+				glTexCoord2d(width, (i==boxfaces.length-1?depth:height/SQUARE_SIZE));
+				Utils.glVertvec(boxvertices[boxfaces[i][1]]);
+				glTexCoord2d(width, 0);
+				Utils.glVertvec(boxvertices[boxfaces[i][2]]);
+				glTexCoord2d(0, 0);
+				Utils.glVertvec(boxvertices[boxfaces[i][3]]);
+			}
 		}
 		glEnd();
 		
 		/*
 		 * Floor thickener
 		 */
-		int ss = Mazerunner.SQUARE_SIZE;
-		int[][] maze = Mazerunner.maze;
-		glPushMatrix();
-		glTranslated(left, -1, back);
 		
-		int X = getGridX((int) ss);
-		int Z = getGridZ((int) ss);
+		glPushMatrix();
+		glTranslated(left, -1, back);		
+
 		boolean left  = (X==0? false: maze[Z][X-1]==0);
 		boolean fore  = (Z==0? false: maze[Z-1][X]==0);
 		boolean right  = (X==maze[0].length-1? false: maze[Z][X+1]==0);
