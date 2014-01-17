@@ -362,8 +362,9 @@ public class Player extends GameObject {
 		// Gravity
 		velocity.add(0, -deltaTime*0.005, 0);
 		
-
-
+		// for low frame rates, prevents shooting through walls
+		if(Math.abs(velocity.getX())>0.6){velocity.setX(Math.signum(velocity.getX())*0.6);}
+		if(Math.abs(velocity.getZ())>0.6){velocity.setZ(Math.signum(velocity.getZ())*0.6);}
 	}
 	
 	public void updateX(){
