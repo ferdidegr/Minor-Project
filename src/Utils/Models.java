@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * static class that contains the models in drawlists.
+ * 
+ * @author ZL
+ *
+ */
 public class Models {
 	public static int skybox, obelisk, pickup;
 	public static List<Integer> monster = new ArrayList<Integer>(); // List with the different monster models for animation

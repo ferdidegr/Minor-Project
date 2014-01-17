@@ -114,7 +114,11 @@ public class Graphics {
 	      }
 	      glEnd();
 	}
-	
+	/**
+	 * Draws a spike
+	 * @param baseradius the radius of the bottom
+	 * @param height the height of the spike
+	 */
 	public static void renderSpike(float baseradius, float height){
 		
 		cylinder.setNormals(GLU.GLU_OUTSIDE);		

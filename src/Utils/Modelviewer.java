@@ -145,7 +145,11 @@ public class Modelviewer {
 		
 		gluLookAt(0, 0, -10, 0, 0, 0, 0, 1, 0);
 	}
-	
+	/**
+	 * Selecting a file and returns the file
+	 * @return selected file
+	 * @throws IOException
+	 */
 	public File choosefile() throws IOException{
 		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir"));		
 		jfc.setMultiSelectionEnabled(false);
@@ -156,9 +160,7 @@ public class Modelviewer {
 		
 		if(res == JFileChooser.APPROVE_OPTION){
 			File file = jfc.getSelectedFile();
-			return file;
-			
-			
+			return file;			
 		}
 		throw new IOException("You pressed cancel or X");
 	}

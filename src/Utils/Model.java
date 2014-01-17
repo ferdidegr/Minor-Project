@@ -30,8 +30,6 @@ public class Model {
 	private List<Face> faces = new ArrayList<Face>();
 	private List<Materialm> mtl = new ArrayList<Materialm>();
 
-
-
 	public Model() {}
 	/**
 	 * Parsing the model (vertices, texcoords, normals, faces)

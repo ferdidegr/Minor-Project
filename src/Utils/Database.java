@@ -83,6 +83,10 @@ public class Database {
 		}
 		return null;
 	}
+	/**
+	 * Close the connection properly
+	 * @throws SQLException
+	 */
 	public void destroy() throws SQLException{
 		conn.close();
 		stat.close();

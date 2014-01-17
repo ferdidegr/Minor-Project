@@ -7,21 +7,33 @@ package Utils;
  */
 public class Vector {
 	private double x, y, z;
-	
+	/**
+	 * Create the vector
+	 * @param x X component
+	 * @param y Y component
+	 * @param z Z component
+	 */
 	public Vector(double x, double y, double z){
 		setX(x);
 		setY(y);
 		setZ(z);
-	}
-	
-		
+	}	
+	/**
+	 * Take the average of two vectors	
+	 * @param vec another vector
+	 * @return a vector which contains the result
+	 */
 	public Vector avg(Vector vec){
 		double xnew = (vec.getX() + x)/2;
 		double ynew = (vec.getY() + y)/2;
 		double znew = (vec.getZ() + z)/2;
 		return new Vector(xnew, ynew, znew);
 	}
-	
+	/**
+	 * Rotate the vector in 2D, i.e. around the Y-axis
+	 * @param rad the rotation in radians
+	 * @return the rotated vector (itself) allow chaining
+	 */
 	public Vector rotate2D(double rad){
 		float X = (float) x;
 		float Z = (float) z;
@@ -108,15 +120,24 @@ public class Vector {
 		
 		return this;
 	}
-	
+	/**
+	 * The length
+	 * @return the length as a double
+	 */
 	public double length(){
 		return Math.sqrt(x*x+y*y+z*z);
 	}
-	
+	/**
+	 * Returns the length of the 2D components (X and Z)
+	 * @return
+	 */
 	public double length2D(){
 		return Math.sqrt(x*x+z*z);
 	}
-	
+	/**
+	 * Normalize the X and Z components
+	 * @return the normalized self
+	 */
 	public Vector normalize2D(){
 		
 		double length = length2D();
@@ -127,7 +148,10 @@ public class Vector {
 		
 		return this;
 	}
-	
+	/**
+	 * Normalize the vector in 3D
+	 * @return the normalized self
+	 */
 	public Vector normalize(){
 		double length = length();
 		x /= length;
@@ -136,15 +160,21 @@ public class Vector {
 		
 		return this;
 	}
-	
+	/**
+	 * Scales all components to 1, remaining the sign
+	 * @return this
+	 */
 	public Vector normalizePerdir(){
-		x = Math.signum(x)*x/x;
-		y = Math.signum(y)*y/y;
-		z = Math.signum(z)*z/z;
+		x = Math.signum(x);
+		y = Math.signum(y);
+		z = Math.signum(z);
 		
 		return this;
 	}
-	
+	/**
+	 * Step function for each component
+	 * @return this
+	 */
 	public Vector step(){
 		x = (x>0? 1:0);
 		y = (y>0? 1:0);
@@ -152,10 +182,15 @@ public class Vector {
 		
 		return this;
 	}
+	/**
+	 * Clones this vector
+	 */
 	public Vector clone(){
 		return new Vector(x, y, z);
 	}
-	
+	/**
+	 * Checks if the other vector has the same components
+	 */
 	public boolean equals(Object v2){
 		if(v2 instanceof Vector){
 			Vector other = (Vector) v2;
@@ -164,6 +199,11 @@ public class Vector {
 		return false;
 	}
 	
+	/**
+	 * Takes the crossproduct with another vector this X that
+	 * @param v2 the other vector
+	 * @return the result (Vector)
+	 */
 	public Vector crossprod(Vector v2){
 		return new Vector(	(this.y*v2.z-this.z*v2.y), 
 						   -(this.x*v2.z - this.z*v2.x), 

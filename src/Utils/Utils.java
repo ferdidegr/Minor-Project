@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 
@@ -16,18 +17,32 @@ import org.lwjgl.opengl.Display;
 
 
 public class Utils {
+	/**
+	 * Work around to set a normal vector using a array
+	 * @param vec array with the components of the normal vector
+	 */
 	public static void glNormalvec(double[] vec){
 		glNormal3d(vec[0], vec[1], vec[2]);
 	}
-	
+	/**
+	 * Work around to set a vertex vector using a array
+	 * @param vec array with the components of the vertex vector
+	 */
 	public static void glVertvec(double[] vec){
 		glVertex3d(vec[0], vec[1], vec[2]);
 	}
-	
+	/**
+	 * Quick way to create a FloatBuffer
+	 * @param values You can enter as many floats as you like (separated by commas)
+	 * @return FloatBuffer containing your floats
+	 */
 	public static FloatBuffer createFloatBuffer(float... values) {
 		return (FloatBuffer) BufferUtils.createFloatBuffer(values.length). put(values).flip(); 
 	}
-	
+	/**
+	 * Load all file names in the folder level
+	 * @return a sorted arraylist with the levelnames
+	 */
 	public static ArrayList<String> loadLevelList(){
 		ArrayList<String> MazeList = new ArrayList<String>();
 		String currentdir = System.getProperty("user.dir");		
@@ -40,9 +55,13 @@ public class Utils {
 			}
 		}
 		
+		Collections.sort(MazeList, String.CASE_INSENSITIVE_ORDER);
+		
 		return MazeList;
 	}
-	
+	/**
+	 * Goes through all pixels on your screen and converts it into a PNG file
+	 */
 	public static void makeScreenShot(){
 		glReadBuffer(GL_FRONT);
 		int width = Display.getDisplayMode().getWidth();

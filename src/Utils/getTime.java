@@ -27,7 +27,7 @@ public class getTime {
 		S 	Millisecond 			Number 	978
 		z 	Time zone 				General time zone 	Pacific Standard Time; PST; GMT-08:00
 		Z 	Time zone 				RFC 822 time zone 	-0800
-	 * @param input
+	 * @param input the desired format as a string
 	 * @return the current time in your desired format as a String
 	 */
 	
