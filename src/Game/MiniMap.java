@@ -7,11 +7,19 @@ import java.util.ArrayList;
 
 import Utils.Vector;
 
+/**
+ * @author Ferdi
+ * Class drawing the minimap in the HUD
+ */
 public class MiniMap {
 	private int[][] maze;
 	Vector dir;
 	private int[][] visited;
 
+	/**
+	 * Constructor for the minimap
+	 * @param maze the game maze
+	 */
 	public MiniMap(int[][] maze) {
 		this.maze = maze;
 		this.visited = new int[maze.length][maze[0].length];
@@ -23,6 +31,12 @@ public class MiniMap {
 //		}
 	}
 
+	/**
+	 * General draw minimap function. View has already been changed when this function is called, therefore it contains only drawing in 2d
+	 * @param player player object
+	 * @param monsterlijst monsters still in the game
+	 * @param SQUARE_SIZE size of a single square
+	 */
 	public void draw(Player player, ArrayList<Monster> monsterlijst, int SQUARE_SIZE) {
 		int mapWidth = maze[0].length;
 		int mapHeight = maze.length;
@@ -42,21 +56,17 @@ public class MiniMap {
 					if (Math.abs(z - locZ) < 5 && Math.abs(x - locX) < 5) {
 						visited[z][x] = 1;
 					}
-
 					if (maze[z][x] >= 1 && maze[z][x] <= 10 && visited[z][x] == 1) {
 						for (int k = 0; k < maze[z][x]; k++) {
 							drawBlock();
 						}
 					}
-
 				}
 				glTranslatef(10f, 0f, 0f);
 			}
 			glTranslatef(-10f * (2 * size), 10f, 0f);
 		}
 		
-		
-
 		// draw black box around the minimap
 		glPushMatrix();
 		glLoadIdentity();
@@ -81,7 +91,6 @@ public class MiniMap {
 		glPopMatrix();
 
 		// draw monster dots
-
 		glColor4f(0.2f, 0.2f, 1f, 0.5f);
 		for (Monster monster : monsterlijst) {
 			if(monster.active){
@@ -100,10 +109,9 @@ public class MiniMap {
 					glPopMatrix();
 				}
 			}
-
 		}
 
-		// draw white player dot
+		// draw white player dot, rotate it according to the players direction
 		glPushMatrix();
 		glTranslated(size * 10.5, -size * 9.5, 0);
 		dir = player.lookat();
@@ -112,9 +120,11 @@ public class MiniMap {
 		glColor4f(1.0f, 1.0f, 1.0f, 0.8f);
 		drawPlayer();
 		glPopMatrix();
-
 	}
 
+	/**
+	 * Draw a simple block part of the minimap
+	 */
 	public void drawBlock() {
 		glBegin(GL_QUADS);
 		glVertex2f(0.0f, 0.0f);
@@ -124,6 +134,9 @@ public class MiniMap {
 		glEnd();
 	}
 
+	/**
+	 * Draw a triangle for the player
+	 */
 	public void drawPlayer() {
 		int size = 2;
 		glBegin(GL_TRIANGLES);
@@ -132,7 +145,10 @@ public class MiniMap {
 		glVertex2f(-3.0f * size, -3.0f * size);
 		glEnd();
 	}
-
+	
+	/**
+	 * Rotate player triangle using matrix multiplication (faster than GL_Rotate)
+	 */
 	public void rotateV() {
 		float x = (float) dir.getX();
 		float z = (float) dir.getZ();

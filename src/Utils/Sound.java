@@ -18,6 +18,10 @@ import org.newdawn.slick.openal.OggDecoder;
 import Game.Monster;
 import Game.Player;
 
+/**
+ * @author Ferdi
+ * Class for all sound related functions
+ */
 public class Sound {
 	/** Maximum data buffers we will need. */
 	public static final int NUM_BUFFERS = 256;
@@ -43,9 +47,6 @@ public class Sound {
 	/** Index of skitter sound */
 	public static final int skitter = 4;
 
-	/** Index of gun 2 sound */
-	// public static final int GUN2 = 3;
-
 	/** Buffers hold sound data. */
 	IntBuffer buffer = BufferUtils.createIntBuffer(NUM_BUFFERS);
 
@@ -70,12 +71,10 @@ public class Sound {
 	 */
 	FloatBuffer listenerOri = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { 0.0f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f }).rewind();
 
+	
 	/**
-	 * boolean LoadALData()
-	 * 
-	 * This function will load our sample data from the disk using the Alut
-	 * utility and send the data into OpenAL as a buffer. A source is then also
-	 * created to play that buffer.
+	 * This function loads all different sounds into the buffer, generates sources, and binds the ones that have a constant single source, i.e. background music and sound effects
+	 * @return error int
 	 */
 	int loadALData() {
 
@@ -219,10 +218,11 @@ public class Sound {
 				return AL10.AL_FALSE;
 	}
 
+	/** Binds monsters to sources by id, ranging from 4-239 (all possible monster id's)
+	 * @param monsterlijst list of all monsters at the start of the game
+	 */
 	public void bindMonsters(ArrayList<Monster> monsterlijst) {
 		// Bind buffers into audio sources.
-		
-
 		for (Monster mon : monsterlijst) {
 
 			AL10.alSourcei(source.get(mon.getID()), AL10.AL_BUFFER, buffer.get(skitter));
@@ -231,17 +231,12 @@ public class Sound {
 			AL10.alSource(source.get(mon.getID()), AL10.AL_POSITION, (FloatBuffer) sourcePos.position(mon.getID() * 3));
 			AL10.alSource(source.get(mon.getID()), AL10.AL_VELOCITY, (FloatBuffer) sourceVel.position(mon.getID() * 3));
 			AL10.alSourcei(source.get(mon.getID()), AL10.AL_LOOPING, AL10.AL_FALSE);
-
-		}
-
-		
+		}		
 	}
 
 	/**
 	 * void setListenerValues()
-	 * 
-	 * We already defined certain values for the Listener, but we need to tell
-	 * OpenAL to use that data. This function does just that.
+	 * tell openal to use our defined listener values
 	 */
 	void setListenerValues() {
 		AL10.alListener(AL10.AL_POSITION, listenerPos);
@@ -251,37 +246,29 @@ public class Sound {
 
 	/**
 	 * void killALData()
-	 * 
-	 * We have allocated memory for our buffers and sources which needs to be
-	 * returned to the system. This function frees that memory.
+	 * clear the sources and buffers
 	 */
 	void killALData() {
 		AL10.alDeleteSources(source);
 		AL10.alDeleteBuffers(buffer);
 	}
 
+	/**
+	 * Initialize and check for error
+	 */
 	public void execute() {
-		// Initialize OpenAL and clear the error bit.
-		// try{
-		// AL.create();
-		// } catch (LWJGLException le) {
-		// le.printStackTrace();
-		// return;
-		// }
-		// AL10.alGetError();
-
-		// Load the wav data.
+		// Load the wav data, check for an error
 		if (loadALData() == AL10.AL_FALSE) {
 			System.out.println("Error loading data.");
 			return;
 		}
-
-		setListenerValues();
-
-		
-		
+		setListenerValues();		
 	}
 
+	/**
+	 * Update the positions of the monsters according to the monsterlist, bind the sources
+	 * @param monsterlijst list of monsters still in the game
+	 */
 	public void updatemonsters(ArrayList<Monster> monsterlijst) {
 		for (Monster mon : monsterlijst) {
 			sourcePos.position(mon.getID() * 3);
@@ -317,6 +304,9 @@ public class Sound {
 		AL10.alSourcePlay(source.get(button));
 	}
 	
+	/**
+	 * Stops all possible scorpion sources from playing when the game stops
+	 */
 	public void stopScorps(){
 		for (int i=4;i<240;i++){
 			int playing = AL10.alGetSourcei(source.get(i), AL10.AL_SOURCE_STATE);
@@ -326,6 +316,10 @@ public class Sound {
 		}
 	}
 
+	/** Plays all monstersources by id that are not already playing, after updating the listener value
+	 * @param monsterlijst all monsters still in the game
+	 * @param player the player object
+	 */
 	public void play(ArrayList<Monster> monsterlijst, Player player) {
 		listenerPos = (FloatBuffer) BufferUtils.createFloatBuffer(3).put(new float[] { (float) player.getLocationX(), (float) player.getLocationY(), (float) player.getLocationZ() }).rewind();
 		listenerOri = (FloatBuffer) BufferUtils.createFloatBuffer(6).put(new float[] { (float) player.lookat().getX(), (float) player.lookat().getY(), (float) player.lookat().getZ(), 0.0f, 1.0f, 0.0f }).rewind();
@@ -341,6 +335,11 @@ public class Sound {
 		}
 	}
 	
+	/** Play the sound for explosions using recycling sources to make sure that sources dont overflow, and there are always enough sources to play both monster and explosion sounds
+	 * @param x x coordinate
+	 * @param y y coordinate
+	 * @param z z coordinate
+	 */
 	public void playExplosion(double x, double y, double z){
 		int sourceid=explosion;
 		int playing = AL10.alGetSourcei(source.get(sourceid), AL10.AL_SOURCE_STATE);
@@ -370,9 +369,11 @@ public class Sound {
 		}
 	}
 
+	/**
+	 * General cleanup function
+	 */
 	public void cleanup() {
-		AL10.alDeleteSources(source);
-		AL10.alDeleteBuffers(buffer);
+		killALData();
 		// AL.destroy();
 	}
 

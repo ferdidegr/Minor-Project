@@ -211,6 +211,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 									 j * SQUARE_SIZE + SQUARE_SIZE / 2.0, 			// z position
 									 SQUARE_SIZE*0.7, SQUARE_SIZE*0.7, SQUARE_SIZE,ID)); // Width, height, squae size
 				ID++;
+				if (ID>239){
+					ID=4;
+				}
 			}
 			// parsing the hatch
 			else if(maze[j][i]==16){
