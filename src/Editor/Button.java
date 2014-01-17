@@ -134,4 +134,5 @@ public class Button {
 	public static float getbarTop(){return bar_top;}
 	public static float getbarLeft(){return bar_left;}
 	public static float getbarRight(){return bar_right;}
+	public static void resetSelectors(){leftID = 0; rightID= 0;}
 }

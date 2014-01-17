@@ -41,7 +41,7 @@ public class MazeMaker {
 	 * ***********************************************
 	 */
 	public void start() throws LWJGLException, InterruptedException, IOException{
-
+		Button.resetSelectors();
 		/*
 		 * Set mouse
 		 */
@@ -57,7 +57,7 @@ public class MazeMaker {
 			bottom = 0;
 			menubarwidth = (Display.getWidth()<1024? Display.getWidth()/6:(int) (1024f/6f));
 			tilesize = 0.2f * menubarwidth;
-			MazeMap.setSize(tilesize);
+			MazeMap.setSize(tilesize);			
 		/*
 		 * Initialize openGL
 		 */
