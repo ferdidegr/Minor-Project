@@ -4,6 +4,7 @@ import Game.*;
 import Utils.Chooser;
 import Utils.Database;
 import Utils.IO;
+import Utils.Sound;
 import Utils.Text;
 import Utils.Timer;
 
@@ -47,7 +48,7 @@ public class Menu {
 	static ArrayList<String> levelList;
 	public static int mousesensitivity = 3;
 	public static Texture loadingscreen = null;
-	private static Skitter skitter;
+	private static Sound sound;
 	
 	/**
 	 * ************************************
@@ -77,9 +78,9 @@ public class Menu {
 
 		loadingscreen();
 		AL.create();
-		skitter=new Skitter();
-		skitter.execute();
-		skitter.playMenu();
+		sound=new Sound();
+		sound.execute();
+		sound.playMenu();
 
 		
 		Display.setVSyncEnabled(true);
@@ -448,7 +449,7 @@ public class Menu {
 	public static int getScreenx() {return screenx;}
 	
 	// getter for sound
-	public static Skitter getSkitter(){
-		return skitter;
+	public static Sound getSkitter(){
+		return sound;
 	}
 }

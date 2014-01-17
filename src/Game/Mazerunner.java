@@ -14,7 +14,6 @@ import static org.lwjgl.util.glu.GLU.gluPerspective;
 
 import org.newdawn.slick.opengl.TextureImpl;
 
-import Game.Skitter;
 import Intelligence.AStar;
 import Menu.GameState;
 import Menu.Menu;
@@ -60,7 +59,7 @@ public class Mazerunner {
 	
 	public static boolean pausemonster = false;						// Debug option TODO:remove trigger by F3
 	
-	private Skitter skitter;										// Skitter scorpion sound
+	private Sound sound;										// Skitter scorpion sound
 	private EndObelisk eo;
 	public static ArrayList<C4> c4;
 	public static int c4Count = 0; 
@@ -76,7 +75,7 @@ public class Mazerunner {
 public void start(String levelname) throws Exception{
 	loadingscreen();
 	Menu.ingame = true;	
-	skitter=Menu.getSkitter();
+	sound=Menu.getSkitter();
 	
 	new Game.Textures();			// Initialize textures
 	new Graphics();					// Initialize graphics
@@ -86,8 +85,8 @@ public void start(String levelname) throws Exception{
 	timer = 0;
 	c4 = new ArrayList<C4>();
 	
-	skitter.stopMenu();
-	skitter.playGame();
+	sound.stopMenu();
+	sound.playGame();
 						
 	// TODO remove
 	Display.setResizable(false);
@@ -239,7 +238,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	}
 	
 
-	skitter.bindMonsters(monsterlijst);
+	sound.bindMonsters(monsterlijst);
 	status.init( 0, player);
 
 }
@@ -311,9 +310,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glDisable(GL_DEPTH_TEST);
 		glDisable(GL_LIGHT0);
 //		glDisable(GL_BLEND);
-		skitter.stopScorps();
-		skitter.stopGame();
-		skitter.playMenu();
+		sound.stopScorps();
+		sound.stopGame();
+		sound.playMenu();
 //		skitter.deleteSources();
 	
 	}  
@@ -384,8 +383,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        }		       
 		        
 		        // Monster sound
-		        skitter.updatemonsters(monsterlijst);
-		        skitter.play(monsterlijst, player);
+		        sound.updatemonsters(monsterlijst);
+		        sound.play(monsterlijst, player);
 		        
 		        // Pickups
 		        ArrayList<Pickup> rmpu = new ArrayList<Pickup>();
@@ -573,8 +572,8 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		    /*
 		     * Sound
 		     */    
-		    skitter.updatemonsters(monsterlijst);
-		    skitter.play(monsterlijst, player);
+		    sound.updatemonsters(monsterlijst);
+		    sound.play(monsterlijst, player);
 		        
 		        
 			/*

@@ -1,4 +1,4 @@
-package Game;
+package Utils;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import org.newdawn.slick.openal.OggDecoder;
 import Game.Monster;
 import Game.Player;
 
-public class Skitter {
+public class Sound {
 	/** Maximum data buffers we will need. */
 	public static final int NUM_BUFFERS = 256;
 

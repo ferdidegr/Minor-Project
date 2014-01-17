@@ -12,10 +12,10 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import Game.Skitter;
 import Menu.Menu;
 import Utils.Chooser;
 import Utils.IO;
+import Utils.Sound;
 import static org.lwjgl.opengl.GL11.*;
 
 public class MazeMaker {
@@ -31,7 +31,7 @@ public class MazeMaker {
 	private boolean exit = false;	
 	private float tilesize;
 	private int flaggreenx = -1, flaggreeny = -1, flagredx = -1, flagredy = -1;
-	private Skitter skitter;
+	private Sound sound;
 	/**
 	 * ***********************************************
 	 * Begin the program
@@ -66,7 +66,7 @@ public class MazeMaker {
 		/*
 		 * Initialize sound
 		 */
-			skitter=Menu.getSkitter();
+			sound=Menu.getSkitter();
 			
 		/*
 		 * Initialize Buttons
@@ -224,7 +224,7 @@ public class MazeMaker {
 						if(Mouse.isButtonDown(1)){rightID=ID;Button.setrightID(ID);}
 					}
 					
-					skitter.playButton();
+					sound.playButton();
 					
 					break;							// if found no need to check others
 				}

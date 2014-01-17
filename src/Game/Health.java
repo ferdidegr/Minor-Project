@@ -1,6 +1,7 @@
 package Game;
 
 import Menu.Menu;
+import Utils.Sound;
 
 
 /**
@@ -14,7 +15,7 @@ public class Health {
 	private int health;				// current health
 	private int maxHealth;			// initial maximum health
 	private boolean isPlayer;		// Is the carrier of this health the player
-	private Skitter skitter;
+	private Sound sound;
 	/**
 	 * Constructor: initializes the health
 	 * @param health integer value
@@ -23,7 +24,7 @@ public class Health {
 		setmaxHealth(health);
 		setHealth(health);
 		this.isPlayer=isPlayer;
-		skitter=Menu.getSkitter();
+		sound=Menu.getSkitter();
 	}
 	/**
 	 * set the constant int maximum health
@@ -56,7 +57,7 @@ public class Health {
 			setHealth(maxHealth);
 		}
 		if (isPlayer && addition<0){
-			skitter.playHurt();
+			sound.playHurt();
 			
 		}
 	}
