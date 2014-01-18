@@ -77,7 +77,7 @@ int FontSize, Fontheight;
 
 		
 		for(int i = 1 ; i < levelname.size();i++){Menu.mainfont.draw(Display.getWidth()*0.1f, i*Fontheight, FontSize, levelname.get(i));}
-		for(int i = 1 ; i < playername.size();i++){Menu.mainfont.draw(Display.getWidth()*2/5, i*Fontheight, FontSize, playername.get(i));}
+		for(int i = 1 ; i < playername.size();i++){Menu.mainfont.draw(Display.getWidth()*1/2, i*Fontheight, FontSize, playername.get(i));}
 		for(int i = 1 ; i < levelname.size();i++){Menu.mainfont.draw(Display.getWidth()*4/5, i*Fontheight, FontSize, score.get(i));}
 		
 		/*
@@ -91,7 +91,7 @@ int FontSize, Fontheight;
 		 * Draw title bar
 		 */
 		Menu.mainfont.draw(Display.getWidth()*0.1f, 0, FontSize, levelname.get(0));
-		Menu.mainfont.draw(Display.getWidth()*2/5, 0, FontSize, playername.get(0));
+		Menu.mainfont.draw(Display.getWidth()*1/2, 0, FontSize, playername.get(0));
 		Menu.mainfont.draw(Display.getWidth()*4/5, 0, FontSize, score.get(0));		
 		toDynamicScreen();
 		
