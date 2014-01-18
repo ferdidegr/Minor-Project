@@ -12,6 +12,8 @@ import java.nio.ByteBuffer;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.plaf.basic.BasicFileChooserUI;
 
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.opengl.Texture;
@@ -58,10 +60,21 @@ public class IO {
 	 * @throws IOException
 	 */
 	public static int[][] loadchooser() throws ClassNotFoundException, IOException{
-		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir")+"/levels");		
+		// Creates a File to the directory
+		File dirToLock = new File(System.getProperty("user.dir")+"/levels");
+		// Create a new filesystemview which locks the chosen directory
+		FileSystemView fsv = new SingleRootFileSystemView(dirToLock);
+		// create the filechooser
+		JFileChooser jfc = new JFileChooser(fsv);	
+		// Disable the new folder button
+		BasicFileChooserUI ui = (BasicFileChooserUI)jfc.getUI();
+		ui.getNewFolderAction().setEnabled(false);
+		// Disable selecting multiple files
 		jfc.setMultiSelectionEnabled(false);
+		// Filter on .maze files
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
 		jfc.addChoosableFileFilter(filter);
+		// open dialog
 		int res = jfc.showOpenDialog(null);
 		int[][] maze;
 		if(res == JFileChooser.APPROVE_OPTION){
@@ -78,10 +91,21 @@ public class IO {
 	 * @throws IOException
 	 */
 	public static void savechooser(MazeMap maze) throws IOException{
-		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir")+"/levels");
+		// Creates a File to the directory
+		File dirToLock = new File(System.getProperty("user.dir")+"/levels");
+		// Create a new filesystemview which locks the chosen directory
+		FileSystemView fsv = new SingleRootFileSystemView(dirToLock);
+		// create the filechooser
+		JFileChooser jfc = new JFileChooser(fsv);	
+		// Disable the new folder button
+		BasicFileChooserUI ui = (BasicFileChooserUI)jfc.getUI();
+		ui.getNewFolderAction().setEnabled(false);
+		// Disable selecting multiple files
 		jfc.setMultiSelectionEnabled(false);
+		// Filter on .maze files
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
 		jfc.addChoosableFileFilter(filter);
+		// open save dialog
 		int res = jfc.showSaveDialog(null);
 		if(res == JFileChooser.APPROVE_OPTION){
 			File file = jfc.getSelectedFile();
