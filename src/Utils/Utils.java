@@ -48,14 +48,21 @@ public class Utils {
 		String currentdir = System.getProperty("user.dir");		
 
 		String[] files = new File(currentdir+"/"+"levels").list();
+		String[] custfiles = new File(currentdir+"/"+"customlevels").list();
 		
 		for(String name:files){
 			if(name.toLowerCase().endsWith(".maze")){
-				MazeList.add(name);
+				MazeList.add("levels/"+name);
 			}
 		}
 		
 		Collections.sort(MazeList, String.CASE_INSENSITIVE_ORDER);
+		
+		for(String name:custfiles){
+			if(name.toLowerCase().endsWith(".maze")){
+				MazeList.add("customlevels/"+name);
+			}
+		}		
 		
 		return MazeList;
 	}

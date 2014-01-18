@@ -81,7 +81,7 @@ public void start(String levelname) throws Exception{
 	new Graphics();					// Initialize graphics
 	new Models();
 	this.levelname = levelname;
-	level = "levels/"+levelname;
+	level = levelname;
 	timer = 0;
 	c4 = new ArrayList<C4>();
 	

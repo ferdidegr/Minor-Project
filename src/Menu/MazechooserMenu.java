@@ -30,7 +30,7 @@ public class MazechooserMenu extends ButtonList{
 		
 		int counter = 0;
 		for(String name:Menu.levelList){			
-			lijst.add(new MenuButton((counter)*height , Textures.start, Textures.startover,counter, name.split("\\.maze")[0], MenuButton.Alignment.CENTER));
+			lijst.add(new MenuButton((counter)*height , Textures.start, Textures.startover,counter, name.split("\\.maze")[0].split("/")[1], MenuButton.Alignment.CENTER));
 			counter++;
 		}
 		// Back to menu button added
