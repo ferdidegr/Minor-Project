@@ -49,15 +49,16 @@ public class Utils {
 
 		String[] files = new File(currentdir+"/"+"levels").list();
 		String[] custfiles = new File(currentdir+"/"+"customlevels").list();
-		
+		// Load standard levels
 		for(String name:files){
 			if(name.toLowerCase().endsWith(".maze")){
 				MazeList.add("levels/"+name);
 			}
 		}
-		
+		// Sort standard levels
 		Collections.sort(MazeList, String.CASE_INSENSITIVE_ORDER);
 		
+		// Load custom levels, you do not care about the order
 		for(String name:custfiles){
 			if(name.toLowerCase().endsWith(".maze")){
 				MazeList.add("customlevels/"+name);

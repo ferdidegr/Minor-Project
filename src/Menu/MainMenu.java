@@ -58,7 +58,7 @@ public class MainMenu extends ButtonList {
 			glPushMatrix();
 			try{
 				Display.setFullscreen(false);
-				new MazeMaker().start();
+				new MazeMaker().start(false);
 				Display.setFullscreen(fullscreen);
 			}catch(Exception e){}
 			glPopMatrix();

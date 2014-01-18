@@ -9,6 +9,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.openal.AL;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
@@ -32,6 +33,7 @@ public class MazeMaker {
 	private float tilesize;
 	private int flaggreenx = -1, flaggreeny = -1, flagredx = -1, flagredy = -1;
 	private Sound sound;
+
 	/**
 	 * ***********************************************
 	 * Begin the program
@@ -40,7 +42,7 @@ public class MazeMaker {
 	 * @throws IOException
 	 * ***********************************************
 	 */
-	public void start() throws LWJGLException, InterruptedException, IOException{
+	public void start(boolean standalone) throws LWJGLException, InterruptedException, IOException{
 		Button.resetSelectors();
 		/*
 		 * Set mouse
@@ -66,7 +68,14 @@ public class MazeMaker {
 		/*
 		 * Initialize sound
 		 */
-			sound=Menu.getSkitter();
+			if(!standalone){
+				sound=Menu.getSkitter();
+			}else{				
+				sound=new Sound();
+				sound.execute();
+				sound.playMenu();
+			}
+
 			
 		/*
 		 * Initialize Buttons
@@ -376,7 +385,10 @@ public class MazeMaker {
 					flagredy=y;
 					maze.setObject(12, x, y);
 					break;} 						// Flag red
-			case 14:{maze.setObject(14, x, y);break;}
+			case 14:{maze.setObject(14, x, y);
+					checkScorpCount();
+					break;
+					}
 			case 15:{maze.setObject(15, x, y);break;}
 			case 16:{maze.setObject(16, x, y);break;}
 			case 17:{maze.setObject(17, x, y);break;}
@@ -415,13 +427,17 @@ public class MazeMaker {
 		}
 		if(mwidth>0 && mheight>0)
 		maze = new MazeMap(mwidth, mheight);
+		if(mwidth*mheight > 2500 ){JOptionPane.showMessageDialog(null, "Your maze size is very large.\nSome pc's might experience performance problems.", 
+																	"Warning: Large maze", JOptionPane.WARNING_MESSAGE, null);}
 		resetView();
 		
 	}
 	/**
+	 * ****************************************************************************************
 	 * Resize the maze, keep the data from the top left corner
+	 * ****************************************************************************************
 	 */
-	public void resizeMaze(){
+	private void resizeMaze(){
 		if(maze!=null){
 			int[][] tempmaze = maze.getMaze();
 			newMaze();
@@ -438,13 +454,25 @@ public class MazeMaker {
 			Sys.alert("No existing maze available", "You do not have a maze open, please open or make a maze first");
 		}
 	}
+	private void checkScorpCount(){
+		int scorpcount = 0;
+		for(int j = 0 ; j <maze.getMaze().length; ++j){
+			for(int i = 0 ; i < maze.getMaze()[0].length; ++i){
+				if(maze.getMaze()[j][i]==14){++scorpcount;}
+			}
+		}
+		if(scorpcount == 51){
+			JOptionPane.showMessageDialog(null, "The amount of scorpions is getting quite high.\nSome pc's might experience performance problems.",
+					"Warning: Too many scorpions", JOptionPane.WARNING_MESSAGE);
+		}
+	}
 	/**
 	 * ********************************************
 	 * Save the maze
 	 * @throws IOException
 	 * ********************************************
 	 */
-	public void saveMaze() throws IOException{
+	private void saveMaze() throws IOException{
 		
 			if (maze==null){
 				Sys.alert("Warning", "No maze loaded!");
@@ -463,10 +491,9 @@ public class MazeMaker {
 	 * Load in a maze file
 	 * ********************************************
 	 */
-	public void loadMaze(){
+	private void loadMaze(){
 		int[][] tempmaze = null;
 		try {tempmaze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(tempmaze!=null){
@@ -478,8 +505,12 @@ public class MazeMaker {
 		}
 
 	}
-	
-	public void reinitflags(){
+	/**
+	 * ****************************************************************************************
+	 * Put the flag locations on the right position when loading in a maze
+	 * ****************************************************************************************
+	 */
+	private void reinitflags(){
 		int[][] tempmaze2 = maze.getMaze();
 		flaggreenx=-1; flaggreeny=-1; flagredx= -1; flagredy =-1;
 		for(int j = 0 ; j < tempmaze2.length; j++){
@@ -511,12 +542,13 @@ public class MazeMaker {
 		
 		while(keuze.getDisplay() == null){
 			Thread.sleep(500);
-		}
+		}			
 		
 		MazeMaker maker = new MazeMaker();
+		AL.create();
 		Display.create();
-		maker.start();
-
+		maker.start(true);
+		AL.destroy();
 		}catch(Exception e){e.printStackTrace();}
 	}
 }

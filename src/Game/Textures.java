@@ -7,13 +7,13 @@ import org.newdawn.slick.opengl.Texture;
 import Utils.IO;
 
 public class Textures {
-		public static Texture ingamewall, startover, ground
+		public static Texture ingamewall, ground
 				, front, back, left,right,top, bottom, movewall, hatch, c4;
 		
 		static{
 			try {				
 				ingamewall = IO.loadtexture("res/ingamewall.jpg",false);
-				startover = IO.loadtexture("res/transparent.png",false);
+
 				ground = IO.loadtexture("res/ground1.jpg",false);
 				movewall  = IO.loadtexture("res/sandwall.png", false);
 				hatch = IO.loadtexture("res/Wooden_floor_original.jpg", false);
@@ -25,8 +25,7 @@ public class Textures {
 				left = IO.loadtexture("res/Skybox/Sahara/west.png",true);
 				right = IO.loadtexture("res/Skybox/Sahara/east.png",true);
 				top = IO.loadtexture("res/Skybox/Sahara/up.png",true);
-				bottom = IO.loadtexture("res/Skybox/Sahara/down.png",true);
-//				
+				bottom = IO.loadtexture("res/Skybox/Sahara/down.png",true);			
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
