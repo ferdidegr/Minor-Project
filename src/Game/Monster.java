@@ -430,8 +430,8 @@ public class Monster extends levelObject {
 		velocity.add(dir.getX() * speed * deltaTime * 0.5, -0.005 * deltaTime, dir.getZ() * speed * deltaTime * 0.5);
 		
 		// for low frame rates, prevents shooting through walls
-		if(Math.abs(velocity.getX())>0.6){velocity.setX(Math.signum(velocity.getX())*0.6);}
-		if(Math.abs(velocity.getZ())>0.6){velocity.setZ(Math.signum(velocity.getZ())*0.6);}
+		if(Math.abs(velocity.getX())>0.5){velocity.setX(Math.signum(velocity.getX())*0.5);}
+		if(Math.abs(velocity.getZ())>0.5){velocity.setZ(Math.signum(velocity.getZ())*0.5);}
 	}
 
 	public void updateX() {
