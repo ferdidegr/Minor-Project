@@ -52,7 +52,8 @@ public class Pickup extends levelObject {
 				&& maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]<10 
 				|| alpu[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==1
 				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==15
-				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==17){
+				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==17
+				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==18){
 			locationZ=random.nextInt(maze.length)*Mazerunner.SQUARE_SIZE;
 			locationX=random.nextInt(maze[0].length)*Mazerunner.SQUARE_SIZE;
 		}

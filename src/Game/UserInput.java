@@ -1,17 +1,11 @@
 package Game;
 
-
-
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import Menu.*;
-
-
-
 
 /**
  * The UserInput class is an extension of the Control class. It also implements three 

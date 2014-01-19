@@ -14,7 +14,8 @@ import Utils.IO;
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
-			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred, scorpion, pit, hatch, texresize , texquit, movwall, mazebg, texshift;
+			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred,
+			scorpion, pit, hatch, texresize , texquit, movwalldown, movwallup, mazebg, texshift;
 	
 	static {
 		try {
@@ -39,7 +40,8 @@ public class Textures {
 			hatch = IO.loadtexture("res/Textures/Editor/hatch.jpg",false);
 			texresize = IO.loadtexture("res/Textures/Editor/resize.jpg", false);
 			texquit = IO.loadtexture("res/Textures/Editor/quit.png"	, false	);
-			movwall = IO.loadtexture("res/Textures/Editor/movwall.jpg", false);
+			movwalldown = IO.loadtexture("res/Textures/Editor/movwalldown.jpg", false);
+			movwallup = IO.loadtexture("res/Textures/Editor/movwallup.jpg", false);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

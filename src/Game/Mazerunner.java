@@ -222,9 +222,16 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				objlijst.add(h);
 				objectindex[j][i]=objlijst.size()-1;
 			}
-			// Parsing movable wall
+			// Parsing movable wall UP
 			else if(maze[j][i]==17){
-				MoveableWall mw = new MoveableWall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0);
+				MoveableWall mw = new MoveableWall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0, true);
+				moveable.add(mw);
+				objlijst.add(mw);
+				objectindex[j][i]=objlijst.size()-1;
+			}
+			// Parsing movable wall DOWN
+			else if(maze[j][i]==18){
+				MoveableWall mw = new MoveableWall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0, false);
 				moveable.add(mw);
 				objlijst.add(mw);
 				objectindex[j][i]=objlijst.size()-1;
@@ -398,9 +405,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	}
 		        }
 		        for (Pickup pu: rmpu){
-		        	if (pickuplijst.remove(pu)){
-		        		pu.effect();
-		        	}
+		        	if (pickuplijst.remove(pu)){pu.effect();}
 		        }
 		        
 		        eo.display();
@@ -415,12 +420,6 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        if(input.minimap){drawHUD();}
 		        glPopMatrix();
 		        player.draw();
-		        
-		        //Refresh maze every 30 seconds
-		        if(timer%30000<20){
-		        	AStar.loadMaze(maze);
-		        }
-
 	}
 	
 	/**
@@ -572,6 +571,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		    }
 		        deathlist.clear();
 			
+	        //Refresh maze every 30 seconds
+	        if(timer%30000<20){
+	        	AStar.loadMaze(maze);
+	        }
 		    /*
 		     * Sound
 		     */    
