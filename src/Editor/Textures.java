@@ -14,11 +14,12 @@ import Utils.IO;
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
-			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred, scorpion, pit, hatch, texresize , texquit, movwall, mazebg;
+			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred, scorpion, pit, hatch, texresize , texquit, movwall, mazebg, texshift;
 	
 	static {
 		try {
 			texempty = IO.loadtexture("res/Textures/Editor/empty.jpg",false);
+			texshift = IO.loadtexture("res/Textures/Editor/shift.jpg",false);
 			texmenubar = IO.loadtexture("res/sandwall.png",false);
 			texnewmaze = IO.loadtexture("res/Textures/Editor/newmaze.jpg",false);
 			texwall1 = IO.loadtexture("res/Textures/Editor/wall1.jpg",false);

@@ -59,9 +59,9 @@ public class IO {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public static int[][] loadchooser() throws ClassNotFoundException, IOException{
+	public static int[][] loadchooser(boolean master) throws ClassNotFoundException, IOException{
 		// Creates a File to the directory
-		File dirToLock = new File(System.getProperty("user.dir")+"/customlevels");
+		File dirToLock = new File(System.getProperty("user.dir")+(master?"/levels":"/customlevels"));
 		// Create a new filesystemview which locks the chosen directory
 		FileSystemView fsv = new SingleRootFileSystemView(dirToLock);
 		// create the filechooser
@@ -90,9 +90,9 @@ public class IO {
 	 * @param maze
 	 * @throws IOException
 	 */
-	public static void savechooser(MazeMap maze) throws IOException{
+	public static void savechooser(MazeMap maze, boolean master) throws IOException{
 		// Creates a File to the directory
-		File dirToLock = new File(System.getProperty("user.dir")+"/customlevels");
+		File dirToLock = new File(System.getProperty("user.dir")+(master?"/levels":"/customlevels"));
 		// Create a new filesystemview which locks the chosen directory
 		FileSystemView fsv = new SingleRootFileSystemView(dirToLock);
 		// create the filechooser
