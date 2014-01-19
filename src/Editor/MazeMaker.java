@@ -309,7 +309,7 @@ public class MazeMaker {
 		buttonlist.add(new Button(LEFT, 7.3f,Textures.texwall6, 6));		// 6 
 		buttonlist.add(new Button(RIGHT, 7.3f,Textures.texwall7, 7));		// 7 
 		
-		buttonlist.add(new Button(LEFT, 9.0f,Textures.texflaggreen,11));	// 11 flaggreen
+		buttonlist.add(new Button(LEFT, 9.0f,Textures.texstart,11));		// 11 flaggreen
 		buttonlist.add(new Button(RIGHT, 9.0f,Textures.texflagred,12));		// 12 flagred
 		buttonlist.add(new Button(LEFT, 10.1f,Textures.texspike, 13));		// 13
 		buttonlist.add(new Button(RIGHT, 10.1f,Textures.scorpion, 14));		// 14

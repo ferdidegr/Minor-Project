@@ -14,7 +14,7 @@ import Utils.IO;
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
-			, texsave = null, texload = null, texspike = null, texflaggreen = null, texflagred,
+			, texsave = null, texload = null, texspike = null, texstart = null, texflagred,
 			scorpion, pit, hatch, texresize , texquit, movwalldown, movwallup, mazebg, texshift;
 	
 	static {
@@ -33,7 +33,7 @@ public class Textures {
 			texsave = IO.loadtexture("res/Textures/Editor/save.jpg",false);
 			texload = IO.loadtexture("res/Textures/Editor/load.jpg",false);
 			texspike = IO.loadtexture("res/Textures/Editor/spikes.jpg",false);
-			texflaggreen= IO.loadtexture("res/Textures/Editor/flaggreen.jpg",false);
+			texstart = IO.loadtexture("res/Textures/Editor/start.png",false);
 			texflagred= IO.loadtexture("res/Textures/Editor/flagred.jpg",false);
 			scorpion = IO.loadtexture("res/Textures/Editor/scorpion.jpg",false);
 			pit = IO.loadtexture("res/Textures/Editor/pitt.jpg",false);
