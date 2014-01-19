@@ -22,7 +22,7 @@ public class Textures {
 			texempty = IO.loadtexture("res/Textures/Editor/empty.jpg",false);
 			texshift = IO.loadtexture("res/Textures/Editor/shift.jpg",false);
 			texmenubar = IO.loadtexture("res/sandwall.png",false);
-			texnewmaze = IO.loadtexture("res/Textures/Editor/newmaze.jpg",false);
+			texnewmaze = IO.loadtexture("res/Textures/Editor/newmaze.png",false);
 			texwall1 = IO.loadtexture("res/Textures/Editor/wall1.png",false);
 			texwall2 = IO.loadtexture("res/Textures/Editor/wall2.png",false);
 			texwall3 = IO.loadtexture("res/Textures/Editor/wall3.png",false);
@@ -32,16 +32,16 @@ public class Textures {
 			texwall7 = IO.loadtexture("res/Textures/Editor/wall7.png",false);
 			texsave = IO.loadtexture("res/Textures/Editor/save.jpg",false);
 			texload = IO.loadtexture("res/Textures/Editor/load.jpg",false);
-			texspike = IO.loadtexture("res/Textures/Editor/spikes.jpg",false);
+			texspike = IO.loadtexture("res/Textures/Editor/spikes.png",false);
 			texstart = IO.loadtexture("res/Textures/Editor/start.png",false);
 			texend = IO.loadtexture("res/Textures/Editor/end.png",false);
 			scorpion = IO.loadtexture("res/Textures/Editor/scorpion.jpg",false);
 			pit = IO.loadtexture("res/Textures/Editor/pitt.jpg",false);
-			hatch = IO.loadtexture("res/Textures/Editor/hatch.jpg",false);
+			hatch = IO.loadtexture("res/Textures/Editor/hatch.png",false);
 			texresize = IO.loadtexture("res/Textures/Editor/resize.jpg", false);
 			texquit = IO.loadtexture("res/Textures/Editor/quit.png"	, false	);
-			movwalldown = IO.loadtexture("res/Textures/Editor/movwalldown.jpg", false);
-			movwallup = IO.loadtexture("res/Textures/Editor/movwallup.jpg", false);
+			movwalldown = IO.loadtexture("res/Textures/Editor/movwalldown.png", false);
+			movwallup = IO.loadtexture("res/Textures/Editor/movwallup.png", false);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

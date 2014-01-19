@@ -423,7 +423,7 @@ public class MazeMaker {
 		while(mwidth==0 && lcont){
 			try{
 									
-				String temp = JOptionPane.showInputDialog("Enter the width as an integer:", "20");
+				String temp = JOptionPane.showInputDialog("Enter the width:", "20");
 				
 				mwidth = Integer.parseInt(temp);
 				
@@ -433,7 +433,7 @@ public class MazeMaker {
 		}
 		while(mheight==0 && lcont){
 			try{
-				String temp = JOptionPane.showInputDialog("Enter the height as an integer:", "20");
+				String temp = JOptionPane.showInputDialog("Enter the height:", "20");
 				mheight = Integer.parseInt(temp);
 				
 			}catch(Exception e){	
