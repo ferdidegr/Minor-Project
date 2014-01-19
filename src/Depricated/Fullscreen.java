@@ -1,4 +1,4 @@
-package Game;
+package Depricated;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;

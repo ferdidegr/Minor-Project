@@ -150,8 +150,11 @@ public class Menu {
 					
 					mousepoll();
 					// Discard all keyboard events
-					while(Keyboard.next() && ingame){ 
-						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE){gamestate=GameState.GAME;}
+					while(Keyboard.next()){ 
+						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE && ingame){gamestate=GameState.GAME;}
+						if(!Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_F12){
+							try{Display.setFullscreen(!Display.isFullscreen());}catch(Exception e){}
+						}
 					}
 					
 					display();					
