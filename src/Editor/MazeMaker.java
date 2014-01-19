@@ -293,12 +293,12 @@ public class MazeMaker {
 		/*
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
-		buttonlist.add(new Button(LEFT, 0.1f,Textures.texload, 98));		// 98 load button 
-		buttonlist.add(new Button(RIGHT, 0.1f,Textures.texsave, 99));		// 99 save button
-		buttonlist.add(new Button(LEFT, 1.2f,Textures.texnewmaze, 100));	// 100 New maze
-		buttonlist.add(new Button(RIGHT, 1.2f,Textures.texresize, 101));	// 101 Resize button
+		buttonlist.add(new Button(LEFT, 0.1f,Textures.texopen, 98));		// 98 load button 
+		buttonlist.add(new Button(RIGHT, 0.1f,Textures.texnewmaze, 100));	// 100 New maze
+		buttonlist.add(new Button(LEFT, 1.2f,Textures.texsave, 99));		// 99 save button
+		buttonlist.add(new Button(RIGHT, 1.2f,Textures.texquit, 110));		// 110 Exit button
 		buttonlist.add(new Button(LEFT, 2.3f,Textures.texshift, 102)); 		// 102 Shift maze button
-		buttonlist.add(new Button(RIGHT, 2.3f,Textures.texquit, 110)); 		// 110 Exit button
+		buttonlist.add(new Button(RIGHT, 2.3f,Textures.texresize, 101));	// 101 Resize button
 		
 		buttonlist.add(new Button(LEFT, 4.0f,Textures.texempty, 0));		// 0
 		buttonlist.add(new Button(RIGHT, 4.0f,Textures.texwall1, 1));		// 1 
@@ -309,14 +309,23 @@ public class MazeMaker {
 		buttonlist.add(new Button(LEFT, 7.3f,Textures.texwall6, 6));		// 6 
 		buttonlist.add(new Button(RIGHT, 7.3f,Textures.texwall7, 7));		// 7 
 		
-		buttonlist.add(new Button(LEFT, 9.0f,Textures.texstart,11));		// 11 flaggreen
-		buttonlist.add(new Button(RIGHT, 9.0f,Textures.texend,12));			// 12 flagred
+		buttonlist.add(new Button(LEFT, 9.0f,Textures.texstart,11));		// 11
+		buttonlist.add(new Button(RIGHT, 9.0f,Textures.texend,12));			// 12
 		buttonlist.add(new Button(LEFT, 10.1f,Textures.texspike, 13));		// 13
-		buttonlist.add(new Button(RIGHT, 10.1f,Textures.scorpion, 14));		// 14
-		buttonlist.add(new Button(LEFT, 11.2f,Textures.pit, 15));			// 15
-		buttonlist.add(new Button(RIGHT, 11.2f,Textures.hatch, 16));		// 16
-		buttonlist.add(new Button(LEFT, 12.3f,Textures.movwallup, 17));		// 17
-		buttonlist.add(new Button(RIGHT, 12.3f,Textures.movwalldown, 18));	// 18
+		buttonlist.add(new Button(RIGHT, 10.1f,Textures.hatch, 16));		// 16
+		buttonlist.add(new Button(LEFT, 11.2f,Textures.movwallup, 17));		// 17
+		buttonlist.add(new Button(RIGHT, 11.2f,Textures.movwalldown, 18));	// 18
+		buttonlist.add(new Button(LEFT, 12.3f,Textures.pit, 15));			// 15
+		buttonlist.add(new Button(RIGHT, 12.3f,Textures.scorpion, 14));		// 14
+		
+//		buttonlist.add(new Button(LEFT, 9.0f,Textures.texstart,11));		// 11
+//		buttonlist.add(new Button(RIGHT, 9.0f,Textures.texend,12));			// 12
+//		buttonlist.add(new Button(LEFT, 10.1f,Textures.texspike, 13));		// 13
+//		buttonlist.add(new Button(RIGHT, 10.1f,Textures.scorpion, 14));		// 14
+//		buttonlist.add(new Button(LEFT, 11.2f,Textures.pit, 15));			// 15
+//		buttonlist.add(new Button(RIGHT, 11.2f,Textures.hatch, 16));		// 16
+//		buttonlist.add(new Button(LEFT, 12.3f,Textures.movwallup, 17));		// 17
+//		buttonlist.add(new Button(RIGHT, 12.3f,Textures.movwalldown, 18));	// 18
 	}
 	/**
 	 * ********************************************

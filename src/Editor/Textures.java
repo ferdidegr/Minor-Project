@@ -14,13 +14,13 @@ import Utils.IO;
 public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
-			, texsave = null, texload = null, texspike = null, texstart = null, texend,
+			, texsave = null, texopen = null, texspike = null, texstart = null, texend,
 			scorpion, pit, hatch, texresize , texquit, movwalldown, movwallup, mazebg, texshift;
 	
 	static {
 		try {
 			texempty = IO.loadtexture("res/Textures/Editor/empty.jpg",false);
-			texshift = IO.loadtexture("res/Textures/Editor/shift.jpg",false);
+			texshift = IO.loadtexture("res/Textures/Editor/shift.png",false);
 			texmenubar = IO.loadtexture("res/sandwall.png",false);
 			texnewmaze = IO.loadtexture("res/Textures/Editor/newmaze.png",false);
 			texwall1 = IO.loadtexture("res/Textures/Editor/wall1.png",false);
@@ -30,15 +30,15 @@ public class Textures {
 			texwall5 = IO.loadtexture("res/Textures/Editor/wall5.png",false);
 			texwall6 = IO.loadtexture("res/Textures/Editor/wall6.png",false);
 			texwall7 = IO.loadtexture("res/Textures/Editor/wall7.png",false);
-			texsave = IO.loadtexture("res/Textures/Editor/save.jpg",false);
-			texload = IO.loadtexture("res/Textures/Editor/load.jpg",false);
+			texsave = IO.loadtexture("res/Textures/Editor/save.png",false);
+			texopen = IO.loadtexture("res/Textures/Editor/open.png",false);
 			texspike = IO.loadtexture("res/Textures/Editor/spikes.png",false);
 			texstart = IO.loadtexture("res/Textures/Editor/start.png",false);
 			texend = IO.loadtexture("res/Textures/Editor/end.png",false);
-			scorpion = IO.loadtexture("res/Textures/Editor/scorpion.jpg",false);
+			scorpion = IO.loadtexture("res/Textures/Editor/scorpion.png",false);
 			pit = IO.loadtexture("res/Textures/Editor/pitt.jpg",false);
 			hatch = IO.loadtexture("res/Textures/Editor/hatch.png",false);
-			texresize = IO.loadtexture("res/Textures/Editor/resize.jpg", false);
+			texresize = IO.loadtexture("res/Textures/Editor/resize.png", false);
 			texquit = IO.loadtexture("res/Textures/Editor/quit.png"	, false	);
 			movwalldown = IO.loadtexture("res/Textures/Editor/movwalldown.png", false);
 			movwallup = IO.loadtexture("res/Textures/Editor/movwallup.png", false);
