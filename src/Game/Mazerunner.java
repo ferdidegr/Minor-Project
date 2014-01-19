@@ -323,6 +323,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		sound.stopScorps();
 		sound.stopGame();
 		sound.playMenu();
+		Display.setTitle("Ruins of Scorps");
 //		skitter.deleteSources();
 	
 	}  
@@ -543,7 +544,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			timer += deltaTime;
 			
 			// TODO remove
-			Display.setTitle("dt: "+ deltaTime);
+			Display.setTitle("Ruins of Scorps dt: "+ deltaTime);
 
 			//Update any movement since last frame.
 			Monster.setPlayerloc(new Vector(player.locationX, player.locationY, player.locationZ));	

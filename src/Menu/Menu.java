@@ -71,11 +71,9 @@ public class Menu {
 		
 		Timer timer = new Timer().start();
 		Display.create();
-		
-		
-		
+				
 		Display.setResizable(false);
-
+		Display.setTitle("Ruins of Scorps");
 		loadingscreen();
 		AL.create();
 		sound=new Sound();
@@ -97,7 +95,7 @@ public class Menu {
 		new Textures();
 		initButtons();
 		
-//		while(timer.getTime()<5000){}
+		while(timer.getTime()<2000){}
 		
 		run();
 		
