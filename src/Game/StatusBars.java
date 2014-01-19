@@ -33,8 +33,9 @@ public class StatusBars {
 		int borderwidth = 2;									// Border width in pixels
 		double dwidth = Display.getWidth();						// get current display width
 		int plhealth = player.getHealth().getHealth();
+		plhealth = (plhealth >= 0? plhealth:0);
 		double healthwidth = (barwidth - 2* borderwidth)*plhealth/player.getHealth().getmaxHealth();
-		
+		healthwidth = (healthwidth>=0? healthwidth:0);
 		double runperc = (double)player.getRunMod()/player.runcountermax;
 		double runwidth = Math.max((barwidth - 2* borderwidth)*runperc,0);
 		
