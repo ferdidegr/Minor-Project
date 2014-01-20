@@ -3,12 +3,14 @@ package Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -24,6 +26,33 @@ import Editor.MazeMap;
 
 
 public class IO {
+	/**
+	 * Read the progres file
+	 * @return ArrayList with completed levels
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static ArrayList<String> readprogress() throws IOException, ClassNotFoundException{
+		
+		FileInputStream fis = new FileInputStream("progres.sav");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		
+		ArrayList<String> progres = (ArrayList<String>) ois.readObject();
+		ois.close();
+		
+		return progres;
+	}
+	/**
+	 * Write to the progres file
+	 * @param progres
+	 * @throws IOException
+	 */
+	public static void writeprogress(ArrayList<String> progres) throws IOException{
+		FileOutputStream fos = new FileOutputStream("progres.sav");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(progres);				
+		oos.close();
+	}
 	/**
 	 * read a maze file (which is an int[][])
 	 * @param input

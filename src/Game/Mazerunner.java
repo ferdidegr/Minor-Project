@@ -16,6 +16,7 @@ import org.newdawn.slick.opengl.TextureImpl;
 
 import Intelligence.AStar;
 import Menu.GameState;
+import Menu.MazechooserMenu;
 import Menu.Menu;
 import ParticleSystem.ParticleEmitter;
 import Utils.*;
@@ -144,6 +145,15 @@ public void start(String levelname) throws Exception{
 	else if(Menu.getState()==GameState.TOMAIN){
 		Menu.setState(GameState.MAIN);
 	}else{
+		if(!Menu.progres.contains(levelname)){
+			Menu.progres.add(levelname);
+			IO.writeprogress(Menu.progres);
+			Menu.levelList = Utils.loadLevelList(Menu.progres);
+			MazechooserMenu temp = (MazechooserMenu) Menu.menus.get(GameState.SELECTLVL);
+			temp.resetlist();
+			temp.init(0, 0);
+		}
+		
 		changetoHUD();
 		ScoreScreen.initview();
 		ScoreScreen.displayScoreatGO(status.getScore(), Math.max(0, MAXTIME-timer), player.getHealth().getHealth());

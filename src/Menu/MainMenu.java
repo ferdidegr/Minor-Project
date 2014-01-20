@@ -63,7 +63,7 @@ public class MainMenu extends ButtonList {
 			}catch(Exception e){}
 			glPopMatrix();
 			glPopAttrib();
-			Menu.levelList = Utils.Utils.loadLevelList();
+			Menu.levelList = Utils.Utils.loadLevelList(Menu.progres);
 			MazechooserMenu temp = (MazechooserMenu) Menu.menus.get(GameState.SELECTLVL);
 			temp.resetlist();
 			temp.init(0, 0);

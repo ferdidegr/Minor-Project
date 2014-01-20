@@ -35,7 +35,7 @@ public class Menu {
 	private static GameState gamestate;
 	public static Difficulty difficulty;
 	public static Mazerunner game;
-	protected static HashMap<GameState, ButtonList> menus = new HashMap<>();	
+	public static HashMap<GameState, ButtonList> menus = new HashMap<>();	
 	protected static int top, bottom, scrollspeed;
 	private static int screenx;
 	private static int screeny;
@@ -45,10 +45,11 @@ public class Menu {
 	public static Text mainfont;
 	public static boolean ingame = false;
 	static Database score ;
-	static ArrayList<String> levelList;
+	public static ArrayList<String> levelList;
 	public static int mousesensitivity = 3;
 	public static Texture loadingscreen = null;
 	private static Sound sound;
+	public static ArrayList<String> progres = null;
 	
 	/**
 	 * ************************************
@@ -88,9 +89,17 @@ public class Menu {
 		
 		gamestate = GameState.MAIN;
 		difficulty = Difficulty.EASY;
-		levelList = Utils.Utils.loadLevelList();
 		score =  new Database("db/scores.db");
 		mainfont = new Text("BEBAS.TTF");	
+		
+		// Read progress file
+		try {
+			progres = IO.readprogress();
+		} catch (Exception e){
+			progres = new ArrayList<>();
+		}
+		
+		levelList = Utils.Utils.loadLevelList(progres);
 		
 		new Textures();
 		initButtons();
