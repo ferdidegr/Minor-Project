@@ -98,8 +98,8 @@ public class Menu {
 		} catch (Exception e){
 			progres = new ArrayList<>();
 		}
-		
-		levelList = Utils.Utils.loadLevelList(progres);
+		// Set the second cheat parameter on true to play all levels
+		levelList = Utils.Utils.loadLevelList(progres, true);
 		
 		new Textures();
 		initButtons();

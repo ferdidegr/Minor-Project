@@ -39,7 +39,14 @@ public class ScoreScreen {
 		/*
 		 * Get previous highscore from database
 		 */
-		String levelname = Menu.levelList.get(Menu.currentlevel).split("\\.maze")[0].split("/")[1];
+		String currentlevel = Menu.levelList.get(Menu.currentlevel);
+		String levelname;
+		if(currentlevel.startsWith("custom")){
+			levelname = "custom/"+currentlevel.split("\\.maze")[0].split("/")[1];
+		}else{
+			levelname = currentlevel.split("\\.maze")[0].split("/")[1];
+		}
+		
 		initview();
 		highscore = readDatabase(levelname);
 		

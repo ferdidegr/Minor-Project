@@ -43,7 +43,7 @@ public class Utils {
 	 * Load all file names in the folder level
 	 * @return a sorted arraylist with the levelnames
 	 */
-	public static ArrayList<String> loadLevelList(ArrayList<String> progres){
+	public static ArrayList<String> loadLevelList(ArrayList<String> progres, boolean cheat){
 		ArrayList<String> MazeList = new ArrayList<String>();
 		ArrayList<String> tempMazeList = new ArrayList<String>();
 		String currentdir = System.getProperty("user.dir");		
@@ -62,7 +62,7 @@ public class Utils {
 		for(String name:tempMazeList){
 			if(name.toLowerCase().endsWith(".maze")){
 				MazeList.add(name);		
-				if(!progres.contains(name)){break;}
+				if(!progres.contains(name) && !cheat){break;}
 			}
 		}		
 		
