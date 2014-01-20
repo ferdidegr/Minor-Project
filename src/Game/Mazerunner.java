@@ -597,7 +597,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			/*
 			 * Pickups
 			 */
-			if (ptimer.getTime()>2*1000 && !Pickup.isFull()){
+			if (ptimer.getTime()>10*1000 && !Pickup.isFull()){
 				pickuplijst.add(new Pickup(false));
 				ptimer.start();
 			}
