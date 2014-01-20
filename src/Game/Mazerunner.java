@@ -415,12 +415,12 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	explosive.display();
 		        }
 		        
+		        player.draw();
 		        // HUD  and glare
 		        glPushMatrix();
 		        drawglare();
 		        if(input.minimap){drawHUD();}
 		        glPopMatrix();
-		        player.draw();
 	}
 	
 	/**
@@ -451,7 +451,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		 * Please use odd numbers
 		 */
 		float factor = (float) Math.pow(player.lookat().dotprod(playertosun),25);
-		
+		glPushAttrib(GL_ENABLE_BIT);
 		changetoHUD();
 		glEnable(GL_BLEND);
 		glColor4f(1, 1, 1, factor*0.5f);
@@ -462,6 +462,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glVertex2f(Display.getWidth(), 0);
 		glEnd();
 		glDisable(GL_BLEND);
+		glPopAttrib();
 		changetoWorld();
 	}
 	

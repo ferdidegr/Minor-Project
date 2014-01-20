@@ -120,6 +120,7 @@ public class MiniMap {
 		glColor4f(1.0f, 1.0f, 1.0f, 0.8f);
 		drawPlayer();
 		glPopMatrix();
+		glDisable(GL_BLEND);
 	}
 
 	/**

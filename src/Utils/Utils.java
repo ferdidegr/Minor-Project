@@ -56,9 +56,9 @@ public class Utils {
 			}
 		}
 		// Sort standard levels
-		Collections.sort(MazeList, String.CASE_INSENSITIVE_ORDER);
+		Collections.sort(MazeList, new NaturalOrderComparator());
 		
-		// Load custom levels, you do not care about the order
+		// Load custom levels, you dont care about the order
 		for(String name:custfiles){
 			if(name.toLowerCase().endsWith(".maze")){
 				MazeList.add("customlevels/"+name);
