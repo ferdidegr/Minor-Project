@@ -148,7 +148,7 @@ public void start(String levelname) throws Exception{
 		if(!Menu.progres.contains(levelname)){
 			Menu.progres.add(levelname);
 			IO.writeprogress(Menu.progres);
-			Menu.levelList = Utils.loadLevelList(Menu.progres, false);
+			Menu.levelList = Utils.loadLevelList(Menu.progres, Menu.cheat);
 			MazechooserMenu temp = (MazechooserMenu) Menu.menus.get(GameState.SELECTLVL);
 			temp.resetlist();
 			temp.init(0, 0);

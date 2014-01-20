@@ -50,6 +50,7 @@ public class Menu {
 	public static Texture loadingscreen = null;
 	private static Sound sound;
 	public static ArrayList<String> progres = null;
+	public static boolean cheat = true;
 	
 	/**
 	 * ************************************
@@ -99,7 +100,7 @@ public class Menu {
 			progres = new ArrayList<>();
 		}
 		// Set the second cheat parameter on true to play all levels
-		levelList = Utils.Utils.loadLevelList(progres, true);
+		levelList = Utils.Utils.loadLevelList(progres, cheat);
 		
 		new Textures();
 		initButtons();
