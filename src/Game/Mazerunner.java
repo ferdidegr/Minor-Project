@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -18,7 +17,6 @@ import Intelligence.AStar;
 import Menu.GameState;
 import Menu.MazechooserMenu;
 import Menu.Menu;
-import ParticleSystem.ParticleEmitter;
 import Utils.*;
 import Menu.ScoreScreen;
 
@@ -45,8 +43,7 @@ public class Mazerunner {
 	protected static int SQUARE_SIZE=1;								// Size of a unit block
 	protected static int timer = 0;									// Keeps track of the time
 	private static int MAXTIME;
-	protected static int scorpcount;
-	protected int numpickups;										// Amount of pickups that have already been dropped
+	protected static int scorpcount;	
 	protected static StatusBars status = new StatusBars();			// Creates the overlay object/ HUD
 	
 
@@ -65,6 +62,7 @@ public class Mazerunner {
 	public static ArrayList<C4> c4;
 	public static int c4Count = 0; 
 	protected String levelname;
+	private Timer ptimer = new Timer();
 
 									
 	/*
@@ -103,6 +101,8 @@ public void start(String levelname) throws Exception{
 	c4Count = 2;
 	
 	previousTime = Calendar.getInstance().getTimeInMillis();
+	
+	ptimer.start();
 	
 	while(!Display.isCloseRequested() && !player.isDead){
 		
@@ -145,7 +145,7 @@ public void start(String levelname) throws Exception{
 	else if(Menu.getState()==GameState.TOMAIN){
 		Menu.setState(GameState.MAIN);
 	}else{
-		if(!Menu.progres.contains(levelname)){
+		if(!Menu.progres.contains(levelname) && !levelname.startsWith("custom")){
 			Menu.progres.add(levelname);
 			IO.writeprogress(Menu.progres);
 			Menu.levelList = Utils.loadLevelList(Menu.progres, Menu.cheat);
@@ -489,7 +489,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			changetoWorld();
 			// Reset deltaTime
 			previousTime = Calendar.getInstance().getTimeInMillis();
-
+			ptimer.start();
 			input.minimap = buffer;
 		}
 	}
@@ -597,10 +597,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			/*
 			 * Pickups
 			 */
-			if (timer>numpickups*10*1000){
-				numpickups++;
+			if (ptimer.getTime()>2*1000 && !Pickup.isFull()){
 				pickuplijst.add(new Pickup(false));
+				ptimer.start();
 			}
+			
 			/*
 			 * C4
 			 */

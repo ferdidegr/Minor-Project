@@ -17,7 +17,6 @@ public class Pickup extends levelObject {
 	float size=1/2f;
 	float origsize;
 	boolean on = false;
-	static int[][] maze;
 	static int [][] alpu;
 	static Random random = new Random();
 	
@@ -42,22 +41,18 @@ public class Pickup extends levelObject {
 	 * @param drop deprecated
 	 */
 	public Pickup(boolean drop){
-		super(random.nextInt(maze[0].length)*Mazerunner.SQUARE_SIZE,
-				0,random.nextInt(maze.length)*Mazerunner.SQUARE_SIZE);
+		super(random.nextInt(alpu[0].length)*Mazerunner.SQUARE_SIZE,
+				0,random.nextInt(alpu.length)*Mazerunner.SQUARE_SIZE);
 		
 		this.type=random.nextInt(5);
+
 //		System.out.println(this.getGridZ(Mazerunner.SQUARE_SIZE)+" "+this.getGridX(Mazerunner.SQUARE_SIZE));
 //		System.out.println(maze[0].length+" "+maze.length);
-		while(maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]>0 
-				&& maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]<10 
-				|| alpu[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==1
-				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==15
-				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==17
-				|| maze[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]==18){
-			locationZ=random.nextInt(maze.length)*Mazerunner.SQUARE_SIZE;
-			locationX=random.nextInt(maze[0].length)*Mazerunner.SQUARE_SIZE;
+		while(	alpu[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]>=1){
+			locationZ=random.nextInt(alpu.length)*Mazerunner.SQUARE_SIZE;
+			locationX=random.nextInt(alpu[0].length)*Mazerunner.SQUARE_SIZE;			
 		}
-		alpu[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]=1;
+		alpu[this.getGridZ(Mazerunner.SQUARE_SIZE)][this.getGridX(Mazerunner.SQUARE_SIZE)]++;
 		locationX+=0.5;
 		locationZ+=0.5;
 		if (drop){
@@ -113,12 +108,41 @@ public class Pickup extends levelObject {
 	
 	
 	/**
-	 * Initialization function for pickup, creates a similar maze object to remember the squares that already have a pickup
+	 * Initialization function for pickup, creates a similar maze object to remember the squares that already have a pickup or cannot conatain a pickup
 	 * @param mazein the level maze
 	 */
 	public static void initPickup(int[][] mazein){
-		maze = mazein;
+		int[][] maze = mazein;
 		alpu = new int[maze.length][maze[0].length];
+		
+		for(int j = 0 ; j < maze.length; ++j){
+			for(int i = 0 ; i < maze[0].length; ++i){
+				if(maze[j][i]>0 
+				&& maze[j][i]<10 				
+				|| maze[j][i]==12
+				|| maze[j][i]==15
+				|| maze[j][i]==17
+				|| maze[j][i]==18){
+					alpu[j][i] = 1;
+				}
+			}
+		}
+
+	}
+	/**
+	 * Checks if the maze is already full of pickups
+	 * @return
+	 */
+	public static boolean isFull(){
+		int total = alpu[0].length*alpu.length;
+		int counter = 0;
+		for(int j = 0; j< alpu.length; ++j){
+			for(int i = 0 ; i < alpu[0].length; ++i){
+				counter += alpu[j][i];
+			}
+		}		
+		
+		return total == counter;
 	}
 	
 	/**
