@@ -176,6 +176,7 @@ public class MazeMaker {
 				if(Keyboard.getEventKey() == Keyboard.KEY_LCONTROL){ctrldown = false;}
 				if(Keyboard.getEventKey() == Keyboard.KEY_LSHIFT){Lshiftdown = false;}
 				if(Keyboard.getEventKey() == Keyboard.KEY_LMENU){Laltdown = false;}
+				if(Keyboard.getEventKey() == Keyboard.KEY_F1){infomenu();}
 			}
 		}
 	}
@@ -266,6 +267,43 @@ public class MazeMaker {
 		tilesize = 0.2f*menubarwidth;
 		MazeMap.setSize(tilesize);
 		initGL();
+	}
+	/**
+	 * ********************************************
+	 * Show info about the maze
+	 * ********************************************
+	 */
+	public void infomenu(){
+		if(maze!=null){
+		int[][] intmaze= maze.getMaze();
+		int width = intmaze[0].length;
+		int height = intmaze.length;
+		int scorpcount = 0, spikecount = 0 , wallcount = 0 , liftcount = 0, hatchcount = 0, pitcount = 0;
+		
+		for(int j = 0 ; j < intmaze.length; ++j){
+			for(int i = 0 ; i < intmaze[0].length; ++i){
+				int a = intmaze[j][i];
+				if(a>0 && a<10)wallcount++;
+				if(a == 13) spikecount ++;
+				if(a == 14) scorpcount ++;
+				if(a == 15) pitcount ++;
+				if(a == 16) hatchcount++;
+				if(a == 17 || a ==18) liftcount++;
+			}
+		}
+		
+		JOptionPane.showMessageDialog(null, 
+										"Width: "+width+
+										"\nHeight: "+height+"\n"+
+										"Walls: "+wallcount+"\n"+
+										"Spikes: "+spikecount+"\n"+
+										"Scorpions: "+scorpcount+"\n"+
+										"Pits: "+pitcount+"\n"+
+										"Hatches: "+hatchcount+"\n"+
+										"Elevators: "+liftcount, "Maze info", JOptionPane.INFORMATION_MESSAGE);
+		}else{
+			Sys.alert("No existing maze available", "You do not have a maze open, please open or make a maze first");
+		}
 	}
 	/**
 	 * *************************************************
