@@ -15,7 +15,7 @@ public class Textures {
 	public static Texture texempty = null, texmenubar = null, texnewmaze = null, texwall1 = null,
 			texwall2 = null,texwall3 = null,texwall4 = null,texwall5 = null,texwall6 = null,texwall7 = null
 			, texsave = null, texopen = null, texspike = null, texstart = null, texend,
-			scorpion, pit, hatch, texresize , texquit, movwalldown, movwallup, mazebg, texshift;
+			scorpion, pit, hatch, texresize , texquit, movwalldown, movwallup, mazebg, texshift, butpit;
 	
 	static {
 		try {
@@ -37,6 +37,7 @@ public class Textures {
 			texend = IO.loadtexture("res/Textures/Editor/end.png",false);
 			scorpion = IO.loadtexture("res/Textures/Editor/scorpion.png",false);
 			pit = IO.loadtexture("res/Textures/Editor/pitt.jpg",false);
+			butpit = IO.loadtexture("res/Textures/Editor/pitt.png",false);
 			hatch = IO.loadtexture("res/Textures/Editor/hatch.png",false);
 			texresize = IO.loadtexture("res/Textures/Editor/resize.png", false);
 			texquit = IO.loadtexture("res/Textures/Editor/quit.png"	, false	);

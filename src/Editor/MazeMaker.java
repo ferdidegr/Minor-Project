@@ -315,7 +315,7 @@ public class MazeMaker {
 		buttonlist.add(new Button(RIGHT, 10.1f,Textures.hatch, 16));		// 16
 		buttonlist.add(new Button(LEFT, 11.2f,Textures.movwallup, 17));		// 17
 		buttonlist.add(new Button(RIGHT, 11.2f,Textures.movwalldown, 18));	// 18
-		buttonlist.add(new Button(LEFT, 12.3f,Textures.pit, 15));			// 15
+		buttonlist.add(new Button(LEFT, 12.3f,Textures.butpit, 15));		// 15
 		buttonlist.add(new Button(RIGHT, 12.3f,Textures.scorpion, 14));		// 14
 	}
 	/**
