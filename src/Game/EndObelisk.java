@@ -1,6 +1,7 @@
 package Game;
 import static org.lwjgl.opengl.GL11.*;
 import ParticleSystem.ParticleEmitter;
+import Utils.Material;
 import Utils.Models;
 import Utils.Timer;
 import Utils.Vector;
@@ -37,7 +38,7 @@ public class EndObelisk extends levelObject{
 		glShadeModel(GL_FLAT);
 		glPushMatrix();
 		glTranslated(locationX, locationY, locationZ);		
-		glCallList(Models.obelisk);	
+		glCallList(Models.obelisk);			
 		/*
 		 * Displays the flame when the monsterlist is empty
 		 */
@@ -53,7 +54,11 @@ public class EndObelisk extends levelObject{
 		glPopMatrix();
 		glShadeModel(GL_SMOOTH);
 		
-
+		Material.setMtlHole();
+		glPushMatrix();
+		glTranslated(locationX-0.5, -1, locationZ-0.5);
+		Utils.Graphics.groundThickner(false, false, false, false);
+		glPopMatrix();
 	}
 	/**
 	 * Checks for the input x,y and z if it is inside the obelisk
