@@ -27,7 +27,8 @@ public class Wall extends levelObject{
 	 */
 	private double[][] boxvertices;
 	private double left, right, back, front, top, bottom;
-	private boolean wleft, wright, wfront, wback;
+	private boolean bleft, bright, bfore, bback;
+	boolean[] contact ;
 	private double height;
 	private int SQUARE_SIZE;
 	private int[][] boxfaces= {{0,1,5,4},		// front (near you, positive z axis)
@@ -70,6 +71,27 @@ public class Wall extends levelObject{
 							{right, top, front},	//5
 							{right, top, back},		//6
 							{left, top, back}};		//7
+		
+		/*
+		 * contact culling, removes all faces which has contact with a wall with an equal or bigger height
+		 */		
+		int ss = Mazerunner.SQUARE_SIZE;
+		int[][] maze = Mazerunner.maze;
+		int X = getGridX((int) ss);
+		int Z = getGridZ((int) ss);
+		contact = new boolean[5];
+
+		contact[0] = (Z== maze.length-1? false: (maze[Z+1][X]>= height && maze[Z+1][X]<10));
+		contact[1] = (X==maze[0].length-1? false: (maze[Z][X+1]>= height && maze[Z][X+1] <10));
+		contact[2] = (Z==0? false: (maze[Z-1][X]>= height && maze[Z-1][X] <10));
+		contact[3] = (X==0? false: (maze[Z][X-1]>= height && maze[Z][X-1] <10));
+		contact[4] = false;
+		
+		// Ground thickener culling
+		bleft  = (X==0? false: maze[Z][X-1]<10 || maze[Z][X-1]==14);
+		bfore  = (Z==0? false: maze[Z-1][X]<10 || maze[Z-1][X]==14);
+		bright  = (X==maze[0].length-1? false: maze[Z][X+1]<10 || maze[Z][X+1]==14);
+		bback  = (Z== maze.length-1? false: maze[Z+1][X]<10 || maze[Z+1][X]==14);
 	}
 	/**
 	 * Sets the square size used in the game
@@ -82,19 +104,7 @@ public class Wall extends levelObject{
 	 * Draw the wall
 	 */
 	public void display(){
-		/*
-		 * contact culling, removes all faces which has contact with a wall with an equal or bigger height
-		 */		
-		int ss = Mazerunner.SQUARE_SIZE;
-		int[][] maze = Mazerunner.maze;
-		int X = getGridX((int) ss);
-		int Z = getGridZ((int) ss);
-		boolean[] contact = new boolean[5];
-		contact[0] = (Z== maze.length-1? false: (maze[Z+1][X]> height && maze[Z+1][X]<10));
-		contact[1] = (X==maze[0].length-1? false: (maze[Z][X+1]> height && maze[Z][X+1] <10));
-		contact[2] = (Z==0? false: (maze[Z-1][X]> height && maze[Z-1][X] <10));
-		contact[3] = (X==0? false: (maze[Z][X-1]> height && maze[Z][X-1] <10));
-		contact[4] = false;
+
 		
 		/*
 		 * Wall
@@ -124,15 +134,10 @@ public class Wall extends levelObject{
 		 */
 		
 		glPushMatrix();
-		glTranslated(left, -1, back);		
-
-		boolean left  = (X==0? false: maze[Z][X-1]==0);
-		boolean fore  = (Z==0? false: maze[Z-1][X]==0);
-		boolean right  = (X==maze[0].length-1? false: maze[Z][X+1]==0);
-		boolean back  = (Z== maze.length-1? false: maze[Z+1][X]==0);
+		glTranslated(left, -1, back);				
 		
 		Material.setMtlHole();
-		Graphics.groundThickner(left, fore, right, back);	
+		Graphics.groundThickner(bleft, bfore, bright, bback);	
 		glPopMatrix();
 	}
 	/**

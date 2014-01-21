@@ -7,7 +7,9 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -69,8 +71,16 @@ public class Chooser extends JFrame implements ActionListener{
 		}
 		/*
 		 * Sort all display mode strings in an ascending way
-		 */
-		Arrays.sort(lijst2);
+		 */		
+		ArrayList<String> temp = new ArrayList<>();
+		for(int i = 0 ; i < lijst2.length; ++i){
+			temp.add(lijst2[i]);
+		}
+		Collections.sort(temp, new NaturalOrderComparator());
+		
+		for(int i = 0 ; i < temp.size(); ++i){
+			lijst2[i] = temp.get(i);
+		}
 		
 		/**
 		 * JFrame settings
@@ -135,7 +145,7 @@ public class Chooser extends JFrame implements ActionListener{
 		checkbox.setEnabled(enableFS);
 		
 		// Center the pop up
-		setLocation(Display.getDisplayMode().getWidth()/2, Display.getDisplayMode().getHeight()/2);
+		setLocation((Display.getDisplayMode().getWidth()-250)/2, (Display.getDisplayMode().getHeight()-110)/2);
 		
 		// Make it visible
 		setVisible(true);

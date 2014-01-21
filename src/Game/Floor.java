@@ -82,10 +82,10 @@ public class Floor extends levelObject{
 		
 		int X = getGridX((int) ss);
 		int Z = getGridZ((int) ss);
-		boolean left  = (X==0? false: maze[Z][X-1]==0);
-		boolean fore  = (Z==0? false: maze[Z-1][X]==0);
-		boolean right  = (X==maze[0].length-1? false: maze[Z][X+1]==0);
-		boolean back  = (Z== maze.length-1? false: maze[Z+1][X]==0);
+		boolean left  = (X==0? false: maze[Z][X-1]<10 || maze[Z][X-1]==14);
+		boolean fore  = (Z==0? false: maze[Z-1][X]<10 || maze[Z-1][X]==14);
+		boolean right  = (X==maze[0].length-1? false: maze[Z][X+1]<10 || maze[Z][X+1]==14);
+		boolean back  = (Z== maze.length-1? false: maze[Z+1][X]<10 || maze[Z+1][X]==14);
 		
 		Material.setMtlHole();
 		Graphics.groundThickner(left, fore, right, back);	
