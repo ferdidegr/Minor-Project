@@ -2,7 +2,6 @@ package Intelligence;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.PriorityQueue;
 
 import Utils.*;
 
@@ -43,7 +42,9 @@ public class AStar {
 	 * Zet het eind- en beginpunt van de route als deze beloopbaar zijn (dus in allnodes zitten). Geeft true als dit gelukt is.
 	 * Van vector A en B wordt hiervoor het x- en z-coordinaat gebruikt, die naar beneden afgerond worden.
 	 * @param A
+	 * 			A vector representing the starting point
 	 * @param B
+	 * 			A vector representing the end point
 	 * @return
 	 */
 	public boolean setRoute(Vector A, Vector B){
@@ -66,6 +67,14 @@ public class AStar {
 		return true;
 	}
 	
+	/**
+	 * Search for an alternative endpoint of the route if the player is not on a walkable tile. To avoid 
+	 * stack overflow, a maximum of 10 iterations is used.
+	 * @param en  
+	 * 			The node you try to reach
+	 * @return 
+	 * 			True if an endpoint has been set, false if none has been found.
+	 */
 	public boolean tryEnd(Node en){
 		int countTries = 0;
 		while(countTries<10){
@@ -88,7 +97,9 @@ public class AStar {
 	 * PAS OP! Kan pas uitgevoerd worden na setRoute. 
 	 * Zoekt met het A* algoritme de maze door totdat het einde gevonden is.
 	 * Geeft true als het gelukt is binnen het maximum aantal iteraties.
+	 * 
 	 * @return
+	 * 		True if a route has been found. False if the maximum iterations has passed without reaching the end point.
 	 */
 	public boolean explore(){
 		Visited.clear();
@@ -115,6 +126,9 @@ public class AStar {
 	
 	/**
 	 * Zoekt met explore de maze door en zet de gevonden snelste route in de arraylist Route.
+	 * 
+	 * @return
+	 * 			ArrayList with all nodes of the route, ordered from start to end.
 	 */
 	public ArrayList<Node> findRoute(){
 		ArrayList<Node> Route = new ArrayList<Node>();
