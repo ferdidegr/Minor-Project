@@ -43,19 +43,35 @@ public class Utils {
 	 * Load all file names in the folder level
 	 * @return a sorted arraylist with the levelnames
 	 */
-	public static ArrayList<String> loadLevelList(){
+	public static ArrayList<String> loadLevelList(ArrayList<String> progres, boolean cheat){
 		ArrayList<String> MazeList = new ArrayList<String>();
+		ArrayList<String> tempMazeList = new ArrayList<String>();
 		String currentdir = System.getProperty("user.dir");		
 
 		String[] files = new File(currentdir+"/"+"levels").list();
-		
+		String[] custfiles = new File(currentdir+"/"+"customlevels").list();
+		// Load standard levels
 		for(String name:files){
 			if(name.toLowerCase().endsWith(".maze")){
-				MazeList.add(name);
+				tempMazeList.add("levels/"+name);				
 			}
 		}
+		// Sort standard levels
+		Collections.sort(tempMazeList, new NaturalOrderComparator());
+		// Compare to your progres file
+		for(String name:tempMazeList){
+			if(name.toLowerCase().endsWith(".maze")){
+				MazeList.add(name);		
+				if(!progres.contains(name) && !cheat){break;}
+			}
+		}		
 		
-		Collections.sort(MazeList, String.CASE_INSENSITIVE_ORDER);
+		// Load custom levels, you dont care about the order
+		for(String name:custfiles){
+			if(name.toLowerCase().endsWith(".maze")){
+				MazeList.add("customlevels/"+name);
+			}
+		}		
 		
 		return MazeList;
 	}

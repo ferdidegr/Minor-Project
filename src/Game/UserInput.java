@@ -1,17 +1,11 @@
 package Game;
 
-
-
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import Menu.*;
-
-
-
 
 /**
  * The UserInput class is an extension of the Control class. It also implements three 
@@ -110,7 +104,10 @@ public class UserInput extends Control
 				if (Keyboard.getEventKey() == Keyboard.KEY_D) {right = false;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_LSHIFT) {run = false;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_F12){
-					Fullscreen.setDisplayMode(Display.getWidth(), Display.getHeight(), true);
+					try {
+						Display.setFullscreen(!Display.isFullscreen());
+					} catch (LWJGLException e) {}
+//					Fullscreen.setDisplayMode(Display.getWidth(), Display.getHeight(), !Display.isFullscreen());
 				}
 				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE) {jump = false;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_F1) {view_coord = false;}

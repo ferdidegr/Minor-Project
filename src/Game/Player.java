@@ -362,8 +362,9 @@ public class Player extends GameObject {
 		// Gravity
 		velocity.add(0, -deltaTime*0.005, 0);
 		
-
-
+		// for low frame rates, prevents shooting through walls
+		if(Math.abs(velocity.getX())>0.5){velocity.setX(Math.signum(velocity.getX())*0.5);}
+		if(Math.abs(velocity.getZ())>0.5){velocity.setZ(Math.signum(velocity.getZ())*0.5);}
 	}
 	
 	public void updateX(){
@@ -380,21 +381,27 @@ public class Player extends GameObject {
 	}
 	
 	public void draw(){
-		glDisable(GL_LIGHTING);
+		double zfighteps = 1E-2;
+		glPushAttrib(GL_ENABLE_BIT);
+		glEnable(GL_BLEND);		
+		glDisable(GL_LIGHTING);		
 		glDisable(GL_TEXTURE_2D);
-		glColor4f(1.0f, 1.0f, 1.0f,1.0f);
-		glPointSize(50);
-		glBegin(GL_POINTS);
-		glVertex3d(locationX, locationY-height, locationZ);
-		glEnd();
-		glLineWidth(2);
-		glBegin(GL_LINE_LOOP);
-		glVertex3d(locationX+width, locationY-height, locationZ+width);
-		glVertex3d(locationX-width, locationY-height, locationZ+width);
-		glVertex3d(locationX-width, locationY-height, locationZ-width);
-		glVertex3d(locationX+width, locationY-height, locationZ-width);
-		glEnd();
-		glEnable(GL_LIGHTING);
+		glPushMatrix();
+		glTranslated(locationX, locationY-height+zfighteps, locationZ);
+		for(int i = 0 ; i< 4; ++i){
+			glRotated(90*i, 0, 1, 0);			
+			glBegin(GL_QUADS);
+			glColor4f(0.0f, 0.0f, 0.0f,0.5f);
+			glVertex3d(0, 0, 0);
+			glVertex3d(0, 0, width);
+			glColor4f(0.0f, 0.0f, 0.0f,0.2f);
+			glVertex3d(width, 0, width);
+			glColor4f(0.0f, 0.0f, 0.0f,0.5f);
+			glVertex3d(width, 0, 0);
+			glEnd();
+		}
+		glPopMatrix();
+		glPopAttrib();
 	}
 	
 	private void Scorpreaction(){

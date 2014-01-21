@@ -29,12 +29,16 @@ public class MazechooserMenu extends ButtonList{
 		int height = MenuButton.height;
 		
 		int counter = 0;
-		for(String name:Menu.levelList){			
-			lijst.add(new MenuButton((counter)*height , Textures.start, Textures.startover,counter, name.split("\\.maze")[0], MenuButton.Alignment.CENTER));
+		int separator = 0;
+		boolean separated = false;
+		for(String name:Menu.levelList){
+			if(name.startsWith("custom") && !separated){separator++; separated = true;}
+			lijst.add(new MenuButton((counter+separator)*(height) , Textures.start, Textures.startover,counter, name.split("\\.maze")[0].split("/")[1], MenuButton.Alignment.CENTER));
+
 			counter++;
 		}
 		// Back to menu button added
-		lijst .add(new MenuButton((counter+1)*height , Textures.start, Textures.startover,counter, "BACK TO MENU", MenuButton.Alignment.CENTER));
+		lijst .add(new MenuButton((counter+1+separator)*height , Textures.start, Textures.startover,counter, "BACK TO MENU", MenuButton.Alignment.CENTER));
 	}
 	
 	/** Bepaal hier wat bij verschillende knoppen de bijbehorende actie is.

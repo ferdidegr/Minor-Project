@@ -428,6 +428,10 @@ public class Monster extends levelObject {
 		velocity.scale(0.0);
 		// Movement to dir vector
 		velocity.add(dir.getX() * speed * deltaTime * 0.5, -0.005 * deltaTime, dir.getZ() * speed * deltaTime * 0.5);
+		
+		// for low frame rates, prevents shooting through walls
+		if(Math.abs(velocity.getX())>0.5){velocity.setX(Math.signum(velocity.getX())*0.5);}
+		if(Math.abs(velocity.getZ())>0.5){velocity.setZ(Math.signum(velocity.getZ())*0.5);}
 	}
 
 	public void updateX() {
@@ -529,6 +533,7 @@ public class Monster extends levelObject {
 			}
 			immunitycounter += 1;
 			flickercounter=60;
+			locationY += 0.15;
 		}
 	}
 

@@ -58,12 +58,12 @@ public class MainMenu extends ButtonList {
 			glPushMatrix();
 			try{
 				Display.setFullscreen(false);
-				new MazeMaker().start();
+				new MazeMaker().start(false);
 				Display.setFullscreen(fullscreen);
 			}catch(Exception e){}
 			glPopMatrix();
 			glPopAttrib();
-			Menu.levelList = Utils.Utils.loadLevelList();
+			Menu.levelList = Utils.Utils.loadLevelList(Menu.progres, Menu.cheat);
 			MazechooserMenu temp = (MazechooserMenu) Menu.menus.get(GameState.SELECTLVL);
 			temp.resetlist();
 			temp.init(0, 0);

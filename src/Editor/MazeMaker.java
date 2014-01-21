@@ -17,7 +17,12 @@ import Utils.Chooser;
 import Utils.IO;
 import Utils.Sound;
 import static org.lwjgl.opengl.GL11.*;
-
+/**
+ * Program to make mazes for the game Ruins of scorps
+ * 
+ * @author ZL
+ *
+ */
 public class MazeMaker {
 	private int left;								// world coordinate of the left side of the screen
 	private int right;								// world coordinate of the right side of the screen
@@ -25,13 +30,14 @@ public class MazeMaker {
 	private int bottom;								// world coordinate of the bottom side of the screen
 	private int menubarwidth;	
 	private ArrayList<Button> buttonlist = new ArrayList<Button>();
-	private boolean mousedown = false, ctrldown = false;
+	private boolean mousedown = false, ctrldown = false, Lshiftdown = false, Laltdown = false;
 	private MazeMap maze = null;
 	private int ID = -1, leftID = 0, rightID = 0;								// ID when no button has been pressed
 	private boolean exit = false;	
 	private float tilesize;
 	private int flaggreenx = -1, flaggreeny = -1, flagredx = -1, flagredy = -1;
 	private Sound sound;
+	private boolean standalone;
 	/**
 	 * ***********************************************
 	 * Begin the program
@@ -40,8 +46,9 @@ public class MazeMaker {
 	 * @throws IOException
 	 * ***********************************************
 	 */
-	public void start() throws LWJGLException, InterruptedException, IOException{
+	public void start(boolean standalone) throws LWJGLException, InterruptedException, IOException{
 		Button.resetSelectors();
+		this.standalone = standalone;
 		/*
 		 * Set mouse
 		 */
@@ -66,14 +73,15 @@ public class MazeMaker {
 		/*
 		 * Initialize sound
 		 */
-			sound=Menu.getSkitter();
+			if(!standalone){
+				sound=Menu.getSkitter();
+			}
 			
 		/*
 		 * Initialize Buttons
 		 */
-			initButtons();
-		
-//		texnewmaze = IO.readtexture("res/newmaze.jpg");
+			initButtons();	
+
 		
 		/*
 		 * Main loop
@@ -159,11 +167,15 @@ public class MazeMaker {
 				 * Key Pressed
 				 */
 				if(Keyboard.getEventKey() == Keyboard.KEY_LCONTROL){ctrldown = true;}
+				if(Keyboard.getEventKey() == Keyboard.KEY_LSHIFT){Lshiftdown = true;}
+				if(Keyboard.getEventKey() == Keyboard.KEY_LMENU){Laltdown = true;}
 			}else{
 				/*
 				 * Key Released events
 				 */
 				if(Keyboard.getEventKey() == Keyboard.KEY_LCONTROL){ctrldown = false;}
+				if(Keyboard.getEventKey() == Keyboard.KEY_LSHIFT){Lshiftdown = false;}
+				if(Keyboard.getEventKey() == Keyboard.KEY_LMENU){Laltdown = false;}
 			}
 		}
 	}
@@ -224,7 +236,9 @@ public class MazeMaker {
 						if(Mouse.isButtonDown(1)){rightID=ID;Button.setrightID(ID);}
 					}
 					
-					sound.playButton();
+					if(!standalone){
+						sound.playButton();
+					}
 					
 					break;							// if found no need to check others
 				}
@@ -237,11 +251,16 @@ public class MazeMaker {
 			case 98:{loadMaze();	break;}
 			case 100: {newMaze();	break;}
 			case 101: {resizeMaze(); break;}
+			case 102: {shiftMaze(); break;}
 			case 110:{exit = true; 	 break;}
 		}
 		ID = -1;
 	}
-	
+	/**
+	 * ********************************************
+	 * Reset the maze to its initial position
+	 * ********************************************
+	 */
 	public void resetView(){
 		left=0; right = Display.getWidth(); top = Display.getHeight(); bottom = 0;
 		tilesize = 0.2f*menubarwidth;
@@ -261,6 +280,8 @@ public class MazeMaker {
 	 * 13 - Spikes
 	 * 14 - Scorpion
 	 * 15 - pit
+	 * 16 - hatch
+	 * 17 - movable wall
 	 */
 	public void initButtons(){
 		final float LEFT = 0.05f;
@@ -272,11 +293,12 @@ public class MazeMaker {
 		/*
 		 * Add buttons to the arraylist, give each button an unique ID!
 		 */
-		buttonlist.add(new Button(LEFT, 0.1f,Textures.texload, 98));		// 98 load button 
-		buttonlist.add(new Button(RIGHT, 0.1f,Textures.texsave, 99));		// 99 save button
-		buttonlist.add(new Button(LEFT, 1.2f,Textures.texnewmaze, 100));	// 100 New maze
-		buttonlist.add(new Button(RIGHT, 1.2f,Textures.texresize, 101));	// 101 Resize button
-		buttonlist.add(new Button(LEFT, 2.3f,Textures.texquit, 110)); 		// 110 Exit button
+		buttonlist.add(new Button(LEFT, 0.1f,Textures.texopen, 98));		// 98 load button 
+		buttonlist.add(new Button(RIGHT, 0.1f,Textures.texnewmaze, 100));	// 100 New maze
+		buttonlist.add(new Button(LEFT, 1.2f,Textures.texsave, 99));		// 99 save button
+		buttonlist.add(new Button(RIGHT, 1.2f,Textures.texquit, 110));		// 110 Exit button
+		buttonlist.add(new Button(LEFT, 2.3f,Textures.texshift, 102)); 		// 102 Shift maze button
+		buttonlist.add(new Button(RIGHT, 2.3f,Textures.texresize, 101));	// 101 Resize button
 		
 		buttonlist.add(new Button(LEFT, 4.0f,Textures.texempty, 0));		// 0
 		buttonlist.add(new Button(RIGHT, 4.0f,Textures.texwall1, 1));		// 1 
@@ -287,13 +309,14 @@ public class MazeMaker {
 		buttonlist.add(new Button(LEFT, 7.3f,Textures.texwall6, 6));		// 6 
 		buttonlist.add(new Button(RIGHT, 7.3f,Textures.texwall7, 7));		// 7 
 		
-		buttonlist.add(new Button(LEFT, 9.0f,Textures.texflaggreen,11));	// 11 flaggreen
-		buttonlist.add(new Button(RIGHT, 9.0f,Textures.texflagred,12));		// 12 flagred
+		buttonlist.add(new Button(LEFT, 9.0f,Textures.texstart,11));		// 11
+		buttonlist.add(new Button(RIGHT, 9.0f,Textures.texend,12));			// 12
 		buttonlist.add(new Button(LEFT, 10.1f,Textures.texspike, 13));		// 13
-		buttonlist.add(new Button(RIGHT, 10.1f,Textures.scorpion, 14));		// 14
-		buttonlist.add(new Button(LEFT, 11.2f,Textures.pit, 15));			// 15
-		buttonlist.add(new Button(RIGHT, 11.2f,Textures.hatch, 16));		// 15
-		buttonlist.add(new Button(LEFT, 12.3f,Textures.movwall, 17));		// 15
+		buttonlist.add(new Button(RIGHT, 10.1f,Textures.hatch, 16));		// 16
+		buttonlist.add(new Button(LEFT, 11.2f,Textures.movwallup, 17));		// 17
+		buttonlist.add(new Button(RIGHT, 11.2f,Textures.movwalldown, 18));	// 18
+		buttonlist.add(new Button(LEFT, 12.3f,Textures.pit, 15));			// 15
+		buttonlist.add(new Button(RIGHT, 12.3f,Textures.scorpion, 14));		// 14
 	}
 	/**
 	 * ********************************************
@@ -376,10 +399,14 @@ public class MazeMaker {
 					flagredy=y;
 					maze.setObject(12, x, y);
 					break;} 						// Flag red
-			case 14:{maze.setObject(14, x, y);break;}
+			case 14:{maze.setObject(14, x, y);
+					checkScorpCount();
+					break;
+					}
 			case 15:{maze.setObject(15, x, y);break;}
 			case 16:{maze.setObject(16, x, y);break;}
 			case 17:{maze.setObject(17, x, y);break;}
+			case 18:{maze.setObject(18, x, y);break;}
 			}
 		}
 	}
@@ -396,7 +423,7 @@ public class MazeMaker {
 		while(mwidth==0 && lcont){
 			try{
 									
-				String temp = JOptionPane.showInputDialog("Enter the width as an integer:", "20");
+				String temp = JOptionPane.showInputDialog("Enter the width:", "20");
 				
 				mwidth = Integer.parseInt(temp);
 				
@@ -406,7 +433,7 @@ public class MazeMaker {
 		}
 		while(mheight==0 && lcont){
 			try{
-				String temp = JOptionPane.showInputDialog("Enter the height as an integer:", "20");
+				String temp = JOptionPane.showInputDialog("Enter the height:", "20");
 				mheight = Integer.parseInt(temp);
 				
 			}catch(Exception e){	
@@ -415,13 +442,17 @@ public class MazeMaker {
 		}
 		if(mwidth>0 && mheight>0)
 		maze = new MazeMap(mwidth, mheight);
+		if(mwidth*mheight > 2500 ){JOptionPane.showMessageDialog(null, "Your maze size is very large.\nSome pc's might experience performance problems.", 
+																	"Warning: Large maze", JOptionPane.WARNING_MESSAGE, null);}
 		resetView();
 		
 	}
 	/**
+	 * ****************************************************************************************
 	 * Resize the maze, keep the data from the top left corner
+	 * ****************************************************************************************
 	 */
-	public void resizeMaze(){
+	private void resizeMaze(){
 		if(maze!=null){
 			int[][] tempmaze = maze.getMaze();
 			newMaze();
@@ -439,34 +470,87 @@ public class MazeMaker {
 		}
 	}
 	/**
+	 * Shift the maze
+	 */
+	private void shiftMaze(){
+		if(maze!=null){			
+			int[][] shiftedmaze = new int[maze.getMaze().length][maze.getMaze()[0].length];
+			// get Dimensions
+			int mwidth = shiftedmaze[0].length;
+			int mheight = shiftedmaze.length;
+			
+			// get shifts
+			int Hshift = 0;
+			int Vshift = 0;
+			// Get input from user
+			try{
+				Hshift = Integer.parseInt(JOptionPane.showInputDialog("Shift ... in horizontal direction", "0"));
+				Vshift = Integer.parseInt(JOptionPane.showInputDialog("Shift ... in vertical direction", "0"));
+			}catch(Exception e){
+				Hshift = 0; Vshift = 0;
+			}
+			// Shift the maze
+			for(int j = (Vshift>0?Vshift:0) ; j < (Vshift>0?mheight:mheight+Vshift); ++j){
+				for(int i = (Hshift>0?Hshift:0) ; i < (Hshift>0?mwidth:mwidth+Hshift); ++i){
+					shiftedmaze[j][i] = maze.getMaze()[j-Vshift][i-Hshift];
+				}
+			}
+			// Set the shifted maze
+			maze.setMaze(shiftedmaze);
+			// Reinitialize flags
+			reinitflags();
+		}else{
+			Sys.alert("No existing maze available", "You do not have a maze open, please open or make a maze first");
+		}
+	}
+	/**
+	 * ********************************************
+	 * Count amount of placed scorpions
+	 * ********************************************
+	 */
+	private void checkScorpCount(){
+		int scorpcount = 0;
+		for(int j = 0 ; j <maze.getMaze().length; ++j){
+			for(int i = 0 ; i < maze.getMaze()[0].length; ++i){
+				if(maze.getMaze()[j][i]==14){++scorpcount;}
+			}
+		}
+		if(scorpcount == 51){
+			JOptionPane.showMessageDialog(null, "The amount of scorpions is getting quite high.\nSome pc's might experience performance problems.",
+					"Warning: Too many scorpions", JOptionPane.WARNING_MESSAGE);
+		}
+	}
+	/**
 	 * ********************************************
 	 * Save the maze
 	 * @throws IOException
 	 * ********************************************
 	 */
-	public void saveMaze() throws IOException{
+	private void saveMaze() throws IOException{
 		
 			if (maze==null){
 				Sys.alert("Warning", "No maze loaded!");
 			}
 			else{
 				if (checkFlags(maze.getMaze())){
-				IO.savechooser(maze);}
+				IO.savechooser(maze,Lshiftdown&&Laltdown&&ctrldown);
+				}				
 				else{
 					Sys.alert("Warning", "Start and/or ending flag not placed!");
 				}			
 			}
-	
+			ctrldown=false; Lshiftdown=false;Laltdown=false;
+
 	}
 	/**
 	 * ********************************************
 	 * Load in a maze file
 	 * ********************************************
 	 */
-	public void loadMaze(){
+	private void loadMaze(){
 		int[][] tempmaze = null;
-		try {tempmaze = IO.loadchooser();} catch (IOException e) {} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+		try {tempmaze = IO.loadchooser(Lshiftdown&&Laltdown&&ctrldown);		
+		} catch (IOException e) {} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		if(tempmaze!=null){
@@ -476,10 +560,14 @@ public class MazeMaker {
 			
 			resetView();
 		}
-
+		ctrldown=false; Lshiftdown=false;Laltdown=false;
 	}
-	
-	public void reinitflags(){
+	/**
+	 * ****************************************************************************************
+	 * Put the flag locations on the right position when loading in a maze
+	 * ****************************************************************************************
+	 */
+	private void reinitflags(){
 		int[][] tempmaze2 = maze.getMaze();
 		flaggreenx=-1; flaggreeny=-1; flagredx= -1; flagredy =-1;
 		for(int j = 0 ; j < tempmaze2.length; j++){
@@ -498,7 +586,7 @@ public class MazeMaker {
 	}
 	/**
 	 * ********************************************
-	 * Main program starts here
+	 * Main program starts here (standalone)
 	 * @param args
 	 * ********************************************
 	 */
@@ -511,12 +599,11 @@ public class MazeMaker {
 		
 		while(keuze.getDisplay() == null){
 			Thread.sleep(500);
-		}
+		}			
 		
-		MazeMaker maker = new MazeMaker();
+		MazeMaker maker = new MazeMaker();		
 		Display.create();
-		maker.start();
-
+		maker.start(true);		
 		}catch(Exception e){e.printStackTrace();}
 	}
 }

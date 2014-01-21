@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.lwjgl.BufferUtils;
-import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -16,8 +15,8 @@ import org.newdawn.slick.opengl.TextureImpl;
 
 import Intelligence.AStar;
 import Menu.GameState;
+import Menu.MazechooserMenu;
 import Menu.Menu;
-import ParticleSystem.ParticleEmitter;
 import Utils.*;
 import Menu.ScoreScreen;
 
@@ -44,8 +43,7 @@ public class Mazerunner {
 	protected static int SQUARE_SIZE=1;								// Size of a unit block
 	protected static int timer = 0;									// Keeps track of the time
 	private static int MAXTIME;
-	protected static int scorpcount;
-	protected int numpickups;										// Amount of pickups that have already been dropped
+	protected static int scorpcount;	
 	protected static StatusBars status = new StatusBars();			// Creates the overlay object/ HUD
 	
 
@@ -64,6 +62,7 @@ public class Mazerunner {
 	public static ArrayList<C4> c4;
 	public static int c4Count = 0; 
 	protected String levelname;
+	private Timer ptimer = new Timer();
 
 									
 	/*
@@ -81,7 +80,7 @@ public void start(String levelname) throws Exception{
 	new Graphics();					// Initialize graphics
 	new Models();
 	this.levelname = levelname;
-	level = "levels/"+levelname;
+	level = levelname;
 	timer = 0;
 	c4 = new ArrayList<C4>();
 	
@@ -102,6 +101,8 @@ public void start(String levelname) throws Exception{
 	c4Count = 2;
 	
 	previousTime = Calendar.getInstance().getTimeInMillis();
+	
+	ptimer.start();
 	
 	while(!Display.isCloseRequested() && !player.isDead){
 		
@@ -144,6 +145,15 @@ public void start(String levelname) throws Exception{
 	else if(Menu.getState()==GameState.TOMAIN){
 		Menu.setState(GameState.MAIN);
 	}else{
+		if(!Menu.progres.contains(levelname) && !levelname.startsWith("custom")){
+			Menu.progres.add(levelname);
+			IO.writeprogress(Menu.progres);
+			Menu.levelList = Utils.loadLevelList(Menu.progres, Menu.cheat);
+			MazechooserMenu temp = (MazechooserMenu) Menu.menus.get(GameState.SELECTLVL);
+			temp.resetlist();
+			temp.init(0, 0);
+		}
+		
 		changetoHUD();
 		ScoreScreen.initview();
 		ScoreScreen.displayScoreatGO(status.getScore(), Math.max(0, MAXTIME-timer), player.getHealth().getHealth());
@@ -222,9 +232,16 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				objlijst.add(h);
 				objectindex[j][i]=objlijst.size()-1;
 			}
-			// Parsing movable wall
+			// Parsing movable wall UP
 			else if(maze[j][i]==17){
-				MoveableWall mw = new MoveableWall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0);
+				MoveableWall mw = new MoveableWall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0, true);
+				moveable.add(mw);
+				objlijst.add(mw);
+				objectindex[j][i]=objlijst.size()-1;
+			}
+			// Parsing movable wall DOWN
+			else if(maze[j][i]==18){
+				MoveableWall mw = new MoveableWall(i*SQUARE_SIZE+SQUARE_SIZE/2.0, 0, j*SQUARE_SIZE+SQUARE_SIZE/2.0, false);
 				moveable.add(mw);
 				objlijst.add(mw);
 				objectindex[j][i]=objlijst.size()-1;
@@ -316,6 +333,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		sound.stopScorps();
 		sound.stopGame();
 		sound.playMenu();
+		Display.setTitle("Ruins of Scorps");
 //		skitter.deleteSources();
 	
 	}  
@@ -398,9 +416,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	}
 		        }
 		        for (Pickup pu: rmpu){
-		        	if (pickuplijst.remove(pu)){
-		        		pu.effect();
-		        	}
+		        	if (pickuplijst.remove(pu)){pu.effect();}
 		        }
 		        
 		        eo.display();
@@ -409,18 +425,12 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        	explosive.display();
 		        }
 		        
+		        player.draw();
 		        // HUD  and glare
 		        glPushMatrix();
 		        drawglare();
 		        if(input.minimap){drawHUD();}
 		        glPopMatrix();
-		        player.draw();
-		        
-		        //Refresh maze every 30 seconds
-		        if(timer%30000<20){
-		        	AStar.loadMaze(maze);
-		        }
-
 	}
 	
 	/**
@@ -451,7 +461,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		 * Please use odd numbers
 		 */
 		float factor = (float) Math.pow(player.lookat().dotprod(playertosun),25);
-		
+		glPushAttrib(GL_ENABLE_BIT);
 		changetoHUD();
 		glEnable(GL_BLEND);
 		glColor4f(1, 1, 1, factor*0.5f);
@@ -462,6 +472,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glVertex2f(Display.getWidth(), 0);
 		glEnd();
 		glDisable(GL_BLEND);
+		glPopAttrib();
 		changetoWorld();
 	}
 	
@@ -478,7 +489,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			changetoWorld();
 			// Reset deltaTime
 			previousTime = Calendar.getInstance().getTimeInMillis();
-
+			ptimer.start();
 			input.minimap = buffer;
 		}
 	}
@@ -544,7 +555,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			timer += deltaTime;
 			
 			// TODO remove
-			Display.setTitle("dt: "+ deltaTime);
+			Display.setTitle("Ruins of Scorps dt: "+ deltaTime);
 
 			//Update any movement since last frame.
 			Monster.setPlayerloc(new Vector(player.locationX, player.locationY, player.locationZ));	
@@ -572,6 +583,10 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		    }
 		        deathlist.clear();
 			
+	        //Refresh maze every 30 seconds
+	        if(timer%30000<20){
+	        	AStar.loadMaze(maze);
+	        }
 		    /*
 		     * Sound
 		     */    
@@ -582,10 +597,11 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			/*
 			 * Pickups
 			 */
-			if (timer>numpickups*10*1000){
-				numpickups++;
+			if (ptimer.getTime()>10*1000 && !Pickup.isFull()){
 				pickuplijst.add(new Pickup(false));
+				ptimer.start();
 			}
+			
 			/*
 			 * C4
 			 */

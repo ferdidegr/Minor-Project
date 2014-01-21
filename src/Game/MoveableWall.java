@@ -12,7 +12,7 @@ public class MoveableWall extends levelObject{
 	// Height of the wall
 	private double bottom, height=3;
 	// Initial wall state
-	private wallState wallstate = wallState.UP;
+	private wallState wallstate;
 	// Draw list 
 	private static int Wallmodel = 0;
 	
@@ -22,10 +22,11 @@ public class MoveableWall extends levelObject{
 	 * @param y locationY
 	 * @param z locationZ
 	 */
-	public MoveableWall(double x, double y, double z) {
+	public MoveableWall(double x, double y, double z, boolean up) {
 		super(x, y, z);
-		// set the wall to up position
-		this.bottom = y;
+		// set the wall to up or down position
+		this.bottom = (up?0:-height);
+		wallstate = (up?wallState.UP:wallState.DOWN);		
 		
 		if(Wallmodel == 0){
 			Wallmodel = glGenLists(1);
@@ -33,6 +34,8 @@ public class MoveableWall extends levelObject{
 			drawwall();
 			glEndList();
 		}
+		
+
 	}
 	/**
 	 * show the wall in its current state
@@ -56,10 +59,10 @@ public class MoveableWall extends levelObject{
 			glRotated(90*i, 0, 1, 0);
 			glNormal3d(0, 1, 1);
 			glBegin(GL_QUADS);
-			glTexCoord2d(0, height);		glVertex3d(-0.5, bottom-1, +0.5);	
-			glTexCoord2d(1, height);		glVertex3d(0.5, bottom-1, +0.5);	
-			glTexCoord2d(1, 0);		glVertex3d(0.5, bottom+height, +0.5);	
-			glTexCoord2d(0, 0);		glVertex3d(-0.5, bottom+height, +0.5);	
+			glTexCoord2d(0, height);		glVertex3d(-0.5, -1, +0.5);	
+			glTexCoord2d(1, height);		glVertex3d(0.5, -1, +0.5);	
+			glTexCoord2d(1, 0);		glVertex3d(0.5, height, +0.5);	
+			glTexCoord2d(0, 0);		glVertex3d(-0.5, height, +0.5);	
 			glEnd();
 		}
 		/*
@@ -67,10 +70,10 @@ public class MoveableWall extends levelObject{
 		 */
 		glNormal3d(0, 1, 0);
 		glBegin(GL_QUADS);
-		glTexCoord2d(0, 0);	glVertex3d(-0.5, bottom+height, -0.5);
-		glTexCoord2d(0, 1);	glVertex3d(-0.5, bottom+height, 0.5);
-		glTexCoord2d(1, 1);	glVertex3d(0.5, bottom+height, 0.5);
-		glTexCoord2d(1, 0);	glVertex3d(0.5, bottom+height, -0.5);
+		glTexCoord2d(0, 0);	glVertex3d(-0.5, height, -0.5);
+		glTexCoord2d(0, 1);	glVertex3d(-0.5, height, 0.5);
+		glTexCoord2d(1, 1);	glVertex3d(0.5, height, 0.5);
+		glTexCoord2d(1, 0);	glVertex3d(0.5, height, -0.5);
 		glEnd();
 	}
 	/**

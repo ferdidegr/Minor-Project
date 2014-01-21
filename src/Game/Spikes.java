@@ -52,7 +52,7 @@ private static int spike =0;
 	 */
 	@Override
 	public boolean isCollision(double x, double y, double z) {
-		boolean col = y<this.locationY && x>this.locationX && x<(this.locationX+Mazerunner.SQUARE_SIZE) &&
+		boolean col = y<=this.locationY && x>this.locationX && x<(this.locationX+Mazerunner.SQUARE_SIZE) &&
 				z>this.locationZ && z<(this.locationZ+Mazerunner.SQUARE_SIZE);			
 		return col;
 	}

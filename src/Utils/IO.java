@@ -3,15 +3,19 @@ package Utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
+import javax.swing.plaf.basic.BasicFileChooserUI;
 
 import org.newdawn.slick.opengl.PNGDecoder;
 import org.newdawn.slick.opengl.Texture;
@@ -22,6 +26,33 @@ import Editor.MazeMap;
 
 
 public class IO {
+	/**
+	 * Read the progres file
+	 * @return ArrayList with completed levels
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
+	public static ArrayList<String> readprogress() throws IOException, ClassNotFoundException{
+		
+		FileInputStream fis = new FileInputStream("progres.sav");
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		
+		ArrayList<String> progres = (ArrayList<String>) ois.readObject();
+		ois.close();
+		
+		return progres;
+	}
+	/**
+	 * Write to the progres file
+	 * @param progres
+	 * @throws IOException
+	 */
+	public static void writeprogress(ArrayList<String> progres) throws IOException{
+		FileOutputStream fos = new FileOutputStream("progres.sav");
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		oos.writeObject(progres);				
+		oos.close();
+	}
 	/**
 	 * read a maze file (which is an int[][])
 	 * @param input
@@ -57,11 +88,22 @@ public class IO {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	public static int[][] loadchooser() throws ClassNotFoundException, IOException{
-		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir")+"/levels");		
+	public static int[][] loadchooser(boolean master) throws ClassNotFoundException, IOException{
+		// Creates a File to the directory
+		File dirToLock = new File(System.getProperty("user.dir")+(master?"/levels":"/customlevels"));
+		// Create a new filesystemview which locks the chosen directory
+		FileSystemView fsv = new SingleRootFileSystemView(dirToLock);
+		// create the filechooser
+		JFileChooser jfc = new JFileChooser(fsv);	
+		// Disable the new folder button
+		BasicFileChooserUI ui = (BasicFileChooserUI)jfc.getUI();
+		ui.getNewFolderAction().setEnabled(false);
+		// Disable selecting multiple files
 		jfc.setMultiSelectionEnabled(false);
+		// Filter on .maze files
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
 		jfc.addChoosableFileFilter(filter);
+		// open dialog
 		int res = jfc.showOpenDialog(null);
 		int[][] maze;
 		if(res == JFileChooser.APPROVE_OPTION){
@@ -77,11 +119,22 @@ public class IO {
 	 * @param maze
 	 * @throws IOException
 	 */
-	public static void savechooser(MazeMap maze) throws IOException{
-		JFileChooser jfc = new JFileChooser(System.getProperty("user.dir")+"/levels");
+	public static void savechooser(MazeMap maze, boolean master) throws IOException{
+		// Creates a File to the directory
+		File dirToLock = new File(System.getProperty("user.dir")+(master?"/levels":"/customlevels"));
+		// Create a new filesystemview which locks the chosen directory
+		FileSystemView fsv = new SingleRootFileSystemView(dirToLock);
+		// create the filechooser
+		JFileChooser jfc = new JFileChooser(fsv);	
+		// Disable the new folder button
+		BasicFileChooserUI ui = (BasicFileChooserUI)jfc.getUI();
+		ui.getNewFolderAction().setEnabled(false);
+		// Disable selecting multiple files
 		jfc.setMultiSelectionEnabled(false);
+		// Filter on .maze files
 		FileNameExtensionFilter filter = new FileNameExtensionFilter("Maze Files", "maze");
 		jfc.addChoosableFileFilter(filter);
+		// open save dialog
 		int res = jfc.showSaveDialog(null);
 		if(res == JFileChooser.APPROVE_OPTION){
 			File file = jfc.getSelectedFile();

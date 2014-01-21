@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
 import org.newdawn.slick.Color;
 
@@ -38,7 +39,14 @@ public class ScoreScreen {
 		/*
 		 * Get previous highscore from database
 		 */
-		String levelname = Menu.levelList.get(Menu.currentlevel).split("\\.maze")[0];
+		String currentlevel = Menu.levelList.get(Menu.currentlevel);
+		String levelname;
+		if(currentlevel.startsWith("custom")){
+			levelname = "custom/"+currentlevel.split("\\.maze")[0].split("/")[1];
+		}else{
+			levelname = currentlevel.split("\\.maze")[0].split("/")[1];
+		}
+		
 		initview();
 		highscore = readDatabase(levelname);
 		
@@ -61,7 +69,8 @@ public class ScoreScreen {
 			// Only get out when ENTER is released, to prevent jumping through the highscore name input screen
 			while(Keyboard.next()){
 				if(!Keyboard.getEventKeyState()){
-					if(Keyboard.getEventKey()==Keyboard.KEY_RETURN)loop=false;
+					if(Keyboard.getEventKey()==Keyboard.KEY_RETURN 
+					|| Keyboard.getEventKey()==Keyboard.KEY_ESCAPE )loop=false;
 				}
 			}
 			
@@ -188,22 +197,23 @@ public class ScoreScreen {
 		double diffwidth =  Menu.mainfont.getWidth(fontsize, "X"+diffmodifier);
 		int score2 = (int) (score + healthbonus + timebonus)*diffmodifier;
 		double finalscorew = Menu.mainfont.getWidth(fontsize, score2+"");
-		
+		boolean skip = false;
+		int maxlooptime = 8000;
 		tempt.start();
-		while(tempt.getTime() < 8000){
+		while(tempt.getTime() < maxlooptime ){
 			glClear(GL_COLOR_BUFFER_BIT);
 			Menu.mainfont.draw(Display.getWidth()*(1/6f), (float) height/2, fontsize, "level score:");
 			Menu.mainfont.draw((float) (Display.getWidth()*5/6-lvlscorewidth), (float) height/2, fontsize, score+"");
 			
-			if(tempt.getTime()>1000){
+			if(tempt.getTime()>1000 || skip){
 				Menu.mainfont.draw(Display.getWidth()*(1/6f), (float) height*2, fontsize, "health bonus:");
 				Menu.mainfont.draw((float) (Display.getWidth()*5/6-healthwidth), (float) height*2, fontsize, healthbonus+"");
 			}
-			if(tempt.getTime()>2000){
+			if(tempt.getTime()>2000 || skip){
 				Menu.mainfont.draw(Display.getWidth()*(1/6f), (float) height * 3.5f, fontsize, "time bonus:");	
 				Menu.mainfont.draw((float) (Display.getWidth()*5/6-timewidth), (float) height *3.5f, fontsize, timebonus+"");
 			}
-			if(tempt.getTime()>3000){
+			if(tempt.getTime()>3000 || skip){
 				glLineWidth(2);
 				glBegin(GL_LINES);
 				glVertex2d(Display.getWidth()*(1/6f), (float) height *3.5f+height);
@@ -212,12 +222,12 @@ public class ScoreScreen {
 			
 				Menu.mainfont.draw((float) (Display.getWidth()*5/6-intermscorew), (float) height *5f, fontsize, (score+healthbonus+timebonus)+"");
 			}
-			if(tempt.getTime()>4000){
+			if(tempt.getTime()>4000 || skip){
 				Menu.mainfont.draw(Display.getWidth()*(1/6f), (float) height * 6.5f, fontsize, "difficulty:");	
 				Menu.mainfont.draw((float) (Display.getWidth()*5/6-diffwidth), (float) height *6.5f, fontsize, "X"+diffmodifier);
 			}			
 			
-			if(tempt.getTime()>5000){
+			if(tempt.getTime()>5000 || skip){
 				glLineWidth(2);
 				glBegin(GL_LINES);
 				glVertex2d(Display.getWidth()*(1/6f), (float) height *6.5f+height);
@@ -226,7 +236,10 @@ public class ScoreScreen {
 			
 				Menu.mainfont.draw((float) (Display.getWidth()*5/6-finalscorew), (float) height *8f, fontsize, score2+"");
 			}
-			
+			if(Mouse.next() && Mouse.getEventButtonState() || Keyboard.next() && Keyboard.getEventKeyState()){
+				skip = true;
+				maxlooptime = 3000;
+			}
 			Display.update();
 			Display.sync(60);
 		}

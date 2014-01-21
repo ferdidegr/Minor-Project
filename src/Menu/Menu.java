@@ -35,7 +35,7 @@ public class Menu {
 	private static GameState gamestate;
 	public static Difficulty difficulty;
 	public static Mazerunner game;
-	protected static HashMap<GameState, ButtonList> menus = new HashMap<>();	
+	public static HashMap<GameState, ButtonList> menus = new HashMap<>();	
 	protected static int top, bottom, scrollspeed;
 	private static int screenx;
 	private static int screeny;
@@ -45,10 +45,12 @@ public class Menu {
 	public static Text mainfont;
 	public static boolean ingame = false;
 	static Database score ;
-	static ArrayList<String> levelList;
+	public static ArrayList<String> levelList;
 	public static int mousesensitivity = 3;
 	public static Texture loadingscreen = null;
 	private static Sound sound;
+	public static ArrayList<String> progres = null;
+	public static boolean cheat = true;
 	
 	/**
 	 * ************************************
@@ -71,11 +73,9 @@ public class Menu {
 		
 		Timer timer = new Timer().start();
 		Display.create();
-		
-		
-		
+				
 		Display.setResizable(false);
-
+		Display.setTitle("Ruins of Scorps");
 		loadingscreen();
 		AL.create();
 		sound=new Sound();
@@ -90,14 +90,22 @@ public class Menu {
 		
 		gamestate = GameState.MAIN;
 		difficulty = Difficulty.EASY;
-		levelList = Utils.Utils.loadLevelList();
 		score =  new Database("db/scores.db");
 		mainfont = new Text("BEBAS.TTF");	
+		
+		// Read progress file
+		try {
+			progres = IO.readprogress();
+		} catch (Exception e){
+			progres = new ArrayList<>();
+		}
+		// Set the second cheat parameter on true to play all levels
+		levelList = Utils.Utils.loadLevelList(progres, cheat);
 		
 		new Textures();
 		initButtons();
 		
-//		while(timer.getTime()<5000){}
+		while(timer.getTime()<2000){}
 		
 		run();
 		
@@ -150,8 +158,11 @@ public class Menu {
 					
 					mousepoll();
 					// Discard all keyboard events
-					while(Keyboard.next() && ingame){ 
-						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE){gamestate=GameState.GAME;}
+					while(Keyboard.next()){ 
+						if(Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_ESCAPE && ingame){gamestate=GameState.GAME;}
+						if(!Keyboard.getEventKeyState() && Keyboard.getEventKey()==Keyboard.KEY_F12){
+							try{Display.setFullscreen(!Display.isFullscreen());}catch(Exception e){}
+						}
 					}
 					
 					display();					
