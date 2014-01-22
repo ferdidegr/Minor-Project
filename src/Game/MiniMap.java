@@ -5,6 +5,8 @@ import static org.lwjgl.opengl.GL11.*;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
+import org.lwjgl.opengl.Display;
+
 import Utils.Vector;
 
 /**
@@ -15,7 +17,8 @@ public class MiniMap {
 	private int[][] maze;
 	Vector dir;
 	private int[][] visited;
-
+	double factor = (Display.getHeight()<768?Display.getHeight()/768f:1);
+	double blocksize = 10 * factor;
 	/**
 	 * Constructor for the minimap
 	 * @param maze the game maze
@@ -23,12 +26,6 @@ public class MiniMap {
 	public MiniMap(int[][] maze) {
 		this.maze = maze;
 		this.visited = new int[maze.length][maze[0].length];
-//		this.visited = new int[maze.length][maze[0].length];
-//		for (int i = 0; i < visited.length; i++) {
-//			for (int j = 0; j < visited[0].length; j++) {
-//				visited[i][j] = 0;
-//			}
-//		}
 	}
 
 	/**
@@ -45,7 +42,7 @@ public class MiniMap {
 		int locZ = player.getGridZ(SQUARE_SIZE);
 
 		int size = 10;
-
+		
 		// draw red maze
 		glEnable(GL_BLEND);
 		glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
@@ -62,31 +59,33 @@ public class MiniMap {
 						}
 					}
 				}
-				glTranslatef(10f, 0f, 0f);
+				glTranslated(blocksize, 0f, 0f);
 			}
-			glTranslatef(-10f * (2 * size), 10f, 0f);
+			glTranslated(-blocksize * (2 * size), blocksize, 0f);
 		}
 		
 		// draw black box around the minimap
 		glPushMatrix();
 		glLoadIdentity();
+		
 		for (int i = 0; i < size * 2; i++) {
 			glColor4f(0.0f, 0.0f, 0.0f, 0.7f);
 			drawBlock();
-			glTranslatef(10f, 0, 0);
+			glTranslated(blocksize, 0, 0);
 		}
 		for (int i = 0; i < size * 2 + 1; i++) {
 			drawBlock();
-			glTranslatef(0, 10f, 0);
+			glTranslated(0, blocksize, 0);
 		}
 		glLoadIdentity();
+		
 		for (int i = 0; i < size * 2; i++) {
 			drawBlock();
-			glTranslatef(0, 10f, 0);
+			glTranslated(0, blocksize, 0);
 		}
 		for (int i = 0; i < size * 2 + 1; i++) {
 			drawBlock();
-			glTranslatef(10f, 0, 0);
+			glTranslated(blocksize, 0, 0);
 		}
 		glPopMatrix();
 
@@ -103,8 +102,8 @@ public class MiniMap {
 				int relZ = locZ - monster.getGridZ(SQUARE_SIZE);
 				if ((Math.abs(relX) < 10) && (Math.abs(relZ) < 10)) {
 					glPushMatrix();
-					glTranslated(size * 10, -size * 10, 0);
-					glTranslated(-relX * size, -relZ * size, 0);
+					glTranslated(size * 10*factor, -size * 10*factor, 0);
+					glTranslated(-relX * size*factor, -relZ * size*factor, 0);
 					drawBlock();
 					glPopMatrix();
 				}
@@ -113,7 +112,7 @@ public class MiniMap {
 
 		// draw white player dot, rotate it according to the players direction
 		glPushMatrix();
-		glTranslated(size * 10.5, -size * 9.5, 0);
+		glTranslated(size * 10.5*factor, -size * 9.5*factor, 0);
 		dir = player.lookat();
 		rotateV();
 
@@ -129,9 +128,9 @@ public class MiniMap {
 	public void drawBlock() {
 		glBegin(GL_QUADS);
 		glVertex2f(0.0f, 0.0f);
-		glVertex2f(10.0f, 0.0f);
-		glVertex2f(10.0f, 10.0f);
-		glVertex2f(0.0f, 10.0f);
+		glVertex2d(blocksize, 0.0f);
+		glVertex2d(blocksize, blocksize);
+		glVertex2d(0.0f, blocksize);
 		glEnd();
 	}
 
@@ -141,9 +140,9 @@ public class MiniMap {
 	public void drawPlayer() {
 		int size = 2;
 		glBegin(GL_TRIANGLES);
-		glVertex2f(0.0f, 6.0f * size);
-		glVertex2f(3.0f * size, -3.0f * size);
-		glVertex2f(-3.0f * size, -3.0f * size);
+		glVertex2d(0.0f, 6.0f * size*factor);
+		glVertex2d(3.0f * size*factor, -3.0f * size*factor);
+		glVertex2d(-3.0f * size*factor, -3.0f * size*factor);
 		glEnd();
 	}
 	
