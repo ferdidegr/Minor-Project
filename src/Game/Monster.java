@@ -108,10 +108,8 @@ public class Monster extends levelObject {
 	 * @param deltaTime
 	 */
 	public void walk(int deltaTime){
-		RouteCount++;
-		if(RouteCount>10 && findPath()){
-			RouteCount = 0;
-		}
+		findPath();
+		
 		checkRoute();
 		
 		avoidWalls();
@@ -126,7 +124,7 @@ public class Monster extends levelObject {
 	 * Checkt of de Route daadwerkelijk punten bevat en volgt de route. Zo niet, randomwalk.
 	 */
 	public void checkRoute(){
-		if(Route.size()>0 && !(Route.size()<2)) {
+		if(Route.size()>2) {
 			followRoute();
 		} else {
 			dirToPlayer();
