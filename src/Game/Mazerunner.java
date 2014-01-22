@@ -451,6 +451,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 
 	}
 	
+	/**
+	 * Creates the glare when looking in the direction of the sun.
+	 */
 	public void drawglare(){
 
 		
@@ -521,6 +524,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		glEnable(GL_LIGHTING);
 		glEnable(GL_TEXTURE_2D);
 	}
+	/**
+	 * Draws the loading screen
+	 */
 	public void loadingscreen(){
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
