@@ -533,7 +533,7 @@ public class Monster extends levelObject {
 			}
 			immunitycounter += 1;
 			flickercounter=60;
-			locationY += 0.2;
+			locationY += 0.3;
 		}
 	}
 

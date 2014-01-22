@@ -50,7 +50,7 @@ public class Menu {
 	public static Texture loadingscreen = null;
 	private static Sound sound;
 	public static ArrayList<String> progres = null;
-	public static boolean cheat = true;
+	public static boolean cheat = false;
 	
 	/**
 	 * ************************************

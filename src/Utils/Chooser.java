@@ -144,6 +144,9 @@ public class Chooser extends JFrame implements ActionListener{
 		// Depending on the constructor input, enable or disable the checkbox for full screen
 		checkbox.setEnabled(enableFS);
 		
+		// Set default value
+		box.setSelectedIndex(temp.size()/2);
+		
 		// Center the pop up
 		setLocation((Display.getDisplayMode().getWidth()-250)/2, (Display.getDisplayMode().getHeight()-110)/2);
 		
