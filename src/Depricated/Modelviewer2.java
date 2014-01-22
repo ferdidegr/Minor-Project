@@ -1,4 +1,4 @@
-package Utils;
+package Depricated;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,6 +16,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.Display;
 
+import Utils.Model;
 import static org.lwjgl.util.glu.GLU.*;
 import static org.lwjgl.opengl.GL11.*;
 /**
