@@ -4,6 +4,8 @@ import static org.lwjgl.opengl.GL11.*;
 import java.io.IOException;
 import java.io.Serializable;
 
+import javax.swing.JOptionPane;
+
 public class MazeMap implements Serializable{
 	/**
 	 * SerialUID
@@ -111,8 +113,49 @@ public class MazeMap implements Serializable{
 	public void setObject(int ID, float x , float y){
 		int xloc = getMazeX(x);
 		int yloc = getMazeY(y);
-		if(xloc>=0 && xloc<width && yloc >= 0 && yloc<height)
+		if(xloc>=0 && xloc<width && yloc >= 0 && yloc<height){
+			if(ID == 14){checkScorpCount();	}
+			if(ID == 11){resetGreen();}
+			if(ID == 12){resetRed();}
 			maze[yloc][xloc] = ID;
+		}
+	}
+	/**
+	 * Remove all green begin points
+	 */
+	private void resetGreen(){
+		for(int j = 0 ; j < maze.length; ++j){
+			for(int i = 0 ; i < maze[0].length; ++i){
+				if(maze[j][i] == 11) maze[j][i]=0;
+			}
+		}
+	}
+	/**
+	 * Remove all red endpoints
+	 */
+	private void resetRed(){
+		for(int j = 0 ; j < maze.length; ++j){
+			for(int i = 0 ; i < maze[0].length; ++i){
+				if(maze[j][i] == 12) maze[j][i]=0;
+			}
+		}
+	}
+	/**
+	 * ********************************************
+	 * Count amount of placed scorpions
+	 * ********************************************
+	 */
+	private void checkScorpCount(){
+		int scorpcount = 0;
+		for(int j = 0 ; j <maze.length; ++j){
+			for(int i = 0 ; i < maze[0].length; ++i){
+				if(maze[j][i]==14){++scorpcount;}
+			}
+		}
+		if(scorpcount == 51){
+			JOptionPane.showMessageDialog(null, "The amount of scorpions is getting quite high.\nSome pc's might experience performance problems.",
+					"Warning: Too many scorpions", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 	/**
 	 * Attaches a new maze int[][]

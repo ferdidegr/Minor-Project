@@ -35,7 +35,6 @@ public class MazeMaker {
 	private int ID = -1, leftID = 0, rightID = 0;								// ID when no button has been pressed
 	private boolean exit = false;	
 	private float tilesize;
-	private int flaggreenx = -1, flaggreeny = -1, flagredx = -1, flagredy = -1;
 	private Sound sound;
 	private boolean standalone;
 	/**
@@ -408,44 +407,7 @@ public class MazeMaker {
 		// If you are on the left side of the screen (Maze side)
 		if(x>left && x<right-menubarwidth && y>bottom && y<top && maze!=null){
 //			System.out.println(maze.getMazeX(x)+" "+maze.getMazeY(y));
-			switch(Nummer){
-			case 0:{maze.setObject(0, x, y);break;} // Empty spot
-			case 1:{maze.setObject(1, x, y);break;}	// Wall
-			case 2:{maze.setObject(2, x, y);break;}	// Wall
-			case 3:{maze.setObject(3, x, y);break;}	// Wall
-			case 4:{maze.setObject(4, x, y);break;}	// Wall
-			case 5:{maze.setObject(5, x, y);break;}	// Wall
-			case 6:{maze.setObject(6, x, y);break;}	// Wall
-			case 7:{maze.setObject(7, x, y);break;}	// Wall
-			
-			case 13:{maze.setObject(13, x, y);break;}	// Spikes
-			case 11:{if (flaggreenx>=0 && flaggreeny>=0 
-					&& flaggreeny<(maze.getHeight()*MazeMap.getSize())
-					&& flaggreenx<(maze.getWidth()*MazeMap.getSize())
-					&& maze.getMaze()[maze.getMazeY(flaggreeny)][maze.getMazeX(flaggreenx)]==11){
-						maze.setObject(0, flaggreenx, flaggreeny);
-					}
-					flaggreenx=x;
-					flaggreeny=y;
-					maze.setObject(11, x, y);
-					break;} 						// Flag green
-			case 12:{if (flagredx>=0 && flagredy>=0 && flagredy<(maze.getHeight()*MazeMap.getSize())&& 
-					flagredx<(maze.getWidth()*MazeMap.getSize())&&  maze.getMaze()[maze.getMazeY(flagredy)][maze.getMazeX(flagredx)]==12){
-						maze.setObject(0, flagredx, flagredy);
-					}
-					flagredx=x;
-					flagredy=y;
-					maze.setObject(12, x, y);
-					break;} 						// Flag red
-			case 14:{maze.setObject(14, x, y);
-					checkScorpCount();
-					break;
-					}
-			case 15:{maze.setObject(15, x, y);break;}
-			case 16:{maze.setObject(16, x, y);break;}
-			case 17:{maze.setObject(17, x, y);break;}
-			case 18:{maze.setObject(18, x, y);break;}
-			}
+			maze.setObject(Nummer, x, y);
 		}
 	}
 	/**
@@ -501,8 +463,7 @@ public class MazeMaker {
 				for(int i = 0 ; i < newWidth; i++){
 					maze.getMaze()[j][i] = tempmaze[j][i];
 				}
-			}
-			reinitflags();
+			}			
 		}else{
 			Sys.alert("No existing maze available", "You do not have a maze open, please open or make a maze first");
 		}
@@ -535,29 +496,12 @@ public class MazeMaker {
 			}
 			// Set the shifted maze
 			maze.setMaze(shiftedmaze);
-			// Reinitialize flags
-			reinitflags();
+
 		}else{
 			Sys.alert("No existing maze available", "You do not have a maze open, please open or make a maze first");
 		}
 	}
-	/**
-	 * ********************************************
-	 * Count amount of placed scorpions
-	 * ********************************************
-	 */
-	private void checkScorpCount(){
-		int scorpcount = 0;
-		for(int j = 0 ; j <maze.getMaze().length; ++j){
-			for(int i = 0 ; i < maze.getMaze()[0].length; ++i){
-				if(maze.getMaze()[j][i]==14){++scorpcount;}
-			}
-		}
-		if(scorpcount == 51){
-			JOptionPane.showMessageDialog(null, "The amount of scorpions is getting quite high.\nSome pc's might experience performance problems.",
-					"Warning: Too many scorpions", JOptionPane.WARNING_MESSAGE);
-		}
-	}
+	
 	/**
 	 * ********************************************
 	 * Save the maze
@@ -594,34 +538,12 @@ public class MazeMaker {
 		if(tempmaze!=null){
 			maze = new MazeMap(tempmaze[0].length, tempmaze.length);
 			maze.setMaze(tempmaze);		
-			reinitflags();			
 			
 			resetView();
 		}
 		ctrldown=false; Lshiftdown=false;Laltdown=false;
 	}
-	/**
-	 * ****************************************************************************************
-	 * Put the flag locations on the right position when loading in a maze
-	 * ****************************************************************************************
-	 */
-	private void reinitflags(){
-		int[][] tempmaze2 = maze.getMaze();
-		flaggreenx=-1; flaggreeny=-1; flagredx= -1; flagredy =-1;
-		for(int j = 0 ; j < tempmaze2.length; j++){
-			for(int i = 0 ; i < tempmaze2[0].length; i++){
-				if(tempmaze2[j][i] == 11){
-					flaggreenx = (int) (i*MazeMap.getSize()); 
-					flaggreeny = (int) ((tempmaze2.length-j)*MazeMap.getSize());
-										
-				}
-				if(tempmaze2[j][i] == 12){
-					flagredx = (int) (i*MazeMap.getSize()); 
-					flagredy = (int) ((tempmaze2.length-j)*MazeMap.getSize());
-				}
-			}
-		}
-	}
+
 	/**
 	 * ********************************************
 	 * Main program starts here (standalone)
