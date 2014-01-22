@@ -666,6 +666,9 @@ public void initMaze() throws ClassNotFoundException, IOException{
 				   
 		}
 		
+		/**
+		 * Initialise the timer. Calculate the desired time for level completion.
+		 */
 		public void initTimer(){
 			int movwallcount = 0;
 			int emptycount = 0;
