@@ -125,10 +125,7 @@ public void start(String levelname) throws Exception{
 		
 		// Draw objects on screen
 		display();
-		
-		// Location print player location
-		if(input.view_coord==true)System.out.println(player.getGridX(SQUARE_SIZE)+" "+player.getGridZ(SQUARE_SIZE));
-			
+					
 		Display.update();
 		Display.sync(60);
 		
@@ -384,7 +381,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 		        glLight( GL_LIGHT0, GL_POSITION, lightPosition);			        
 				
 		        // Display all the visible objects of MazeRunner.
-		        if(!input.debug){ 	glCallList(objectDisplayList); }
+		        glCallList(objectDisplayList); 
 		        
 		        // Display all movable visible objects (immediate mode)
 		        TextureImpl.bindNone();

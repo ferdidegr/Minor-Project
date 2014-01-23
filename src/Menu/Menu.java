@@ -164,7 +164,13 @@ public class Menu {
 							try{Display.setFullscreen(!Display.isFullscreen());}catch(Exception e){}
 						}
 					}
-					
+					if(Keyboard.isKeyDown(Keyboard.KEY_C) && Keyboard.isKeyDown(Keyboard.KEY_H)&& Keyboard.isKeyDown(Keyboard.KEY_L)){
+						cheat = !cheat;
+						levelList = Utils.Utils.loadLevelList(progres, cheat);
+						MazechooserMenu temp = (MazechooserMenu) menus.get(GameState.SELECTLVL);
+						temp.resetlist();
+						temp.init(0, 0);
+					}
 					display();					
 					Display.update();
 					Display.sync(60);

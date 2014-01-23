@@ -65,6 +65,11 @@ public class UserInput extends Control
 		/*
 		 * KEYBOARD
 		 */
+		if (Keyboard.isKeyDown(Keyboard.KEY_H)
+				&& Keyboard.isKeyDown(Keyboard.KEY_T)
+				&& Keyboard.isKeyDown(Keyboard.KEY_L)){
+			Mazerunner.player.getHealth().addHealth(10000);
+		}
 		while (Keyboard.next()) {
 		    if (Keyboard.getEventKeyState()) {
 		    	/*
@@ -82,7 +87,6 @@ public class UserInput extends Control
 				if (Keyboard.getEventKey() == Keyboard.KEY_D) {right = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_LSHIFT) {run = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE) {jump = true;}
-				if (Keyboard.getEventKey() == Keyboard.KEY_F1) {view_coord = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_E) {lookback = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_F) { detonate = true;}
 				if (Keyboard.getEventKey() == Keyboard.KEY_C) { 
@@ -110,15 +114,13 @@ public class UserInput extends Control
 //					Fullscreen.setDisplayMode(Display.getWidth(), Display.getHeight(), !Display.isFullscreen());
 				}
 				if (Keyboard.getEventKey() == Keyboard.KEY_SPACE) {jump = false;}
-				if (Keyboard.getEventKey() == Keyboard.KEY_F1) {view_coord = false;}
-				if (Keyboard.getEventKey() == Keyboard.KEY_E) {lookback = false;}
-				if (Keyboard.getEventKey()== Keyboard.KEY_F2) {debug = !debug;}
+				if (Keyboard.getEventKey() == Keyboard.KEY_E) {lookback = false;}	
 				if (Keyboard.getEventKey()== Keyboard.KEY_M) {minimap = ! minimap;}
 				if (Keyboard.getEventKey()==Keyboard.KEY_Q) {triggered = true;}
-				if (Keyboard.getEventKey()==Keyboard.KEY_H){Mazerunner.player.getHealth().addHealth(100000);}
 				if (Keyboard.getEventKey()== Keyboard.KEY_F8){Utils.Utils.makeScreenShot();}
-				if (Keyboard.getEventKey()==Keyboard.KEY_F3){Mazerunner.pausemonster = !Mazerunner.pausemonster;}				
+			
 		    }
+		    
 		}
 	}
 	
