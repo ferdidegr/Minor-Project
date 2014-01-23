@@ -63,6 +63,7 @@ public class Mazerunner {
 	public static int c4Count = 0; 
 	protected String levelname;
 	private Timer ptimer = new Timer();
+	static boolean pause;
 
 									
 	/*
@@ -484,6 +485,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 	 */
 	public void checkPause(){
 		if(!Menu.getState().equals(GameState.GAME)){	
+			pause  =true;
 			boolean buffer = input.minimap;
 			input.minimap = false;
 			glPushAttrib(GL_ENABLE_BIT);			
@@ -494,6 +496,7 @@ public void initMaze() throws ClassNotFoundException, IOException{
 			previousTime = Calendar.getInstance().getTimeInMillis();
 			ptimer.start();
 			input.minimap = buffer;
+			pause = false;
 		}
 	}
 

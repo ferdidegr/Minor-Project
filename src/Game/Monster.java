@@ -20,7 +20,6 @@ public class Monster extends levelObject {
 	private Vector dir = new Vector(0, 0, -1);
 	private boolean colX, colZ, colY;
 	protected double distanceToPlayer;
-	private int RouteCount = 0;
 	public boolean isDead = false;
 	private Health health;
 	private int immunitycounter;
@@ -462,7 +461,7 @@ public class Monster extends levelObject {
 			glCallList(buffer);
 
 			glPopMatrix();
-			monsterframe++;
+			if(!Mazerunner.pause)monsterframe++;
 		}}
 	}
 
