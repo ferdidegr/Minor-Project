@@ -24,6 +24,7 @@ public class Monster extends levelObject {
 	private Health health;
 	private int immunitycounter;
 	private int flickercounter;
+	private int RouteCounter;
 	private int monsterframe = 0;
 	private ArrayList<Node> Route;
 	private AStar pathfinding;
@@ -41,6 +42,7 @@ public class Monster extends levelObject {
 		isplaying=false;
 		Route = new ArrayList<Node>();
 		this.ID=ID;
+		RouteCounter = ID%10;
 	}
 
 	public double getHeight() {
@@ -107,7 +109,10 @@ public class Monster extends levelObject {
 	 * @param deltaTime
 	 */
 	public void walk(int deltaTime){
-		findPath();
+		RouteCounter++;
+		if(RouteCounter>10 && findPath()){
+			RouteCounter = 0;
+		}
 		
 		checkRoute();
 		
