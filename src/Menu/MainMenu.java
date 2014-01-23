@@ -2,7 +2,9 @@ package Menu;
 import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.Display;
+
 
 
 
@@ -112,6 +114,14 @@ public class MainMenu extends ButtonList {
 			|| Keyboard.isKeyDown(Keyboard.KEY_SPACE)
 			|| Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 				loop = false;
+			}
+			
+			// Catch all input events
+			while(Keyboard.next()){}
+			while(Mouse.next()){
+				if(Mouse.getEventButtonState()){
+					loop = false;
+				}
 			}
 			glClear(GL_COLOR_BUFFER_BIT);
 
